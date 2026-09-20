@@ -60,6 +60,8 @@ deepdive/<对象>/
 
 以上是阅读入口与已知范围，不是产品能力表，不承诺按清单逐个完成。已有问题时，选能区分解释的条件；先探索对象时，选具有认识价值且材料可读的路径。
 
+2026-09-21 起，当前优先 [Memory 工程选择](../analysis/memory-engineering-selection.md)提出的机制对照：简单原文与状态基线、Mem0 实际开源写读路径、当前 Letta 的模型主导记忆。已有[一手材料核对](../evidence/domain/memory-frameworks-core-2026-09-21.md)，仍不等于完整对象深拆；关系、时间和后台整理按具体问题选择后续对象。
+
 ## 怎样接到其他工作
 
 对象中的局部疑问和评论就地解释；需要持续单独追问时进入 [Analysis](../analysis/README.md)。多项认识开始需要统一解释时，再形成 [Domain 主题](../domain/index.md)。来源与运行记录可以直接引用，确有需要才保存在 Evidence。

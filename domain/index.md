@@ -12,7 +12,7 @@
 - [记忆生命周期](agent-runtime/memory-lifecycle.md)：形成、读取、修正、失效和跨任务复用怎样贯穿运行。
 - [失效定位](agent-runtime/failure-modes.md)：从错误行动反查信息、模型能力、执行与恢复问题。
 
-上述补充属于同一个研究主题，可以独立深入，也共同支撑主文。它们不预设为教材第二、三、四章。未来教学组织见 [章节设计提案](../analysis/book-design.md)。
+上述补充属于同一个研究主题，可以独立深入，也共同支撑主文。它们不预设为教材第二、三、四章。未来教学组织见 [Output](../output/README.md)，当前优先 [Memory 专题](../output/book-memory/design.md)；本主题继续提供整体运行背景。
 
 ## 研究依据与后续修订
 

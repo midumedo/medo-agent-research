@@ -6,6 +6,7 @@
 
 ## 已有研究
 
+- [Memory 工程选择](memory-engineering-selection.md)：当前优先问题；从任务需要、机制价值、实际实现和完整成本筛选深拆对象，不以框架榜单替代判断。
 - [概念与边界](concepts-and-boundaries.md)：Memory、Context、Harness 的工作定义与初始观察框架。
 - [上下文留存](context-retention.md)：直接保留、摘要、外部化与组合的条件推演。
 - [研究议程](research-agenda.md)：已有问题、竞争解释和检验设计的统一入口，尚无模型行为实验结果。
@@ -16,7 +17,7 @@
 
 ## 项目自身的研究
 
-- [教材章节设计](book-design.md)：把 Harness、Context、Memory 交织成一条持续任务的学习路线，章节仍可调整。
+- 教材设计在 [Output](../output/README.md) 维护；当前优先 Memory 专题，保留整体运行路线供后续使用。
 - [聚焦研究职责的架构设计](knowledge-architecture-2026-09-20.md)：本次诊断、外部参考、替代方案与边界案例。
 - [此前深度审查](project-review-2026-09-20.md)：旧结构如何使推断变成事实，以及证据纠错的依据。
 
