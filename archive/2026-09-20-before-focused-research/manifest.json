@@ -1,0 +1,181 @@
+{
+  "created": "2026-09-20",
+  "scope": "First-party Markdown before focused research redesign; not a full repository backup",
+  "files": [
+    {
+      "path": ".workbuddy/memory/2026-09-19.md",
+      "sha256": "c3f404053cdf22e0487d0a834232692508dc6877a9575c14425f366235de8942",
+      "bytes": 207
+    },
+    {
+      "path": ".workbuddy/memory/2026-09-20.md",
+      "sha256": "5d988df056753b7ec736ef5e5c52f9de4d1b548a9a07b4ab1dde48a7511aa903",
+      "bytes": 1061
+    },
+    {
+      "path": ".workbuddy/memory/MEMORY.md",
+      "sha256": "11b8fef9526fe8a44ee865d0425d679d98f96d4bc86f69bd56e3bbabe87545ae",
+      "bytes": 473
+    },
+    {
+      "path": ".workbuddy/skills/project-maintenance/SKILL.md",
+      "sha256": "faa970aa46bf6438ac4e8c8bb4e504bba777fce0a999272e3d836d8e1d4c8803",
+      "bytes": 2921
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "273ca59bd300d3c8c4ce8184bca879179e2c0218dd240b1a8f92b7d277978267",
+      "bytes": 2121
+    },
+    {
+      "path": "analysis/claude-code/context-economics-two-traps.md",
+      "sha256": "9942ebd0051e4ed7d2b3359a169785e804d9f92aac988d8620673d353f461062",
+      "bytes": 7700
+    },
+    {
+      "path": "analysis/claude-code/context-management-offload.md",
+      "sha256": "73b5342ca8e51862a30f220b0abf24337bbfd103403d8ef81ad1259c057cf7ca",
+      "bytes": 7937
+    },
+    {
+      "path": "analysis/landscape/memory-landscape-2026-09.md",
+      "sha256": "1b2df37e1a3456c25ce70b6c24cb3fb45827ce0f29b777c2237217df4cb94614",
+      "bytes": 50733
+    },
+    {
+      "path": "analysis/project-review-2026-09-20.md",
+      "sha256": "251fcfa0d1d915e1bc9c3963fd6b45a21c2e4379d0bc20b218ca521fea9e6293",
+      "bytes": 12659
+    },
+    {
+      "path": "analysis/README.md",
+      "sha256": "a495daaa037abbcc1b7f4c4c4155ae2714f2af1162b6c696ff9c244afe074d23",
+      "bytes": 2643
+    },
+    {
+      "path": "analysis/research-agenda.md",
+      "sha256": "6dbc6ff95fd90ea409ab66280bf78d2e79a324f545713dd0daa712daa8e037a9",
+      "bytes": 7493
+    },
+    {
+      "path": "analysis/surveys/README.md",
+      "sha256": "6fd441bf9c71dd20697edc7cf30615aaaaaf3494e8282e29b63cb855ae032354",
+      "bytes": 4313
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "sha256": "a8d6e002fba5582c9224825e118e8dc8b30b4368ae0f399c588734e3241caf08",
+      "bytes": 9652
+    },
+    {
+      "path": "BRIEF.md",
+      "sha256": "3d492b2384655535f7dc2aae84eee43196b266ecf30d74530d81ce0b5f5e4235",
+      "bytes": 373
+    },
+    {
+      "path": "CONVENTIONS.md",
+      "sha256": "f76627635ea5900b013a6de753cd9a01380cd34881fec38b4e7248ed3718d592",
+      "bytes": 7107
+    },
+    {
+      "path": "deepdive/README.md",
+      "sha256": "1ab1eef264cf3daaab6bc19b64137348a64eed6c247f31f32b9defca73e3038c",
+      "bytes": 3943
+    },
+    {
+      "path": "dialogue/2026-09-19-research-log.md",
+      "sha256": "e95083ac2acdd3a6c24c9eaa7dae69f41e1f500753e20a255f3aebbfadc10c0f",
+      "bytes": 7498
+    },
+    {
+      "path": "dialogue/2026-09-20-project-structure-and-artifacts.md",
+      "sha256": "8e73024ebd41315ff2f665c4cab8b123a76d6af9a8c15b1c5ceb9ef24689f3e9",
+      "bytes": 6977
+    },
+    {
+      "path": "dialogue/2026-09-20-research-log.md",
+      "sha256": "6eb97af564ca29fcdbda783e9537c2e6fb7adedaf7bad73c7fbda724d9e5a1dd",
+      "bytes": 33338
+    },
+    {
+      "path": "domain/disputes.md",
+      "sha256": "872b4df01a2a7c26ca764b47425a2a0a991066488b289ab46b89da73f1d853ee",
+      "bytes": 4204
+    },
+    {
+      "path": "domain/foundations.md",
+      "sha256": "edd8a085598c24d314e1e884b125b397178d6b50de2614a925c5959a992f09d5",
+      "bytes": 8117
+    },
+    {
+      "path": "domain/index.md",
+      "sha256": "21bec8b8010e5efd141be4ea4294df821ceee9c7ad0245b92421061593e940de",
+      "bytes": 3780
+    },
+    {
+      "path": "domain/mechanisms/context-retention.md",
+      "sha256": "0c980901af81d67770224da9a59ed812c0e6741200bdfee935873d6a6b92e80b",
+      "bytes": 9768
+    },
+    {
+      "path": "domain/systems.md",
+      "sha256": "eb5e47f4c0b6caf612381e17187260d15312a07b4bdc3840b30691e4d7f04d2b",
+      "bytes": 5242
+    },
+    {
+      "path": "evidence/domain/claude-code-default-strategy.md",
+      "sha256": "4968b9390076c0465838da5df6c038b2fbfa9f718b8d1b599639859b07579913",
+      "bytes": 2864
+    },
+    {
+      "path": "evidence/domain/reviewed-local-passages.md",
+      "sha256": "378a0aefe4c5d70b8819a2da8dff6cf43ce00eacab7487e2cfe4185abf467148",
+      "bytes": 7058
+    },
+    {
+      "path": "evidence/style/agents-md-convergence.md",
+      "sha256": "59aed74f722cc17b744c86087f0dea7678a24225a76000e750ad7b603b6aaa56",
+      "bytes": 2590
+    },
+    {
+      "path": "notes/2026-09-20-deepdive-and-research-roles.md",
+      "sha256": "0940cf401ee4601e37b54d75c3839caf1fd50547523f7401282a1c60b53fc676",
+      "bytes": 2984
+    },
+    {
+      "path": "notes/2026-09-20-research-architecture.md",
+      "sha256": "b81ee17f836adeb56982edc80667e6ce971ffbe4f950c2516934011a2e6b9ad1",
+      "bytes": 4389
+    },
+    {
+      "path": "notes/decided-no-length-caps.md",
+      "sha256": "b25d7867d5bbe24fd339552ffb1996ef1a54594ed3a7063b5b02bb3a7c88ada5",
+      "bytes": 1713
+    },
+    {
+      "path": "notes/README.md",
+      "sha256": "50070eb9d54562f06a3697223ded45eabec6605e853e37ce9582388f9e7566b5",
+      "bytes": 1573
+    },
+    {
+      "path": "README.md",
+      "sha256": "5a5e85f832d7146fc7a10325753f66679d5b381d47d3f64352a34de308aaf274",
+      "bytes": 4092
+    },
+    {
+      "path": "STYLE.md",
+      "sha256": "f1685056242acf21e1e643bd775483753911c8cfb71c10c012e0ed67f7117746",
+      "bytes": 3368
+    },
+    {
+      "path": "THESIS.md",
+      "sha256": "fa84aef712751f03f99e12ce0c68b53346261a7dfd94834aec7587cf76b24dbf",
+      "bytes": 4597
+    },
+    {
+      "path": "TRADEOFFS.md",
+      "sha256": "b3a0043a38b41671ad0c61335d209c80b45c55a2ec8100353b76da6b0ac9225f",
+      "bytes": 3911
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+# Third-party checkouts are acquired separately; keep versions in research references.
+/sources/repos/
+
+# A local private file; it is not a research source.
+/sources/以前的/pass.md
+
+# Local credentials. Keep safe examples versioned.
+.env
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Re-creatable runtime data; research evidence and provenance remain versioned.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+node_modules/
+/sources/papers/logs/
+/analysis/archive/**/main_agent_context*
+/analysis/archive/**/id_to_doc*
+
+# Editor recovery files and OS metadata.
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini

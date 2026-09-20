@@ -1,0 +1,150 @@
+{
+  "_comment": "2026-09-20 建立的本地文件记录。SHA256 只标识当前文件，不证明来源真实性、版本或 PDF 到 Markdown 转换准确性。null 表示缺失。",
+  "2404.13501": {
+    "source_url": "https://arxiv.org/abs/2404.13501",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/2404.13501.pdf",
+    "pdf_sha256": "aae2f9537f748f30f0ca59fd66c499b7df7bdb199d24ce43cab0a6170f7dceef",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "surveys/2404.13501.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "2f3243b93a9a44b7199f53ac60d7c78d15a7302cdce6c60550a9ee321a9b1ddf",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "2505.00675": {
+    "source_url": "https://arxiv.org/abs/2505.00675",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/2505.00675.pdf",
+    "pdf_sha256": "23724df6e6a38bdffc97c8bccb132581bf1e21fa534d5c19f84c80d5ab0e741d",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "surveys/2505.00675.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "b6832176e0c46ec22bea245d81fb413428f4f4187dca70e2d27773fc1d512c7b",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "2512.13564": {
+    "source_url": "https://arxiv.org/abs/2512.13564",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/2512.13564.pdf",
+    "pdf_sha256": "10de3c050903bfa1113c9a954380e2786f42d25a9ea24478bf6cc69fef2e2b42",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "surveys/2512.13564.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "9f595dbcc72fef6bc920128efe8c1e66e5434733c9c961706068271436dac18f",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "2602.06052": {
+    "source_url": "https://arxiv.org/abs/2602.06052",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/2602.06052.pdf",
+    "pdf_sha256": "497e95492cb4bd8a8b45f813afabbb1d202c98076fb5f091be316a9b271b46a6",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "surveys/2602.06052.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "3ed13b62513787a68f9a84418a258f46a225d32dafbc39619187fb7cec063a76",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "2603.07670": {
+    "source_url": "https://arxiv.org/abs/2603.07670",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/2603.07670.pdf",
+    "pdf_sha256": "ca7d6c5dfb712921da92542454e07af2a09751d61811e76a29066e89dd57cc51",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "surveys/2603.07670.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "673fa6b58a7cf4ab925dcd28b0578f5a9cf02d76527eb6fe75abb6177816c150",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "2606.06448": {
+    "source_url": "https://arxiv.org/abs/2606.06448",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/2606.06448.pdf",
+    "pdf_sha256": "b9d840d861da993e05ecc9e2295e9754ee9289ebc595270f6af18c55e57b8782",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "surveys/2606.06448.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "7d73672a343931c655c24bbf1d2a2e8077455ea6aa56b90041b11cca34c0c34a",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "2607.16848": {
+    "source_url": "https://arxiv.org/abs/2607.16848",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/2607.16848.pdf",
+    "pdf_sha256": "09dd5520b628bbce492110aa73efd70d40d7e48eba379ab24dc6bda2cad68069",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "surveys/2607.16848.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "010ec650eb287e08c20ea0377cbc872a63f0f6d76ba87521026f161b2e9b138c",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  }
+}

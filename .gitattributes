@@ -1,0 +1,17 @@
+* text=auto
+*.md text eol=lf
+*.json text eol=lf
+*.py text eol=lf
+*.txt text eol=lf
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+
+# Existing snapshot manifests describe exact historical bytes.
+archive/** -text
+
+# Preserve imported material and provenance hashes byte for byte.
+sources/papers/surveys/*.md -text
+analysis/archive/** -text
+analysis/landscape/memory-landscape-2026-09.md -text

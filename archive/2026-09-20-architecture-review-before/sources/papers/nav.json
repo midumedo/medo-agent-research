@@ -1,0 +1,59 @@
+{
+  "_comment": "每篇论文的导航卡。pdf2md.py 会把这张卡渲染进每篇 md 的头部。改这里后重跑 pdf2md.py --force 即可生效。answers 字段写「这篇回答什么问题」，不写「对应第几章」——章节号会随主线变化而失效，问题不会。",
+  "2512.13564": {
+    "axis": "Forms（token-level / parametric / latent）× Functions（factual / experiential / working）× Dynamics（formation / evolution / retrieval）",
+    "one_liner": "48 位作者的共识尝试：给碎片化的 agent memory 建立共同语言，并划清它与 LLM memory、RAG、context engineering 的边界。",
+    "must_read": "§2.3 Comparing Agent Memory with Other Key Concepts（全库最该先读的一节）、§3 Form、§4 Functions、§5 Dynamics 的定义段、§6 Resources and Frameworks",
+    "skip": "§7 Positions and Frontiers（automation / RL / multimodal / multi-agent / trustworthiness 各一小节，点到即止）",
+    "blind_spot": "程序性记忆只在 taxonomy 表里出现，工程实现几乎没写；完全没有系统开销与缓存视角。",
+    "answers": "记忆和 RAG、长上下文的边界到底在哪？记忆该分成几类，有共识吗？"
+  },
+  "2603.07670": {
+    "axis": "write–manage–read 闭环；三维 taxonomy（temporal scope / representational substrate / control policy）；五族机制",
+    "one_liner": "把记忆形式化为一条与感知、行动耦合的 write–manage–read 回路，最短但结构最清晰的一篇。",
+    "must_read": "§2 Problem Formulation and Design Objectives、§3 三维 taxonomy、§7 Engineering Realities（写路径过滤 / 矛盾处理 / 延迟预算 / 隐私治理）、§8 Positioning Relative to Prior Surveys（帮你判断整个库的分工）",
+    "skip": "§6 Where Memory Makes or Breaks the Agent（五个应用领域的罗列）",
+    "blind_spot": "单作者，覆盖面靠引用而非实测；没有系统 profiling；参数化记忆只是一笔带过。",
+    "answers": "记忆系统有哪些实现路线？工程落地要考虑哪些现实约束？"
+  },
+  "2505.00675": {
+    "axis": "表示（parametric vs contextual）× 六大操作（Consolidation / Updating / Indexing / Forgetting / Retrieval / Condensation）",
+    "one_liner": "把记忆拆成「表示形态 + 六个原子操作」，是记忆生命周期最干净的操作清单。",
+    "must_read": "§2.1 Memory Representation、§2.4 Memory Operations（六操作定义）、§5 The Cognitive Gap between Biological and Agent Memory（少见的反类比反思，很适合拿来批判「人脑隐喻」）",
+    "skip": "§3 四个 research topic 的文献罗列、§4 产品与工具清单（时效性差）",
+    "blind_spot": "不谈系统开销、不谈 Harness、不谈缓存；六操作之间没有给出调度与触发条件的工程讨论。",
+    "answers": "记忆的生命周期有哪些原子操作？用人脑来类比记忆到底靠不靠谱？"
+  },
+  "2602.06052": {
+    "axis": "Substrate（internal / external）× Cognitive（sensory / working / episodic / semantic / procedural）× Subject（user-centric / agent-centric）",
+    "one_liner": "转向「下半场」：长程自主 Agent。三轴分类，程序性记忆是它的重点，也是全库唯一系统讨论技能沉淀的一篇。",
+    "must_read": "§3 Taxonomy 的 Subject 轴（user-centric vs agent-centric）与 procedural 部分、§4 Memory Operation Mechanism、§5 Learning Policy（记忆操作能否用 RL 学）、多 Agent 记忆路由与共享、可移植技能生态",
+    "skip": "sensory / working / episodic / semantic 各认知类型小节（与其他综述重复度高）；§8 Applications",
+    "blind_spot": "没有系统开销量化；篇幅最大（2238 行）但密度不均；60 位作者导致部分章节像拼接。",
+    "answers": "程序性记忆（技能沉淀）怎么工程化？多 Agent 之间怎么共享与路由记忆？"
+  },
+  "2606.06448": {
+    "axis": "系统视角四轴；phase-aware profiling 把开销归因到 construction / retrieval / generation",
+    "one_liner": "唯一从系统负载角度实测记忆的工作：10 套系统、三相开销归因、10 条工程建议。",
+    "must_read": "§3 Workload Suite and Profiling Harness、§4 Characterizing Agent Memory Workloads（实测归因）、§5 的 10 条 recommendations（construction scheduling / capability floors / amortization / freshness-latency / fleet-scale）",
+    "skip": "§2 Agent Memory Paradigms（四轴 taxonomy 不是它的贡献点）",
+    "blind_spot": "是短文（415 行，约 6–8 页），没有体系性分类；只测 10 套系统，样本有限；不涉及缓存友好设计。",
+    "answers": "记忆系统到底贵在写还是贵在读？开销在三相之间怎么分布？"
+  },
+  "2404.13501": {
+    "axis": "来源（inside-trial / cross-trial / external）× 形式（textual / parametric）× 操作（writing / management / reading）",
+    "one_liner": "奠基之作。用来源 × 形式 × 操作三轴给早期记忆机制立了术语，并从认知心理学论证「为什么需要记忆」。",
+    "must_read": "§3.2 / §3.3 窄定义与宽定义、§4.1 Perspective of Cognitive Psychology、§5.2.3 textual 与 parametric 记忆的优劣对比",
+    "skip": "§7 七个应用场景的罗列、§6 评测部分（已被 2607.16848 部分推翻）",
+    "blind_spot": "2024 年 4 月，mem0 / Zep / Letta / OpenViking 之后的生态完全没有；无程序性记忆工程化、无 Harness、无缓存视角。",
+    "answers": "这套术语从哪来？早期是怎么给记忆分类的？（历史脉络，不是现状）"
+  },
+  "2607.16848": {
+    "axis": "不论分类，论评测协议：ingestion granularity / raw-text preservation / retrieval budget / modality / rubric audit / judge",
+    "one_liner": "证明「脱离协议的榜单不可解读」：控制检索预算后 Graphiti 的领先消失；稀疏+稠密混合是最大单项改进。",
+    "must_read": "§2 Related work 的十种机制家族梳理（意外的好评测地图）、实验结论（budget 控制前后对比）、multi-judge 与人类对齐的校准、它对评测目标的重定义（budgeted, modality-aware context restoration）",
+    "skip": "Theoria 自身的方法细节（除非要复现）",
+    "blind_spot": "只做科学论文领域的记忆（PAIM / PTr），不覆盖对话式记忆与编码 Agent 场景。",
+    "answers": "榜单上的分数能不能信？评测协议怎么决定结论？"
+  }
+}
