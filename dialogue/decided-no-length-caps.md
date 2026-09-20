@@ -1,6 +1,6 @@
 # 决定：常驻层不设长度上限（2026-09-20）
 
-> 历史决定：此后目录、自动读取与条目安排已有调整，见 [后续决定](2026-09-20-focused-research-structure.md)。原理由保留；当前规则按 [CONVENTIONS](../../CONVENTIONS.md) 等职责文件执行。
+> 历史决定：此后目录、自动读取与条目安排已有调整，见 [后续决定](2026-09-20-focused-research-structure.md)。原理由保留；当前规则按 [CONVENTIONS](../CONVENTIONS.md) 等职责文件执行。
 
 ## 决定
 

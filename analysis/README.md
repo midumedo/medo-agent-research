@@ -16,6 +16,7 @@
 
 ## 项目自身的研究
 
+- [教材章节设计](book-design.md)：把 Harness、Context、Memory 交织成一条持续任务的学习路线，章节仍可调整。
 - [聚焦研究职责的架构设计](knowledge-architecture-2026-09-20.md)：本次诊断、外部参考、替代方案与边界案例。
 - [此前深度审查](project-review-2026-09-20.md)：旧结构如何使推断变成事实，以及证据纠错的依据。
 

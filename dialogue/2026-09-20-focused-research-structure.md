@@ -1,5 +1,7 @@
 # 决定 · 聚焦研究，取消重复维护的层次
 
+> 后续调整：决定与日志的位置、版本保留方式和首个主题状态已更新，见 [Git 与运行主题决定](2026-09-20-runtime-theme-and-git.md)。以下保留当时的取舍与实施范围。
+
 日期：2026-09-20。依据：用户要求重新设计维护技能、Notes／Dialogue、Entries、Domain 与 Deepdive 的职责，并授权实施重建。具体目录及合并方式由本次设计选择，不冒称用户逐项确认。
 
 ## 采用的调整
@@ -14,7 +16,7 @@ Deepdive 围绕 Memory、Context 与相关 Harness 行为，先有整体地图�
 
 ## 理由与替代范围
 
-详细诊断、外部参考和边界案例见 [本轮架构研究](../../analysis/knowledge-architecture-2026-09-20.md)。当前结构见 [ARCHITECTURE](../../ARCHITECTURE.md)，执行约定见 [CONVENTIONS](../../CONVENTIONS.md)，本记录不重复维护这些规则。
+详细诊断、外部参考和边界案例见 [本轮架构研究](../analysis/knowledge-architecture-2026-09-20.md)。当前结构见 [ARCHITECTURE](../ARCHITECTURE.md)，执行约定见 [CONVENTIONS](../CONVENTIONS.md)，本记录不重复维护这些规则。
 
 替代[上一版对象深拆决定](2026-09-20-deepdive-and-research-roles.md)中 Notes 根目录、Entries、Domain 尺度和较宽的深拆范围；替代[早期架构决定](2026-09-20-research-architecture.md)中相应层次安排。来源与推断分开、可纠错、历史可追溯、探索无需先命中假设等原则继续适用。
 
@@ -22,7 +24,7 @@ Deepdive 围绕 Memory、Context 与相关 Harness 行为，先有整体地图�
 
 ## 迁移与验证记录
 
-修改前的 35 份第一方 Markdown 已保存在 [范围快照](../../archive/2026-09-20-before-focused-research/SNAPSHOT.md)，附原路径、字节数与 SHA-256；它不是全项目备份。来源论文与第三方代码未纳入本轮迁移。
+修改前的 35 份第一方 Markdown 已保存在 [范围快照](../archive/2026-09-20-before-focused-research/SNAPSHOT.md)，附原路径、字节数与 SHA-256；它不是全项目备份。来源论文与第三方代码未纳入本轮迁移。
 
 验证完成：
 
