@@ -54,7 +54,7 @@ deepdive/<对象>/
 | Claude Code | 已有[策略分析](../analysis/claude-code/context-management-offload.md)与[成本分析](../analysis/claude-code/context-economics-two-traps.md)。厂商事实仍有待核实项，不能据官方清单顺序或单价比推断策略优越性 |
 | 本地论文 | 有[阅读导航](../analysis/surveys/README.md)和[局部原文核对](../evidence/domain/reviewed-local-passages.md)。可选具体论文拆相关机制；当前不等于全文复核或实验复现 |
 | Codex、EverOS 等本地候选 | 先确认实际源码完整性与可解析版本，再选与状态、上下文或记忆有关的一条路径；本表不把目录存在当作已完成审查 |
-| mem0、Zep、Letta、memgit、OpenViking、Tianshu 等旧候选 | 项目身份、版本及材料需逐一确认；名字不是能力证据，不按旧名单预设结构或优先级 |
+| mem0、Zep、Letta、memgit、OpenViking、Tianshu 等旧候选 | 项目身份、版本及材料需逐一确认；名字不是能力证据，不按旧名单预设结构或优先级。候选笔记见[候选对象与记忆框架清单](../analysis/landscape/memory-object-candidates-2026-09.md) |
 | 简单文件检索／全文检索 | 可以从简单路径理解保存、定位、读取与更新；作为问题对照时另行控制任务条件与预算 |
 | 非编码的持续任务 | 用来观察其他任务中的信息变化；避免把编码工具机制直接推广为全部 Agent 的规律 |
 

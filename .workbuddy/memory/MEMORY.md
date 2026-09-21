@@ -8,3 +8,5 @@
 - 早期经过：[Dialogue](../../dialogue/README.md)
 
 - 运行主题与教材路线：[主题](../../domain/agent-runtime/index.md)、[章节提案](../../analysis/book-design.md)、[版本管理决定](../../dialogue/2026-09-20-runtime-theme-and-git.md)。
+
+- 记忆横评与分类（2026-09-21）：[横评对照](../../analysis/memory-benchmark-crossreview-2026-09.md)、[记忆分类主题](../../domain/memory-taxonomy/index.md)、[候选清单](../../analysis/landscape/memory-object-candidates-2026-09.md)、[决定记录](../../dialogue/2026-09-21-memory-benchmarks-and-layout.md)。新增论文分入 `sources/papers/benchmarks/` 与 `frameworks/`。

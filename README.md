@@ -29,6 +29,8 @@ Deepdive 与 Analysis 在根级并列，分别按对象和问题组织。Domain 
 - [Claude Code 策略分析](analysis/claude-code/context-management-offload.md)与[成本分析](analysis/claude-code/context-economics-two-traps.md)：已修正过强推断，产品行为仍有待核实项。
 - [综述阅读导航](analysis/surveys/README.md)与[本地核对片段](evidence/domain/reviewed-local-passages.md)：已有局部原文核对，不代表全文复核或实验复现。
 - [Memory 框架一手材料](evidence/domain/memory-frameworks-core-2026-09-21.md)与[评估片段核对](evidence/domain/memory-evaluation-passages-2026-09-21.md)：固定版本的文档和局部源码阅读，以及论文比较条件与报告限制。
+- [记忆横评对照](analysis/memory-benchmark-crossreview-2026-09.md)：20 个基准的编号与日期经官方接口核验，五份一手横评的具体数字，以及厂商自报分数为何不能互比。
+- [记忆分类法](domain/memory-taxonomy/index.md)：第二个主题综合，解释六家分类轴的分歧与三处归属冲突。
 
 目前有初版主题综合与章节提案，尚无完成的对象深拆或成对模型行为实验。主题综合依据已有研究和官方资料形成可修正解释，不能因目录名称被提升成实证定律。候选对象与范围在 [Deepdive 入口](deepdive/README.md#research-map)。
 

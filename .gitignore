@@ -1,9 +1,6 @@
 # Third-party checkouts are acquired separately; keep versions in research references.
 /sources/repos/
 
-# A local private file; it is not a research source.
-/sources/以前的/pass.md
-
 # Local credentials. Keep safe examples versioned.
 .env
 .env.*

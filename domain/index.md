@@ -14,6 +14,12 @@
 
 上述补充属于同一个研究主题，可以独立深入，也共同支撑主文。它们不预设为教材第二、三、四章。未来教学组织见 [Output](../output/README.md)，当前优先 [Memory 专题](../output/book-memory/design.md)；本主题继续提供整体运行背景。
 
+### [记忆有哪些分类法，以及为什么它们互相矛盾](memory-taxonomy/index.md)
+
+2026-09-21。把"怎样给记忆分类"本身当作研究问题：六家综述在切哪些轴、各自把什么排除在记忆之外，以及三处实质冲突（RAG 算不算记忆、模型内部状态算不算记忆、"external"一词指什么）。分类分歧先于分数比较，是 [记忆横评对照](../analysis/memory-benchmark-crossreview-2026-09.md) 中"数字不可比"的原因之一。
+
+- [六篇综述的分类卡片](memory-taxonomy/taxonomies-by-survey.md)：各轴取值、定义、边界与原文位置；新综述入库后在此追加。运行背景。
+
 ## 研究依据与后续修订
 
 [概念草稿](../analysis/concepts-and-boundaries.md)、[留存分析](../analysis/context-retention.md)、[研究议程](../analysis/research-agenda.md)和[对象探索](../deepdive/README.md)继续维护各自问题与材料。新的实现或反例可以改写本主题；不为保住流程图而把所有系统归入固定阶段。具体归属见 [CONVENTIONS](../CONVENTIONS.md)。

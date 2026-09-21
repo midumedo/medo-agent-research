@@ -146,5 +146,465 @@
       "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
       "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
     }
+  },
+  "2402.17753": {
+    "source_url": "https://arxiv.org/abs/2402.17753v1",
+    "pdf_url": "https://arxiv.org/pdf/2402.17753v1",
+    "version": "2402.17753v1",
+    "retrieved_at": "2026-09-21T02:33:16.027781+00:00",
+    "pdf_path": "pdf/2402.17753.pdf",
+    "pdf_sha256": "218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2402.17753.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:36:13.755239+00:00",
+      "pdf_sha256": "218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539",
+      "body_sha256": "507cee4e018b67be53e095e99b5f656d8bb9a055929fae321cc92cd1bc2c8334",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2410.10813": {
+    "source_url": "https://arxiv.org/abs/2410.10813v2",
+    "pdf_url": "https://arxiv.org/pdf/2410.10813v2",
+    "version": "2410.10813v2",
+    "retrieved_at": "2026-09-21T02:33:18.695833+00:00",
+    "pdf_path": "pdf/2410.10813.pdf",
+    "pdf_sha256": "05c5d055201466a241a56e082cdd02d39ad566fa04b3804891983e4e069a3fda",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2410.10813.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:36:35.400913+00:00",
+      "pdf_sha256": "05c5d055201466a241a56e082cdd02d39ad566fa04b3804891983e4e069a3fda",
+      "body_sha256": "503e46dbbb19a5cc2b55ce2a729dd0323b64251a81c5781ea4c987e5e33bdfb5",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2507.05257": {
+    "source_url": "https://arxiv.org/abs/2507.05257v4",
+    "pdf_url": "https://arxiv.org/pdf/2507.05257v4",
+    "version": "2507.05257v4",
+    "retrieved_at": "2026-09-21T02:33:35.613690+00:00",
+    "pdf_path": "pdf/2507.05257.pdf",
+    "pdf_sha256": "022d3771fd643d3bece04841e71331ef6963ff0eba43166849072caeb1b79508",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2507.05257.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:37:00.981736+00:00",
+      "pdf_sha256": "022d3771fd643d3bece04841e71331ef6963ff0eba43166849072caeb1b79508",
+      "body_sha256": "be873dd4aecdebff1339b3f5bb06cf07af31c558eecbed7e009972139d06c5cc",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2510.27246": {
+    "source_url": "https://arxiv.org/abs/2510.27246v2",
+    "pdf_url": "https://arxiv.org/pdf/2510.27246v2",
+    "version": "2510.27246v2",
+    "retrieved_at": "2026-09-21T02:33:40.305557+00:00",
+    "pdf_path": "pdf/2510.27246.pdf",
+    "pdf_sha256": "8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2510.27246.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:37:58.414418+00:00",
+      "pdf_sha256": "8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303",
+      "body_sha256": "f46d654034938b4ef943e103bc57775ae6cb57234e2585234bbdfa89ce4f1e41",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2602.22769": {
+    "source_url": "https://arxiv.org/abs/2602.22769v4",
+    "pdf_url": "https://arxiv.org/pdf/2602.22769v4",
+    "version": "2602.22769v4",
+    "retrieved_at": "2026-09-21T02:33:45.350334+00:00",
+    "pdf_path": "pdf/2602.22769.pdf",
+    "pdf_sha256": "2bb21d3d335839da888c8f16543065d4964cf09b5ca2b39d92e80655bd8b7611",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2602.22769.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:38:27.033421+00:00",
+      "pdf_sha256": "2bb21d3d335839da888c8f16543065d4964cf09b5ca2b39d92e80655bd8b7611",
+      "body_sha256": "bc8f996d7f5b6be3deb1e94e9adac3cd80816251d9363d1cd5d4ff168a559314",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2605.12493": {
+    "source_url": "https://arxiv.org/abs/2605.12493v1",
+    "pdf_url": "https://arxiv.org/pdf/2605.12493v1",
+    "version": "2605.12493v1",
+    "retrieved_at": "2026-09-21T02:33:48.988089+00:00",
+    "pdf_path": "pdf/2605.12493.pdf",
+    "pdf_sha256": "5734ebfe844c4b8a846e2766fb7150aa8cbca62429c137935f3fbfc0ff2cd5c3",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2605.12493.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:38:51.675933+00:00",
+      "pdf_sha256": "5734ebfe844c4b8a846e2766fb7150aa8cbca62429c137935f3fbfc0ff2cd5c3",
+      "body_sha256": "8bc37ee57764a6d54f13094aced6ef3487bfe332fc065456559bcabb85a310fa",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2506.21605": {
+    "source_url": "https://arxiv.org/abs/2506.21605v1",
+    "pdf_url": "https://arxiv.org/pdf/2506.21605v1",
+    "version": "2506.21605v1",
+    "retrieved_at": "2026-09-21T02:34:07.662945+00:00",
+    "pdf_path": "pdf/2506.21605.pdf",
+    "pdf_sha256": "499acafb5507457a69d57448ed61ff0911c93882abf1aaa4f95615d8ea13ffff",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2506.21605.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:39:08.433176+00:00",
+      "pdf_sha256": "499acafb5507457a69d57448ed61ff0911c93882abf1aaa4f95615d8ea13ffff",
+      "body_sha256": "d09bef559b9821d166fdb10feecdc5fead8bdc2983ded62596fdb4745bff833a",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2510.17281": {
+    "source_url": "https://arxiv.org/abs/2510.17281v7",
+    "pdf_url": "https://arxiv.org/pdf/2510.17281v7",
+    "version": "2510.17281v7",
+    "retrieved_at": "2026-09-21T02:34:12.846175+00:00",
+    "pdf_path": "pdf/2510.17281.pdf",
+    "pdf_sha256": "00b2aee7c582f53dadf1c3b5bf6cd7fbf3da242d1a0328edb1338b9aeb318bf8",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2510.17281.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:39:45.027250+00:00",
+      "pdf_sha256": "00b2aee7c582f53dadf1c3b5bf6cd7fbf3da242d1a0328edb1338b9aeb318bf8",
+      "body_sha256": "0d449f35c12ca238349c08ae3ccabad46698e7a7281ec762f02b63f4dd4fc306",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2504.14225": {
+    "source_url": "https://arxiv.org/abs/2504.14225v2",
+    "pdf_url": "https://arxiv.org/pdf/2504.14225v2",
+    "version": "2504.14225v2",
+    "retrieved_at": "2026-09-21T02:34:26.115166+00:00",
+    "pdf_path": "pdf/2504.14225.pdf",
+    "pdf_sha256": "24633e985675243f324b546daee7e27ff177a5af516b239c8f59be60a3bf58c6",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2504.14225.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:40:10.754087+00:00",
+      "pdf_sha256": "24633e985675243f324b546daee7e27ff177a5af516b239c8f59be60a3bf58c6",
+      "body_sha256": "9af9b1cd0a740caab75d8fee82f7314358f21475ecfd4b270e84c8d0dc5724df",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2602.16313": {
+    "source_url": "https://arxiv.org/abs/2602.16313v2",
+    "pdf_url": "https://arxiv.org/pdf/2602.16313v2",
+    "version": "2602.16313v2",
+    "retrieved_at": "2026-09-21T02:34:30.504775+00:00",
+    "pdf_path": "pdf/2602.16313.pdf",
+    "pdf_sha256": "7478c3b9294b483a32350a5844be6fa596e3ee18abc6dba33b1827780a86af0d",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "benchmarks/2602.16313.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:40:34.200221+00:00",
+      "pdf_sha256": "7478c3b9294b483a32350a5844be6fa596e3ee18abc6dba33b1827780a86af0d",
+      "body_sha256": "c1a53d7953cf9c5d13631b93926d393502720b1dec08180d55e44db6105d1369",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2501.13956": {
+    "source_url": "https://arxiv.org/abs/2501.13956v1",
+    "pdf_url": "https://arxiv.org/pdf/2501.13956v1",
+    "version": "2501.13956v1",
+    "retrieved_at": "2026-09-21T02:34:33.793138+00:00",
+    "pdf_path": "pdf/2501.13956.pdf",
+    "pdf_sha256": "d26f7eb599540e8b14d75e7efda58a07661abbb1b864e58323b5768475a15d42",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2501.13956.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:40:43.778642+00:00",
+      "pdf_sha256": "d26f7eb599540e8b14d75e7efda58a07661abbb1b864e58323b5768475a15d42",
+      "body_sha256": "a4b353305aaa025d132ebfa1a3adc00c99a1fa86d58174e765a1bc2d42fcf798",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2504.19413": {
+    "source_url": "https://arxiv.org/abs/2504.19413v1",
+    "pdf_url": "https://arxiv.org/pdf/2504.19413v1",
+    "version": "2504.19413v1",
+    "retrieved_at": "2026-09-21T02:34:37.424074+00:00",
+    "pdf_path": "pdf/2504.19413.pdf",
+    "pdf_sha256": "bec870b657aa73405275a6d8fe27bcd4271799e028bc62986ab9c4cd27a3712d",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2504.19413.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:40:57.247107+00:00",
+      "pdf_sha256": "bec870b657aa73405275a6d8fe27bcd4271799e028bc62986ab9c4cd27a3712d",
+      "body_sha256": "fd19b3abadab9632e7eadb8e9b128e17428e932099b84c48d8d36615a6fbbbe4",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2507.03724": {
+    "source_url": "https://arxiv.org/abs/2507.03724v4",
+    "pdf_url": "https://arxiv.org/pdf/2507.03724v4",
+    "version": "2507.03724v4",
+    "retrieved_at": "2026-09-21T02:34:42.041202+00:00",
+    "pdf_path": "pdf/2507.03724.pdf",
+    "pdf_sha256": "9b9b71b61487ce9f01d2de014b80201d9a30c4fd43effa33e84ef7d2db824977",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2507.03724.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:41:25.646056+00:00",
+      "pdf_sha256": "9b9b71b61487ce9f01d2de014b80201d9a30c4fd43effa33e84ef7d2db824977",
+      "body_sha256": "e248b22cf55630e8ec717131a62b6d4a9089e1b386180cd4ff99d45fdcfdb609",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2601.02163": {
+    "source_url": "https://arxiv.org/abs/2601.02163v2",
+    "pdf_url": "https://arxiv.org/pdf/2601.02163v2",
+    "version": "2601.02163v2",
+    "retrieved_at": "2026-09-21T02:34:45.868168+00:00",
+    "pdf_path": "pdf/2601.02163.pdf",
+    "pdf_sha256": "265314799f9803a841a3aeb6fca949ce5eb6923d1d8a450de26843993e1605fd",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2601.02163.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:41:41.167309+00:00",
+      "pdf_sha256": "265314799f9803a841a3aeb6fca949ce5eb6923d1d8a450de26843993e1605fd",
+      "body_sha256": "81cbda4193646f028234dec7dcd9bb42ebf20386c8970fe52222e631c4d1bb29",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2506.06326": {
+    "source_url": "https://arxiv.org/abs/2506.06326v1",
+    "pdf_url": "https://arxiv.org/pdf/2506.06326v1",
+    "version": "2506.06326v1",
+    "retrieved_at": "2026-09-21T02:34:50.257580+00:00",
+    "pdf_path": "pdf/2506.06326.pdf",
+    "pdf_sha256": "4b3cbeb6a94d6b5a996f7bbeabe651929fbf7dd15a5e00cd28e728530d9ff730",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2506.06326.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:41:49.306031+00:00",
+      "pdf_sha256": "4b3cbeb6a94d6b5a996f7bbeabe651929fbf7dd15a5e00cd28e728530d9ff730",
+      "body_sha256": "ba627af2d95fe99df4f793b0f486d8c58ef2a640ed9d6f7030d3932acc8c0972",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2507.07957": {
+    "source_url": "https://arxiv.org/abs/2507.07957v1",
+    "pdf_url": "https://arxiv.org/pdf/2507.07957v1",
+    "version": "2507.07957v1",
+    "retrieved_at": "2026-09-21T02:34:55.049151+00:00",
+    "pdf_path": "pdf/2507.07957.pdf",
+    "pdf_sha256": "8204e2a238a86af14b358b28a7ef1f682956f1b41f7023d08cc7e2762e45c5ea",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2507.07957.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:42:01.103130+00:00",
+      "pdf_sha256": "8204e2a238a86af14b358b28a7ef1f682956f1b41f7023d08cc7e2762e45c5ea",
+      "body_sha256": "52754a847b60ee1076183ddc751067a06cde0bd1c2e939d8584fdbeaf5cf738f",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2502.12110": {
+    "source_url": "https://arxiv.org/abs/2502.12110v11",
+    "pdf_url": "https://arxiv.org/pdf/2502.12110v11",
+    "version": "2502.12110v11",
+    "retrieved_at": "2026-09-21T02:34:58.343102+00:00",
+    "pdf_path": "pdf/2502.12110.pdf",
+    "pdf_sha256": "fec32b521c4a1f793442bf1aeb26139c583078350d1cd4ab8f4eccc54a0694f0",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2502.12110.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:42:22.378582+00:00",
+      "pdf_sha256": "fec32b521c4a1f793442bf1aeb26139c583078350d1cd4ab8f4eccc54a0694f0",
+      "body_sha256": "b53d97d936c5c212f2f05c70f7ea1f232711f86298e048be398133b0c9fd23fa",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2601.02553": {
+    "source_url": "https://arxiv.org/abs/2601.02553v3",
+    "pdf_url": "https://arxiv.org/pdf/2601.02553v3",
+    "version": "2601.02553v3",
+    "retrieved_at": "2026-09-21T02:35:01.392830+00:00",
+    "pdf_path": "pdf/2601.02553.pdf",
+    "pdf_sha256": "8752aa223e004ca286995bc1e8cbde8e89e67ad3aeb9ba0266f3ccab3cc11078",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2601.02553.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:42:34.747258+00:00",
+      "pdf_sha256": "8752aa223e004ca286995bc1e8cbde8e89e67ad3aeb9ba0266f3ccab3cc11078",
+      "body_sha256": "e7d4238fec76703a7d49c55dfeea008fdbaf816f37cc5ed9e370b82669977735",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2601.08323": {
+    "source_url": "https://arxiv.org/abs/2601.08323v3",
+    "pdf_url": "https://arxiv.org/pdf/2601.08323v3",
+    "version": "2601.08323v3",
+    "retrieved_at": "2026-09-21T02:35:08.715574+00:00",
+    "pdf_path": "pdf/2601.08323.pdf",
+    "pdf_sha256": "5fae3a91c69265a8232b2e5c2e6313569d55da7d7c6387164cda004871989e7a",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2601.08323.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:42:47.801067+00:00",
+      "pdf_sha256": "5fae3a91c69265a8232b2e5c2e6313569d55da7d7c6387164cda004871989e7a",
+      "body_sha256": "3c503cd84cbffa9e9497902020ec18a9c614bcba81ecddb7f5fd774753484271",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "2601.01885": {
+    "source_url": "https://arxiv.org/abs/2601.01885v3",
+    "pdf_url": "https://arxiv.org/pdf/2601.01885v3",
+    "version": "2601.01885v3",
+    "retrieved_at": "2026-09-21T02:35:12.310801+00:00",
+    "pdf_path": "pdf/2601.01885.pdf",
+    "pdf_sha256": "03ccd0aeabb6ee742d376034ec95ef5a692cbbb6a9af9cf3f2371260b8c61622",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "frameworks/2601.01885.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:43:10.625224+00:00",
+      "pdf_sha256": "03ccd0aeabb6ee742d376034ec95ef5a692cbbb6a9af9cf3f2371260b8c61622",
+      "body_sha256": "d2a651b9c32cc8641ea895b4ca5601996ad56e169c202867ab6e94df794fa1b4",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
   }
 }
