@@ -1,11 +1,12 @@
 ---
+stem: simplemem-efficient-lifelong-memory-for-llm-agents
 id: arxiv-2601.02553
 title: "SimpleMem: Efficient Lifelong Memory for LLM Agents"
 registry: arxiv
 native_id: 2601.02553
 version: "2601.02553v3"
-kind: [framework]
-pdf: pdf/arxiv-2601.02553.pdf
+kinds: [framework]
+pdf: pdf/simplemem-efficient-lifelong-memory-for-llm-agents.pdf
 pdf_sha256: "8752aa223e004ca286995bc1e8cbde8e89e67ad3aeb9ba0266f3ccab3cc11078"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:42:34.747258+00:00"

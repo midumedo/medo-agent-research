@@ -1,11 +1,12 @@
 ---
+stem: atommem-learnable-dynamic-agentic-memory-with-atomic-memory-operation
 id: arxiv-2601.08323
 title: "AtomMem : Learnable Dynamic Agentic Memory with Atomic Memory Operation"
 registry: arxiv
 native_id: 2601.08323
 version: "2601.08323v3"
-kind: [framework]
-pdf: pdf/arxiv-2601.08323.pdf
+kinds: [framework]
+pdf: pdf/atommem-learnable-dynamic-agentic-memory-with-atomic-memory-operation.pdf
 pdf_sha256: "5fae3a91c69265a8232b2e5c2e6313569d55da7d7c6387164cda004871989e7a"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:42:47.801067+00:00"

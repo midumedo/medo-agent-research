@@ -1,11 +1,12 @@
 ---
+stem: zep-a-temporal-knowledge-graph-architecture-for-agent-memory
 id: arxiv-2501.13956
 title: "Zep: A Temporal Knowledge Graph Architecture for Agent Memory"
 registry: arxiv
 native_id: 2501.13956
 version: "2501.13956v1"
-kind: [framework]
-pdf: pdf/arxiv-2501.13956.pdf
+kinds: [framework]
+pdf: pdf/zep-a-temporal-knowledge-graph-architecture-for-agent-memory.pdf
 pdf_sha256: "d26f7eb599540e8b14d75e7efda58a07661abbb1b864e58323b5768475a15d42"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:40:43.778642+00:00"

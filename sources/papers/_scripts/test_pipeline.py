@@ -30,7 +30,9 @@ import stem
 download = module("download_arxiv")
 convert = module("pdf2md")
 
-STEM = "arxiv-2512.13564"
+STEM = "memory-in-the-age-of-ai-agents"
+AID = "2512.13564"
+ID = "arxiv-2512.13564"
 
 
 class PipelineTests(unittest.TestCase):
@@ -43,11 +45,14 @@ class PipelineTests(unittest.TestCase):
         active = patch.object(stem, "BASE", str(self.base))
         active.start()
         self.addCleanup(active.stop)
-        self.aid = STEM.split("-", 1)[1]
-        self.meta = {STEM: {"title": "Existing title", "exists": True, "native_id": self.aid}}
+        self.aid = AID
+        self.meta = {STEM: {"title": "Existing title", "exists": True, "native_id": AID,
+                            "id": ID, "registry": "arxiv"}}
         self.provenance = {STEM: {"version": None}}
         stem.save_meta(self.meta)
         stem.save_provenance(self.provenance)
+        stem.save_index({"papers": [{"stem": STEM, "id": ID, "registry": "arxiv",
+                                     "native_id": AID, "title": "Existing title"}]})
         self.original_meta = (self.base / "meta.json").read_bytes()
 
     def test_cached_pdf_never_fetches_or_replaces_metadata(self):
@@ -82,9 +87,9 @@ class PipelineTests(unittest.TestCase):
         self.assertIn("version unresolved", message)
         self.assertEqual((self.base / "meta.json").read_bytes(), self.original_meta)
 
-    def test_rejects_a_registry_it_cannot_fetch(self):
-        message = download.download_one("web-2025-example-paper", self.meta, self.provenance)
-        self.assertIn("本脚本只处理 arXiv", message)
+    def test_refuses_a_source_it_cannot_resolve(self):
+        message = download.download_one("some-unknown-title", self.meta, self.provenance)
+        self.assertIn("只有 arXiv 来源能自动下载", message)
 
     def test_download_refetches_metadata_for_same_pinned_version(self):
         version = self.aid + "v2"
@@ -107,7 +112,7 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(self.meta[STEM]["title"], "Pinned metadata")
         self.assertEqual(self.provenance[STEM]["pdf_sha256"], hashlib.sha256(pdf).hexdigest())
         self.assertEqual(self.provenance[STEM]["version"], version)
-        self.assertEqual(self.meta[STEM]["native_id"], self.aid)
+        self.assertEqual(self.meta[STEM]["native_id"], AID)
         self.assertEqual(self.meta[STEM]["registry"], "arxiv")
 
     def test_non_pdf_response_is_rejected(self):
@@ -137,7 +142,8 @@ class PipelineTests(unittest.TestCase):
         front, rest = raw.split(b"\n---\n\n", 1)
         header, body = rest.split(b"\n---\n\n", 1)
         self.assertIn(b"Memory pipeline source preservation check.", body)
-        self.assertIn(b"id: " + STEM.encode(), front)
+        self.assertIn(b"stem: " + STEM.encode(), front)
+        self.assertIn(b"id: " + ID.encode(), front)
         self.assertNotIn("导航卡".encode(), header)
         record = json.loads((self.base / "provenance.json").read_text(encoding="utf-8"))[STEM]
         self.assertEqual(record["conversion"]["body_sha256"], hashlib.sha256(body).hexdigest())

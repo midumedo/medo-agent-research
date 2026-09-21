@@ -1,11 +1,12 @@
 ---
+stem: evaluating-very-long-term-conversational-memory-of-llm-agents
 id: arxiv-2402.17753
 title: "Evaluating Very Long-Term Conversational Memory of LLM Agents"
 registry: arxiv
 native_id: 2402.17753
 version: "2402.17753v1"
-kind: [benchmark]
-pdf: pdf/arxiv-2402.17753.pdf
+kinds: [benchmark]
+pdf: pdf/evaluating-very-long-term-conversational-memory-of-llm-agents.pdf
 pdf_sha256: "218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:36:13.755239+00:00"

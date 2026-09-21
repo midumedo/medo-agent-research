@@ -20,6 +20,9 @@ __pycache__/
 .venv/
 venv/
 node_modules/
+# 转换图片是从 PDF 派生的：只跟踪清单，字节用 --keep-images 随时再生成。
+/sources/papers/assets/*/*
+!/sources/papers/assets/*/manifest.json
 /sources/papers/logs/
 /analysis/archive/**/main_agent_context*
 /analysis/archive/**/id_to_doc*

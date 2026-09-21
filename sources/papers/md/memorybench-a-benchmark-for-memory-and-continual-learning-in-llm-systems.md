@@ -1,11 +1,12 @@
 ---
+stem: memorybench-a-benchmark-for-memory-and-continual-learning-in-llm-systems
 id: arxiv-2510.17281
 title: "MemoryBench: A Benchmark for Memory and Continual Learning in LLM Systems"
 registry: arxiv
 native_id: 2510.17281
 version: "2510.17281v7"
-kind: [benchmark]
-pdf: pdf/arxiv-2510.17281.pdf
+kinds: [benchmark]
+pdf: pdf/memorybench-a-benchmark-for-memory-and-continual-learning-in-llm-systems.pdf
 pdf_sha256: "00b2aee7c582f53dadf1c3b5bf6cd7fbf3da242d1a0328edb1338b9aeb318bf8"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:39:45.027250+00:00"

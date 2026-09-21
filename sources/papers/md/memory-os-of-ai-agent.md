@@ -1,11 +1,12 @@
 ---
+stem: memory-os-of-ai-agent
 id: arxiv-2506.06326
 title: "Memory OS of AI Agent"
 registry: arxiv
 native_id: 2506.06326
 version: "2506.06326v1"
-kind: [framework]
-pdf: pdf/arxiv-2506.06326.pdf
+kinds: [framework]
+pdf: pdf/memory-os-of-ai-agent.pdf
 pdf_sha256: "4b3cbeb6a94d6b5a996f7bbeabe651929fbf7dd15a5e00cd28e728530d9ff730"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:41:49.306031+00:00"

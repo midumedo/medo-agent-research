@@ -1,11 +1,12 @@
 ---
+stem: memoryarena-benchmarking-agent-memory-in-interdependent-multi-session-agentic-tasks
 id: arxiv-2602.16313
 title: "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks"
 registry: arxiv
 native_id: 2602.16313
 version: "2602.16313v2"
-kind: [benchmark]
-pdf: pdf/arxiv-2602.16313.pdf
+kinds: [benchmark]
+pdf: pdf/memoryarena-benchmarking-agent-memory-in-interdependent-multi-session-agentic-tasks.pdf
 pdf_sha256: "7478c3b9294b483a32350a5844be6fa596e3ee18abc6dba33b1827780a86af0d"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:40:34.200221+00:00"

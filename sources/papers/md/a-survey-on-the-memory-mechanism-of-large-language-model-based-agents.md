@@ -1,11 +1,12 @@
 ---
+stem: a-survey-on-the-memory-mechanism-of-large-language-model-based-agents
 id: arxiv-2404.13501
 title: "A Survey on the Memory Mechanism of Large Language Model based Agents"
 registry: arxiv
 native_id: 2404.13501
-version: ""
-kind: [survey]
-pdf: pdf/arxiv-2404.13501.pdf
+version: null
+kinds: [survey]
+pdf: pdf/a-survey-on-the-memory-mechanism-of-large-language-model-based-agents.pdf
 pdf_sha256: "aae2f9537f748f30f0ca59fd66c499b7df7bdb199d24ce43cab0a6170f7dceef"
 parser: pymupdf4llm (recorded by legacy script)
 converted_at: null

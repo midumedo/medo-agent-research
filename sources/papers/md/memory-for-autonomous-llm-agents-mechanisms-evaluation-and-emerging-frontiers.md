@@ -1,11 +1,12 @@
 ---
+stem: memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers
 id: arxiv-2603.07670
 title: "Memory for Autonomous LLM Agents:Mechanisms, Evaluation, and Emerging Frontiers"
 registry: arxiv
 native_id: 2603.07670
-version: ""
-kind: [survey]
-pdf: pdf/arxiv-2603.07670.pdf
+version: null
+kinds: [survey]
+pdf: pdf/memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers.pdf
 pdf_sha256: "ca7d6c5dfb712921da92542454e07af2a09751d61811e76a29066e89dd57cc51"
 parser: pymupdf4llm (recorded by legacy script)
 converted_at: null

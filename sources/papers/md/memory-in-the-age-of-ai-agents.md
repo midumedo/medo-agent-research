@@ -1,11 +1,12 @@
 ---
+stem: memory-in-the-age-of-ai-agents
 id: arxiv-2512.13564
 title: "Memory in the Age of AI Agents"
 registry: arxiv
 native_id: 2512.13564
-version: ""
-kind: [survey]
-pdf: pdf/arxiv-2512.13564.pdf
+version: null
+kinds: [survey]
+pdf: pdf/memory-in-the-age-of-ai-agents.pdf
 pdf_sha256: "10de3c050903bfa1113c9a954380e2786f42d25a9ea24478bf6cc69fef2e2b42"
 parser: pymupdf4llm (recorded by legacy script)
 converted_at: null

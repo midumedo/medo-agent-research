@@ -2,34 +2,34 @@
 # 2026-09-21 按材料类型分组；分组只影响阅读顺序，不改变下载与转换行为
 
 # --- 综述（第一批，2026-09-20 入库）---
-arxiv-2404.13501
-arxiv-2505.00675
-arxiv-2512.13564
-arxiv-2602.06052
-arxiv-2603.07670
-arxiv-2606.06448
-arxiv-2607.16848
+a-survey-on-the-memory-mechanism-of-large-language-model-based-agents
+rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics
+memory-in-the-age-of-ai-agents
+a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents
+memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers
+agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads
+beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration
 
 # --- 基准（2026-09-21 入库，编号与日期经官方 API 核验）---
-arxiv-2402.17753
-arxiv-2410.10813
-arxiv-2507.05257
-arxiv-2510.27246
-arxiv-2602.22769
-arxiv-2605.12493
-arxiv-2506.21605
-arxiv-2510.17281
-arxiv-2504.14225
-arxiv-2602.16313
+evaluating-very-long-term-conversational-memory-of-llm-agents
+longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory
+evaluating-memory-in-llm-agents-via-incremental-multi-turn-interactions
+beyond-a-million-tokens-benchmarking-and-enhancing-long-term-memory-in-llms
+ama-bench-evaluating-long-horizon-memory-for-agentic-applications
+longmemeval-v2-evaluating-long-term-agent-memory-toward-experienced-colleagues
+membench-towards-more-comprehensive-evaluation-on-the-memory-of-llm-based-agents
+memorybench-a-benchmark-for-memory-and-continual-learning-in-llm-systems
+know-me-respond-to-me-benchmarking-llms-for-dynamic-user-profiling-and-personalized-responses
+memoryarena-benchmarking-agent-memory-in-interdependent-multi-session-agentic-tasks
 
 # --- 框架（2026-09-21 入库）---
-arxiv-2501.13956
-arxiv-2502.12110
-arxiv-2504.19413
-arxiv-2506.06326
-arxiv-2507.03724
-arxiv-2507.07957
-arxiv-2601.01885
-arxiv-2601.02163
-arxiv-2601.02553
-arxiv-2601.08323
+zep-a-temporal-knowledge-graph-architecture-for-agent-memory
+a-mem-agentic-memory-for-llm-agents
+mem0-building-production-ready-ai-agents-with-scalable-long-term-memory
+memory-os-of-ai-agent
+memos-a-memory-os-for-ai-system
+mirix-multi-agent-memory-system-for-llm-based-agents
+agentic-memory-learning-unified-long-term-and-short-term-memory-management-for-large-language
+evermemos-a-self-organizing-memory-operating-system-for-structured-long-horizon-reasoning
+simplemem-efficient-lifelong-memory-for-llm-agents
+atommem-learnable-dynamic-agentic-memory-with-atomic-memory-operation

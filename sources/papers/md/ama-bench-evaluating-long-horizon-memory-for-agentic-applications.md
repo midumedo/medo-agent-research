@@ -1,11 +1,12 @@
 ---
+stem: ama-bench-evaluating-long-horizon-memory-for-agentic-applications
 id: arxiv-2602.22769
 title: "AMA-Bench: Evaluating Long-Horizon Memory for Agentic Applications"
 registry: arxiv
 native_id: 2602.22769
 version: "2602.22769v4"
-kind: [benchmark]
-pdf: pdf/arxiv-2602.22769.pdf
+kinds: [benchmark]
+pdf: pdf/ama-bench-evaluating-long-horizon-memory-for-agentic-applications.pdf
 pdf_sha256: "2bb21d3d335839da888c8f16543065d4964cf09b5ca2b39d92e80655bd8b7611"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:38:27.033421+00:00"

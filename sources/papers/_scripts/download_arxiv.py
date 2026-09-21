@@ -22,8 +22,8 @@ ATOM = "{http://www.w3.org/2005/Atom}"
 ARXIV_API = "http://export.arxiv.org/api/query?id_list={}&max_results=1"
 
 
-from stem import load_meta, load_provenance, native_id, pdf_path, registry, save_meta, \
-    save_provenance, to_stem
+from stem import find, load_meta, load_provenance, native_for, pdf_path, save_meta, \
+    save_provenance, slugify
 
 WATCHLIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "watchlist.txt")
 UA = "MemoryResearch/1.0 (local paper archive)"
@@ -106,36 +106,39 @@ def fetch_pdf(versioned_id):
 
 
 def download_one(token, meta, provenance):
-    try:
-        stem = to_stem(token)
-    except ValueError as error:
-        return f"[{token}] {error}"
-    aid = native_id(stem)
-    if registry(stem) != "arxiv" or not re.fullmatch(r"\d{4}\.\d{4,5}(?:v[1-9]\d*)?", aid):
-        return f"[{stem}] 本脚本只处理 arXiv 来源；非 arXiv 来源请手工放入 pdf/ 并按 AGENTS.md 定词干"
-    dest = pdf_path(stem)
-    if os.path.exists(dest):
+    record = find(token)
+    aid = native_for(token, record)
+    stem = record["stem"] if record else None
+    if stem and os.path.exists(pdf_path(stem)):
         # Do not fetch latest metadata for a legacy/cached PDF.
         return f"[{stem}] cached PDF and metadata preserved; version: {provenance.get(stem, {}).get('version') or 'unknown'}"
+    if not aid or not re.fullmatch(r"\d{4}\.\d{4,5}(?:v[1-9]\d*)?", aid):
+        return f"[{token}] 只有 arXiv 来源能自动下载：给出 arXiv 编号或已入库的标识／标题；非 arXiv 请手工放入 pdf/ 再跑 pdf2md.py"
 
     candidate = fetch_meta(aid)
     if not candidate.get("exists"):
-        return f"[{stem}] metadata unavailable; existing records preserved"
+        return f"[{token}] metadata unavailable; existing records preserved"
     versioned_id = candidate.get("versioned_id")
     if not versioned_id:
         # Fall back to the API; the abs page alone no longer guarantees a versioned identity.
         versioned_id = resolve_version(aid)
     if not versioned_id:
-        return f"[{stem}] version unresolved; unchanged. Retry with an explicit version after checking the intended version."
+        return f"[{token}] version unresolved; unchanged. Retry with an explicit version after checking the intended version."
     if aid != versioned_id:
         candidate = fetch_meta(versioned_id)
         if not candidate.get("exists"):
-            return f"[{stem}] versioned metadata unavailable; existing records preserved"
+            return f"[{token}] versioned metadata unavailable; existing records preserved"
     try:
         data = fetch_pdf(versioned_id)
     except Exception as error:
-        return f"[{stem}] PDF unavailable ({error}); existing records preserved"
+        return f"[{token}] PDF unavailable ({error}); existing records preserved"
 
+    stem = stem or slugify(candidate.get("title") or "")
+    if not stem:
+        return f"[{token}] 元数据没有标题，无法定文件名；未写入"
+    dest = pdf_path(stem)
+    if os.path.exists(dest) and not record:
+        return f"[{stem}] 同名文件已存在，未覆盖；先确认是不是同一篇"
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     temporary = dest + ".tmp"
     with open(temporary, "wb") as f:

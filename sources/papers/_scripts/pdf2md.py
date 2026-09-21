@@ -12,8 +12,8 @@ import re
 import sys
 from datetime import datetime, timezone
 
-from stem import (base, front_matter, load_meta, load_provenance, md_path, native_id,
-                  pdf_dir, pdf_path, registry, save_provenance, to_stem)
+from stem import (base, find, front_matter, load_meta, load_provenance, md_path,
+                  pdf_dir, pdf_path, save_provenance, to_stem)
 
 
 def clean(md):
@@ -23,16 +23,18 @@ def clean(md):
     return md.strip() + "\n"
 
 
-def human_header(stem, meta, pdf_hash, record):
+def human_header(name, meta, pdf_hash, record):
     """Human-readable block below the front matter; identity fields live above it."""
-    m = meta.get(stem, {})
-    authors = m.get("authors") or []
+    m = meta.get(name, {})
+    info = find(name) or {}
+    registry = info.get("registry") or m.get("registry") or "unknown"
+    native_id = info.get("native_id") or m.get("native_id") or "unknown"
+    authors = m.get("authors") or info.get("authors") or []
     names = (", ".join(authors[:6]) + f" 等 {len(authors)} 人") if len(authors) > 6 else (", ".join(authors) or "—")
-    aid = native_id(stem)
-    if registry(stem) == "arxiv":
-        source = f"arXiv: [{aid}]({record.get('source_url') or 'https://arxiv.org/abs/' + aid})"
+    if registry == "arxiv":
+        source = f"arXiv: [{native_id}]({record.get('source_url') or 'https://arxiv.org/abs/' + native_id})"
     else:
-        source = f"{registry(stem)}: [{aid}]({record.get('source_url') or ''})"
+        source = f"{registry}: [{native_id}]({record.get('source_url') or ''})"
     return "\n".join([
         f"# {m.get('title') or '(标题待补)'}", "",
         f"- {source}",
@@ -74,7 +76,7 @@ def convert(token, meta, force=False, kind=None):
     record.setdefault("metadata_pdf_pairing", "unknown")
     record["pdf_sha256"] = pdf_hash
     record["pdf_path"] = os.path.relpath(src, base()).replace(os.sep, "/")
-    out = front_matter(stem, meta.get(stem, {}), record, kind) + human_header(stem, meta, pdf_hash, record) + md
+    out = front_matter(stem, meta.get(stem, {}), find(stem), record, kind) + human_header(stem, meta, pdf_hash, record) + md
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     temporary = dst + ".tmp"
     with open(temporary, "w", encoding="utf-8", newline="\n") as f:

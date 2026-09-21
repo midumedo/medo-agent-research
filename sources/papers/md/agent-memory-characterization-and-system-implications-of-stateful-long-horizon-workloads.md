@@ -1,11 +1,12 @@
 ---
+stem: agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads
 id: arxiv-2606.06448
 title: "Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads"
 registry: arxiv
 native_id: 2606.06448
-version: ""
-kind: [survey?]
-pdf: pdf/arxiv-2606.06448.pdf
+version: null
+kinds: [survey]
+pdf: pdf/agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads.pdf
 pdf_sha256: "b9d840d861da993e05ecc9e2295e9754ee9289ebc595270f6af18c55e57b8782"
 parser: pymupdf4llm (recorded by legacy script)
 converted_at: null

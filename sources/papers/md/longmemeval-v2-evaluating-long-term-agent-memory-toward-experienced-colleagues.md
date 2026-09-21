@@ -1,11 +1,12 @@
 ---
+stem: longmemeval-v2-evaluating-long-term-agent-memory-toward-experienced-colleagues
 id: arxiv-2605.12493
 title: "LongMemEval-V2: Evaluating Long-Term Agent Memory Toward Experienced Colleagues"
 registry: arxiv
 native_id: 2605.12493
 version: "2605.12493v1"
-kind: [benchmark]
-pdf: pdf/arxiv-2605.12493.pdf
+kinds: [benchmark]
+pdf: pdf/longmemeval-v2-evaluating-long-term-agent-memory-toward-experienced-colleagues.pdf
 pdf_sha256: "5734ebfe844c4b8a846e2766fb7150aa8cbca62429c137935f3fbfc0ff2cd5c3"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:38:51.675933+00:00"

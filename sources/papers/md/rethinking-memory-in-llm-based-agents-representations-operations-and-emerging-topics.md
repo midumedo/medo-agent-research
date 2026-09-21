@@ -1,11 +1,12 @@
 ---
+stem: rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics
 id: arxiv-2505.00675
 title: "Rethinking Memory in LLM based Agents: Representations, Operations, and Emerging Topics"
 registry: arxiv
 native_id: 2505.00675
-version: ""
-kind: [survey]
-pdf: pdf/arxiv-2505.00675.pdf
+version: null
+kinds: [survey]
+pdf: pdf/rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics.pdf
 pdf_sha256: "23724df6e6a38bdffc97c8bccb132581bf1e21fa534d5c19f84c80d5ab0e741d"
 parser: pymupdf4llm (recorded by legacy script)
 converted_at: null

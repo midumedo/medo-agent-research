@@ -50,3 +50,42 @@ MinerU 云端返回的是 zip（`full.md` + `*_content_list.json` + `images/`）
 
 - `json/` 目前只有占位文件：现有 27 份都是 `pymupdf4llm` 转换的，没有结构化输出。需要表格或公式定位时，对具体某篇跑一次 `mineru_cloud.py` 即可补齐。
 - 首批七份的来源版本与获取时间仍为 unknown，INDEX 里如实记着；补齐需要对每篇单独核对 PDF 与 arXiv 版本。
+
+---
+
+## 同日追加：命名改为标题，索引改为 index.json
+
+用户在同一天推翻了上面「不按标题命名」的结论，并要求索引不再是 changelog。两项都已改。
+
+### 文件名用标题，身份退到 id
+
+**决定**：文件名 = 标题 slug（用户选择）；`<registry>-<native-id>` 不再是文件名，改为 index.json 与 front matter 里的 `id`，作为永久身份。
+
+之前反对标题命名的核心理由是**标题会变**、**slug 不可推导**。改用标题后这两条依然成立，所以必须靠另外两条规则兜住，否则方案会烂掉：
+
+- **文件名只是标签，id 才是身份。** 标题变了不改文件名；改的是 index.json 的 `title` 与 front matter。引用锚点是 `id`，不是文件名。
+- **slug 冻结 + 冲突计数。** 入库那一刻按 `stem.slugify` 定名（小写、只留 ASCII 字母数字与汉字、其余变 `-`、96 字符处按词截断），同名为 `-2`、`-3`。规则是确定性的，所以「不可推导」从「各人截断方式不同」降级为「标题本身可能过时」——后者有 id 兜底。
+
+这样换来的好处是真的：目录列表、diff、引用链接里能直接看出是哪篇，不需要先查表。这个好处在 27 篇时还不明显，在上百篇时比编号强得多。
+
+### 索引：JSON 存储 + SQL 查询
+
+用户提出改成表格或 JSON，甚至直接 `.sql`。三条路的实际差别：
+
+- **Markdown 表格**：机器读要先解析，人读要整表扫；篇数一多就没人看。而且它会和 changelog 混在一起——changelog 是**追加的历史**，index 是**当前状态**，两者更新频率与读法都不同，不该同处一文件。
+- **`.db` 二进制**：能查，但进 Git 无法 diff、无法 review，违反本项目「文本 + Git 追溯」的前提。
+- **JSON + 内存 SQLite**：JSON 可 diff、可 grep、可被 jq 处理，作唯一事实来源；`index_query.py` 把它载进内存 SQLite，用真正的 SQL 查；`--emit` 能导出带 CREATE/INSERT 的 `.sql` 文本，需要在外部工具里查时现载。**查询能力归 SQL，存储归 JSON**，不在版本库里放二进制。
+
+分工：`index.json`（数据）／`INDEX.md`（字段说明与查询方式，不再是清单）／`CHANGELOG.md`（只追加日志）。
+
+### 字段为什么分五组
+
+身份 / 语义 / 定位 / 状态 / 溯源。分组的意义在于**谁负责哪个字段**：`stem` 是路由键（冻结），`id` 是身份（永不改），`kinds`/`tags`/`note` 是人工判断（可改、可多值），`has_*` 与指纹是生成字段（不许手改，重建时从文件推导）。多值字段在 SQL 视图里展开成 `paper_kinds`、`paper_tags`，所以类型查询是 JOIN 而不是字符串 LIKE。
+
+### 图片：派生品，默认只留清单
+
+MinerU 结果里的图片是从已提交 PDF 派生的，所以默认只写 `assets/<词干>/manifest.json`（文件名、字节数、SHA256 + 从 content_list 抽出的图注），字节要 `--keep-images` 才落盘，且不进 Git。理由与上面 `.db` 一致：能重新生成的东西不占版本库，但要留下**验证重新生成是否一致**的依据。md 里的 `images/` 引用改写为 `../assets/<词干>/`，让引用与 md 的位置解耦。
+
+### 附带
+
+MinerU skill 从用户级 `~/.workbuddy/skills/` 移到**项目级** `.workbuddy/skills/mineru-pdf-convert/`，与 grilling、domain-modeling 等一致，随项目进 Git。

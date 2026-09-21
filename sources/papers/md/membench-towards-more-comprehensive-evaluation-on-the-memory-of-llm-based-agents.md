@@ -1,11 +1,12 @@
 ---
+stem: membench-towards-more-comprehensive-evaluation-on-the-memory-of-llm-based-agents
 id: arxiv-2506.21605
 title: "MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents"
 registry: arxiv
 native_id: 2506.21605
 version: "2506.21605v1"
-kind: [benchmark]
-pdf: pdf/arxiv-2506.21605.pdf
+kinds: [benchmark]
+pdf: pdf/membench-towards-more-comprehensive-evaluation-on-the-memory-of-llm-based-agents.pdf
 pdf_sha256: "499acafb5507457a69d57448ed61ff0911c93882abf1aaa4f95615d8ea13ffff"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:39:08.433176+00:00"

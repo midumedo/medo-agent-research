@@ -1,11 +1,12 @@
 ---
+stem: know-me-respond-to-me-benchmarking-llms-for-dynamic-user-profiling-and-personalized-responses
 id: arxiv-2504.14225
 title: "Know Me, Respond to Me: Benchmarking LLMs for Dynamic User Profiling and Personalized Responses at Scale"
 registry: arxiv
 native_id: 2504.14225
 version: "2504.14225v2"
-kind: [benchmark]
-pdf: pdf/arxiv-2504.14225.pdf
+kinds: [benchmark]
+pdf: pdf/know-me-respond-to-me-benchmarking-llms-for-dynamic-user-profiling-and-personalized-responses.pdf
 pdf_sha256: "24633e985675243f324b546daee7e27ff177a5af516b239c8f59be60a3bf58c6"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:40:10.754087+00:00"

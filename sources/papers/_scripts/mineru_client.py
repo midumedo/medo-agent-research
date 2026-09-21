@@ -27,7 +27,7 @@ import zipfile
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from stem import (base, front_matter, json_path, load_meta, load_provenance, md_path,
+from stem import (base, find, front_matter, json_path, load_meta, load_provenance, md_path,
                   pdf_path, save_provenance, to_stem)
 
 UA = "MemoryResearch/1.0 (mineru client)"
@@ -157,7 +157,7 @@ def convert(token, args, provenance, meta_json, info):
     record["pdf_path"] = os.path.relpath(src, base()).replace(os.sep, "/")
     info["converted_at"] = stamp
     with open(dst, "w", encoding="utf-8", newline="") as f:
-        f.write(front_matter(stem, meta_json.get(stem, {}), record))
+        f.write(front_matter(stem, meta_json.get(stem, {}), find(stem), record))
         f.write(header(stem, record, pdf_hash, info))
         f.write(md.strip() + "\n")
     struct = json_path(stem)

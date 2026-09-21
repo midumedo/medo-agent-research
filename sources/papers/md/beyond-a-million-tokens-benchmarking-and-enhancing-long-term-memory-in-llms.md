@@ -1,11 +1,12 @@
 ---
+stem: beyond-a-million-tokens-benchmarking-and-enhancing-long-term-memory-in-llms
 id: arxiv-2510.27246
 title: "Beyond a Million Tokens: Benchmarking and Enhancing Long-Term Memory in LLMs"
 registry: arxiv
 native_id: 2510.27246
 version: "2510.27246v2"
-kind: [benchmark]
-pdf: pdf/arxiv-2510.27246.pdf
+kinds: [benchmark]
+pdf: pdf/beyond-a-million-tokens-benchmarking-and-enhancing-long-term-memory-in-llms.pdf
 pdf_sha256: "8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:37:58.414418+00:00"

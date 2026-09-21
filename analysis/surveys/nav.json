@@ -6,7 +6,7 @@
     "must_read": "§2.3 概念边界；§4.2.3 Skill-based Memory（已核对本地转换正文）；其余章节依问题按需阅读。",
     "skip": "本轮未复核全文，不预先排除任何章节。",
     "answers": "记忆和 RAG、长上下文的边界到底在哪？记忆该分成几类，有共识吗？",
-    "source": "../../sources/papers/md/arxiv-2512.13564.md",
+    "source": "../../sources/papers/md/memory-in-the-age-of-ai-agents.md",
     "review_status": "local excerpt check only; full review pending",
     "open_checks": "已撤回“程序性记忆只在 taxonomy 表里出现”：本地转换正文 §4.2.3 明确讨论代码片段、函数脚本、API 与 MCP。关于系统开销与 prefix caching 的覆盖程度待专项复核，不能由旧导航断言缺席。",
     "checked_excerpt": "../../evidence/domain/reviewed-local-passages.md#procedural-memory"
@@ -17,7 +17,7 @@
     "must_read": "§2 Problem Formulation and Design Objectives、§3 三维 taxonomy、§7 Engineering Realities（写路径过滤 / 矛盾处理 / 延迟预算 / 隐私治理）、§8 Positioning Relative to Prior Surveys（帮你判断整个库的分工）",
     "skip": "初步取舍建议，不构成全文覆盖判断：§6 Where Memory Makes or Breaks the Agent（五个应用领域的罗列）",
     "answers": "记忆系统有哪些实现路线？工程落地要考虑哪些现实约束？",
-    "source": "../../sources/papers/md/arxiv-2603.07670.md",
+    "source": "../../sources/papers/md/memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers.md",
     "review_status": "local excerpt check only; full review pending",
     "open_checks": "已核对 §3.3 Control policy，撤回本项目“谁决定轴为独创”的说法。系统 profiling、参数记忆的覆盖深度待复核；作者人数不直接决定论证质量。",
     "checked_excerpt": "../../evidence/domain/reviewed-local-passages.md#control-policy"
@@ -28,7 +28,7 @@
     "must_read": "§2.1 Memory Representation、§2.4 Memory Operations（六操作定义）、§5 The Cognitive Gap between Biological and Agent Memory（少见的反类比反思，很适合拿来批判「人脑隐喻」）",
     "skip": "初步取舍建议，不构成全文覆盖判断：§3 四个 research topic 的文献罗列、§4 产品与工具清单（时效性差）",
     "answers": "记忆的生命周期有哪些原子操作？用人脑来类比记忆到底靠不靠谱？",
-    "source": "../../sources/papers/md/arxiv-2505.00675.md",
+    "source": "../../sources/papers/md/rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics.md",
     "review_status": "reading suggestions pending review",
     "open_checks": "待复核：系统开销、harness、缓存以及操作调度与触发条件的具体覆盖范围。"
   },
@@ -38,7 +38,7 @@
     "must_read": "§3 Taxonomy 的 Subject 轴（user-centric vs agent-centric）与 procedural 部分、§4 Memory Operation Mechanism、§5 Learning Policy（记忆操作能否用 RL 学）、多 Agent 记忆路由与共享、可移植技能生态",
     "skip": "初步取舍建议，不构成全文覆盖判断：sensory / working / episodic / semantic 各认知类型小节（与其他综述重复度高）；§8 Applications",
     "answers": "程序性记忆（技能沉淀）怎么工程化？多 Agent 之间怎么共享与路由记忆？",
-    "source": "../../sources/papers/md/arxiv-2602.06052.md",
+    "source": "../../sources/papers/md/a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents.md",
     "review_status": "local excerpt check only; full review pending",
     "open_checks": "待复核：系统开销量化与技能工程的覆盖深度；不再声称本库只有这一篇讨论技能。",
     "checked_excerpt": "../../evidence/domain/reviewed-local-passages.md#procedural-memory"
@@ -49,7 +49,7 @@
     "must_read": "§3 Workload Suite and Profiling Harness、§4 Characterizing Agent Memory Workloads（实测归因）、§5 的 10 条 recommendations（construction scheduling / capability floors / amortization / freshness-latency / fleet-scale）",
     "skip": "初步取舍建议，不构成全文覆盖判断：§2 Agent Memory Paradigms（四轴 taxonomy 不是它的贡献点）",
     "answers": "记忆系统到底贵在写还是贵在读？开销在三相之间怎么分布？",
-    "source": "../../sources/papers/md/arxiv-2606.06448.md",
+    "source": "../../sources/papers/md/agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads.md",
     "review_status": "reading suggestions pending review",
     "open_checks": "待复核：样本、配置与统计口径，以及缓存友好设计的具体覆盖程度。解析行数不能推定页数或研究强度。"
   },
@@ -59,7 +59,7 @@
     "must_read": "§3.2 / §3.3 窄定义与宽定义、§4.1 Perspective of Cognitive Psychology、§5.2.3 textual 与 parametric 记忆的优劣对比",
     "skip": "初步取舍建议，不构成全文覆盖判断：§7 七个应用场景的罗列、§6 评测部分（与 2607.16848 对照，关系待复核）",
     "answers": "这套术语从哪来？早期是怎么给记忆分类的？（历史脉络，不是现状）",
-    "source": "../../sources/papers/md/arxiv-2404.13501.md",
+    "source": "../../sources/papers/md/a-survey-on-the-memory-mechanism-of-large-language-model-based-agents.md",
     "review_status": "reading suggestions pending review",
     "open_checks": "待复核：当前本地版本覆盖的系统与方法；初次发表日期不能替代实际版本与全文检查。"
   },
@@ -69,7 +69,7 @@
     "must_read": "§2 Related work 的十种机制家族梳理（意外的好评测地图）、实验结论（budget 控制前后对比）、multi-judge 与人类对齐的校准、它对评测目标的重定义（budgeted, modality-aware context restoration）",
     "skip": "初步取舍建议，不构成全文覆盖判断：Theoria 自身的方法细节（除非要复现）",
     "answers": "榜单上的分数能不能信？评测协议怎么决定结论？",
-    "source": "../../sources/papers/md/arxiv-2607.16848.md",
+    "source": "../../sources/papers/md/beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration.md",
     "review_status": "local excerpt check only; full review pending",
     "open_checks": "待复核：实验任务、预算与对话/编码场景的可迁移边界。",
     "checked_excerpt": "../../evidence/domain/reviewed-local-passages.md#evaluation-protocol"

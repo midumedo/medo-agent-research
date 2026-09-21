@@ -1,11 +1,12 @@
 ---
+stem: mem0-building-production-ready-ai-agents-with-scalable-long-term-memory
 id: arxiv-2504.19413
 title: "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory"
 registry: arxiv
 native_id: 2504.19413
 version: "2504.19413v1"
-kind: [framework]
-pdf: pdf/arxiv-2504.19413.pdf
+kinds: [framework]
+pdf: pdf/mem0-building-production-ready-ai-agents-with-scalable-long-term-memory.pdf
 pdf_sha256: "bec870b657aa73405275a6d8fe27bcd4271799e028bc62986ab9c4cd27a3712d"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:40:57.247107+00:00"

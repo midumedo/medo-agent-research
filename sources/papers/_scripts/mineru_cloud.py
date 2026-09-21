@@ -1,17 +1,17 @@
 """Convert local PDFs through the MinerU cloud API (https://mineru.net).
 
 Preferred over the local service: no models to install, and the account has a
-daily free page quota. The token is read from the MINERU_APIKEY environment
+daily free page quota. The token comes from the MINERU_APIKEY environment
 variable (falling back to the Windows user environment).
 
 Usage:
     mineru_cloud.py [--model-version vlm|pipeline] [--lang en]
                     [--keep-images] [--force] [--timeout 1800] [stem ...]
 
-Writes md/<stem>.md and json/<stem>.json, and updates provenance.json.
-Existing nonempty md/ is preserved unless --force is given. The API is used
-as documented; this script never falls back to another parser, so a failure
-cannot be mistaken for a conversion.
+Writes md/<stem>.md and json/<stem>.json, optionally assets/<stem>/.
+Existing nonempty md/ is preserved unless --force is given. The API is used as
+documented; this script never falls back to another parser, so a failure cannot
+be mistaken for a conversion.
 """
 
 import argparse
@@ -19,6 +19,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -26,13 +27,14 @@ import urllib.request
 import zipfile
 from datetime import datetime, timezone
 
-from stem import (base, front_matter, json_path, load_meta, load_provenance, md_path,
-                  pdf_dir, pdf_path, save_provenance, to_stem)
+from stem import (assets_dir, base, find, front_matter, json_path, load_meta,
+                  load_provenance, md_path, pdf_dir, pdf_path, save_provenance, slugify)
 
 API = "https://mineru.net/api/v4"
 UA = "MemoryResearch/1.0 (mineru cloud client)"
 DONE = "done"
 FAILED = "failed"
+IMAGE_EXT = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".svg"}
 
 
 def token():
@@ -66,16 +68,14 @@ def request(url, data=None, headers=None, method=None, timeout=120):
         raise SystemExit("MinerU 返回的不是 JSON，请检查接口版本。")
 
 
+def auth():
+    return {"Content-Type": "application/json", "Authorization": "Bearer " + token()}
+
+
 def apply_upload_urls(stems, model_version):
-    payload = {
-        "files": [{"name": f"{stem}.pdf", "data_id": stem} for stem in stems],
-        "model_version": model_version,
-    }
-    response = request(
-        API + "/file-urls/batch",
-        data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json", "Authorization": "Bearer " + token()},
-    )
+    payload = {"files": [{"name": f"{stem}.pdf", "data_id": stem} for stem in stems],
+               "model_version": model_version}
+    response = request(API + "/file-urls/batch", data=json.dumps(payload).encode("utf-8"), headers=auth())
     if response.get("code") != 0:
         raise SystemExit(f"申请上传链接失败：{response.get('msg')} / {response.get('trace_id')}")
     data = response.get("data") or {}
@@ -97,10 +97,7 @@ def poll(batch_id, stems, timeout):
     deadline = time.time() + timeout
     last = ""
     while time.time() < deadline:
-        response = request(
-            API + f"/extract-results/batch/{batch_id}",
-            headers={"Content-Type": "application/json", "Authorization": "Bearer " + token()},
-        )
+        response = request(API + f"/extract-results/batch/{batch_id}", headers=auth())
         if response.get("code") != 0:
             raise SystemExit(f"查询结果失败：{response.get('msg')} / {response.get('trace_id')}")
         results = (response.get("data") or {}).get("extract_result") or []
@@ -118,7 +115,7 @@ def poll(batch_id, stems, timeout):
     raise SystemExit(f"等待超时（{timeout}s）；任务可能仍在队列里，稍后可用 batch_id {batch_id} 再查。")
 
 
-def unzip(url):
+def open_zip(url):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=600) as resp:
         payload = resp.read()
@@ -138,11 +135,70 @@ def pick(zf, suffix, prefer=None):
     return sorted(names)[0]
 
 
+def rewrite_image_refs(md_text, stem):
+    """MinerU writes ![](images/x.jpg); point it at ../assets/<stem>/ instead so
+    the reference stays valid wherever md/ is read from."""
+    target = f"../assets/{stem}/"
+    md_text = re.sub(r"\]\(images/", "](" + target, md_text)
+    md_text = re.sub(r'(src=)"images/', r'\1"' + target, md_text)
+    return md_text
+
+
+def image_entries(zf):
+    return [n for n in zf.namelist()
+            if os.path.splitext(n)[1].lower() in IMAGE_EXT and not n.endswith("/")]
+
+
+def figure_captions(zf, json_name):
+    """Captions from content_list let you find a figure by text without opening it."""
+    if not json_name:
+        return []
+    try:
+        items = json.loads(zf.read(json_name).decode("utf-8", "replace"))
+    except ValueError:
+        return []
+    if isinstance(items, dict):
+        items = items.get("content_list") or []
+    out = []
+    for item in items or []:
+        if not isinstance(item, dict) or item.get("type") != "image":
+            continue
+        caption = " ".join(str(item.get(k) or "") for k in ("caption", "img_caption", "text")).strip()
+        out.append({"n": len(out) + 1, "page": item.get("page_idx"),
+                    "caption": caption or None,
+                    "file": os.path.basename(str(item.get("img_path") or "")) or None})
+    return out
+
+
+def write_assets(zf, stem, keep_images, figures):
+    """Images are derived: bytes are optional, the manifest is always written."""
+    names = sorted(image_entries(zf))
+    directory = assets_dir(stem)
+    images = []
+    for name in names:
+        payload = zf.read(name)
+        images.append({"file": os.path.basename(name), "bytes": len(payload),
+                       "sha256": hashlib.sha256(payload).hexdigest()})
+    if images:
+        os.makedirs(directory, exist_ok=True)
+        if keep_images:
+            for name in names:
+                with open(os.path.join(directory, os.path.basename(name)), "wb") as f:
+                    f.write(zf.read(name))
+        with open(os.path.join(directory, "manifest.json"), "w", encoding="utf-8", newline="\n") as f:
+            json.dump({"stem": stem, "generated_by": "mineru-cloud",
+                       "images": images, "figures": figures}, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+    return {"count": len(images), "bytes": sum(i["bytes"] for i in images),
+            "kept": bool(keep_images and images),
+            "manifest": f"assets/{stem}/manifest.json" if images else None}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model-version", default="vlm")
     ap.add_argument("--lang", default="en")
-    ap.add_argument("--keep-images", action="store_true")
+    ap.add_argument("--keep-images", action="store_true", help="把图片字节写入 assets/（默认只写清单）")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--timeout", type=int, default=1800)
     ap.add_argument("tokens", nargs="*")
@@ -150,12 +206,10 @@ def main():
 
     stems = []
     for raw in args.tokens:
-        try:
-            stems.append(to_stem(raw))
-        except ValueError as error:
-            print(f"[{raw}] {error}")
+        record = find(raw)
+        stems.append(record["stem"] if record else slugify(raw))
     if not stems:
-        stems = sorted(f[:-4] for f in os.listdir(pdf_dir()) if f.lower().endswith(".pdf"))
+        stems = sorted(os.path.splitext(f)[0] for f in os.listdir(pdf_dir()) if f.lower().endswith(".pdf"))
     stems = [s for s in stems if os.path.exists(pdf_path(s))]
     if not stems:
         print("没有可转换的 PDF。")
@@ -191,42 +245,37 @@ def main():
         if result.get("state") != DONE:
             print(f"[{stem}] 未成功：state={result.get('state')} err={result.get('err_msg')}")
             continue
-        with unzip(result["full_zip_url"]) as zf:
+        with open_zip(result["full_zip_url"]) as zf:
             md_name = pick(zf, ".md", prefer="full")
             if not md_name:
                 print(f"[{stem}] zip 里没有 .md，跳过")
                 continue
-            md_text = zf.read(md_name).decode("utf-8", "replace")
+            md_text = rewrite_image_refs(zf.read(md_name).decode("utf-8", "replace"), stem)
             json_name = pick(zf, "_content_list.json")
+            if json_name:
+                os.makedirs(os.path.dirname(json_path(stem)), exist_ok=True)
+                with open(json_path(stem), "wb") as f:
+                    f.write(zf.read(json_name))
+            assets = write_assets(zf, stem, args.keep_images, figure_captions(zf, json_name))
+
             stamp = datetime.now(timezone.utc).isoformat()
             record = provenance[stem]
             os.makedirs(os.path.dirname(md_path(stem)), exist_ok=True)
             with open(md_path(stem), "w", encoding="utf-8", newline="\n") as f:
-                f.write(front_matter(stem, meta.get(stem, {}), record))
+                f.write(front_matter(stem, meta.get(stem, {}), find(stem), record))
                 f.write("\n".join([
-                    f"# {stem}（MinerU 云端转换）", "",
+                    f"# {meta.get(stem, {}).get('title') or stem}（MinerU 云端转换）", "",
                     f"- 解析器: MinerU cloud（model_version {args.model_version}；语言 {args.lang}）",
                     f"- 转换时间: {stamp}",
-                    f"- 本地 PDF SHA256: `{record['pdf_sha256']}`", "",
+                    f"- 本地 PDF SHA256: `{record['pdf_sha256']}`",
+                    f"- 图片: {assets['count']} 个，{assets['bytes'] // 1024} KB；"
+                    + ("字节已写入 assets/" + stem if assets["kept"]
+                       else "字节未保留，只写清单（--keep-images 可取回）"), "",
                     "> 本文件由 MinerU 云端接口转换，**转换成功不等于已对 PDF 做视觉核验**。",
                     "> 表格、公式与图像仍需在使用时核对；结构化输出见 json/ 下的同名文件。",
                     "> 下方分隔线之后为转换正文，不含本项目的阅读建议。", "", "---", "",
                 ]) + "\n")
                 f.write(md_text.strip() + "\n")
-            structured_path = None
-            if json_name:
-                os.makedirs(os.path.dirname(json_path(stem)), exist_ok=True)
-                with open(json_path(stem), "wb") as f:
-                    f.write(zf.read(json_name))
-                structured_path = os.path.relpath(json_path(stem), base()).replace(os.sep, "/")
-            assets = os.path.join(base(), "assets", stem)
-            if args.keep_images:
-                os.makedirs(assets, exist_ok=True)
-                for name in zf.namelist():
-                    if name.lower().startswith("images/") and not name.endswith("/"):
-                        target = os.path.join(assets, os.path.basename(name))
-                        with open(target, "wb") as f:
-                            f.write(zf.read(name))
             record["conversion"] = {
                 "path": os.path.relpath(md_path(stem), base()).replace(os.sep, "/"),
                 "parser": "mineru-cloud",
@@ -239,13 +288,16 @@ def main():
                 "converted_at": stamp,
                 "pdf_sha256": record["pdf_sha256"],
                 "body_sha256": hashlib.sha256(md_text.encode("utf-8")).hexdigest(),
-                "structured_path": structured_path,
-                "assets_path": (f"assets/{stem}" if args.keep_images else None),
+                "structured_path": (os.path.relpath(json_path(stem), base()).replace(os.sep, "/")
+                                    if json_name else None),
+                "images": assets,
                 "options": {"model_version": args.model_version, "lang": args.lang},
                 "visual_verification": False,
             }
             save_provenance(provenance)
-            print(f"[{stem}] -> {md_path(stem)}（{len(md_text.splitlines())} 行）")
+            print(f"[{stem}] -> {md_path(stem)}（{len(md_text.splitlines())} 行，"
+                  f"图 {assets['count']} 个{'，已保留字节' if assets['kept'] else '，仅清单'}）")
+    print("转换完成；运行 _scripts/build_index.py 刷新 index.json。")
 
 
 if __name__ == "__main__":

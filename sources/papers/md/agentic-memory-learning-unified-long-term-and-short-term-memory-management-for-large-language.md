@@ -1,11 +1,12 @@
 ---
+stem: agentic-memory-learning-unified-long-term-and-short-term-memory-management-for-large-language
 id: arxiv-2601.01885
 title: "Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents"
 registry: arxiv
 native_id: 2601.01885
 version: "2601.01885v3"
-kind: [framework]
-pdf: pdf/arxiv-2601.01885.pdf
+kinds: [framework]
+pdf: pdf/agentic-memory-learning-unified-long-term-and-short-term-memory-management-for-large-language.pdf
 pdf_sha256: "03ccd0aeabb6ee742d376034ec95ef5a692cbbb6a9af9cf3f2371260b8c61622"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:43:10.625224+00:00"

@@ -1,11 +1,12 @@
 ---
+stem: evermemos-a-self-organizing-memory-operating-system-for-structured-long-horizon-reasoning
 id: arxiv-2601.02163
 title: "EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning"
 registry: arxiv
 native_id: 2601.02163
 version: "2601.02163v2"
-kind: [framework]
-pdf: pdf/arxiv-2601.02163.pdf
+kinds: [framework]
+pdf: pdf/evermemos-a-self-organizing-memory-operating-system-for-structured-long-horizon-reasoning.pdf
 pdf_sha256: "265314799f9803a841a3aeb6fca949ce5eb6923d1d8a450de26843993e1605fd"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:41:41.167309+00:00"

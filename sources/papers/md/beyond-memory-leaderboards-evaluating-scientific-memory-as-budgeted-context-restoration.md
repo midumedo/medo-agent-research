@@ -1,11 +1,12 @@
 ---
+stem: beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration
 id: arxiv-2607.16848
 title: "Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration"
 registry: arxiv
 native_id: 2607.16848
-version: ""
-kind: [survey?]
-pdf: pdf/arxiv-2607.16848.pdf
+version: null
+kinds: [survey]
+pdf: pdf/beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration.pdf
 pdf_sha256: "09dd5520b628bbce492110aa73efd70d40d7e48eba379ab24dc6bda2cad68069"
 parser: pymupdf4llm (recorded by legacy script)
 converted_at: null

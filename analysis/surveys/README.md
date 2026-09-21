@@ -7,7 +7,7 @@
 下列三点针对 `2512.13564` 做了局部检查，依据是本地转换正文与元数据，未重新联网确认版本，也未做 PDF 视觉核验：
 
 - [元数据](../../sources/papers/meta.json) 中作者数组有 **47** 人，转换文件的作者头部也写 47。旧导航中的“48 位作者”已更正。
-- [正文 §4.2.3 Skill-based Memory](../../sources/papers/md/arxiv-2512.13564.md#423-skill-based-memory) 明确讨论 **Code Snippets、Functions and Scripts、APIs、MCPs**，并在 MCP 段落提到按需加载与降低上下文开销。因此撤回“程序性记忆只在 taxonomy 表里出现”的旧判断。
+- [正文 §4.2.3 Skill-based Memory](../../sources/papers/md/memory-in-the-age-of-ai-agents.md#423-skill-based-memory) 明确讨论 **Code Snippets、Functions and Scripts、APIs、MCPs**，并在 MCP 段落提到按需加载与降低上下文开销。因此撤回“程序性记忆只在 taxonomy 表里出现”的旧判断。
 - 这段原文只足以纠正上述缺席断言；它没有自动证明某个工程方案有效，也不能代替对整篇论文及其余六篇材料的复核。
 
 本次还核对了控制策略、记忆范围、技能外部化与评测协议的局部原文，见 [可引用摘录](../../evidence/domain/reviewed-local-passages.md)。这些文本核对不等于全文评审或实验复现。
@@ -20,12 +20,12 @@
 
 | 想调查的问题 | 可先检查的材料 |
 |---|---|
-| 不同论文如何划分 memory、RAG 与 context engineering？ | [2512.13564](../../sources/papers/md/arxiv-2512.13564.md) §2.3；比较定义，不预设边界已统一 |
-| 技能记忆有哪些表示和执行方式？ | [2512.13564](../../sources/papers/md/arxiv-2512.13564.md#423-skill-based-memory) §4.2.3；再对照 [2602.06052](../../sources/papers/md/arxiv-2602.06052.md) 的 procedural 与 learning policy 部分 |
-| 写入、管理和读取能解释哪些机制？ | [2603.07670](../../sources/papers/md/arxiv-2603.07670.md) 的问题形式化与分类；[2505.00675](../../sources/papers/md/arxiv-2505.00675.md) 的记忆操作 |
-| 构建、检索和生成的代价怎样分布？ | [2606.06448](../../sources/papers/md/arxiv-2606.06448.md) 的 workload、profiling 与实验部分；使用数字前补齐配置与分母 |
-| 协议与预算怎样影响系统比较？ | [2607.16848](../../sources/papers/md/arxiv-2607.16848.md)；先核对任务、输入、检索预算与评分方式 |
-| 早期分类与当前定义有什么差异？ | [2404.13501](../../sources/papers/md/arxiv-2404.13501.md)；先确定所读版本，不能只凭初次发布日期推定覆盖范围 |
+| 不同论文如何划分 memory、RAG 与 context engineering？ | [2512.13564](../../sources/papers/md/memory-in-the-age-of-ai-agents.md) §2.3；比较定义，不预设边界已统一 |
+| 技能记忆有哪些表示和执行方式？ | [2512.13564](../../sources/papers/md/memory-in-the-age-of-ai-agents.md#423-skill-based-memory) §4.2.3；再对照 [2602.06052](../../sources/papers/md/a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents.md) 的 procedural 与 learning policy 部分 |
+| 写入、管理和读取能解释哪些机制？ | [2603.07670](../../sources/papers/md/memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers.md) 的问题形式化与分类；[2505.00675](../../sources/papers/md/rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics.md) 的记忆操作 |
+| 构建、检索和生成的代价怎样分布？ | [2606.06448](../../sources/papers/md/agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads.md) 的 workload、profiling 与实验部分；使用数字前补齐配置与分母 |
+| 协议与预算怎样影响系统比较？ | [2607.16848](../../sources/papers/md/beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration.md)；先核对任务、输入、检索预算与评分方式 |
+| 早期分类与当前定义有什么差异？ | [2404.13501](../../sources/papers/md/a-survey-on-the-memory-mechanism-of-large-language-model-based-agents.md)；先确定所读版本，不能只凭初次发布日期推定覆盖范围 |
 
 逐篇阅读提示仅维护在 [nav.json](nav.json)。它保留初步分类与章节线索，把覆盖判断改为待检查问题；不再嵌入来源正文，也不需要为更新导航而重新解析 PDF。
 

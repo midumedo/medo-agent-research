@@ -1,11 +1,12 @@
 ---
+stem: mirix-multi-agent-memory-system-for-llm-based-agents
 id: arxiv-2507.07957
 title: "MIRIX: Multi-Agent Memory System for LLM-Based Agents"
 registry: arxiv
 native_id: 2507.07957
 version: "2507.07957v1"
-kind: [framework]
-pdf: pdf/arxiv-2507.07957.pdf
+kinds: [framework]
+pdf: pdf/mirix-multi-agent-memory-system-for-llm-based-agents.pdf
 pdf_sha256: "8204e2a238a86af14b358b28a7ef1f682956f1b41f7023d08cc7e2762e45c5ea"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:42:01.103130+00:00"

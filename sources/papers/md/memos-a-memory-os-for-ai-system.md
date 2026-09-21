@@ -1,11 +1,12 @@
 ---
+stem: memos-a-memory-os-for-ai-system
 id: arxiv-2507.03724
 title: "MemOS: A Memory OS for AI System"
 registry: arxiv
 native_id: 2507.03724
 version: "2507.03724v4"
-kind: [framework]
-pdf: pdf/arxiv-2507.03724.pdf
+kinds: [framework]
+pdf: pdf/memos-a-memory-os-for-ai-system.pdf
 pdf_sha256: "9b9b71b61487ce9f01d2de014b80201d9a30c4fd43effa33e84ef7d2db824977"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:41:25.646056+00:00"

@@ -1,11 +1,12 @@
 ---
+stem: a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents
 id: arxiv-2602.06052
 title: "A Survey of Agent Memory in the Second Half: Towards Self-Evolving and Long-Horizon Agents"
 registry: arxiv
 native_id: 2602.06052
-version: ""
-kind: [survey]
-pdf: pdf/arxiv-2602.06052.pdf
+version: null
+kinds: [survey]
+pdf: pdf/a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents.pdf
 pdf_sha256: "497e95492cb4bd8a8b45f813afabbb1d202c98076fb5f091be316a9b271b46a6"
 parser: pymupdf4llm (recorded by legacy script)
 converted_at: null

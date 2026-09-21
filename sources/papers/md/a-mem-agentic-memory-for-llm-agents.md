@@ -1,11 +1,12 @@
 ---
+stem: a-mem-agentic-memory-for-llm-agents
 id: arxiv-2502.12110
 title: "A-MEM: Agentic Memory for LLM Agents"
 registry: arxiv
 native_id: 2502.12110
 version: "2502.12110v11"
-kind: [framework]
-pdf: pdf/arxiv-2502.12110.pdf
+kinds: [framework]
+pdf: pdf/a-mem-agentic-memory-for-llm-agents.pdf
 pdf_sha256: "fec32b521c4a1f793442bf1aeb26139c583078350d1cd4ab8f4eccc54a0694f0"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:42:22.378582+00:00"

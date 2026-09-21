@@ -1,11 +1,12 @@
 ---
+stem: longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory
 id: arxiv-2410.10813
 title: "LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory"
 registry: arxiv
 native_id: 2410.10813
 version: "2410.10813v2"
-kind: [benchmark]
-pdf: pdf/arxiv-2410.10813.pdf
+kinds: [benchmark]
+pdf: pdf/longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory.pdf
 pdf_sha256: "05c5d055201466a241a56e082cdd02d39ad566fa04b3804891983e4e069a3fda"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:36:35.400913+00:00"

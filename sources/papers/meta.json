@@ -1,5 +1,5 @@
 {
-  "arxiv-2404.13501": {
+  "a-survey-on-the-memory-mechanism-of-large-language-model-based-agents": {
     "id": "arxiv-2404.13501",
     "title": "A Survey on the Memory Mechanism of Large Language Model based Agents",
     "authors": [
@@ -20,7 +20,7 @@
     "native_id": "2404.13501",
     "registry": "arxiv"
   },
-  "arxiv-2505.00675": {
+  "rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics": {
     "id": "arxiv-2505.00675",
     "title": "Rethinking Memory in LLM based Agents: Representations, Operations, and Emerging Topics",
     "authors": [
@@ -40,7 +40,7 @@
     "native_id": "2505.00675",
     "registry": "arxiv"
   },
-  "arxiv-2512.13564": {
+  "memory-in-the-age-of-ai-agents": {
     "id": "arxiv-2512.13564",
     "title": "Memory in the Age of AI Agents",
     "authors": [
@@ -99,7 +99,7 @@
     "native_id": "2512.13564",
     "registry": "arxiv"
   },
-  "arxiv-2602.06052": {
+  "a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents": {
     "id": "arxiv-2602.06052",
     "title": "A Survey of Agent Memory in the Second Half: Towards Self-Evolving and Long-Horizon Agents",
     "authors": [
@@ -171,7 +171,7 @@
     "native_id": "2602.06052",
     "registry": "arxiv"
   },
-  "arxiv-2603.07670": {
+  "memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers": {
     "id": "arxiv-2603.07670",
     "title": "Memory for Autonomous LLM Agents:Mechanisms, Evaluation, and Emerging Frontiers",
     "authors": [
@@ -184,7 +184,7 @@
     "native_id": "2603.07670",
     "registry": "arxiv"
   },
-  "arxiv-2606.06448": {
+  "agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads": {
     "id": "arxiv-2606.06448",
     "title": "Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads",
     "authors": [
@@ -205,7 +205,7 @@
     "native_id": "2606.06448",
     "registry": "arxiv"
   },
-  "arxiv-2607.16848": {
+  "beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration": {
     "id": "arxiv-2607.16848",
     "title": "Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration",
     "authors": [
@@ -220,7 +220,7 @@
     "native_id": "2607.16848",
     "registry": "arxiv"
   },
-  "arxiv-2402.17753": {
+  "evaluating-very-long-term-conversational-memory-of-llm-agents": {
     "id": "arxiv-2402.17753",
     "title": "Evaluating Very Long-Term Conversational Memory of LLM Agents",
     "authors": [
@@ -239,7 +239,7 @@
     "native_id": "2402.17753",
     "registry": "arxiv"
   },
-  "arxiv-2410.10813": {
+  "longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory": {
     "id": "arxiv-2410.10813",
     "title": "LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory",
     "authors": [
@@ -258,7 +258,7 @@
     "native_id": "2410.10813",
     "registry": "arxiv"
   },
-  "arxiv-2507.05257": {
+  "evaluating-memory-in-llm-agents-via-incremental-multi-turn-interactions": {
     "id": "arxiv-2507.05257",
     "title": "Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions",
     "authors": [
@@ -274,7 +274,7 @@
     "native_id": "2507.05257",
     "registry": "arxiv"
   },
-  "arxiv-2510.27246": {
+  "beyond-a-million-tokens-benchmarking-and-enhancing-long-term-memory-in-llms": {
     "id": "arxiv-2510.27246",
     "title": "Beyond a Million Tokens: Benchmarking and Enhancing Long-Term Memory in LLMs",
     "authors": [
@@ -293,7 +293,7 @@
     "native_id": "2510.27246",
     "registry": "arxiv"
   },
-  "arxiv-2602.22769": {
+  "ama-bench-evaluating-long-horizon-memory-for-agentic-applications": {
     "id": "arxiv-2602.22769",
     "title": "AMA-Bench: Evaluating Long-Horizon Memory for Agentic Applications",
     "authors": [
@@ -318,7 +318,7 @@
     "native_id": "2602.22769",
     "registry": "arxiv"
   },
-  "arxiv-2605.12493": {
+  "longmemeval-v2-evaluating-long-term-agent-memory-toward-experienced-colleagues": {
     "id": "arxiv-2605.12493",
     "title": "LongMemEval-V2: Evaluating Long-Term Agent Memory Toward Experienced Colleagues",
     "authors": [
@@ -338,7 +338,7 @@
     "native_id": "2605.12493",
     "registry": "arxiv"
   },
-  "arxiv-2506.21605": {
+  "membench-towards-more-comprehensive-evaluation-on-the-memory-of-llm-based-agents": {
     "id": "arxiv-2506.21605",
     "title": "MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents",
     "authors": [
@@ -357,7 +357,7 @@
     "native_id": "2506.21605",
     "registry": "arxiv"
   },
-  "arxiv-2510.17281": {
+  "memorybench-a-benchmark-for-memory-and-continual-learning-in-llm-systems": {
     "id": "arxiv-2510.17281",
     "title": "MemoryBench: A Benchmark for Memory and Continual Learning in LLM Systems",
     "authors": [
@@ -376,7 +376,7 @@
     "native_id": "2510.17281",
     "registry": "arxiv"
   },
-  "arxiv-2504.14225": {
+  "know-me-respond-to-me-benchmarking-llms-for-dynamic-user-profiling-and-personalized-responses": {
     "id": "arxiv-2504.14225",
     "title": "Know Me, Respond to Me: Benchmarking LLMs for Dynamic User Profiling and Personalized Responses at Scale",
     "authors": [
@@ -398,7 +398,7 @@
     "native_id": "2504.14225",
     "registry": "arxiv"
   },
-  "arxiv-2602.16313": {
+  "memoryarena-benchmarking-agent-memory-in-interdependent-multi-session-agentic-tasks": {
     "id": "arxiv-2602.16313",
     "title": "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks",
     "authors": [
@@ -425,7 +425,7 @@
     "native_id": "2602.16313",
     "registry": "arxiv"
   },
-  "arxiv-2501.13956": {
+  "zep-a-temporal-knowledge-graph-architecture-for-agent-memory": {
     "id": "arxiv-2501.13956",
     "title": "Zep: A Temporal Knowledge Graph Architecture for Agent Memory",
     "authors": [
@@ -443,7 +443,7 @@
     "native_id": "2501.13956",
     "registry": "arxiv"
   },
-  "arxiv-2504.19413": {
+  "mem0-building-production-ready-ai-agents-with-scalable-long-term-memory": {
     "id": "arxiv-2504.19413",
     "title": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory",
     "authors": [
@@ -461,7 +461,7 @@
     "native_id": "2504.19413",
     "registry": "arxiv"
   },
-  "arxiv-2507.03724": {
+  "memos-a-memory-os-for-ai-system": {
     "id": "arxiv-2507.03724",
     "title": "MemOS: A Memory OS for AI System",
     "authors": [
@@ -513,7 +513,7 @@
     "native_id": "2507.03724",
     "registry": "arxiv"
   },
-  "arxiv-2601.02163": {
+  "evermemos-a-self-organizing-memory-operating-system-for-structured-long-horizon-reasoning": {
     "id": "arxiv-2601.02163",
     "title": "EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning",
     "authors": [
@@ -537,7 +537,7 @@
     "native_id": "2601.02163",
     "registry": "arxiv"
   },
-  "arxiv-2506.06326": {
+  "memory-os-of-ai-agent": {
     "id": "arxiv-2506.06326",
     "title": "Memory OS of AI Agent",
     "authors": [
@@ -554,7 +554,7 @@
     "native_id": "2506.06326",
     "registry": "arxiv"
   },
-  "arxiv-2507.07957": {
+  "mirix-multi-agent-memory-system-for-llm-based-agents": {
     "id": "arxiv-2507.07957",
     "title": "MIRIX: Multi-Agent Memory System for LLM-Based Agents",
     "authors": [
@@ -569,7 +569,7 @@
     "native_id": "2507.07957",
     "registry": "arxiv"
   },
-  "arxiv-2502.12110": {
+  "a-mem-agentic-memory-for-llm-agents": {
     "id": "arxiv-2502.12110",
     "title": "A-MEM: Agentic Memory for LLM Agents",
     "authors": [
@@ -588,7 +588,7 @@
     "native_id": "2502.12110",
     "registry": "arxiv"
   },
-  "arxiv-2601.02553": {
+  "simplemem-efficient-lifelong-memory-for-llm-agents": {
     "id": "arxiv-2601.02553",
     "title": "SimpleMem: Efficient Lifelong Memory for LLM Agents",
     "authors": [
@@ -609,7 +609,7 @@
     "native_id": "2601.02553",
     "registry": "arxiv"
   },
-  "arxiv-2601.08323": {
+  "atommem-learnable-dynamic-agentic-memory-with-atomic-memory-operation": {
     "id": "arxiv-2601.08323",
     "title": "AtomMem : Learnable Dynamic Agentic Memory with Atomic Memory Operation",
     "authors": [
@@ -627,7 +627,7 @@
     "native_id": "2601.08323",
     "registry": "arxiv"
   },
-  "arxiv-2601.01885": {
+  "agentic-memory-learning-unified-long-term-and-short-term-memory-management-for-large-language": {
     "id": "arxiv-2601.01885",
     "title": "Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents",
     "authors": [

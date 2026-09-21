@@ -1,11 +1,12 @@
 ---
+stem: evaluating-memory-in-llm-agents-via-incremental-multi-turn-interactions
 id: arxiv-2507.05257
 title: "Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions"
 registry: arxiv
 native_id: 2507.05257
 version: "2507.05257v4"
-kind: [benchmark]
-pdf: pdf/arxiv-2507.05257.pdf
+kinds: [benchmark]
+pdf: pdf/evaluating-memory-in-llm-agents-via-incremental-multi-turn-interactions.pdf
 pdf_sha256: "022d3771fd643d3bece04841e71331ef6963ff0eba43166849072caeb1b79508"
 parser: pymupdf4llm
 converted_at: "2026-09-21T02:37:00.981736+00:00"

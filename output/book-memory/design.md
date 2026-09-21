@@ -129,9 +129,9 @@ Context 在“怎样把记忆交给本次调用”时出现；Harness 在“谁�
 
 [已有研究议程](../../analysis/research-agenda.md)中的留存、更正和成本问题可以直接支撑本书，但不把它的全部假设写成章节结论。[记忆生命周期综合](../../domain/agent-runtime/memory-lifecycle.md)提供初步关系解释；真正的 Memory 主题仍需要更多对象拆解与任务证据。
 
-本地 [2606.06448](../../sources/papers/md/arxiv-2606.06448.md) 的摘要与系统讨论按 construction、retrieval、generation 区分开销，提示第七章不能只计算回答时输入。这里引用的是作者研究的组织视角，本项目尚未复现其 profiling，不采用其中性能数字替任何当前框架排名。
+本地 [2606.06448](../../sources/papers/md/agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads.md) 的摘要与系统讨论按 construction、retrieval、generation 区分开销，提示第七章不能只计算回答时输入。这里引用的是作者研究的组织视角，本项目尚未复现其 profiling，不采用其中性能数字替任何当前框架排名。
 
-本地 [2607.16848](../../sources/papers/md/arxiv-2607.16848.md) 的 §8.1—8.2 讨论预算、检索方式、原文保留对科学文献问答比较的影响，并明确列出单次运行、近似预算控制等限制；部分内置综合系统并未使用统一回答模型。它支持“阅读协议后再理解排名”的教材安排，不能推出图记忆在动态对话、时态事件或持续行动中没有价值。两篇论文的具体摘录、混杂因素和部分报告不一致见 [比较边界核对](../../evidence/domain/memory-evaluation-passages-2026-09-21.md)。
+本地 [2607.16848](../../sources/papers/md/beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration.md) 的 §8.1—8.2 讨论预算、检索方式、原文保留对科学文献问答比较的影响，并明确列出单次运行、近似预算控制等限制；部分内置综合系统并未使用统一回答模型。它支持“阅读协议后再理解排名”的教材安排，不能推出图记忆在动态对话、时态事件或持续行动中没有价值。两篇论文的具体摘录、混杂因素和部分报告不一致见 [比较边界核对](../../evidence/domain/memory-evaluation-passages-2026-09-21.md)。
 
 [综述阅读入口](../../analysis/surveys/README.md)提供其他表示与操作的定位，现有元数据和转换正文并非全部完成版本、全文与实验复核。[历史调查稿](../../analysis/landscape/memory-landscape-2026-09.md)只用于发现候选和过去误判，不作为本书已核实的框架清单。
 
