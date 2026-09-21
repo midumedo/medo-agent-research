@@ -26,7 +26,7 @@
 
 旧 [领域入口](../archive/2026-09-20-architecture-review-before/domain/index.md) 第一节称“第三条轴是我们自己加的……没人问谁决定它留下来”。
 
-本地 [2603.07670](../sources/papers/surveys/2603.07670.md) §3.3 **Control policy** 明确写：
+本地 [2603.07670](../sources/papers/md/arxiv-2603.07670.md) §3.3 **Control policy** 明确写：
 
 > Perhaps the most consequential—and least discussed—dimension is who decides what to store, what to retrieve, and what to discard.
 
@@ -36,9 +36,9 @@
 
 ### 3. 阅读导航反过来遮蔽原文
 
-旧 [nav.json](../archive/2026-09-20-architecture-review-before/sources/papers/nav.json) 对 2512.13564 声称“程序性记忆只在 taxonomy 表里出现”。本地 [论文](../sources/papers/surveys/2512.13564.md) §4.2.3 **Skill-based Memory** 已展开 Code Snippets、Functions and Scripts、APIs、MCPs，不能概括成只在表中出现。
+旧 [nav.json](../archive/2026-09-20-architecture-review-before/sources/papers/nav.json) 对 2512.13564 声称“程序性记忆只在 taxonomy 表里出现”。本地 [论文](../sources/papers/md/arxiv-2512.13564.md) §4.2.3 **Skill-based Memory** 已展开 Code Snippets、Functions and Scripts、APIs、MCPs，不能概括成只在表中出现。
 
-旧 [综述入口](../archive/2026-09-20-architecture-review-before/sources/papers/surveys/README.md) 又将若干未核实的“集体盲区”用于定位本项目。其中“七篇都没有系统回答评测协议”与纳入一篇直接研究评测协议的 [2607.16848](../sources/papers/surveys/2607.16848.md) 冲突。
+旧 [综述入口](../archive/2026-09-20-architecture-review-before/sources/papers/surveys/README.md) 又将若干未核实的“集体盲区”用于定位本项目。其中“七篇都没有系统回答评测协议”与纳入一篇直接研究评测协议的 [2607.16848](../sources/papers/md/arxiv-2607.16848.md) 冲突。
 
 **处理**：导航回到我方分析身份；“没写”“没实测”“不覆盖本任务”分开。阅读建议可以引导查找，不能替代原文验证，更不能把偏见写进来源正文后循环引用。
 
@@ -84,7 +84,7 @@
 
 ### 8. 概念包含链与主线二分制造了假问题
 
-Memory 不只跨会话；[2512.13564](../sources/papers/surveys/2512.13564.md) §2.2 同时讨论任务内和跨任务状态。Context 是一次调用可见输入，Harness 是运行系统；不能把三者按同一类型套成包含链。
+Memory 不只跨会话；[2512.13564](../sources/papers/md/arxiv-2512.13564.md) §2.2 同时讨论任务内和跨任务状态。Context 是一次调用可见输入，Harness 是运行系统；不能把三者按同一类型套成包含链。
 
 “卸荷不属于注入，因为它阻止注入”也是人为缩窄操作。选择可返回空，写入可被拒绝，准入策略可部署在数据流各处。治理可能是跨操作约束，没找到同名按钮不能证明它不存在。
 

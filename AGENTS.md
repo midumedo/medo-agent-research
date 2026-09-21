@@ -18,4 +18,6 @@
 
 研究具体对象或问题时，读对应正文与来源；需要了解积累时看 [README.md](README.md) 或 [主题入口](domain/index.md)。不要求每轮加载全部规则、研究假设与历史记录。
 
+子目录有自己的 AGENTS.md，进入该子树时以它为准：来源层见 [sources/AGENTS.md](sources/AGENTS.md)，论文库的标识、目录与入库流程见 [sources/papers/AGENTS.md](sources/papers/AGENTS.md)。
+
 修改或迁移文档前读 [CONVENTIONS.md](CONVENTIONS.md) 的相关部分；撰写或修订论证时读 [STYLE.md](STYLE.md)。设计结构时参考 [ARCHITECTURE.md](ARCHITECTURE.md)，制作后期成品时再读 [TRADEOFFS.md](TRADEOFFS.md)。使用 Git 保存可审查版本，保留已有未提交工作；完成后检查受影响的链接与当前入口，不再为每次修改复制快照。

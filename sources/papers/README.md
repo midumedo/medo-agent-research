@@ -1,69 +1,11 @@
-# 论文来源库
+# 论文库
 
-现有二十七份 PDF 和对应的机器转换文本。**文件在本地不代表已经完成内容核实或 PDF 视觉核验。** 阅读建议、比较和待调查问题见 [我方综述阅读入口](../../analysis/surveys/README.md)；本轮横评用到的基准与框架编号见 [记忆横评对照](../../analysis/memory-benchmark-crossreview-2026-09.md)。
+外部论文的原件与机器转换文本。给人看的入口说明只有这一页；规则见 [AGENTS.md](AGENTS.md)，收录了哪些论文见 [INDEX.md](INDEX.md)。
 
-| 路径 | 内容与限制 |
-|---|---|
-| [surveys/](surveys/README.md) | 第一批七份的机器转换 Markdown；头部是元数据与转换声明，分隔线之后是转换正文。其中 2606.06448 与 2607.16848 不是综述，因既有引用较多而保留在此 |
-| `benchmarks/` | 2026-09-21 入库的十份基准论文转换文本（LoCoMo、LongMemEval、MemoryAgentBench、BEAM、AMA-Bench、LongMemEval-V2、MemBench、MemoryBench、PersonaMem、MemoryArena） |
-| `frameworks/` | 2026-09-21 入库的十份记忆框架论文转换文本（Zep、Mem0、MemOS、EverMemOS、MemoryOS、MIRIX、A-MEM、SimpleMem、AtomMem、AgeMem） |
-| `pdf/` | 既有 PDF 文件，保留原样 |
-| [meta.json](meta.json) | 历史抓取的标题、作者、日期与摘要；尚未核对与现有 PDF 是否同版 |
-| [provenance.json](provenance.json) | 当前本地 PDF SHA256、版本与获取信息、转换记录；缺失字段为 `null` |
-| `_scripts/` | 本项目的下载与转换工具，不属于外部证据 |
-| `logs/` | 历史运行记录，路径按运行时语境保留 |
+- 找一篇论文：在 INDEX.md 的「当前清单」按标题定位标识，再用同一个标识取 `pdf/`（原件）、`md/`（转换正文，AI 默认读这个）、`json/`（结构化输出）。
+- 文件名是 `<registry>-<native-id>`，不含标题也不含版本；版本记在 INDEX.md 与 `provenance.json`。
+- **收录不等于核实。** 机器转换文本不等于已对 PDF 做过视觉核验；引用具体数字、表格、公式前回到 PDF 定位原文。
 
-2026-09-20 将 `nav.json` 移至 [analysis/surveys/nav.json](../../analysis/surveys/nav.json)，不再在来源库维护重复导航。七份 Markdown 只移除了我方导航并补充转换声明，分隔线后的正文与 [重建前快照](../../archive/2026-09-20-architecture-review-before/sources/papers/surveys/README.md) 中对应文件逐字节一致。本轮没有重下载或重新解析这些论文。
+现在共二十七份材料。除首批七份的来源版本与获取时间缺失（记为 unknown）外，其余编号与修订日期经 arXiv 官方接口核对过。
 
-现有 PDF 的 arXiv 版本、原获取时间和实际转换环境缺失，明确记为 unknown / `null`；当前文件指纹不是来源真实性证明，也不是旧 PDF 与旧元数据同版的证明。
-
-## 更高保真的转换：MinerU 服务（可选）
-
-现有转换用 `pymupdf4llm`，快且依赖轻，但对表格、公式、多栏排版损失较大。需要更高保真时改用 **MinerU**，它较重，因此**不装进本项目**：装在独立目录，起成本地 HTTP 服务，本项目只做调用。
-
-**服务侧（项目外，一次性准备）**
-
-```text
-# 选择一个项目外的目录，自带独立环境
-mkdir -p D:/tools/mineru && cd D:/tools/mineru
-python -m venv .venv && .venv/Scripts/python -m pip install mineru
-
-# 起服务（默认 8000）
-.venv/Scripts/mineru-api --host 127.0.0.1 --port 8000
-```
-
-- 健康检查：`GET /health`，返回 `protocol_version` 等，用来记录服务版本。
-- 同步解析：`POST /file_parse`；异步：`POST /tasks` + `GET /tasks/{id}/result`。
-- 后端：`pipeline`（快，显存约 4GB）、`hybrid`（更准，约 8GB）、`vlm`（约 8GB+）。另有 `--effort medium|high` 控制解析强度。
-- 服务只监听 127.0.0.1，不对外暴露；不需要鉴权。
-
-**本项目侧（调用）**
-
-```text
-<python> _scripts\mineru_client.py --out benchmarks --backend hybrid 2507.05257
-```
-
-产物写入 `--out` 目录：`2507.05257.md` 与结构化中间结果 `2507.05257.middle.json`，并把 `parser=mineru`、服务 `protocol_version`、后端、语言、转换时间与正文指纹写进 `provenance.json`，与 `pdf2md.py` 的记录结构保持一致。
-
-**这个脚本不做的事**：不启动服务、不改现有 `pdf_sha256` 校验规则、不在服务不可用时回退到其它解析器——连不上就直接失败，避免把未转换当成已转换。已存在的非空转换文本不会被覆盖，除非显式 `--force`。
-
-两种转换可以并存：同一篇论文先用 `pdf2md.py` 快速得到全文，遇到表格或公式关键的段落再用 MinerU 重转核对，`provenance.json` 会保留最近一次转换的信息，历史由 Git 追溯。
-
-## 编号与日期的核验
-
-2026-09-21 新增的 20 份材料的 arXiv 编号、首次与最新修订日期、以及 venue 线索，均用官方接口核对过，脚本为 [_scripts/check_arxiv.py](_scripts/check_arxiv.py)。它只读取并返回接口字段，核验不到的项输出 `NOT-FOUND` 或 `ERROR`，不推测。同批下载还修复了 [download_arxiv.py](_scripts/download_arxiv.py)：arXiv 的 abs 页改版后 `citation_pdf_url` 不再带版本号，脚本会走到"版本未解析"分支；现在解析失败时改从官方接口取得显式版本，再按该版本分别取元数据与 PDF。
-
-## 继续下载与转换
-
-在本目录运行，`<python>` 替换为本机 Python；执行转换需要安装 `pymupdf4llm` 的环境。
-
-```text
-<python> _scripts\download_arxiv.py --all
-<python> _scripts\download_arxiv.py 2512.13564v2
-<python> _scripts\pdf2md.py
-<python> _scripts\pdf2md.py --out engineering 2512.13564v2
-```
-
-下载工具遇到已有 PDF 时同时保留旧元数据，不拿新元数据拼旧 PDF。下载新文件时先确定一个明确版本，再从该版本分别取得元数据与 PDF；无法确定版本或任一步失败，就保留现有记录。要下载不同版本，核对目标后使用带 `vN` 的编号，得到独立文件；工具不自动回退到 `v1`。
-
-转换工具保留现有非空文件，只有显式 `--force` 才重转。新转换记录 PDF SHA256、解析器版本、转换时间和正文指纹；检测到 PDF 与已记录指纹不一致时停止，先调查来源变化。转换不会加入我方阅读卡片。PDF 的表格、公式、图像和关键摘录仍需在使用时核对。
+`_scripts/` 是下载与转换工具，`logs/` 是运行记录，两者都不属于外部证据。

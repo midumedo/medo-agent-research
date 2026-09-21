@@ -4,7 +4,7 @@
 
 ## 2606.06448：构建、使用和维护要在同一使用期里考察
 
-来源：[Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads](../../sources/papers/surveys/2606.06448.md)。
+来源：[Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads](../../sources/papers/md/arxiv-2606.06448.md)。
 
 ### 原文支持哪些研究问题
 
@@ -35,7 +35,7 @@
 
 ## 2607.16848：返回更多材料与采用更好结构不是同一件事
 
-来源：[Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration](../../sources/papers/surveys/2607.16848.md)。这篇研究包含作者自己的 Theoria 系统，不能作为独立第三方复现使用。
+来源：[Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration](../../sources/papers/md/arxiv-2607.16848.md)。这篇研究包含作者自己的 Theoria 系统，不能作为独立第三方复现使用。
 
 ### 原文支持哪些研究问题
 

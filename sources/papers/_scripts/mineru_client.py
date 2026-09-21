@@ -6,9 +6,10 @@ archive with the same provenance discipline as pdf2md.py.
 
 Usage:
     mineru_client.py [--service URL] [--backend pipeline|hybrid|vlm]
-                     [--lang ch] [--out benchmarks] [--force] [arxiv_id ...]
+                     [--lang ch] [--force] [stem ...]
 
-Defaults: service http://127.0.0.1:8000, backend pipeline, lang ch, out surveys.
+Defaults: service http://127.0.0.1:8000, backend pipeline, lang ch.
+Output goes to md/<stem>.md and json/<stem>.json.
 The service must already be running; this script never starts it and never falls
 back to another parser, so a failed conversion cannot be mistaken for success.
 """
@@ -26,25 +27,10 @@ import zipfile
 from datetime import datetime, timezone
 from uuid import uuid4
 
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PDF_DIR = os.path.join(BASE, "pdf")
-PROVENANCE_PATH = os.path.join(BASE, "provenance.json")
+from stem import (base, front_matter, json_path, load_meta, load_provenance, md_path,
+                  pdf_path, save_provenance, to_stem)
+
 UA = "MemoryResearch/1.0 (mineru client)"
-
-
-def load_json(path):
-    if os.path.exists(path):
-        with open(path, encoding="utf-8") as f:
-            return json.load(f)
-    return {}
-
-
-def save_json(path, data):
-    temporary = path + ".tmp"
-    with open(temporary, "w", encoding="utf-8", newline="\n") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-    os.replace(temporary, path)
 
 
 def request(url, data=None, headers=None, timeout=600):
@@ -120,38 +106,36 @@ def parse_response(payload):
     return md, json.dumps(data, ensure_ascii=False)
 
 
-def header(aid, record, pdf_hash, info):
+def header(stem, record, pdf_hash, info):
     lines = [
-        f"# {aid}（MinerU 转换）", "",
+        f"# {stem}（MinerU 转换）", "",
         f"- 解析器: MinerU{(' ' + info['parser_version']) if info.get('parser_version') else ''}",
         f"- 服务: {info['service']}（protocol_version {info.get('protocol_version') or 'unknown'}）",
         f"- 后端: {info['backend']}；语言: {info['lang']}",
         f"- 转换时间: {info['converted_at']}",
         f"- 本地 PDF SHA256: `{pdf_hash}`", "",
         "> 本文件由外部 MinerU 服务转换，转换成功不等于已对 PDF 做视觉核验。",
-        "> 表格、公式与图像仍需在使用时核对；结构化中间结果见同名 .middle.json。",
+        "> 表格、公式与图像仍需在使用时核对；结构化输出见 json/ 下的同名文件。",
         "> 下方分隔线之后为转换正文，不含本项目的阅读建议。", "", "---", "",
     ]
     return "\n".join(lines)
 
 
-def convert(aid, args, provenance, info):
-    src = os.path.join(PDF_DIR, f"{aid}.pdf")
+def convert(token, args, provenance, meta_json, info):
+    stem = to_stem(token)
+    src = pdf_path(stem)
     if not os.path.exists(src):
-        return f"[{aid}] 缺少 PDF，跳过"
-    md_dir = os.path.abspath(os.path.join(BASE, args.out))
-    if os.path.commonpath([BASE, md_dir]) != BASE or md_dir == BASE:
-        raise SystemExit("--out 必须是 papers/ 的子目录")
-    dst = os.path.join(md_dir, f"{aid}.md")
+        return f"[{stem}] 缺少 PDF，跳过"
+    dst = md_path(stem)
     if os.path.exists(dst) and os.path.getsize(dst) > 0 and not args.force:
-        return f"[{aid}] 已存在，未重新转换（--force 可重转）"
+        return f"[{stem}] 已存在，未重新转换（--force 可重转）"
 
     with open(src, "rb") as f:
         pdf_bytes = f.read()
     pdf_hash = hashlib.sha256(pdf_bytes).hexdigest()
-    record = provenance.setdefault(aid, {})
+    record = provenance.setdefault(stem, {})
     if record.get("pdf_sha256") and record["pdf_sha256"] != pdf_hash:
-        raise SystemExit(f"[{aid}] PDF 与已记录 SHA256 不一致，请先调查来源变化")
+        raise SystemExit(f"[{stem}] PDF 与已记录 SHA256 不一致，请先调查来源变化")
 
     fields = {
         "return_md": "true",
@@ -160,27 +144,29 @@ def convert(aid, args, provenance, info):
         "backend": args.backend,
         "lang_list": args.lang,
     }
-    body, content_type = multipart(fields, [("files", f"{aid}.pdf", pdf_bytes)])
+    body, content_type = multipart(fields, [("files", f"{stem}.pdf", pdf_bytes)])
     _, payload = request(args.service.rstrip("/") + "/file_parse", data=body,
                          headers={"Content-Type": content_type})
     md, middle = parse_response(payload)
 
-    os.makedirs(md_dir, exist_ok=True)
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
     stamp = datetime.now(timezone.utc).isoformat()
     record.setdefault("version", None)
     record.setdefault("retrieved_at", None)
     record["pdf_sha256"] = pdf_hash
-    record["pdf_path"] = os.path.relpath(src, BASE).replace(os.sep, "/")
+    record["pdf_path"] = os.path.relpath(src, base()).replace(os.sep, "/")
     info["converted_at"] = stamp
     with open(dst, "w", encoding="utf-8", newline="") as f:
-        f.write(header(aid, record, pdf_hash, info))
+        f.write(front_matter(stem, meta_json.get(stem, {}), record))
+        f.write(header(stem, record, pdf_hash, info))
         f.write(md.strip() + "\n")
-    json_path = os.path.join(md_dir, f"{aid}.middle.json")
+    struct = json_path(stem)
     if middle:
-        with open(json_path, "w", encoding="utf-8", newline="") as f:
+        os.makedirs(os.path.dirname(struct), exist_ok=True)
+        with open(struct, "w", encoding="utf-8", newline="") as f:
             f.write(middle)
     record["conversion"] = {
-        "path": os.path.relpath(dst, BASE).replace(os.sep, "/"),
+        "path": os.path.relpath(dst, base()).replace(os.sep, "/"),
         "parser": "mineru",
         "parser_version": info.get("parser_version"),
         "service": info["service"],
@@ -190,12 +176,12 @@ def convert(aid, args, provenance, info):
         "converted_at": stamp,
         "pdf_sha256": pdf_hash,
         "body_sha256": hashlib.sha256(md.encode("utf-8")).hexdigest(),
-        "middle_json_path": (os.path.relpath(json_path, BASE).replace(os.sep, "/") if middle else None),
+        "structured_path": (os.path.relpath(struct, base()).replace(os.sep, "/") if middle else None),
         "options": {"return_middle_json": True, "response_format_zip": True},
         "visual_verification": False,
     }
-    save_json(PROVENANCE_PATH, provenance)
-    return f"[{aid}] -> {dst}（{len(md.splitlines())} 行）"
+    save_provenance(provenance)
+    return f"[{stem}] -> {dst}（{len(md.splitlines())} 行）"
 
 
 def main():
@@ -203,14 +189,13 @@ def main():
     ap.add_argument("--service", default=os.environ.get("MINERU_SERVICE", "http://127.0.0.1:8000"))
     ap.add_argument("--backend", default="pipeline")
     ap.add_argument("--lang", default="ch")
-    ap.add_argument("--out", default="surveys")
-    ap.add_argument("--parser-version", default=None)
+    ap.add_argument("--lang", default="ch")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("ids", nargs="*")
     args = ap.parse_args()
 
     if not args.ids:
-        print("没有指定 arXiv 编号。用法见文件头注释。")
+        print("没有指定词干。用法见文件头注释。")
         return
     info = health(args.service)
     meta = {
@@ -220,12 +205,15 @@ def main():
         "parser_version": args.parser_version,
         "protocol_version": info.get("protocol_version"),
     }
-    provenance = load_json(PROVENANCE_PATH)
-    for aid in args.ids:
-        if not re.fullmatch(r"\d{4}\.\d{4,5}(?:v[1-9]\d*)?", aid):
-            print(f"[{aid}] 不是合法的 arXiv 编号，跳过")
+    provenance = load_provenance()
+    meta_json = load_meta()
+    for token in args.ids:
+        try:
+            stem = to_stem(token)
+        except ValueError as error:
+            print(f"[{token}] {error}")
             continue
-        print(convert(aid, args, provenance, meta))
+        print(convert(stem, args, provenance, meta_json, meta))
 
 
 if __name__ == "__main__":

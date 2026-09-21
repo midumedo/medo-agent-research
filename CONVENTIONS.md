@@ -16,6 +16,8 @@
 
 不设独立的条目层，不保留根级笔记目录。尚未成熟的想法留在对应研究稿；尚未形成研究的交流留在 Dialogue。
 
+论文库按 `<registry>-<native-id>` 词干在 `pdf/`、`md/`、`json/` 之间同名路由，目录不再按类型分级（类型记在 INDEX 与 front matter）。词干规则、入库流程与「为什么不按标题命名」见 [sources/papers/AGENTS.md](sources/papers/AGENTS.md)，选择理由见 [本轮决定](dialogue/2026-09-22-papers-layout-and-naming.md)。
+
 ## Deepdive：按对象展开，围绕项目重点选择范围
 
 忠实意味着不扭曲对象、不迎合假设；重点是信息和状态怎样影响 Agent 的行为。先有足够的整体地图，再沿相关路径深入。研究范围不由函数名是否含 memory 决定，具体选择与分层见 [深拆入口](deepdive/README.md)。

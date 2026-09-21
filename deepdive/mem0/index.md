@@ -1,6 +1,6 @@
 # Mem0：抽取-更新派的当前形态
 
-> 对象深拆，2026-09-21。源码 `sources/repos/mem0`（mem0ai/mem0，commit `a39a802bbc93`，2026-09-18，打包下载不含 `.git`），论文 `sources/papers/frameworks/2504.19413.md`（arXiv 2504.19413v1）。
+> 对象深拆，2026-09-21。源码 `sources/repos/mem0`（mem0ai/mem0，commit `a39a802bbc93`，2026-09-18，打包下载不含 `.git`），论文 `sources/papers/md/arxiv-2504.19413.md`（arXiv 2504.19413v1）。
 > 全部结论区分四种状态：**代码确实存在** / **文档或 README 声称** / **默认启用** / **本项目未验证**。静态读码，没有运行框架。
 
 ## 版本与范围

@@ -8,7 +8,7 @@
 
 ## 控制策略：谁决定存、取、丢
 
-**来源定位**：*Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers*，arXiv [2603.07670](https://arxiv.org/abs/2603.07670)，§3.3 **Control policy**。[本地正文](../../sources/papers/surveys/2603.07670.md#33-control-policy) · [本地 PDF](../../sources/papers/pdf/2603.07670.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
+**来源定位**：*Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers*，arXiv [2603.07670](https://arxiv.org/abs/2603.07670)，§3.3 **Control policy**。[本地正文](../../sources/papers/md/arxiv-2603.07670.md#33-control-policy) · [本地 PDF](../../sources/papers/pdf/arxiv-2603.07670.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
 
 **原文摘录**：
 
@@ -26,7 +26,7 @@
 
 ## 记忆范围：任务内状态与外部离散表示
 
-**来源定位**：*Memory in the Age of AI Agents*，arXiv [2512.13564](https://arxiv.org/abs/2512.13564)，§2.2 **Agent Memory Systems** 与 §3.1 **Token-level Memory**。[本地 §2.2](../../sources/papers/surveys/2512.13564.md#22-agent-memory-systems) · [本地 §3.1](../../sources/papers/surveys/2512.13564.md#31-token-level-memory) · [本地 PDF](../../sources/papers/pdf/2512.13564.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
+**来源定位**：*Memory in the Age of AI Agents*，arXiv [2512.13564](https://arxiv.org/abs/2512.13564)，§2.2 **Agent Memory Systems** 与 §3.1 **Token-level Memory**。[本地 §2.2](../../sources/papers/md/arxiv-2512.13564.md#22-agent-memory-systems) · [本地 §3.1](../../sources/papers/md/arxiv-2512.13564.md#31-token-level-memory) · [本地 PDF](../../sources/papers/pdf/arxiv-2512.13564.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
 
 **原文摘录，§2.2**：
 
@@ -44,7 +44,7 @@
 
 ## 程序性记忆：已有技能载体与实现讨论
 
-**来源定位 A**：*Memory in the Age of AI Agents*，arXiv [2512.13564](https://arxiv.org/abs/2512.13564)，§4.2.3 **Skill-based Memory**。[本地正文](../../sources/papers/surveys/2512.13564.md#423-skill-based-memory) · [本地 PDF](../../sources/papers/pdf/2512.13564.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
+**来源定位 A**：*Memory in the Age of AI Agents*，arXiv [2512.13564](https://arxiv.org/abs/2512.13564)，§4.2.3 **Skill-based Memory**。[本地正文](../../sources/papers/md/arxiv-2512.13564.md#423-skill-based-memory) · [本地 PDF](../../sources/papers/pdf/arxiv-2512.13564.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
 
 **原文摘录 A**：
 
@@ -52,7 +52,7 @@
 
 该节随后分别讨论 **Code Snippets**、**Functions and Scripts**、**APIs** 与 **MCPs**。
 
-**来源定位 B**：*A Survey of Agent Memory in the Second Half: Towards Self-Evolving and Long-Horizon Agents*，arXiv [2602.06052](https://arxiv.org/abs/2602.06052)，§3.2.5 **Procedural Memory**，以 “A notable recent development” 开头的段落。[本地正文](../../sources/papers/surveys/2602.06052.md#325-procedural-memory) · [本地 PDF](../../sources/papers/pdf/2602.06052.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
+**来源定位 B**：*A Survey of Agent Memory in the Second Half: Towards Self-Evolving and Long-Horizon Agents*，arXiv [2602.06052](https://arxiv.org/abs/2602.06052)，§3.2.5 **Procedural Memory**，以 “A notable recent development” 开头的段落。[本地正文](../../sources/papers/md/arxiv-2602.06052.md#325-procedural-memory) · [本地 PDF](../../sources/papers/pdf/arxiv-2602.06052.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
 
 **原文摘录 B**：
 
@@ -64,7 +64,7 @@
 
 ## 评测协议：预算与判分条件会影响比较
 
-**来源定位**：*Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration*，arXiv [2607.16848](https://arxiv.org/abs/2607.16848)，**Abstract**；实验条件见 §6.1 **Experimental setup**，Paim 比较见 **Table 4**。[本地摘要](../../sources/papers/surveys/2607.16848.md#abstract) · [本地 §6.1](../../sources/papers/surveys/2607.16848.md#61-experimental-setup) · [本地 PDF](../../sources/papers/pdf/2607.16848.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
+**来源定位**：*Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration*，arXiv [2607.16848](https://arxiv.org/abs/2607.16848)，**Abstract**；实验条件见 §6.1 **Experimental setup**，Paim 比较见 **Table 4**。[本地摘要](../../sources/papers/md/arxiv-2607.16848.md#abstract) · [本地 §6.1](../../sources/papers/md/arxiv-2607.16848.md#61-experimental-setup) · [本地 PDF](../../sources/papers/pdf/arxiv-2607.16848.pdf)。本地资料版本：未知；本地核对日期：2026-09-20。
 
 **原文摘录，Abstract**：
 

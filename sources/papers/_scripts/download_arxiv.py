@@ -1,8 +1,10 @@
 """Download an arXiv PDF and metadata from the same explicit version.
 
-Usage: download_arxiv.py [arxiv_id ...] or download_arxiv.py --all
-Existing PDFs are preserved together with their existing metadata. To fetch a
-different version, pass a versioned id (e.g. 2512.13564v2); it gets its own file.
+Usage: download_arxiv.py [stem ...] or download_arxiv.py --all
+A stem is `arxiv-<id>` (bare arXiv ids still work). The PDF is written to
+`pdf/<stem>.pdf` and all records are keyed by the stem. Existing PDFs are
+preserved together with their existing metadata. To fetch a different version,
+pass a versioned id (e.g. arxiv-2512.13564v2); it gets its own file.
 """
 
 import hashlib
@@ -20,27 +22,11 @@ ATOM = "{http://www.w3.org/2005/Atom}"
 ARXIV_API = "http://export.arxiv.org/api/query?id_list={}&max_results=1"
 
 
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PDF_DIR = os.path.join(BASE, "pdf")
-META_PATH = os.path.join(BASE, "meta.json")
-PROVENANCE_PATH = os.path.join(BASE, "provenance.json")
-WATCHLIST = os.path.join(BASE, "watchlist.txt")
+from stem import load_meta, load_provenance, native_id, pdf_path, registry, save_meta, \
+    save_provenance, to_stem
+
+WATCHLIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "watchlist.txt")
 UA = "MemoryResearch/1.0 (local paper archive)"
-
-
-def load_json(path):
-    if os.path.exists(path):
-        with open(path, encoding="utf-8") as f:
-            return json.load(f)
-    return {}
-
-
-def save_json(path, data):
-    temporary = path + ".tmp"
-    with open(temporary, "w", encoding="utf-8", newline="\n") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-    os.replace(temporary, path)
 
 
 def resolve_version(aid):
@@ -119,53 +105,60 @@ def fetch_pdf(versioned_id):
     return data
 
 
-def download_one(aid, meta, provenance):
-    if not re.fullmatch(r"\d{4}\.\d{4,5}(?:v[1-9]\d*)?", aid):
-        return f"[{aid}] invalid arXiv id; unchanged"
-    dest = os.path.join(PDF_DIR, f"{aid}.pdf")
+def download_one(token, meta, provenance):
+    try:
+        stem = to_stem(token)
+    except ValueError as error:
+        return f"[{token}] {error}"
+    aid = native_id(stem)
+    if registry(stem) != "arxiv" or not re.fullmatch(r"\d{4}\.\d{4,5}(?:v[1-9]\d*)?", aid):
+        return f"[{stem}] 本脚本只处理 arXiv 来源；非 arXiv 来源请手工放入 pdf/ 并按 AGENTS.md 定词干"
+    dest = pdf_path(stem)
     if os.path.exists(dest):
         # Do not fetch latest metadata for a legacy/cached PDF.
-        return f"[{aid}] cached PDF and metadata preserved; version: {provenance.get(aid, {}).get('version') or 'unknown'}"
+        return f"[{stem}] cached PDF and metadata preserved; version: {provenance.get(stem, {}).get('version') or 'unknown'}"
 
     candidate = fetch_meta(aid)
     if not candidate.get("exists"):
-        return f"[{aid}] metadata unavailable; existing records preserved"
+        return f"[{stem}] metadata unavailable; existing records preserved"
     versioned_id = candidate.get("versioned_id")
     if not versioned_id:
         # Fall back to the API; the abs page alone no longer guarantees a versioned identity.
         versioned_id = resolve_version(aid)
     if not versioned_id:
-        return f"[{aid}] version unresolved; unchanged. Retry with an explicit version after checking the intended version."
+        return f"[{stem}] version unresolved; unchanged. Retry with an explicit version after checking the intended version."
     if aid != versioned_id:
         candidate = fetch_meta(versioned_id)
         if not candidate.get("exists"):
-            return f"[{aid}] versioned metadata unavailable; existing records preserved"
+            return f"[{stem}] versioned metadata unavailable; existing records preserved"
     try:
         data = fetch_pdf(versioned_id)
     except Exception as error:
-        return f"[{aid}] PDF unavailable ({error}); existing records preserved"
+        return f"[{stem}] PDF unavailable ({error}); existing records preserved"
 
-    os.makedirs(PDF_DIR, exist_ok=True)
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
     temporary = dest + ".tmp"
     with open(temporary, "wb") as f:
         f.write(data)
     os.replace(temporary, dest)
-    candidate["id"] = aid
+    candidate["id"] = stem
+    candidate["native_id"] = aid
+    candidate["registry"] = "arxiv"
     candidate["versioned_id"] = versioned_id
-    meta[aid] = candidate
-    provenance[aid] = {
+    meta[stem] = candidate
+    provenance[stem] = {
         "source_url": f"https://arxiv.org/abs/{versioned_id}",
         "pdf_url": f"https://arxiv.org/pdf/{versioned_id}",
         "version": versioned_id,
         "retrieved_at": datetime.now(timezone.utc).isoformat(),
-        "pdf_path": f"pdf/{aid}.pdf",
+        "pdf_path": f"pdf/{stem}.pdf",
         "pdf_sha256": hashlib.sha256(data).hexdigest(),
         "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     }
     # Save after each successful pair. Failed attempts never replace valid data.
-    save_json(PROVENANCE_PATH, provenance)
-    save_json(META_PATH, meta)
-    return f"[{aid}] saved {versioned_id} ({len(data) // 1024} KB)"
+    save_provenance(provenance)
+    save_meta(meta)
+    return f"[{stem}] saved {versioned_id} ({len(data) // 1024} KB)"
 
 
 def main():
@@ -177,7 +170,7 @@ def main():
     if not args:
         print("no ids given")
         return
-    meta, provenance = load_json(META_PATH), load_json(PROVENANCE_PATH)
+    meta, provenance = load_meta(), load_provenance()
     for aid in args:
         print(download_one(aid, meta, provenance))
         if len(args) > 1:

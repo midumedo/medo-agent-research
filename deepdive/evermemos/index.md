@@ -1,6 +1,6 @@
 # EverMemOS：论文里的 MemScene，代码里的 Cluster
 
-> 对象深拆，2026-09-21。源码 `sources/repos/EverOS`（EverMind-AI/EverOS，commit `5076683ab88d`，2026-09-08），论文 `sources/papers/frameworks/2601.02163.md`（arXiv 2601.02163，ACL 2026 长文）。
+> 对象深拆，2026-09-21。源码 `sources/repos/EverOS`（EverMind-AI/EverOS，commit `5076683ab88d`，2026-09-08），论文 `sources/papers/md/arxiv-2601.02163.md`（arXiv 2601.02163，ACL 2026 长文）。
 > 状态区分：**代码确实存在** / **文档声称** / **默认启用** / **本项目未验证**。静态读码；GitHub issue #73 原文**未读到**，本文只从代码与配置推断。
 
 ## 先修正一个常见假设

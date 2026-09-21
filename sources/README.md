@@ -2,7 +2,7 @@
 
 这里保存外部论文、第三方代码和原始资料。目录入口、下载工具、元数据与来源记录由本项目维护，**它们帮助定位材料，不等于外部证据，也不证明材料已核实**。
 
-- [论文库](papers/README.md)：PDF 原件、机器转换文本、历史元数据和本地文件指纹。
+- [论文库](papers/README.md)：PDF 原件、机器转换文本、结构化输出与本地文件指纹。清单在 [papers/INDEX.md](papers/INDEX.md)，操作约定在 [papers/AGENTS.md](papers/AGENTS.md)。
 - `repos/`：第三方仓库；使用源码前检查实际文件是否可读，并记录 commit 与路径。
 - [历史报告迁移说明](reports/memory-landscape-2026-09.md)：原先放在这里的本项目调查已移入分析层。
 

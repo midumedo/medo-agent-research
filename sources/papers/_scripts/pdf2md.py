@@ -1,37 +1,19 @@
 """Convert local PDFs to Markdown without adding our reading judgments.
 
-Usage: pdf2md.py [--force] [--out surveys] [arxiv_id ...]
-Existing nonempty outputs are preserved unless --force is supplied.
+Usage: pdf2md.py [--force] [--kind survey] [stem ...]
+Output always goes to md/<stem>.md. Existing nonempty outputs are preserved
+unless --force is supplied.
 """
 
 import hashlib
 import importlib.metadata
-import json
 import os
 import re
 import sys
 from datetime import datetime, timezone
 
-
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PDF_DIR = os.path.join(BASE, "pdf")
-META_PATH = os.path.join(BASE, "meta.json")
-PROVENANCE_PATH = os.path.join(BASE, "provenance.json")
-
-
-def load_json(path):
-    if os.path.exists(path):
-        with open(path, encoding="utf-8") as f:
-            return json.load(f)
-    return {}
-
-
-def save_json(path, data):
-    temporary = path + ".tmp"
-    with open(temporary, "w", encoding="utf-8", newline="\n") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-    os.replace(temporary, path)
+from stem import (base, front_matter, load_meta, load_provenance, md_path, native_id,
+                  pdf_dir, pdf_path, registry, save_provenance, to_stem)
 
 
 def clean(md):
@@ -41,13 +23,19 @@ def clean(md):
     return md.strip() + "\n"
 
 
-def header(aid, meta, pdf_hash, record):
-    m = meta.get(aid, {})
+def human_header(stem, meta, pdf_hash, record):
+    """Human-readable block below the front matter; identity fields live above it."""
+    m = meta.get(stem, {})
     authors = m.get("authors") or []
     names = (", ".join(authors[:6]) + f" 等 {len(authors)} 人") if len(authors) > 6 else (", ".join(authors) or "—")
+    aid = native_id(stem)
+    if registry(stem) == "arxiv":
+        source = f"arXiv: [{aid}]({record.get('source_url') or 'https://arxiv.org/abs/' + aid})"
+    else:
+        source = f"{registry(stem)}: [{aid}]({record.get('source_url') or ''})"
     return "\n".join([
         f"# {m.get('title') or '(标题待补)'}", "",
-        f"- arXiv: [{aid}]({record.get('source_url') or 'https://arxiv.org/abs/' + aid})",
+        f"- {source}",
         f"- 作者: {names}",
         f"- 发表日期: {m.get('date') or '—'}",
         f"- 来源版本: {record.get('version') or 'unknown（缺失，不推测）'}",
@@ -58,25 +46,24 @@ def header(aid, meta, pdf_hash, record):
     ]) + "\n"
 
 
-def convert(aid, meta, out_dir, force=False):
-    if not re.fullmatch(r"\d{4}\.\d{4,5}(?:v[1-9]\d*)?", aid):
-        raise ValueError(f"invalid arXiv id: {aid}")
-    src = os.path.join(PDF_DIR, f"{aid}.pdf")
-    md_dir = os.path.abspath(os.path.join(BASE, out_dir))
-    if os.path.commonpath([BASE, md_dir]) != BASE or md_dir == BASE:
-        raise ValueError("--out must be a subdirectory of papers/")
-    dst = os.path.join(md_dir, f"{aid}.md")
+def convert(token, meta, force=False, kind=None):
+    try:
+        stem = to_stem(token)
+    except ValueError as error:
+        return f"[{token}] {error}"
+    src = pdf_path(stem)
+    dst = md_path(stem)
     if not os.path.exists(src):
-        return f"[{aid}] 缺少 PDF，跳过"
+        return f"[{stem}] 缺少 PDF，跳过"
     if os.path.exists(dst) and os.path.getsize(dst) > 0 and not force:
-        return f"[{aid}] 已存在，未重解析（--force 可重转）"
+        return f"[{stem}] 已存在，未重解析（--force 可重转）"
 
     with open(src, "rb") as f:
         pdf_hash = hashlib.sha256(f.read()).hexdigest()
-    provenance = load_json(PROVENANCE_PATH)
-    record = provenance.setdefault(aid, {})
+    provenance = load_provenance()
+    record = provenance.setdefault(stem, {})
     if record.get("pdf_sha256") and record["pdf_sha256"] != pdf_hash:
-        raise ValueError(f"[{aid}] PDF 与已记录的 SHA256 不一致，请先调查来源变化")
+        raise ValueError(f"[{stem}] PDF 与已记录的 SHA256 不一致，请先调查来源变化")
 
     # Lazy import allows metadata inspection and no-op runs without the parser.
     import pymupdf4llm
@@ -86,15 +73,15 @@ def convert(aid, meta, out_dir, force=False):
     record.setdefault("retrieved_at", None)
     record.setdefault("metadata_pdf_pairing", "unknown")
     record["pdf_sha256"] = pdf_hash
-    record["pdf_path"] = os.path.relpath(src, BASE).replace(os.sep, "/")
-    out = header(aid, meta, pdf_hash, record) + md
-    os.makedirs(md_dir, exist_ok=True)
+    record["pdf_path"] = os.path.relpath(src, base()).replace(os.sep, "/")
+    out = front_matter(stem, meta.get(stem, {}), record, kind) + human_header(stem, meta, pdf_hash, record) + md
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
     temporary = dst + ".tmp"
     with open(temporary, "w", encoding="utf-8", newline="\n") as f:
         f.write(out)
     os.replace(temporary, dst)
     record["conversion"] = {
-        "path": os.path.relpath(dst, BASE).replace(os.sep, "/"),
+        "path": os.path.relpath(dst, base()).replace(os.sep, "/"),
         "parser": "pymupdf4llm",
         "parser_version": importlib.metadata.version("pymupdf4llm"),
         "converted_at": datetime.now(timezone.utc).isoformat(),
@@ -104,28 +91,28 @@ def convert(aid, meta, out_dir, force=False):
         "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
         "visual_verification": False,
     }
-    save_json(PROVENANCE_PATH, provenance)
-    return f"[{aid}] -> {dst} ({len(md.splitlines())} 行；已记录来源与转换信息)"
+    save_provenance(provenance)
+    return f"[{stem}] -> {dst}（{len(md.splitlines())} 行；已记录来源与转换信息）"
 
 
 def main():
-    args, out_dir, force = [], "surveys", False
+    args, force, kind = [], False, None
     it = iter(sys.argv[1:])
     for a in it:
         if a == "--force":
             force = True
-        elif a == "--out":
-            out_dir = next(it, "surveys")
+        elif a == "--kind":
+            kind = "[" + next(it, "unclassified") + "]"
         elif not a.startswith("--"):
             args.append(a)
-    meta = load_json(META_PATH)
+    meta = load_meta()
     if not args:
-        args = sorted(f[:-4] for f in os.listdir(PDF_DIR) if f.lower().endswith(".pdf")) if os.path.isdir(PDF_DIR) else []
+        args = sorted(f[:-4] for f in os.listdir(pdf_dir()) if f.lower().endswith(".pdf")) if os.path.isdir(pdf_dir()) else []
     if not args:
         print("没有可转换的 PDF。先用 download_arxiv.py 下载。")
         return
-    for aid in args:
-        print(convert(aid, meta, out_dir, force))
+    for token in args:
+        print(convert(token, meta, force, kind))
 
 
 if __name__ == "__main__":
