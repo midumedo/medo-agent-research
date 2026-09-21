@@ -14,6 +14,9 @@
 - [Claude Code 上下文经济学](claude-code/context-economics-two-traps.md)：驻留、缓存与完整调用成本。
 - [综述阅读与比较](surveys/README.md)：导航、局部核对与待研究问题。
 - [早期领域调研](landscape/memory-landscape-2026-09.md)：保留历史原稿，尚未逐项复核。
+- [记忆横评对照](memory-benchmark-crossreview-2026-09.md)：基准矩阵、五份一手横评、厂商自报分数，以及"为何不可比"的协议变量清单。
+- [论文简介卡片](paper-digests-2026-09.md)：按材料查"这篇讲了什么"；含四个只有源码的对象与过程中未进正文的判断。
+- [候选对象与记忆框架清单](landscape/memory-object-candidates-2026-09.md)：用户提供的候选笔记，原文保留，未核实。
 - [记忆横评对照](memory-benchmark-crossreview-2026-09.md)：基准矩阵、五份有对照价值的一手横评、厂商自报分数与协议变量清单；区分论文、自报、第三方与未核实。
 - [候选对象与记忆框架清单](landscape/memory-object-candidates-2026-09.md)：用户提供的候选笔记，原文保留，数字尚未核实。
 

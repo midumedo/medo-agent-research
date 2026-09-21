@@ -20,6 +20,15 @@
 
 - [六篇综述的分类卡片](memory-taxonomy/taxonomies-by-survey.md)：各轴取值、定义、边界与原文位置；新综述入库后在此追加。运行背景。
 
+### [记忆有哪些分类法，以及为什么它们互相矛盾](memory-taxonomy/index.md)
+
+第二个主题综合，2026-09-21。把"怎样给记忆分类"本身当成研究问题：六家综述分别切了哪些轴，它们在哪些地方给出相反的归属，以及这些分歧会怎样改变评测与设计结论。
+
+- [经典记忆分类详解](memory-taxonomy/cognitive-classes.md)：从最熟悉的词进入——感觉、工作、情景、语义、程序，陈述性/程序性与外显/内隐两条交叉轴，每一类映射到 Agent 后的对应物、常见误用，以及类比在哪里断掉。
+- [六篇综述的分类卡片](memory-taxonomy/taxonomies-by-survey.md)：每篇的轴、取值、定义与原文位置。
+
+这个主题与上述运行主题的关系：运行主题解释"一次任务里信息怎么流动"，分类主题解释"用什么词描述这些信息，以及为什么不同人的词不一样"。
+
 ## 研究依据与后续修订
 
 [概念草稿](../analysis/concepts-and-boundaries.md)、[留存分析](../analysis/context-retention.md)、[研究议程](../analysis/research-agenda.md)和[对象探索](../deepdive/README.md)继续维护各自问题与材料。新的实现或反例可以改写本主题；不为保住流程图而把所有系统归入固定阶段。具体归属见 [CONVENTIONS](../CONVENTIONS.md)。

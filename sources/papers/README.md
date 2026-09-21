@@ -17,6 +17,38 @@
 
 现有 PDF 的 arXiv 版本、原获取时间和实际转换环境缺失，明确记为 unknown / `null`；当前文件指纹不是来源真实性证明，也不是旧 PDF 与旧元数据同版的证明。
 
+## 更高保真的转换：MinerU 服务（可选）
+
+现有转换用 `pymupdf4llm`，快且依赖轻，但对表格、公式、多栏排版损失较大。需要更高保真时改用 **MinerU**，它较重，因此**不装进本项目**：装在独立目录，起成本地 HTTP 服务，本项目只做调用。
+
+**服务侧（项目外，一次性准备）**
+
+```text
+# 选择一个项目外的目录，自带独立环境
+mkdir -p D:/tools/mineru && cd D:/tools/mineru
+python -m venv .venv && .venv/Scripts/python -m pip install mineru
+
+# 起服务（默认 8000）
+.venv/Scripts/mineru-api --host 127.0.0.1 --port 8000
+```
+
+- 健康检查：`GET /health`，返回 `protocol_version` 等，用来记录服务版本。
+- 同步解析：`POST /file_parse`；异步：`POST /tasks` + `GET /tasks/{id}/result`。
+- 后端：`pipeline`（快，显存约 4GB）、`hybrid`（更准，约 8GB）、`vlm`（约 8GB+）。另有 `--effort medium|high` 控制解析强度。
+- 服务只监听 127.0.0.1，不对外暴露；不需要鉴权。
+
+**本项目侧（调用）**
+
+```text
+<python> _scripts\mineru_client.py --out benchmarks --backend hybrid 2507.05257
+```
+
+产物写入 `--out` 目录：`2507.05257.md` 与结构化中间结果 `2507.05257.middle.json`，并把 `parser=mineru`、服务 `protocol_version`、后端、语言、转换时间与正文指纹写进 `provenance.json`，与 `pdf2md.py` 的记录结构保持一致。
+
+**这个脚本不做的事**：不启动服务、不改现有 `pdf_sha256` 校验规则、不在服务不可用时回退到其它解析器——连不上就直接失败，避免把未转换当成已转换。已存在的非空转换文本不会被覆盖，除非显式 `--force`。
+
+两种转换可以并存：同一篇论文先用 `pdf2md.py` 快速得到全文，遇到表格或公式关键的段落再用 MinerU 重转核对，`provenance.json` 会保留最近一次转换的信息，历史由 Git 追溯。
+
 ## 编号与日期的核验
 
 2026-09-21 新增的 20 份材料的 arXiv 编号、首次与最新修订日期、以及 venue 线索，均用官方接口核对过，脚本为 [_scripts/check_arxiv.py](_scripts/check_arxiv.py)。它只读取并返回接口字段，核验不到的项输出 `NOT-FOUND` 或 `ERROR`，不推测。同批下载还修复了 [download_arxiv.py](_scripts/download_arxiv.py)：arXiv 的 abs 页改版后 `citation_pdf_url` 不再带版本号，脚本会走到"版本未解析"分支；现在解析失败时改从官方接口取得显式版本，再按该版本分别取元数据与 PDF。
