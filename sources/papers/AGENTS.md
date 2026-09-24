@@ -14,87 +14,66 @@
 
 ```text
 papers/
-  index.json      唯一事实来源：一份论文一条记录
-  INDEX.md        index.json 的字段说明与查询方式（不是清单）
+  index.csv       指路表：id, name, keywords, date（一行一版本）
   CHANGELOG.md    只追加的入库与修订日志
   AGENTS.md README.md
   meta.json       抓取到的原始元数据，不改写
   provenance.json 指纹、版本与转换记录
-  pdf/ md/ json/  按表示形式分，同一词干同名路由
-  assets/<词干>/  转换抽出的图片与清单（默认只留清单）
+  pdf/ md/        按表示形式分，同一文件名同名路由
+  assets/         转换抽出的图片，平铺，按 id 与图号命名
   variants/       同一篇的额外版本，默认不存在
   _scripts/ logs/ 工具与运行记录，不属于外部证据
 ```
 
-**同一词干在 `pdf/`、`md/`、`json/`、`assets/` 下同名路由**：给一个词干就能取到该论文的任何表示形式，不需要查表。
+**同一文件名在 `pdf/` 与 `md/` 下同名路由**：给一个文件名词干就能取到该论文的原件与转换正文，不需要查表。`assets/` 里的图片按 `id` 前缀归篇——前缀相同即同一篇。
 
-`pdf/`、`md/`、`json/` 分开而不是合并：目录只表达「表示形式」这一个维度；语义全部交给 index.json 与 front matter。分开后可以按格式做不同处理（二进制与文本的 git 属性不同），也能用 `pdf/` 与 `md/` 的差集直接看出哪些还没转换。同名词干路由在两种布局下都成立，所以这是操作层面的选择，而操作层面分开更划算。
+`pdf/` 与 `md/` 分开而不是合并：目录只表达「表示形式」这一个维度；语义全部交给 `index.csv` 与 front matter。分开后可以按格式做不同处理（二进制与文本的 git 属性不同），也能用两者的差集直接看出哪些还没转换。
 
-## 命名：文件名用标题，身份用 id
+## 命名：文件名 = `<id>.<名称>`
 
-**文件名 = 标题的 slug；身份 = `<registry>-<native-id>`，存在 index.json 与 md 的 front matter 里。**
+**`id` 是身份，`名称` 是给人看的简称，两者拼成文件名。**
 
-这是两套东西，别混：文件名是**标签**（给人认的），`id` 是**身份**（给机器引用的）。之所以必须分开，正是因为采用标题命名——标题会变，所以文件名不能承担身份；而文件名又不能随便改，因为它路由 `pdf/md/json` 且被外部链接引用。解决办法就是：slug 一旦写入即**冻结**，真正的身份交给 `id`。
+`id` 形如 `arxiv-2502.12110v11`（登记处 + 编号 + 版本），含版本、全库唯一；`名称` 是短的可读名。例：`arxiv-2502.12110v11.A-Mem.md`。引用锚点是 `id`，不是文件名。
 
-### slug 规则（`stem.slugify`）
+### 名称的两条来源
 
-1. 取标题原文（入库时登记处的标题）转小写；
-2. 保留 ASCII 字母数字与汉字，其余字符（空格、冒号、引号、斜杠…）一律变 `-`；
-3. 连续 `-` 合并，去掉首尾 `-`；
-4. 超过 96 字符时在 `-` 处截断，不留半词；
-5. 与已有词干冲突则追加 `-2`、`-3`（按入库顺序）；
-6. 标题为空则无法入库，不猜。
+| 论文类型 | 命名方式 | 例 |
+|---|---|---|
+| 有专名（框架、系统、基准、数据集） | 用专名，保留原文大小写 | `Mem0`、`A-Mem`、`LongMemEval`、`Zep` |
+| 无专名（综述、方法类） | 类型 + 领域 | `Survey of Agent Memory`、`Evaluation of Long-Term Conversational Memory` |
 
-例：`Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory` → `mem0-building-production-ready-ai-agents-with-scalable-long-term-memory`。
+专名的判定标准是「标题里作者反复使用的那个名字」；没有就别硬造缩写。
 
 ### 三条硬规则
 
-- **词干永不改名。** 标题后来变了、类型改了、发现更合适的 slug 了，都不动文件名；改 index.json 与 front matter，并在 CHANGELOG 留痕。
-- **版本不进文件名。** 版本记在 index.json 的 `version` 与 `provenance.json`。版本进文件名会让每次修订凭空造出第二个身份。需要并存对比放 `variants/`。
-- **`id` 永不改。** 它才是引用锚点。脚本用 `stem.find()` 从词干／id／编号／标题任意一种反查记录。
+- **非法字符折成 `.`**（`stem.sanitize_name`）。Windows 禁用 `< > : " / \ | ? *`。冒号尤其危险：NTFS 不报错，而是把冒号之后的部分当成**备用数据流名**，文件名被静默截断——实测写 `probe.A-Mem: Agentic Memory.md`，目录里出现的是 `probe.A-Mem`。所以必须替换，不能指望系统报错。
+- **大小写保持**：`A-Mem` 不写成 `a-mem`。代价是大小写敏感的文件系统（Linux、远端 CI）要逐字匹配；引用都靠 `index.csv` 的 `id` 定位，文件名只供人看。
+- **`id` 永不改。** 脚本用 `stem.find()` 从 `id`／名称／文件名词干／编号任意一种反查记录。
 
-## index.json：唯一事实来源
+> 早期方案「文件名 = 标题 slug、版本不进文件名」已推翻：标题进文件名会随 arXiv 修订漂移，版本不进文件名则同一篇的多个版本无法在文件系统里区分。现在版本在 `id` 里、可读性在`名称`里，两个问题都不存在。`stem.slugify()` 仍留给尚未入库的新论文临时定名。
 
-`index.json` 由 `_scripts/build_index.py` 从文件、`meta.json`、`provenance.json` 与 md front matter 生成。**不要手改生成字段**（`has_*`、指纹、解析器、转换时间）；要改的是 `kinds`、`tags`、`note` 这类人工判断，改完重跑 build_index 不会丢。
+## index.csv：指路表
 
-字段分五组，分组本身就是设计：**身份 / 语义 / 定位 / 状态 / 溯源**。
+`index.csv` 由 `_scripts/build_index.py` 生成，**四列**，一行一版本：
 
-| 组 | 字段 | 说明 |
-|---|---|---|
-| 身份 | `stem` | 文件名词干，路由键，冻结 |
-| | `id` | `<registry>-<native-id>`，永久身份 |
-| | `registry` `native_id` `alt_ids` | 登记处与编号；一篇有多号时其余进 `alt_ids` |
-| 语义 | `title` `slug_year` `authors` | 标题取原文，不做 slug |
-| | `kinds` | 多值数组：survey / benchmark / framework / …，可复核后改 |
-| | `tags` | 多值数组，自由标签（如「分类未复核」） |
-| | `note` | 一句话提醒，写给以后要引用它的人 |
-| 定位 | `source_url` | 来源页面 |
-| 状态 | `has_pdf` `has_md` `has_json` `has_assets` | 各表示形式是否齐备 |
-| 溯源 | `version` `pdf_sha256` `parser` `converted_at` `retrieved_at` `visual_verification` | 版本与指纹；`visual_verification` 默认 false |
-| | `added` | 入库日期，缺失为 null |
+| 列 | 语义 |
+|---|---|
+| `id` | 身份，含版本；文件名前半段 |
+| `name` | 简称；文件名后半段 |
+| `keywords` | 多值（`;` 分隔）；人工与 AI 判定，重建时不覆盖 |
+| `date` | 发布日，到日 |
 
-**为什么是 JSON 而不是 Markdown 表格或 .db**：表格写得再整齐，人读都要从头扫一遍，机器读还得先解析；`.db` 是二进制，进 Git 没法 diff、也没法 review。JSON 可 diff、可 grep、可被 `jq` 处理，规模到几百篇也够用。**SQL 用在哪？** 用在查询语言上：`index_query.py` 把 index.json 载入内存 SQLite，说人话地查；`--emit index.sql` 导出带 CREATE/INSERT 的 `.sql` 文本，需要在外部工具里查时现载。查询能力归 SQL，存储归 JSON，不在 Git 里放二进制。
+**文件名推导**：`stem = f"{id}.{name}"`（`stem.stem_of`）。这是唯一规则，脚本与文档都照它走；表里因此不再单列 `stem`。
 
-```text
-<python> _scripts/build_index.py                 # 重建 index.json
-<python> _scripts/build_index.py --check         # 校验 index.json 与文件是否一致
-<python> _scripts/index_query.py                 # 概览：篇数、类型分布、缺口
-<python> _scripts/index_query.py --sql "SELECT stem, id FROM papers WHERE has_json = 0"
-<python> _scripts/index_query.py --sql "SELECT p.stem FROM papers p
-                                        JOIN paper_kinds k ON p.stem = k.stem
-                                        WHERE k.kind = 'benchmark'" --json
-<python> _scripts/index_query.py --emit index.sql
-```
+**只了解信息时读前几列**：想看「库里有什么」，读 `id`、`name`、`keywords`、`date` 就够；要某篇的细节，打开那篇 `md/` 读 front matter 的 `abstract`。
 
-`paper_kinds` 与 `paper_tags` 是把多值字段展开成的表，所以类型查询是 `JOIN`，不是 `LIKE '%,x,%'`。
-
-**CHANGELOG.md 只追加**：入库、重转、更正、结构变动各记一行，日期 · 动作 · 对象 · 说明。它不重复 index.json 已有的信息，也不承担清单职责。
+**CHANGELOG.md 只追加**：入库、重转、更正、结构变动各记一行，日期 · 动作 · 对象 · 说明。它不重复 `index.csv` 已有的信息，也不承担清单职责。
 
 ## 入库流程
 
 1. **取原件** → `pdf/<词干>.pdf`。arXiv 用 `_scripts/download_arxiv.py`（给编号、已入库标识或标题都行；新论文先抓元数据，再用标题定 slug）；非 arXiv 手工放入，按上面的规则定词干。
 2. **登记** → `provenance.json` 写来源 URL、明确版本、获取时间、PDF SHA256；元数据写进 `meta.json`。缺的字段写 `null`／`unknown`，不推测。
-3. **转换** → `md/<词干>.md`（见下）；结构化输出进 `json/<词干>.json`。
+3. **转换** → `md/<id>.<名称>.md`（见下）；结构化输出不落盘，只在转换时读一次用来抽图注。
 4. **入索引** → 跑 `build_index.py`，再在 CHANGELOG 追加一行。
 
 已有非空 `md/` 不会被覆盖，除非显式 `--force`。PDF 与已记录指纹不一致时脚本会停下来——那是「先调查来源变化」，不是「覆盖」。
@@ -118,15 +97,21 @@ papers/
 
 ## 图片怎么管
 
-MinerU 的结果 zip 里有 `images/`，`full.md` 用 `![](images/x.jpg)` 引用它。直接把 md 丢进 `md/` 会让这些引用指向不存在的位置，所以：
+MinerU 的结果 zip 里有 `images/`，`full.md` 用 `![](images/x.jpg)` 引用它。直接把 md 丢进 `md/` 会让引用指向不存在的位置，所以转换时统一处理：
 
-1. **改写引用**：md 里的 `](images/` 与 `src="images/` 改成 `](../assets/<词干>/`，让引用与 md 的位置解耦，永远指向同一处。
-2. **默认不落字节**：`assets/<词干>/manifest.json` 始终写入，记录每个图片的**文件名、字节数、SHA256**；字节只有显式 `--keep-images` 才写盘。
-   - 理由：图片是**从已提交的 PDF 派生的**，PDF 在，图就能按同一 API 与版本原样再生成。把几十 MB 派生字节塞进 Git 只增加体积，不增加可恢复性；而清单让我们能验证重新生成的结果一致，也能在没图时知道这篇有几张图。
-   - 需要看图时：`mineru_cloud.py --keep-images <词干>`。
-   - `.gitignore` 只忽略字节，不忽略 `manifest.json`。
-3. **图注进清单**：从 `*_content_list.json` 抽出 `type == "image"` 的条目及其 caption，写进 manifest 的 `figures`。这样「找 Figure 3 说了什么」不必打开图片——先用文字定位，再决定要不要取回字节。
-4. `has_assets` 反映 `assets/<词干>/` 是否存在；转换记录里的 `images` 记数量、总字节与是否保留字节。
+1. **改写引用**：md 里的 `](images/` 与 `src="images/` 改成 `](../assets/<新文件名>`，引用与 md 的位置解耦。
+2. **每种图都有名字**，平铺在 `assets/`，不建子目录。文件名自带 `id` 前缀，单独一张图拷出去也知道属于哪篇；`ls assets/ | grep <id>` 就是一篇的全部图。
+
+| 图片来源 | 命名 | 例 |
+|---|---|---|
+| content_list 有 `img_path`、图注带编号 | `<id>-<kind><N>` | `arxiv-2504.19413v1-fig3.jpg` |
+| content_list 有 `img_path`、图注无编号 | `<id>-<kind><N>`（顺序号） | `arxiv-2504.19413v1-chart1.jpg` |
+| content_list 没有记录（行间公式一类的图） | `<id>-img<N>` | `arxiv-2502.12110v11-img1.jpg` |
+
+第三类用中性的 `img` 而不写 `eq`：这些图在 content_list 里没有条目，既没类型也没路径，「是公式」只是数量吻合的推断，不写成事实。
+
+3. **没有 manifest**。图注在 md 里紧贴图片引用（`![](…fig1.jpg)` 下面那段就是），图号在文件名里，字节本身进了版本库——再加一份清单只是把已有信息抄第三遍。
+4. 重取图片：`mineru_cloud.py --force <词干>`；`--no-images` 可只登记不落字节。
 
 ## keywords：打词用的关注词表
 
@@ -150,8 +135,8 @@ long-term-memory, context-window, retrieval, rag, evaluation, personalization
 
 ## 不做的事
 
-- 不按类型建子目录（类型在 index.json 的 `kinds`，可多值、可改）。
-- 不往 md 里写本项目的判断、摘要卡或阅读建议。
-- 不改 PDF 原件，不重命名词干，不删 CHANGELOG 行。
+- 不按类型建子目录（分类靠 `keywords`，可多值、可改）。
+- md 的 front matter 是本项目的**登记区**（身份、摘要、关键词、状态），`---` 之后是转换原文——不往正文里写本项目的判断与阅读建议。
+- 不改 PDF 原件，不改已冻结文件名里的 `id` 段，不删 CHANGELOG 行。
 - 不手改 index.json 的生成字段；不因为转换成功就宣称已核实；不在缺失字段上补推测值。
 - 不把本目录的文件当作已确立的证据——它只是可定位的材料。

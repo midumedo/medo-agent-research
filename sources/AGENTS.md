@@ -14,7 +14,7 @@
 
 | 子层 | 内容 | 入口 |
 |---|---|---|
-| `papers/` | 论文原件与机器转换文本，按标题 slug 词干路由 | [index.json](papers/index.json)（数据）· [INDEX.md](papers/INDEX.md)（字段与查询） |
+| `papers/` | 论文原件与机器转换文本，按 `<id>.<简称>` 路由 | index.csv（数据）· papers/AGENTS.md（规则与字段） |
 | `repos/` | 第三方仓库 checkout，用源码前先确认文件真的可读 | [repos-sources.md](repos-sources.md) |
 
 `repos/` 不进版本库（见 `.gitignore`），所以它的索引放在 `sources/` 这一层；`papers/` 进版本库，索引就放在它自己里面。

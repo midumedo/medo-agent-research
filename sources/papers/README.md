@@ -2,8 +2,8 @@
 
 外部论文的原件与机器转换文本。给人看的入口说明只有这一页；规则见 [AGENTS.md](AGENTS.md)，数据查 [index.json](index.json)（字段与查询方式见 [INDEX.md](INDEX.md)），历史见 [CHANGELOG.md](CHANGELOG.md)。
 
-- 找一篇论文：文件名就是标题的 slug（`mem0-building-production-ready-ai-agents-...`），同一个名字在 `pdf/`（原件）、`md/`（转换正文，AI 默认读这个）、`json/`（结构化输出）、`assets/`（图片清单）下都能取到。
-- 认不出某个文件名是哪篇，就查 index.json 的 `title`；`id`（`arxiv-2504.19413` 这种）是永久身份，改文件名不会改它。
+- 找一篇论文：文件名是 `<id>.<简称>`（如 `arxiv-2504.19413v1.Mem0`），同一个名字在 `pdf/`（原件）与 `md/`（转换正文，AI 默认读这个）下都能取到；图片平铺在 `assets/`，以 `id` 前缀归篇。
+- 认不出某个文件名是哪篇，就查 `index.csv` 的 `name`；`id`（`arxiv-2504.19413v1` 这种）是永久身份，改简称不会改它。
 - **收录不等于核实。** 机器转换文本不等于已对 PDF 做过视觉核验；引用具体数字、表格、公式前回到 PDF 定位原文。
 
 现在共二十七份材料。除首批七份的来源版本与获取时间缺失（记为 unknown）外，其余编号与修订日期经 arXiv 官方接口核对过。
