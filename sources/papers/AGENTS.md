@@ -77,6 +77,19 @@ papers/
 
 **CHANGELOG.md 只追加**：入库、重转、更正、结构变动各记一行，日期 · 动作 · 对象 · 说明。它不重复 `index.csv` 已有的信息，也不承担清单职责。
 
+## 三个数据文件，各管一段
+
+读论文**不需要**它们中的任何一个；它们分别服务入库、审计与兜底。判断一个文件是否该留，就看它的信息有没有别的权威处——下表是当前的答案。
+
+| 文件 | 独有信息（别处取不到） | 谁在读 | 定位 |
+|---|---|---|---|
+| `index.csv` | 无——它就是权威：`id`／`name`／`keywords`／`revised` | AI 与人的第一入口 | **指路表** |
+| `md/*.md` 的登记块 | 每篇的摘要、关键词、解析器版本、进度 | 读单篇时 | **单篇登记** |
+| `meta.json` | **首版提交日**（`date`）与 `authors`；其余（title／abstract／url／身份）在 md 或文件名里都有 | 入库与兜底 | **抓取快照 + 入库暂存**：证明这些事实来自 arXiv 抓取而非编造 |
+| `provenance.json` | `pdf_sha256`（转换前的守卫基线）与 `conversion`（批号、任务号、服务端版本、原始地址） | 转换时的守卫与事后复核 | **转换审计** |
+
+**已删的**：`watchlist.txt`——它曾是「关注清单」，但内容与 `index.csv` 的 `id` 列**完全相等**（2026-09-24 实测），且它还因命名体系换过两轮而整体失效过一次。要批量核对／下载，直接用 `download_arxiv.py --all`（它现按 `index.csv` 取 id）。真正需要「关注但未入库」的清单时再建，那时它才有独有信息。
+
 ## 入库流程
 
 1. **取原件** → `pdf/<id>.<名称>.pdf`。arXiv 用 `_scripts/download_arxiv.py`（给编号、已入库标识或标题都行；新论文先抓元数据，再用标题定 slug）；非 arXiv 手工放入，按上面的规则定名称。
@@ -93,7 +106,7 @@ papers/
 下面的 `<python>` 指 `uv run python`；直接用它本机 Python 也行（工具链只用标准库）：
 
 ```text
-<python> _scripts/download_arxiv.py --all                 # 按 watchlist.txt（`id` 一行一个）
+uv run python _scripts/download_arxiv.py --all            # 按 index.csv 的 id 列批量核对／下载
 <python> _scripts/download_arxiv.py 2504.19413            # 也可以用编号或标题
 <python> _scripts/mineru_cloud.py <id 或 名称> <id 或 名称>           # 高保真重转，一次批量提交
 <python> _scripts/check_arxiv.py 2504.19413               # 核对编号与修订日期

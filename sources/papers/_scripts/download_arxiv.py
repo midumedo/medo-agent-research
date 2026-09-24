@@ -25,7 +25,6 @@ ARXIV_API = "http://export.arxiv.org/api/query?id_list={}&max_results=1"
 from stem import find, load_meta, load_provenance, native_for, pdf_path, save_meta, \
     save_provenance, slugify, stem_of
 
-WATCHLIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "watchlist.txt")
 UA = "MemoryResearch/1.0 (local paper archive)"
 
 
@@ -175,9 +174,8 @@ def download_one(token, meta, provenance):
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if "--all" in sys.argv[1:] or not args:
-        if os.path.exists(WATCHLIST):
-            with open(WATCHLIST, encoding="utf-8") as f:
-                args = [line.strip() for line in f if line.strip() and not line.lstrip().startswith("#")]
+        # 不再读一份单独的清单：pdf/ 里现有篇目就是范围，index.csv 的 id 列是权威。
+        args = [r["id"] for r in stem.records()]
     if not args:
         print("no ids given")
         return
