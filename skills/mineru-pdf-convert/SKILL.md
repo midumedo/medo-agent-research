@@ -55,6 +55,18 @@ cd D:/workspace/memory/sources/papers
 2. 没在跑就说明情况让用户决定——**不要自动启动服务或安装依赖**。
 3. 跑：`python _scripts/mineru_client.py --backend hybrid <词干>`（`--backend`：`pipeline`／`hybrid`／`vlm`）。
 
+## 版本：只在 zip 里，别处都没有
+
+MinerU 的版本号**不在 API 响应里**——提交返回只有 `code/msg/trace_id/data{batch_id,file_urls}`，轮询返回只有 `data{batch_id,extract_result[{data_id,file_name,state,err_msg}]}`；`*_model.json` 里也没有。这三处都实测过。
+
+它在 **zip 内 `layout.json`（MiddleJson）的末尾**：
+
+    "_backend": "hybrid", "_effort": "medium", "_ocr_enable": false, "_version_name": "3.4.4"
+
+所以解包后调 `mineru_version(zf)` 取 `_version_name` 与 `_backend`，写进 md 的 `parser: mineru-cloud 3.4.4`。**读不到就退回请求的档位**（`mineru-cloud vlm`），不编版本号。注意 `--model-version` 是我们**请求**的档位、`_backend` 是服务端**实际**用的，两者未必同名——以服务端回报的为准。
+
+登记块因此**不再有 `converted_at`**：版本已唯一确定解析行为，"什么时候转的"由 git 承载。
+
 ## 收尾
 
 转换完跑一次 `_scripts/build_index.py` 刷新 `index.json`，并在 `CHANGELOG.md` 追加一行。

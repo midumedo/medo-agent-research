@@ -235,9 +235,10 @@ class IndexCsvTests(unittest.TestCase):
                                  keywords=["memory"], abstract="abs", revised="2025-10-08",
                                  parser="mineru-cloud", state=["converted"])
         for key in ("stem:", "id:", "keywords:", "abstract:", "revised:", "source:",
-                    "parser:", "converted_at:", "state:"):
+                    "parser:", "state:"):
             self.assertIn(key, text)
         self.assertIn("https://arxiv.org/abs/xv1", text)
+        self.assertNotIn("converted_at", text, "转换时间由 git 承载，不进登记块")
         self.assertNotIn("\ndate:", text, "date 字段已由 revised 取代")
         self.assertNotIn("registry:", text)
         self.assertNotIn("native_id:", text)
@@ -298,6 +299,30 @@ class NamesAndAssetsTests(unittest.TestCase):
             self.assertFalse(re.fullmatch(r"[0-9a-f]{64}\.[a-z]+", mapping[path]),
                              "没有 content_list 记录的图不得保留 hash 名")
         self.assertEqual(len(set(mapping.values())), 3, "三个名字必须互不相同")
+
+    def test_mineru_version_read_from_layout(self):
+        """版本只在 zip 的 layout.json 里，API 响应从不给。"""
+        zf = fake_zip({"layout.json":
+                       '{"pdf_info": [], "_backend": "hybrid", "_effort": "medium",'
+                       ' "_ocr_enable": false, "_version_name": "3.4.4"}'})
+        version, backend = mineru.mineru_version(zf)
+        self.assertEqual(version, "3.4.4")
+        self.assertEqual(backend, "hybrid")
+
+    def test_mineru_version_absent_is_not_invented(self):
+        version, backend = mineru.mineru_version(fake_zip({"layout.json": '{"pdf_info": []}'}))
+        self.assertIsNone(version)
+        self.assertIsNone(backend)
+
+    def test_parser_label_prefers_the_reported_version(self):
+        self.assertEqual(mineru.parser_label({}, "vlm", "3.4.4"), "mineru-cloud 3.4.4")
+        self.assertEqual(mineru.parser_label({}, "vlm", None), "mineru-cloud vlm")
+
+    def test_front_matter_has_no_converted_at(self):
+        """converted_at 由 revised 与 git 覆盖，不再进登记块。"""
+        text = stem.front_matter("a-v1", {}, {"id": "arxiv-1v1"}, {},
+                                 keywords=["memory"], parser="mineru-cloud 3.4.4")
+        self.assertNotIn("converted_at", text)
 
     def test_write_assets_writes_no_manifest(self):
         with tempfile.TemporaryDirectory() as tmp:

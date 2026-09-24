@@ -152,6 +152,8 @@ def poll(batch_id, stems, timeout):
         if response.get("code") != 0:
             raise SystemExit(f"查询结果失败：{response.get('msg')} / {response.get('trace_id')}")
         results = (response.get("data") or {}).get("extract_result") or []
+        if not getattr(poll, "dumped", False):
+            poll.dumped = True
         if not isinstance(results, list) or not results:
             time.sleep(5)
             continue
@@ -314,13 +316,36 @@ def write_assets(zf, stem, ident, items, mapping, keep_images):
             "kept": bool(keep_images and images)}
 
 
-def parser_label(result, model_version):
-    """Prefer a server-reported version; fall back to the model tier we asked for.
+def mineru_version(zf):
+    """MinerU's own version, which only the zip knows.
+
+    The API responses never mention it, and the model output does not either —
+    it sits at the end of `layout.json` (the MiddleJson) as `_version_name`,
+    next to `_backend`. Returns (version, backend), both None when absent: the
+    caller falls back to the tier it asked for rather than inventing a number.
+    """
+    name = pick(zf, "layout.json")
+    if not name:
+        return None, None
+    try:
+        raw = zf.read(name).decode("utf-8", "replace")
+    except Exception:
+        return None, None
+    found = re.search(r'"_version_name"\s*:\s*"([^"]+)"', raw)
+    backend = re.search(r'"_backend"\s*:\s*"([^"]+)"', raw)
+    return (found.group(1) if found else None,
+            backend.group(1) if backend else None)
+
+
+def parser_label(result, model_version, version=None):
+    """`mineru-cloud <version>` when the server told us; the requested tier otherwise.
 
     Never issue an extra request just to learn a version number.
     """
+    if version:
+        return f"mineru-cloud {version}"
     for key in ("version", "parser_version", "model_version"):
-        value = str(result.get(key) or "").strip()
+        value = str((result or {}).get(key) or "").strip()
         if value:
             return f"mineru-cloud {value}"
     return f"mineru-cloud {model_version}"
@@ -393,7 +418,8 @@ def main():
             assets = write_assets(zf, stem, ident, items, mapping, keep_images)
 
             stamp = datetime.now(timezone.utc).isoformat()
-            label = parser_label(result, args.model_version)
+            version, backend = mineru_version(zf)
+            label = parser_label(result, args.model_version, version)
             state = merge_state(read_front_matter(stem).get("state"),
                                 ["downloaded", "converted"] + (["imaged"] if assets["count"] else []))
             # Fill the conversion record before writing the md: the register block
@@ -402,6 +428,8 @@ def main():
             record["conversion"] = {
                 "path": os.path.relpath(md_path(stem), base()).replace(os.sep, "/"),
                 "parser": label,
+                "mineru_version": version,
+                "mineru_backend": backend,
                 "api": API,
                 "model_version": args.model_version,
                 "lang": args.lang,

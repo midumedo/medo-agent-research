@@ -28,7 +28,7 @@ VERSION_RE = re.compile(r"v[1-9]\d*$")
 INDEX_FIELDS = ["id", "name", "keywords", "revised"]
 # md front matter is the per-paper register: 8 fields, no duplicates of index.csv.
 FRONT_FIELDS = ["stem", "id", "keywords", "abstract", "revised", "source",
-                "parser", "converted_at", "state"]
+                "parser", "state"]
 
 
 def base():
@@ -354,7 +354,6 @@ def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
         ("revised", revised or pick("revised", normalize_date(meta.get("revised")))),
         ("source", source or pick("source", prov.get("source_url"), meta.get("url"))),
         ("parser", parser or pick("parser", conversion.get("parser"))),
-        ("converted_at", pick("converted_at", conversion.get("converted_at"))),
         ("state", state or pick("state", prov.get("state"))),
     ]
     lines = ["---"]

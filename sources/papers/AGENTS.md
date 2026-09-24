@@ -137,7 +137,7 @@ long-term-memory, context-window, retrieval, rag, evaluation, personalization
 ## 阅读与引用纪律
 
 - md 是**机器转换文本**，不是原文。引用具体数字、表格、公式前，回到 `pdf/` 定位原文位置核对。
-- md 顶部有 YAML front matter（`stem`、`id`、`keywords`、`abstract`、`date`、`source`、`parser`、`converted_at`、`state`）。身份以 front matter 与 `index.csv` 为准；正文是**最后一个 `---` 之后**的内容。
+- md 顶部有 YAML front matter（`stem`、`id`、`keywords`、`abstract`、`date`、`source`、`parser`（含 MinerU 版本）、`state`）。身份以 front matter 与 `index.csv` 为准；正文是**最后一个 `---` 之后**的内容。
 - 引用时给出 `id` + 版本 + 章节或图表；版本 unknown 就写 unknown。
 - 转换成功不等于做过视觉核验，`visual_verification` 默认是 `false`。
 

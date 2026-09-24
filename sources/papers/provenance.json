@@ -77,12 +77,16 @@
         "lang": "en",
         "keep_images": true
       },
-      "visual_verification": false
+      "visual_verification": false,
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid"
     },
     "state": [
       "downloaded",
       "converted",
-      "imaged"
+      "imaged",
+      "abstracted",
+      "keyworded"
     ],
     "revised": "2025-03-04"
   },
@@ -141,12 +145,16 @@
         "lang": "en",
         "keep_images": true
       },
-      "visual_verification": false
+      "visual_verification": false,
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid"
     },
     "state": [
       "downloaded",
       "converted",
-      "imaged"
+      "imaged",
+      "abstracted",
+      "keyworded"
     ],
     "revised": "2025-10-08"
   },
@@ -205,12 +213,16 @@
         "lang": "en",
         "keep_images": true
       },
-      "visual_verification": false
+      "visual_verification": false,
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid"
     },
     "state": [
       "downloaded",
       "converted",
-      "imaged"
+      "imaged",
+      "abstracted",
+      "keyworded"
     ],
     "revised": "2025-04-28"
   },
@@ -483,20 +495,39 @@
     "pdf_sha256": "8752aa223e004ca286995bc1e8cbde8e89e67ad3aeb9ba0266f3ccab3cc11078",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/simplemem-efficient-lifelong-memory-for-llm-agents.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:42:34.747258+00:00",
+      "path": "md/arxiv-2601.02553v3.Project.SimpleMem.md",
+      "parser": "mineru-cloud vlm",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "68d8e59d-656e-4bac-aae5-6cecfd4dca2a",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-07-30/62789194-81e8-4c0a-bbb5-c271512e77c2.zip",
+      "converted_at": "2026-09-24T15:20:46.676036+00:00",
       "pdf_sha256": "8752aa223e004ca286995bc1e8cbde8e89e67ad3aeb9ba0266f3ccab3cc11078",
-      "body_sha256": "e7d4238fec76703a7d49c55dfeea008fdbaf816f37cc5ed9e370b82669977735",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "939f9f6e2d1f078e81321e857141fe2d707c66c9252d6696bd3b474aa78b634c",
+      "images": {
+        "count": 16,
+        "bytes": 1009791,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
-      "visual_verification": false
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false,
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid"
     },
-    "revised": "2026-01-29"
+    "revised": "2026-01-29",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged",
+      "abstracted",
+      "keyworded"
+    ]
   },
   "arxiv-2601.08323v3.Model.AtomMem": {
     "source_url": "https://arxiv.org/abs/2601.08323v3",

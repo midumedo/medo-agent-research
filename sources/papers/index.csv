@@ -17,7 +17,7 @@ arxiv-2510.27246v2,Bench.Million-Token Memory,benchmark,2026-02-21
 arxiv-2512.13564,Survey.Age of Agent Memory,survey,2026-01-13
 arxiv-2601.01885v3,Method.Agentic Memory,framework,2026-07-23
 arxiv-2601.02163v2,Project.EverMemOS,framework,2026-01-09
-arxiv-2601.02553v3,Project.SimpleMem,framework,2026-01-29
+arxiv-2601.02553v3,Project.SimpleMem,memory;framework;retrieval,2026-01-29
 arxiv-2601.08323v3,Model.AtomMem,framework,2026-03-27
 arxiv-2602.06052,Survey.Agent Memory,survey,2026-08-04
 arxiv-2602.16313v2,Bench.MemoryArena,benchmark,2026-09-17
