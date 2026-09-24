@@ -1,0 +1,1 @@
+`{ai}/`文件夹（如ds，kimi，qwen，codex）为不同的ai的工作区
