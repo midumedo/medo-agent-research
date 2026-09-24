@@ -96,6 +96,20 @@ def native_from_id(value):
     return text.split("-", 1)[1] if "-" in text else ""
 
 
+def identity(meta, prov=None):
+    """`<registry>-<native-id><vN>`, derived from the raw metadata.
+
+    The filename never contributes: it is a label, this is the identity.
+    """
+    meta = meta or {}
+    prov = prov or {}
+    native = meta.get("native_id") or ""
+    if not native:
+        return ""
+    suffix = version_suffix(prov.get("version") or meta.get("versioned_id") or "")
+    return f"{meta.get('registry') or 'arxiv'}-{native}{suffix}"
+
+
 def slugify(title, limit=SLUG_LIMIT):
     """Deterministic filename slug: lowercase, ASCII alphanumerics and CJK kept,
     everything else becomes a separator, cut on a word boundary at `limit`."""
@@ -237,6 +251,14 @@ def yaml_quote(value):
 
 LIST_KEYS = ("keywords", "state")
 BARE = {"stem", "id", "parser", "date"}
+EMPTY_TOKENS = ("", "null", "none")
+
+
+def _clean_list(value):
+    """Drop empty and literal `null` tokens; a blocked field must not become a word."""
+    raw = value if isinstance(value, list) else [value]
+    return [str(v).strip() for v in raw
+            if str(v).strip().lower() not in EMPTY_TOKENS]
 
 
 def read_front_matter(stem):
@@ -256,13 +278,14 @@ def read_front_matter(stem):
         if value.startswith("[") and value.endswith("]"):
             fields[key] = [v.strip().strip('"') for v in value[1:-1].split(",") if v.strip()]
         else:
-            fields[key] = value.strip('"')
+            plain = value.strip('"')
+            fields[key] = "" if plain.lower() in ("null", "none") else plain
     return fields
 
 
 def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
                  keywords=None, abstract=None, date=None, source=None,
-                 parser=None, state=None):
+                 parser=None, state=None, ident=None):
     """The eight-field register block above the parser output.
 
     Everything after the closing `---` is the untouched parser text; this block
@@ -275,7 +298,13 @@ def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
     existing = read_front_matter(stem)
 
     def missing(value):
-        return value is None or (isinstance(value, str) and value.strip().lower() in ("", "null", "none"))
+        if value is None:
+            return True
+        if isinstance(value, str):
+            return value.strip().lower() in ("", "null", "none")
+        if isinstance(value, list):
+            return not _clean_list(value)
+        return False
 
     def pick(key, *values):
         for value in values:
@@ -286,7 +315,7 @@ def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
 
     fields = [
         ("stem", stem),
-        ("id", pick("id", index_record.get("id"), meta.get("id"))),
+        ("id", ident or pick("id", index_record.get("id")) or identity(meta, prov)),
         ("keywords", keywords or pick("keywords", index_record.get("keywords"))),
         ("abstract", abstract or pick("abstract", meta.get("abstract"))),
         ("date", date or pick("date", normalize_date(meta.get("date")), prov.get("published_at"))),
@@ -300,8 +329,7 @@ def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
         if value is None:
             lines.append(f"{key}: null")
         elif key in LIST_KEYS:
-            items = value if isinstance(value, list) else [value]
-            lines.append("%s: [%s]" % (key, ", ".join(str(v) for v in items)))
+            lines.append("%s: [%s]" % (key, ", ".join(_clean_list(value))))
         elif key in BARE:
             lines.append(f"{key}: {value}")
         else:

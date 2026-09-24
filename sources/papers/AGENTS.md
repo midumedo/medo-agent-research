@@ -128,6 +128,19 @@ MinerU 的结果 zip 里有 `images/`，`full.md` 用 `![](images/x.jpg)` 引用
 3. **图注进清单**：从 `*_content_list.json` 抽出 `type == "image"` 的条目及其 caption，写进 manifest 的 `figures`。这样「找 Figure 3 说了什么」不必打开图片——先用文字定位，再决定要不要取回字节。
 4. `has_assets` 反映 `assets/<词干>/` 是否存在；转换记录里的 `images` 记数量、总字节与是否保留字节。
 
+## keywords：打词用的关注词表
+
+`md/` 的 front matter 与 `index.csv` 各有一列 `keywords`，由人／AI 判定，脚本**不自动生成**（重建索引时不覆盖）。打词时优先从下表选；表里没有但确实重要的可以新增，并回填本表——词表随库生长。
+
+```text
+memory, context, harness, agent, benchmark, survey, framework,
+long-term-memory, context-window, retrieval, rag, evaluation, personalization
+```
+
+- arXiv 的元数据里**没有**论文自报的关键词（只有学科分类，如 `cs.CL`），所以关键词不能"搬过来"，只能读标题与摘要后判定。
+- `keywords` 取代了早期的 `kinds` 与 `tags` 两列：体裁词（`survey`／`benchmark`／`framework`）现在也直接作 keyword，不再单设类型列。
+- 轻量筛选只读 `index.csv` 的前几列（`stem`、`id`、`keywords`、`date`）就够；要看某篇讲了什么，再打开那篇 md 读 front matter 的 `abstract`。
+
 ## 阅读与引用纪律
 
 - md 是**机器转换文本**，不是原文。引用具体数字、表格、公式前，回到 `pdf/` 定位原文位置核对。

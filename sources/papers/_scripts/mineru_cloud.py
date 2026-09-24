@@ -18,6 +18,7 @@ be mistaken for a conversion.
 
 import argparse
 import hashlib
+import http.client
 import io
 import json
 import os
@@ -25,13 +26,14 @@ import re
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 import zipfile
 from datetime import datetime, timezone
 
-from stem import (assets_root, base, find, front_matter, load_meta,
-                  load_provenance, md_path, pdf_dir, pdf_path, save_provenance,
-                  slugify, version_suffix)
+from stem import (assets_root, base, find, front_matter, identity, load_meta,
+                  load_provenance, md_path, pdf_dir, pdf_path, read_front_matter,
+                  save_provenance, slugify)
 
 API = "https://mineru.net/api/v4"
 UA = "MemoryResearch/1.0 (mineru cloud client)"
@@ -46,6 +48,26 @@ CAPTION_KEY = {"image": "image_caption", "table": "table_caption",
 CAPTION_FALLBACKS = ("image_caption", "table_caption", "caption", "img_caption")
 KIND_TOKEN = {"image": "fig", "table": "table", "chart": "chart", "equation": "eq"}
 NUM_RE = re.compile(r"(?:figure|fig\.?|图|table|tab\.?|表)\s*([0-9]+[a-z]?)", re.I)
+TAG_RE = re.compile(r"<[^>]+>")
+STATE_ORDER = ["downloaded", "converted", "imaged", "abstracted", "keyworded", "reviewed"]
+
+
+def merge_state(existing, steps):
+    """Union of what is already recorded and what just happened.
+
+    Re-running the converter must not erase steps that came after it — the
+    abstract and keywords are written outside this script.
+    """
+    keep = existing if isinstance(existing, list) else ([existing] if existing else [])
+    merged = {str(s).strip() for s in list(keep) + list(steps) if str(s).strip()}
+    return sorted(merged, key=lambda s: (STATE_ORDER.index(s) if s in STATE_ORDER
+                                         else len(STATE_ORDER), s))
+
+
+def clean_caption(text):
+    """Captions arrive with <sup>/<sub> markup wrapped around single glyphs
+    (`Wit<sup>h</sup>out`); strip the tags rather than storing them as text."""
+    return re.sub(r"\s+", " ", TAG_RE.sub("", text or "")).strip()
 
 
 def token():
@@ -97,11 +119,29 @@ def apply_upload_urls(stems, model_version):
 
 
 def upload(url, path):
-    with open(path, "rb") as f:
-        payload = f.read()
-    req = urllib.request.Request(url, data=payload, headers={"User-Agent": UA}, method="PUT")
-    with urllib.request.urlopen(req, timeout=600) as resp:
-        return resp.status
+    """PUT the PDF straight to the signed URL.
+
+    http.client rather than urllib: urllib injects a default Content-Type on any
+    request carrying a body, and the object-storage signature covers that field,
+    so the upload is rejected with 403. The response body is surfaced on failure
+    instead of being swallowed.
+    """
+    parts = urllib.parse.urlsplit(url)
+    connection_cls = http.client.HTTPSConnection if parts.scheme == "https" else http.client.HTTPConnection
+    connection = connection_cls(parts.netloc, timeout=600)
+    try:
+        with open(path, "rb") as f:
+            payload = f.read()
+        target = parts.path + (("?" + parts.query) if parts.query else "")
+        connection.request("PUT", target, body=payload,
+                           headers={"User-Agent": UA, "Content-Length": str(len(payload))})
+        response = connection.getresponse()
+        body = response.read().decode("utf-8", "replace")[:300]
+        if response.status >= 300:
+            raise SystemExit(f"上传失败 HTTP {response.status}：{body}")
+        return response.status
+    finally:
+        connection.close()
 
 
 def poll(batch_id, stems, timeout):
@@ -146,17 +186,6 @@ def pick(zf, suffix, prefer=None):
     return sorted(names)[0]
 
 
-def identity_for(stem, meta, prov):
-    """The `id` used to prefix image names: `<registry>-<native-id><vN>`."""
-    record = find(stem) or {}
-    if record.get("id"):
-        return record["id"]
-    registry = meta.get("registry") or "arxiv"
-    native = meta.get("native_id") or ""
-    suffix = version_suffix(prov.get("version") or meta.get("versioned_id") or "")
-    return f"{registry}-{native}{suffix}" if native else stem
-
-
 def image_entries(zf):
     return [n for n in zf.namelist()
             if os.path.splitext(n)[1].lower() in IMAGE_EXT and not n.endswith("/")]
@@ -197,7 +226,7 @@ def parse_visual(items):
             if not value:
                 continue
             parts = value if isinstance(value, list) else [value]
-            caption = " ".join(str(p) for p in parts if p).strip()
+            caption = clean_caption(" ".join(str(p) for p in parts if p))
             if caption:
                 break
         match = NUM_RE.search(caption)
@@ -351,7 +380,8 @@ def main():
                 print(f"[{stem}] zip 里没有 .md，跳过")
                 continue
             entry_meta = meta.get(stem, {})
-            ident = identity_for(stem, entry_meta, provenance[stem])
+            record = provenance[stem]
+            ident = identity(entry_meta, record) or stem
             items = parse_visual(load_content_list(zf, pick(zf, "_content_list.json")))
             mapping = name_map(items, ident)
             md_text = rewrite_image_refs(zf.read(md_name).decode("utf-8", "replace"), mapping)
@@ -359,27 +389,11 @@ def main():
 
             stamp = datetime.now(timezone.utc).isoformat()
             label = parser_label(result, args.model_version)
-            state = ["downloaded", "converted"] + (["imaged"] if assets["count"] else [])
-            record = provenance[stem]
+            state = merge_state(read_front_matter(stem).get("state"),
+                                ["downloaded", "converted"] + (["imaged"] if assets["count"] else []))
+            # Fill the conversion record before writing the md: the register block
+            # reads it, and leaving it to the end picks up a previous parser's stamp.
             record["state"] = state
-            os.makedirs(os.path.dirname(md_path(stem)), exist_ok=True)
-            with open(md_path(stem), "w", encoding="utf-8", newline="\n") as f:
-                f.write(front_matter(stem, entry_meta, find(stem), record,
-                                     keywords=None, abstract=None,
-                                     date=None, parser=label, state=state))
-                f.write("\n".join([
-                    f"# {entry_meta.get('title') or stem}（MinerU 云端转换）", "",
-                    f"- 解析器: {label}（语言 {args.lang}）",
-                    f"- 转换时间: {stamp}",
-                    f"- 本地 PDF SHA256: `{record['pdf_sha256']}`",
-                    f"- 图片: {assets['count']} 个，{assets['bytes'] // 1024} KB；"
-                    + ("字节已写入 assets/" if assets["kept"] else "字节未保留，只写清单"),
-                    "",
-                    "> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。",
-                    "> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。",
-                    "> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。", "", "---", "",
-                ]) + "\n")
-                f.write(md_text.strip() + "\n")
             record["conversion"] = {
                 "path": os.path.relpath(md_path(stem), base()).replace(os.sep, "/"),
                 "parser": label,
@@ -397,6 +411,23 @@ def main():
                             "keep_images": keep_images},
                 "visual_verification": False,
             }
+            os.makedirs(os.path.dirname(md_path(stem)), exist_ok=True)
+            with open(md_path(stem), "w", encoding="utf-8", newline="\n") as f:
+                f.write(front_matter(stem, entry_meta, find(stem), record,
+                                     ident=ident, parser=label, state=state))
+                f.write("\n".join([
+                    f"# {entry_meta.get('title') or stem}", "",
+                    f"- 解析器: {label}（语言 {args.lang}）",
+                    f"- 转换时间: {stamp}",
+                    f"- 本地 PDF SHA256: `{record['pdf_sha256']}`",
+                    f"- 图片: {assets['count']} 个，{assets['bytes'] // 1024} KB；"
+                    + ("字节已写入 assets/" if assets["kept"] else "字节未保留，只写清单"),
+                    "",
+                    "> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。",
+                    "> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。",
+                    "> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。", "", "---", "",
+                ]) + "\n")
+                f.write(md_text.strip() + "\n")
             save_provenance(provenance)
             print(f"[{stem}] -> {md_path(stem)}（{len(md_text.splitlines())} 行，"
                   f"图 {assets['count']} 个{'，字节已落盘' if assets['kept'] else '，仅清单'}）")

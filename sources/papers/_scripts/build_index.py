@@ -38,7 +38,8 @@ def front_fields(path):
         if value.startswith("[") and value.endswith("]"):
             fields[key] = [v.strip().strip('"') for v in value[1:-1].split(",") if v.strip()]
         else:
-            fields[key] = value.strip('"')
+            plain = value.strip('"')
+            fields[key] = "" if plain.lower() in ("null", "none") else plain
     return fields
 
 
@@ -72,10 +73,7 @@ def legacy_seed():
 
 def identity_from(name, entry, record):
     """`<registry>-<native-id><vN>`; the filename is not an identity."""
-    registry = entry.get("registry") or "arxiv"
-    native = entry.get("native_id") or ""
-    suffix = stem.version_suffix(record.get("version") or entry.get("versioned_id") or "")
-    return f"{registry}-{native}{suffix}" if native else name
+    return stem.identity(entry, record) or name
 
 
 def render_index(papers):
