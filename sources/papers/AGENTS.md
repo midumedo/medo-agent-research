@@ -25,7 +25,7 @@ papers/
   _scripts/ logs/ 工具与运行记录，不属于外部证据
 ```
 
-**同一文件名在 `pdf/` 与 `md/` 下同名路由**：给一个文件名词干就能取到该论文的原件与转换正文，不需要查表。`assets/` 里的图片按 `id` 前缀归篇——前缀相同即同一篇。
+**同一文件名在 `pdf/` 与 `md/` 下同名路由**：给一个文件名就能取到该论文的原件与转换正文，不需要查表。`assets/` 里的图片按 `id` 前缀归篇——前缀相同即同一篇。
 
 `pdf/` 与 `md/` 分开而不是合并：目录只表达「表示形式」这一个维度；语义全部交给 `index.csv` 与 front matter。分开后可以按格式做不同处理（二进制与文本的 git 属性不同），也能用两者的差集直接看出哪些还没转换。
 
@@ -56,7 +56,7 @@ papers/
 
 - **非法字符折成 `.`**（`stem.sanitize_name`）。Windows 禁用 `< > : " / \ | ? *`。冒号尤其危险：NTFS 不报错，而是把冒号之后的部分当成**备用数据流名**，文件名被静默截断——实测写 `probe.A-Mem: Agentic Memory.md`，目录里出现的是 `probe.A-Mem`。所以必须替换，不能指望系统报错。
 - **大小写保持**：`A-Mem` 不写成 `a-mem`。代价是大小写敏感的文件系统（Linux、远端 CI）要逐字匹配；引用都靠 `index.csv` 的 `id` 定位，文件名只供人看。
-- **`id` 永不改。** 脚本用 `stem.find()` 从 `id`／名称／文件名词干／编号任意一种反查记录。
+- **`id` 永不改。** 脚本用 `stem.find()` 从 `id`／名称／文件名／编号任意一种反查记录。
 
 > 早期方案「文件名 = 标题 slug、版本不进文件名」已推翻：标题进文件名会随 arXiv 修订漂移，版本不进文件名则同一篇的多个版本无法在文件系统里区分。现在版本在 `id` 里、可读性在`名称`里，两个问题都不存在。`stem.slugify()` 仍留给尚未入库的新论文临时定名。
 
@@ -79,7 +79,7 @@ papers/
 
 ## 入库流程
 
-1. **取原件** → `pdf/<词干>.pdf`。arXiv 用 `_scripts/download_arxiv.py`（给编号、已入库标识或标题都行；新论文先抓元数据，再用标题定 slug）；非 arXiv 手工放入，按上面的规则定词干。
+1. **取原件** → `pdf/<id>.<名称>.pdf`。arXiv 用 `_scripts/download_arxiv.py`（给编号、已入库标识或标题都行；新论文先抓元数据，再用标题定 slug）；非 arXiv 手工放入，按上面的规则定名称。
 2. **登记** → `provenance.json` 写来源 URL、明确版本、获取时间、PDF SHA256；元数据写进 `meta.json`。缺的字段写 `null`／`unknown`，不推测。
 3. **转换** → `md/<id>.<名称>.md`（见下）；结构化输出不落盘，只在转换时读一次用来抽图注。
 4. **入索引** → 跑 `build_index.py`，再在 CHANGELOG 追加一行。
@@ -93,9 +93,9 @@ papers/
 下面的 `<python>` 指 `uv run python`；直接用它本机 Python 也行（工具链只用标准库）：
 
 ```text
-<python> _scripts/download_arxiv.py --all                 # 按 watchlist.txt（词干一行一个）
+<python> _scripts/download_arxiv.py --all                 # 按 watchlist.txt（`id` 一行一个）
 <python> _scripts/download_arxiv.py 2504.19413            # 也可以用编号或标题
-<python> _scripts/mineru_cloud.py <词干> <词干>           # 高保真重转，一次批量提交
+<python> _scripts/mineru_cloud.py <id 或 名称> <id 或 名称>           # 高保真重转，一次批量提交
 <python> _scripts/check_arxiv.py 2504.19413               # 核对编号与修订日期
 ```
 
@@ -122,7 +122,7 @@ MinerU 的结果 zip 里有 `images/`，`full.md` 用 `![](images/x.jpg)` 引用
 后两类是 MinerU 切出来、但 content_list 没给路径的图（`equation` 块为主，少数是 `table`）。**只有能确证全是公式时才写 `eq`**；类型一混就无从判断哪张是哪类，退回中性的 `img`（others）。全库当前：`eq` 98 张、`img` 30 张、`fig`/`table`/`chart` 591 张。
 
 3. **没有 manifest**。图注在 md 里紧贴图片引用（`![](…fig1.jpg)` 下面那段就是），图号在文件名里，字节本身进了版本库——再加一份清单只是把已有信息抄第三遍。
-4. 重取图片：`mineru_cloud.py --force <词干>`；`--no-images` 可只登记不落字节。
+4. 重取图片：`mineru_cloud.py --force <id 或 名称>`；`--no-images` 可只登记不落字节。
 
 ## keywords：打词用的关注词表
 
