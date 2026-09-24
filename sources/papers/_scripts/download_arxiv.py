@@ -29,12 +29,13 @@ WATCHLIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "watc
 UA = "MemoryResearch/1.0 (local paper archive)"
 
 
-def resolve_version(aid):
-    """Resolve the current arXiv version through the official API.
+def resolve_meta(aid):
+    """(versioned_id, published) from the official API, or (None, None).
 
     arXiv changed the abs page so that citation_pdf_url may omit the version
-    suffix. The API still reports the identity with version, so it remains an
-    explicit-version source rather than a guess.
+    suffix; the API still reports the identity with version, so it stays an
+    explicit-version source rather than a guess. `published` carries the v1
+    submission time down to the second, which the abs page does not expose.
     """
     base = re.sub(r"v\d+$", "", aid)
     try:
@@ -42,12 +43,13 @@ def resolve_version(aid):
         with urllib.request.urlopen(req, timeout=60) as response:
             root = ET.fromstring(response.read())
     except Exception:
-        return None
+        return None, None
     for entry in root.findall(ATOM + "entry"):
         raw = entry.findtext(ATOM + "id", "").rsplit("/", 1)[-1]
+        published = (entry.findtext(ATOM + "published", "") or "").strip() or None
         if re.fullmatch(r"\d{4}\.\d{4,5}v\d+", raw):
-            return raw
-    return None
+            return raw, published
+    return None, None
 
 
 def get(url, timeout=60):
@@ -119,9 +121,10 @@ def download_one(token, meta, provenance):
     if not candidate.get("exists"):
         return f"[{token}] metadata unavailable; existing records preserved"
     versioned_id = candidate.get("versioned_id")
+    published_at = None
     if not versioned_id:
         # Fall back to the API; the abs page alone no longer guarantees a versioned identity.
-        versioned_id = resolve_version(aid)
+        versioned_id, published_at = resolve_meta(aid)
     if not versioned_id:
         return f"[{token}] version unresolved; unchanged. Retry with an explicit version after checking the intended version."
     if aid != versioned_id:
@@ -148,11 +151,14 @@ def download_one(token, meta, provenance):
     candidate["native_id"] = aid
     candidate["registry"] = "arxiv"
     candidate["versioned_id"] = versioned_id
+    if published_at:
+        candidate["published_at"] = published_at
     meta[stem] = candidate
     provenance[stem] = {
         "source_url": f"https://arxiv.org/abs/{versioned_id}",
         "pdf_url": f"https://arxiv.org/pdf/{versioned_id}",
         "version": versioned_id,
+        "published_at": published_at,
         "retrieved_at": datetime.now(timezone.utc).isoformat(),
         "pdf_path": f"pdf/{stem}.pdf",
         "pdf_sha256": hashlib.sha256(data).hexdigest(),

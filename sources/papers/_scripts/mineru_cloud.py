@@ -6,9 +6,11 @@ variable (falling back to the Windows user environment).
 
 Usage:
     mineru_cloud.py [--model-version vlm|pipeline] [--lang en]
-                    [--keep-images] [--force] [--timeout 1800] [stem ...]
+                    [--no-images] [--force] [--timeout 1800] [stem ...]
 
-Writes md/<stem>.md and json/<stem>.json, optionally assets/<stem>/.
+Writes md/<stem>.md and flat images under assets/, named by id and figure
+number (e.g. arxiv-2504.19413v1-fig3.png). No json/ output: the content list is
+read from the result zip only to recover figure captions, then discarded.
 Existing nonempty md/ is preserved unless --force is given. The API is used as
 documented; this script never falls back to another parser, so a failure cannot
 be mistaken for a conversion.
@@ -27,14 +29,23 @@ import urllib.request
 import zipfile
 from datetime import datetime, timezone
 
-from stem import (assets_dir, base, find, front_matter, json_path, load_meta,
-                  load_provenance, md_path, pdf_dir, pdf_path, save_provenance, slugify)
+from stem import (assets_root, base, find, front_matter, load_meta,
+                  load_provenance, md_path, pdf_dir, pdf_path, save_provenance,
+                  slugify, version_suffix)
 
 API = "https://mineru.net/api/v4"
 UA = "MemoryResearch/1.0 (mineru cloud client)"
 DONE = "done"
 FAILED = "failed"
 IMAGE_EXT = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".svg"}
+
+# Content List V1 field names. The official name is `image_caption`; the older
+# spellings stay as fallbacks in case a server revision differs.
+CAPTION_KEY = {"image": "image_caption", "table": "table_caption",
+               "chart": "image_caption", "equation": None}
+CAPTION_FALLBACKS = ("image_caption", "table_caption", "caption", "img_caption")
+KIND_TOKEN = {"image": "fig", "table": "table", "chart": "chart", "equation": "eq"}
+NUM_RE = re.compile(r"(?:figure|fig\.?|图|table|tab\.?|表)\s*([0-9]+[a-z]?)", re.I)
 
 
 def token():
@@ -135,13 +146,15 @@ def pick(zf, suffix, prefer=None):
     return sorted(names)[0]
 
 
-def rewrite_image_refs(md_text, stem):
-    """MinerU writes ![](images/x.jpg); point it at ../assets/<stem>/ instead so
-    the reference stays valid wherever md/ is read from."""
-    target = f"../assets/{stem}/"
-    md_text = re.sub(r"\]\(images/", "](" + target, md_text)
-    md_text = re.sub(r'(src=)"images/', r'\1"' + target, md_text)
-    return md_text
+def identity_for(stem, meta, prov):
+    """The `id` used to prefix image names: `<registry>-<native-id><vN>`."""
+    record = find(stem) or {}
+    if record.get("id"):
+        return record["id"]
+    registry = meta.get("registry") or "arxiv"
+    native = meta.get("native_id") or ""
+    suffix = version_suffix(prov.get("version") or meta.get("versioned_id") or "")
+    return f"{registry}-{native}{suffix}" if native else stem
 
 
 def image_entries(zf):
@@ -149,8 +162,7 @@ def image_entries(zf):
             if os.path.splitext(n)[1].lower() in IMAGE_EXT and not n.endswith("/")]
 
 
-def figure_captions(zf, json_name):
-    """Captions from content_list let you find a figure by text without opening it."""
+def load_content_list(zf, json_name):
     if not json_name:
         return []
     try:
@@ -159,50 +171,138 @@ def figure_captions(zf, json_name):
         return []
     if isinstance(items, dict):
         items = items.get("content_list") or []
+    return items or []
+
+
+def parse_visual(items):
+    """content_list items -> [{img_path, kind, number, caption, page}], in order.
+
+    The number comes from the caption text (e.g. "Figure 3" -> 3); items whose
+    caption carries no number keep `number = None` so the caller can fall back to
+    a running sequence instead of inventing a figure number.
+    """
     out = []
-    for item in items or []:
-        if not isinstance(item, dict) or item.get("type") != "image":
+    for item in items:
+        if not isinstance(item, dict):
             continue
-        caption = " ".join(str(item.get(k) or "") for k in ("caption", "img_caption", "text")).strip()
-        out.append({"n": len(out) + 1, "page": item.get("page_idx"),
+        kind = item.get("type")
+        if kind not in KIND_TOKEN:
+            continue
+        preferred = CAPTION_KEY.get(kind)
+        candidates = ([preferred] if preferred else []) + [
+            c for c in CAPTION_FALLBACKS if c != preferred]
+        caption = ""
+        for candidate in candidates:
+            value = item.get(candidate)
+            if not value:
+                continue
+            parts = value if isinstance(value, list) else [value]
+            caption = " ".join(str(p) for p in parts if p).strip()
+            if caption:
+                break
+        match = NUM_RE.search(caption)
+        out.append({"img_path": item.get("img_path") or "",
+                    "kind": kind,
+                    "number": match.group(1) if match else None,
                     "caption": caption or None,
-                    "file": os.path.basename(str(item.get("img_path") or "")) or None})
+                    "page": item.get("page_idx")})
     return out
 
 
-def write_assets(zf, stem, keep_images, figures):
-    """Images are derived: bytes are optional, the manifest is always written."""
-    names = sorted(image_entries(zf))
-    directory = assets_dir(stem)
+def name_map(items, ident):
+    """img_path -> `<ident>-<token><n>.<ext>`; duplicates get `-2`, `-3`.
+
+    Naming by figure number is what makes a caption findable without opening the
+    image; numbers without a caption fall back to that kind's running sequence.
+    """
+    used, seq, dup = {}, {}, {}
+    for item in items:
+        path = item["img_path"]
+        if not path:
+            continue
+        kind_token = KIND_TOKEN[item["kind"]]
+        seq[kind_token] = seq.get(kind_token, 0) + 1
+        stem_name = f"{ident}-{kind_token}{item['number'] or seq[kind_token]}"
+        ext = os.path.splitext(path)[1].lower() or ".png"
+        name = stem_name + ext
+        while name in used.values():
+            dup[stem_name] = dup.get(stem_name, 1) + 1
+            name = f"{stem_name}-{dup[stem_name]}{ext}"
+        used[path] = name
+    return used
+
+
+def rewrite_image_refs(md_text, mapping):
+    """MinerU writes ![](images/x.jpg); point it at ../assets/<renamed file>.
+
+    The reference is resolved through the rename map, so the link and the file on
+    disk can never drift apart.
+    """
+    def rel(path):
+        name = os.path.basename(path)
+        return "../assets/" + mapping.get(path, mapping.get(name, name))
+
+    md_text = re.sub(r'\]\(images/([^)\s]+)[^)]*\)',
+                     lambda m: "](" + rel("images/" + m.group(1)) + ")", md_text)
+    return re.sub(r'src="images/([^"]+)"',
+                  lambda m: 'src="' + rel("images/" + m.group(1)) + '"', md_text)
+
+
+def write_assets(zf, stem, ident, items, mapping, keep_images):
+    """Images land flat in assets/, renamed by figure number; the manifest always lands."""
+    directory = assets_root()
+    entries = sorted(image_entries(zf))
     images = []
-    for name in names:
-        payload = zf.read(name)
-        images.append({"file": os.path.basename(name), "bytes": len(payload),
-                       "sha256": hashlib.sha256(payload).hexdigest()})
-    if images:
+    if entries:
         os.makedirs(directory, exist_ok=True)
+    for name in entries:
+        payload = zf.read(name)
+        target = mapping.get(name) or os.path.basename(name)
         if keep_images:
-            for name in names:
-                with open(os.path.join(directory, os.path.basename(name)), "wb") as f:
-                    f.write(zf.read(name))
-        with open(os.path.join(directory, "manifest.json"), "w", encoding="utf-8", newline="\n") as f:
-            json.dump({"stem": stem, "generated_by": "mineru-cloud",
-                       "images": images, "figures": figures}, f, ensure_ascii=False, indent=2)
+            with open(os.path.join(directory, target), "wb") as f:
+                f.write(payload)
+        images.append({"file": target, "bytes": len(payload),
+                       "sha256": hashlib.sha256(payload).hexdigest()})
+    figures = [{"n": index + 1, "kind": item["kind"], "number": item["number"],
+                "page": item["page"], "caption": item["caption"],
+                "file": mapping.get(item["img_path"])}
+               for index, item in enumerate(items)]
+    manifest = None
+    if entries:
+        manifest = os.path.join(directory, f"{stem}.manifest.json")
+        with open(manifest, "w", encoding="utf-8", newline="\n") as f:
+            json.dump({"stem": stem, "id": ident, "images": images, "figures": figures},
+                      f, ensure_ascii=False, indent=2)
             f.write("\n")
-    return {"count": len(images), "bytes": sum(i["bytes"] for i in images),
+    return {"count": len(images),
+            "bytes": sum(i["bytes"] for i in images),
             "kept": bool(keep_images and images),
-            "manifest": f"assets/{stem}/manifest.json" if images else None}
+            "manifest": f"assets/{stem}.manifest.json" if manifest else None}
+
+
+def parser_label(result, model_version):
+    """Prefer a server-reported version; fall back to the model tier we asked for.
+
+    Never issue an extra request just to learn a version number.
+    """
+    for key in ("version", "parser_version", "model_version"):
+        value = str(result.get(key) or "").strip()
+        if value:
+            return f"mineru-cloud {value}"
+    return f"mineru-cloud {model_version}"
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model-version", default="vlm")
     ap.add_argument("--lang", default="en")
-    ap.add_argument("--keep-images", action="store_true", help="把图片字节写入 assets/（默认只写清单）")
+    ap.add_argument("--no-images", action="store_true",
+                    help="只写清单，不把图片字节写入 assets/")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--timeout", type=int, default=1800)
     ap.add_argument("tokens", nargs="*")
     args = ap.parse_args()
+    keep_images = not args.no_images
 
     stems = []
     for raw in args.tokens:
@@ -250,35 +350,39 @@ def main():
             if not md_name:
                 print(f"[{stem}] zip 里没有 .md，跳过")
                 continue
-            md_text = rewrite_image_refs(zf.read(md_name).decode("utf-8", "replace"), stem)
-            json_name = pick(zf, "_content_list.json")
-            if json_name:
-                os.makedirs(os.path.dirname(json_path(stem)), exist_ok=True)
-                with open(json_path(stem), "wb") as f:
-                    f.write(zf.read(json_name))
-            assets = write_assets(zf, stem, args.keep_images, figure_captions(zf, json_name))
+            entry_meta = meta.get(stem, {})
+            ident = identity_for(stem, entry_meta, provenance[stem])
+            items = parse_visual(load_content_list(zf, pick(zf, "_content_list.json")))
+            mapping = name_map(items, ident)
+            md_text = rewrite_image_refs(zf.read(md_name).decode("utf-8", "replace"), mapping)
+            assets = write_assets(zf, stem, ident, items, mapping, keep_images)
 
             stamp = datetime.now(timezone.utc).isoformat()
+            label = parser_label(result, args.model_version)
+            state = ["downloaded", "converted"] + (["imaged"] if assets["count"] else [])
             record = provenance[stem]
+            record["state"] = state
             os.makedirs(os.path.dirname(md_path(stem)), exist_ok=True)
             with open(md_path(stem), "w", encoding="utf-8", newline="\n") as f:
-                f.write(front_matter(stem, meta.get(stem, {}), find(stem), record))
+                f.write(front_matter(stem, entry_meta, find(stem), record,
+                                     keywords=None, abstract=None,
+                                     date=None, parser=label, state=state))
                 f.write("\n".join([
-                    f"# {meta.get(stem, {}).get('title') or stem}（MinerU 云端转换）", "",
-                    f"- 解析器: MinerU cloud（model_version {args.model_version}；语言 {args.lang}）",
+                    f"# {entry_meta.get('title') or stem}（MinerU 云端转换）", "",
+                    f"- 解析器: {label}（语言 {args.lang}）",
                     f"- 转换时间: {stamp}",
                     f"- 本地 PDF SHA256: `{record['pdf_sha256']}`",
                     f"- 图片: {assets['count']} 个，{assets['bytes'] // 1024} KB；"
-                    + ("字节已写入 assets/" + stem if assets["kept"]
-                       else "字节未保留，只写清单（--keep-images 可取回）"), "",
-                    "> 本文件由 MinerU 云端接口转换，**转换成功不等于已对 PDF 做视觉核验**。",
-                    "> 表格、公式与图像仍需在使用时核对；结构化输出见 json/ 下的同名文件。",
-                    "> 下方分隔线之后为转换正文，不含本项目的阅读建议。", "", "---", "",
+                    + ("字节已写入 assets/" if assets["kept"] else "字节未保留，只写清单"),
+                    "",
+                    "> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。",
+                    "> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。",
+                    "> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。", "", "---", "",
                 ]) + "\n")
                 f.write(md_text.strip() + "\n")
             record["conversion"] = {
                 "path": os.path.relpath(md_path(stem), base()).replace(os.sep, "/"),
-                "parser": "mineru-cloud",
+                "parser": label,
                 "api": API,
                 "model_version": args.model_version,
                 "lang": args.lang,
@@ -288,16 +392,15 @@ def main():
                 "converted_at": stamp,
                 "pdf_sha256": record["pdf_sha256"],
                 "body_sha256": hashlib.sha256(md_text.encode("utf-8")).hexdigest(),
-                "structured_path": (os.path.relpath(json_path(stem), base()).replace(os.sep, "/")
-                                    if json_name else None),
                 "images": assets,
-                "options": {"model_version": args.model_version, "lang": args.lang},
+                "options": {"model_version": args.model_version, "lang": args.lang,
+                            "keep_images": keep_images},
                 "visual_verification": False,
             }
             save_provenance(provenance)
             print(f"[{stem}] -> {md_path(stem)}（{len(md_text.splitlines())} 行，"
-                  f"图 {assets['count']} 个{'，已保留字节' if assets['kept'] else '，仅清单'}）")
-    print("转换完成；运行 _scripts/build_index.py 刷新 index.json。")
+                  f"图 {assets['count']} 个{'，字节已落盘' if assets['kept'] else '，仅清单'}）")
+    print("转换完成；运行 _scripts/build_index.py 刷新 index.csv。")
 
 
 if __name__ == "__main__":

@@ -1,15 +1,16 @@
 """Shared stem helpers for the papers/ scripts.
 
 Naming (see papers/AGENTS.md):
-  file stem = slug of the paper title, frozen at ingest
-  identity  = `<registry>-<native-id>`, kept in index.json and in the md front
-              matter as `id`, never derived from the filename again
+  file stem = slug of the paper title plus its version, e.g. `mem0-...-memory-v1`
+  identity  = `<registry>-<native-id><vN>`, kept in index.csv and in the md
+              front matter as `id`, never derived from the filename again
 
-The stem routes `pdf/<stem>.pdf`, `md/<stem>.md`, `json/<stem>.json` and
-`assets/<stem>/`. Paths resolve through functions so tests can move the
-library by patching `stem.BASE` alone.
+The stem routes `pdf/<stem>.pdf` and `md/<stem>.md`. Images live flat under
+`assets/` and are named by `id`, not by stem. Paths resolve through functions so
+tests can move the library by patching `stem.BASE` alone.
 """
 
+import csv
 import hashlib
 import json
 import os
@@ -21,6 +22,13 @@ SLUG_LIMIT = 96
 REGISTRIES = ("arxiv", "openreview", "acl", "doi", "web", "repo")
 ARXIV_RE = re.compile(r"^\d{4}\.\d{4,5}(?:v[1-9]\d*)?$")
 ID_RE = re.compile(r"^(?:%s)-[a-z0-9][a-z0-9.-]*$" % "|".join(REGISTRIES))
+VERSION_RE = re.compile(r"v[1-9]\d*$")
+
+# index.csv is a pointer table: enough to locate a paper, nothing more.
+INDEX_FIELDS = ["stem", "id", "keywords", "date"]
+# md front matter is the per-paper register: 8 fields, no duplicates of index.csv.
+FRONT_FIELDS = ["stem", "id", "keywords", "abstract", "date", "source",
+                "parser", "converted_at", "state"]
 
 
 def base():
@@ -35,16 +43,12 @@ def md_dir():
     return os.path.join(BASE, "md")
 
 
-def json_dir():
-    return os.path.join(BASE, "json")
-
-
-def assets_dir(stem):
-    return os.path.join(BASE, "assets", stem)
+def assets_root():
+    return os.path.join(BASE, "assets")
 
 
 def index_path():
-    return os.path.join(BASE, "index.json")
+    return os.path.join(BASE, "index.csv")
 
 
 def meta_path():
@@ -63,8 +67,33 @@ def md_path(stem):
     return os.path.join(md_dir(), f"{stem}.md")
 
 
-def json_path(stem):
-    return os.path.join(json_dir(), f"{stem}.json")
+def version_suffix(version):
+    """`2504.19413v11` -> `v11`. Missing or unknown versions get no suffix.
+
+    Inventing a version into a filename would invent an identity.
+    """
+    match = VERSION_RE.search((version or "").strip())
+    return match.group(0) if match else ""
+
+
+def with_version(slug, version):
+    """Attach the version suffix to a slug, unless it already carries it."""
+    suffix = version_suffix(version)
+    if not suffix or slug.endswith("-" + suffix):
+        return slug
+    return f"{slug}-{suffix}"
+
+
+def normalize_date(value):
+    """`2025/04/28` or `2025-04-28T01:49:46Z` -> `2025-04-28`; else None."""
+    match = re.match(r"(\d{4})[/-](\d{2})[/-](\d{2})", (value or "").strip())
+    return f"{match.group(1)}-{match.group(2)}-{match.group(3)}" if match else None
+
+
+def native_from_id(value):
+    """`arxiv-2504.19413v1` -> `2504.19413`."""
+    text = VERSION_RE.sub("", (value or "").strip())
+    return text.split("-", 1)[1] if "-" in text else ""
 
 
 def slugify(title, limit=SLUG_LIMIT):
@@ -120,25 +149,52 @@ def save_provenance(data):
     save_json(provenance_path(), data)
 
 
+def read_index():
+    """Rows of index.csv; `keywords` comes back as a list."""
+    if not os.path.exists(index_path()):
+        return []
+    with open(index_path(), encoding="utf-8", newline="") as f:
+        rows = list(csv.DictReader(f))
+    out = []
+    for row in rows:
+        record = {key: (row.get(key) or "") for key in INDEX_FIELDS}
+        record["keywords"] = [w for w in record["keywords"].split(";") if w]
+        out.append(record)
+    return out
+
+
+def write_index(papers):
+    os.makedirs(os.path.dirname(index_path()), exist_ok=True)
+    with open(index_path(), "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=INDEX_FIELDS, lineterminator="\n")
+        writer.writeheader()
+        for record in sorted(papers, key=lambda r: r.get("stem") or ""):
+            row = {key: record.get(key) for key in INDEX_FIELDS}
+            row["keywords"] = ";".join(record.get("keywords") or [])
+            writer.writerow(row)
+
+
 def load_index():
-    return load_json(index_path())
+    return {"papers": read_index()}
 
 
 def save_index(data):
-    save_json(index_path(), data)
+    write_index(data.get("papers", []))
 
 
 def records():
-    return load_index().get("papers", [])
+    return read_index()
 
 
 def find(token):
-    """Resolve a stem, an id, a native id, or a title to an index record."""
+    """Resolve a stem, an id, or the bare native id to an index record."""
     token = (token or "").strip()
     if not token:
         return None
     for record in records():
-        if token in (record.get("stem"), record.get("id"), record.get("native_id")):
+        if token in (record.get("stem"), record.get("id")):
+            return record
+        if token == native_from_id(record.get("id")):
             return record
     slug = slugify(token)
     for record in records():
@@ -165,7 +221,7 @@ def native_for(token, record=None):
     if token.startswith("arxiv-"):
         return token.split("-", 1)[1]
     if record:
-        return record.get("native_id")
+        return native_from_id(record.get("id")) or None
     return None
 
 
@@ -179,7 +235,8 @@ def yaml_quote(value):
     return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
-BARE = {"stem", "id", "registry", "native_id", "pdf", "parser"}
+LIST_KEYS = ("keywords", "state")
+BARE = {"stem", "id", "parser", "date"}
 
 
 def read_front_matter(stem):
@@ -194,12 +251,23 @@ def read_front_matter(stem):
     fields = {}
     for line in match.group(1).splitlines():
         key, _, value = line.partition(":")
-        fields[key.strip()] = value.strip().strip('"')
+        key = key.strip()
+        value = value.strip()
+        if value.startswith("[") and value.endswith("]"):
+            fields[key] = [v.strip().strip('"') for v in value[1:-1].split(",") if v.strip()]
+        else:
+            fields[key] = value.strip('"')
     return fields
 
 
-def front_matter(stem, meta=None, index_record=None, prov=None, kind=None):
-    """YAML block: identity comes from index.json, never from the filename."""
+def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
+                 keywords=None, abstract=None, date=None, source=None,
+                 parser=None, state=None):
+    """The eight-field register block above the parser output.
+
+    Everything after the closing `---` is the untouched parser text; this block
+    is the only place the project writes its own judgement.
+    """
     meta = meta or {}
     index_record = index_record or {}
     prov = prov or {}
@@ -213,27 +281,28 @@ def front_matter(stem, meta=None, index_record=None, prov=None, kind=None):
         for value in values:
             if not missing(value):
                 return value
-        return None if missing(existing.get(key)) else existing.get(key)
+        fallback = existing.get(key)
+        return None if missing(fallback) else fallback
 
-    kinds = kind or index_record.get("kinds") or ([existing["kind"].strip("[]")] if existing.get("kind") else [])
     fields = [
         ("stem", stem),
         ("id", pick("id", index_record.get("id"), meta.get("id"))),
-        ("title", pick("title", index_record.get("title"), meta.get("title"))),
-        ("registry", pick("registry", index_record.get("registry"), meta.get("registry"))),
-        ("native_id", pick("native_id", index_record.get("native_id"), meta.get("native_id"))),
-        ("version", pick("version", index_record.get("version"), prov.get("version"))),
-        ("kinds", "[%s]" % ", ".join(kinds) if kinds else "[]"),
-        ("pdf", f"pdf/{stem}.pdf"),
-        ("pdf_sha256", pick("pdf_sha256", prov.get("pdf_sha256"), index_record.get("pdf_sha256"))),
-        ("parser", conversion.get("parser")),
-        ("converted_at", conversion.get("converted_at")),
+        ("keywords", keywords or pick("keywords", index_record.get("keywords"))),
+        ("abstract", abstract or pick("abstract", meta.get("abstract"))),
+        ("date", date or pick("date", normalize_date(meta.get("date")), prov.get("published_at"))),
+        ("source", source or pick("source", prov.get("source_url"), meta.get("url"))),
+        ("parser", parser or pick("parser", conversion.get("parser"))),
+        ("converted_at", pick("converted_at", conversion.get("converted_at"))),
+        ("state", state or pick("state", prov.get("state"))),
     ]
     lines = ["---"]
     for key, value in fields:
         if value is None:
             lines.append(f"{key}: null")
-        elif key in BARE or key == "kinds":
+        elif key in LIST_KEYS:
+            items = value if isinstance(value, list) else [value]
+            lines.append("%s: [%s]" % (key, ", ".join(str(v) for v in items)))
+        elif key in BARE:
             lines.append(f"{key}: {value}")
         else:
             lines.append(f"{key}: {yaml_quote(value)}")

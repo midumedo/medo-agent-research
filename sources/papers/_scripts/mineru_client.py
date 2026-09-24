@@ -9,7 +9,7 @@ Usage:
                      [--lang ch] [--force] [stem ...]
 
 Defaults: service http://127.0.0.1:8000, backend pipeline, lang ch.
-Output goes to md/<stem>.md and json/<stem>.json.
+Output goes to md/<stem>.md only; no json/ is written.
 The service must already be running; this script never starts it and never falls
 back to another parser, so a failed conversion cannot be mistaken for success.
 """
@@ -27,7 +27,7 @@ import zipfile
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from stem import (base, find, front_matter, json_path, load_meta, load_provenance, md_path,
+from stem import (base, find, front_matter, load_meta, load_provenance, md_path,
                   pdf_path, save_provenance, to_stem)
 
 UA = "MemoryResearch/1.0 (mineru client)"
@@ -115,7 +115,7 @@ def header(stem, record, pdf_hash, info):
         f"- 转换时间: {info['converted_at']}",
         f"- 本地 PDF SHA256: `{pdf_hash}`", "",
         "> 本文件由外部 MinerU 服务转换，转换成功不等于已对 PDF 做视觉核验。",
-        "> 表格、公式与图像仍需在使用时核对；结构化输出见 json/ 下的同名文件。",
+        "> 表格、公式与图像仍需在使用时核对。",
         "> 下方分隔线之后为转换正文，不含本项目的阅读建议。", "", "---", "",
     ]
     return "\n".join(lines)
@@ -160,11 +160,6 @@ def convert(token, args, provenance, meta_json, info):
         f.write(front_matter(stem, meta_json.get(stem, {}), find(stem), record))
         f.write(header(stem, record, pdf_hash, info))
         f.write(md.strip() + "\n")
-    struct = json_path(stem)
-    if middle:
-        os.makedirs(os.path.dirname(struct), exist_ok=True)
-        with open(struct, "w", encoding="utf-8", newline="") as f:
-            f.write(middle)
     record["conversion"] = {
         "path": os.path.relpath(dst, base()).replace(os.sep, "/"),
         "parser": "mineru",
@@ -176,7 +171,6 @@ def convert(token, args, provenance, meta_json, info):
         "converted_at": stamp,
         "pdf_sha256": pdf_hash,
         "body_sha256": hashlib.sha256(md.encode("utf-8")).hexdigest(),
-        "structured_path": (os.path.relpath(struct, base()).replace(os.sep, "/") if middle else None),
         "options": {"return_middle_json": True, "response_format_zip": True},
         "visual_verification": False,
     }

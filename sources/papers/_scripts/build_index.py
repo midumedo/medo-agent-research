@@ -1,54 +1,28 @@
-"""Rebuild papers/index.json from the files, meta.json, provenance.json and md front matter.
+"""Rebuild papers/index.csv from the files, meta.json and md front matter.
 
-index.json is the single source of truth for identity and semantics in the
-library. Everything else (INDEX.md, SQL views) is derived from it.
+index.csv is a pointer table: `stem, id, keywords, date`. `keywords` is a
+judgement column — it is carried over from the previous index.csv (or read from
+an md front matter when the index does not exist yet) and is never overwritten
+by a rebuild. Titles, abstracts and provenance live elsewhere on purpose:
+titles and abstracts in the md front matter, fingerprints in provenance.json.
 
 Usage: build_index.py [--check]
 """
 
 import argparse
+import csv
+import io
 import json
 import os
 import re
 import sys
-from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import stem
 
-EMPTY = {
-    "stem": None,
-    "id": None,
-    "registry": None,
-    "native_id": None,
-    "alt_ids": [],
-    "title": None,
-    "slug_year": None,
-    "authors": [],
-    "kinds": [],
-    "tags": [],
-    "source_url": None,
-    "version": None,
-    "added": None,
-    "has_pdf": False,
-    "has_md": False,
-    "has_json": False,
-    "has_assets": False,
-    "pdf_sha256": None,
-    "parser": None,
-    "converted_at": None,
-    "retrieved_at": None,
-    "visual_verification": False,
-    "note": "",
-}
-
-
-def year_of(value):
-    match = re.search(r"(\d{4})", value or "")
-    return int(match.group(1)) if match else None
-
 
 def front_fields(path):
+    """Read the md front matter block, turning `[a, b]` into a list."""
     if not os.path.exists(path):
         return {}
     with open(path, encoding="utf-8") as f:
@@ -59,84 +33,105 @@ def front_fields(path):
     fields = {}
     for line in match.group(1).splitlines():
         key, _, value = line.partition(":")
-        fields[key.strip()] = value.strip().strip('"')
+        key = key.strip()
+        value = value.strip()
+        if value.startswith("[") and value.endswith("]"):
+            fields[key] = [v.strip().strip('"') for v in value[1:-1].split(",") if v.strip()]
+        else:
+            fields[key] = value.strip('"')
     return fields
 
 
-def kinds_of(fields):
-    raw = fields.get("kind", "")
-    items = [k for k in re.split(r"[,\s\[\]]+", raw) if k]
-    return [k.rstrip("?") for k in items]
+def split_multi(value):
+    if isinstance(value, list):
+        return [v for v in value if v]
+    return [v for v in re.split(r"[;,]", value or "") if v]
+
+
+def legacy_seed():
+    """One-time seed from the retired index.json: its kinds and tags become keywords.
+
+    Read only as a seed — once index.csv exists with keywords, this file is never
+    consulted again.
+    """
+    path = os.path.join(stem.base(), "index.json")
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    except ValueError:
+        return {}
+    seed = {}
+    for record in data.get("papers", []):
+        words = list(record.get("kinds") or []) + list(record.get("tags") or [])
+        if words and record.get("stem"):
+            seed[record["stem"]] = words
+    return seed
+
+
+def identity_from(name, entry, record):
+    """`<registry>-<native-id><vN>`; the filename is not an identity."""
+    registry = entry.get("registry") or "arxiv"
+    native = entry.get("native_id") or ""
+    suffix = stem.version_suffix(record.get("version") or entry.get("versioned_id") or "")
+    return f"{registry}-{native}{suffix}" if native else name
+
+
+def render_index(papers):
+    """The exact text write_index() produces, for --check comparison."""
+    buf = io.StringIO()
+    writer = csv.DictWriter(buf, fieldnames=stem.INDEX_FIELDS, lineterminator="\n")
+    writer.writeheader()
+    for record in sorted(papers, key=lambda r: r.get("stem") or ""):
+        row = {key: record.get(key) for key in stem.INDEX_FIELDS}
+        row["keywords"] = ";".join(record.get("keywords") or [])
+        writer.writerow(row)
+    return buf.getvalue()
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--check", action="store_true", help="fail if index.json differs from a fresh build")
+    ap.add_argument("--check", action="store_true",
+                    help="fail if index.csv differs from a fresh build")
     args = ap.parse_args()
 
     meta = stem.load_meta()
     prov = stem.load_provenance()
-    previous = {}
-    if os.path.exists(stem.index_path()):
-        previous = {r["id"]: r for r in stem.load_index().get("papers", []) if r.get("id")}
+    previous = {r["stem"]: r for r in stem.read_index() if r.get("stem")}
 
-    stems = {os.path.splitext(f)[0] for d in (stem.pdf_dir(), stem.md_dir(), stem.json_dir())
+    stems = {os.path.splitext(f)[0] for d in (stem.pdf_dir(), stem.md_dir())
              if os.path.isdir(d)
-             for f in os.listdir(d) if os.path.splitext(f)[1] in {".pdf", ".md", ".json"}}
+             for f in os.listdir(d) if os.path.splitext(f)[1] in {".pdf", ".md"}}
 
+    seed = legacy_seed()
     papers = []
-    for name in stems:
-        record = dict(EMPTY)
+    for name in sorted(stems):
         fields = front_fields(stem.md_path(name))
-        old = previous.get(fields.get("id")) or {}
-        pid = fields.get("id") or old.get("id") or name
-        meta_entry = meta.get(name) or meta.get(pid) or {}
-        prov_entry = prov.get(name) or prov.get(pid) or {}
-        conversion = prov_entry.get("conversion") or {}
-
-        record["stem"] = name
-        record["id"] = pid
-        record["registry"] = fields.get("registry") or old.get("registry") or meta_entry.get("registry")
-        record["native_id"] = fields.get("native_id") or old.get("native_id") or meta_entry.get("native_id")
-        record["title"] = meta_entry.get("title") or fields.get("title") or old.get("title")
-        record["slug_year"] = year_of(meta_entry.get("date") or "")
-        record["authors"] = meta_entry.get("authors") or old.get("authors") or []
-        record["kinds"] = kinds_of(fields) or old.get("kinds") or []
-        record["tags"] = old.get("tags") or []
-        record["source_url"] = prov_entry.get("source_url")
-        record["version"] = prov_entry.get("version")
-        record["added"] = old.get("added") or (prov_entry.get("retrieved_at") or "")[:10] or None
-        record["has_pdf"] = os.path.exists(stem.pdf_path(name))
-        record["has_md"] = os.path.exists(stem.md_path(name))
-        record["has_json"] = os.path.exists(stem.json_path(name))
-        record["has_assets"] = os.path.isdir(os.path.join(stem.base(), "assets", name))
-        record["pdf_sha256"] = prov_entry.get("pdf_sha256")
-        record["parser"] = conversion.get("parser")
-        record["converted_at"] = conversion.get("converted_at")
-        record["retrieved_at"] = prov_entry.get("retrieved_at")
-        record["visual_verification"] = bool(conversion.get("visual_verification"))
-        record["note"] = old.get("note") or ""
-        papers.append(record)
-
-    data = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "count": len(papers),
-        "papers": sorted(papers, key=lambda r: (r["stem"] or "")),
-    }
-    text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+        old = previous.get(name) or {}
+        entry = meta.get(name) or {}
+        record = prov.get(name) or {}
+        papers.append({
+            "stem": name,
+            "id": fields.get("id") or old.get("id") or identity_from(name, entry, record),
+            # The md register is where keywords are written; index.csv is derived.
+            "keywords": (split_multi(fields.get("keywords")) or old.get("keywords")
+                         or seed.get(name, [])),
+            "date": (stem.normalize_date(fields.get("date")) or old.get("date")
+                     or stem.normalize_date(entry.get("date")) or ""),
+        })
 
     if args.check:
-        current = open(stem.index_path(), encoding="utf-8").read() if os.path.exists(stem.index_path()) else ""
-        current = re.sub(r'"generated_at": "[^"]*"', '"generated_at": ""', current)
-        fresh = re.sub(r'"generated_at": "[^"]*"', '"generated_at": ""', text)
+        current = (open(stem.index_path(), encoding="utf-8").read()
+                   if os.path.exists(stem.index_path()) else "")
+        fresh = render_index(papers)
         if current != fresh:
-            raise SystemExit("index.json 与当前文件状态不一致；运行 build_index.py 重新生成。")
-        print(f"index.json up to date ({len(papers)} 篇)")
+            raise SystemExit("index.csv 与当前文件状态不一致；运行 build_index.py 重新生成。")
+        print(f"index.csv up to date ({len(papers)} 篇)")
         return
 
-    with open(stem.index_path(), "w", encoding="utf-8", newline="\n") as f:
-        f.write(text)
-    print(f"index.json: {len(papers)} 篇")
+    stem.write_index(papers)
+    print(f"index.csv: {len(papers)} 篇")
 
 
 if __name__ == "__main__":

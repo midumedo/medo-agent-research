@@ -81,7 +81,7 @@ class PipelineTests(unittest.TestCase):
 
     def test_unknown_version_is_not_guessed(self):
         with patch.object(download, "fetch_meta", return_value={"exists": True, "versioned_id": None}), \
-             patch.object(download, "resolve_version", return_value=None), \
+             patch.object(download, "resolve_meta", return_value=(None, None)), \
              patch.object(download, "fetch_pdf", side_effect=AssertionError("must not download")):
             message = download.download_one(STEM, self.meta, self.provenance)
         self.assertIn("version unresolved", message)
@@ -154,6 +154,91 @@ class PipelineTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "SHA256"):
             convert.convert(STEM, self.meta, force=True)
         self.assertEqual(out.read_bytes(), raw)
+
+
+mineru = module("mineru_cloud")
+
+
+class VisualNamingTests(unittest.TestCase):
+    """图注解析、命名映射与引用改写：纯函数，不联网、不建 zip。"""
+
+    ITEMS = [
+        {"type": "text", "text": "Intro", "text_level": 1, "page_idx": 0},
+        {"type": "image", "img_path": "images/aaaa.jpg",
+         "image_caption": ["Figure 1: Overview of the architecture."], "page_idx": 2},
+        {"type": "image", "img_path": "images/bbbb.jpg", "page_idx": 3},
+        {"type": "image", "img_path": "images/cccc.jpg", "page_idx": 4},
+        {"type": "table", "img_path": "images/dddd.jpg",
+         "table_caption": ["Table 2: Main results."], "page_idx": 5},
+    ]
+
+    def test_figure_number_from_caption(self):
+        mapping = mineru.name_map(mineru.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
+        self.assertEqual(mapping["images/aaaa.jpg"], "arxiv-2504.19413v1-fig1.jpg")
+
+    def test_numberless_image_falls_back_to_seq(self):
+        mapping = mineru.name_map(mineru.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
+        self.assertEqual(mapping["images/bbbb.jpg"], "arxiv-2504.19413v1-fig2.jpg")
+        self.assertEqual(mapping["images/cccc.jpg"], "arxiv-2504.19413v1-fig3.jpg")
+
+    def test_table_uses_table_caption(self):
+        mapping = mineru.name_map(mineru.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
+        self.assertEqual(mapping["images/dddd.jpg"], "arxiv-2504.19413v1-table2.jpg")
+
+    def test_duplicate_number_gets_suffix(self):
+        dup = [{"type": "image", "img_path": "images/p.jpg",
+                "image_caption": ["Figure 3: First part."], "page_idx": 1},
+               {"type": "image", "img_path": "images/q.jpg",
+                "image_caption": ["Figure 3: Second part."], "page_idx": 2}]
+        mapping = mineru.name_map(mineru.parse_visual(dup), "arxiv-1v1")
+        self.assertEqual(mapping["images/p.jpg"], "arxiv-1v1-fig3.jpg")
+        self.assertEqual(mapping["images/q.jpg"], "arxiv-1v1-fig3-2.jpg")
+
+    def test_rewrite_refs_maps_names(self):
+        mapping = {"aaaa.jpg": "arxiv-1v1-fig1.jpg"}
+        out = mineru.rewrite_image_refs(
+            'see ![](images/aaaa.jpg) and <img src="images/aaaa.jpg">\n', mapping)
+        self.assertIn("](../assets/arxiv-1v1-fig1.jpg)", out)
+        self.assertIn('src="../assets/arxiv-1v1-fig1.jpg"', out)
+        self.assertNotIn("images/aaaa.jpg", out)
+
+
+class IndexCsvTests(unittest.TestCase):
+    """index.csv 四列往返 + md front matter 八字段。"""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        active = patch.object(stem, "BASE", self.temp.name)
+        active.start()
+        self.addCleanup(active.stop)
+
+    def test_index_csv_roundtrip(self):
+        stem.write_index([{"stem": "a-v1", "id": "arxiv-1v1",
+                           "keywords": ["memory", "context"], "date": "2025-04-28"}])
+        back = stem.read_index()
+        self.assertEqual(len(back), 1)
+        self.assertEqual(back[0]["id"], "arxiv-1v1")
+        self.assertEqual(back[0]["keywords"], ["memory", "context"])
+        self.assertEqual(back[0]["date"], "2025-04-28")
+
+    def test_front_matter_fields(self):
+        text = stem.front_matter("a-v1", {"a-v1": {"title": "T"}}, {"id": "arxiv-1v1"},
+                                 {"pdf_sha256": "x", "source_url": "https://arxiv.org/abs/xv1"},
+                                 keywords=["memory"], abstract="abs", date="2025-04-28",
+                                 parser="mineru-cloud", state=["converted"])
+        for key in ("stem:", "id:", "keywords:", "abstract:", "date:", "source:",
+                    "parser:", "converted_at:", "state:"):
+            self.assertIn(key, text)
+        self.assertIn("https://arxiv.org/abs/xv1", text)
+        self.assertNotIn("registry:", text)
+        self.assertNotIn("native_id:", text)
+        self.assertNotIn("pdf_sha256:", text)
+
+    def test_version_suffix(self):
+        self.assertEqual(stem.version_suffix("2504.19413v11"), "v11")
+        self.assertEqual(stem.version_suffix(None), "")
+        self.assertEqual(stem.version_suffix("unknown"), "")
 
 
 if __name__ == "__main__":
