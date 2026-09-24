@@ -279,13 +279,20 @@ def name_map(items, ident, zip_names=()):
         ext = os.path.splitext(path)[1].lower() or ".png"
         used[path] = unique(f"{ident}-{kind_token}{item['number'] or seq[kind_token]}", ext)
 
+    # Items content_list knows but has no image for: `equation` blocks (and, in
+    # a few papers, `table` ones). When every such item is an equation the orphan
+    # images can be called what they are; once the kinds mix there is no way to
+    # tell which file is which, so they fall back to the neutral `img`.
+    nameless = {item["kind"] for item in items if not item["img_path"]}
+    token = "eq" if nameless and nameless <= {"equation"} else "img"
+
     orphan = 0
     for name in zip_names:
         if name in used:
             continue
         orphan += 1
         ext = os.path.splitext(name)[1].lower() or ".png"
-        used[name] = unique(f"{ident}-img{orphan}", ext)
+        used[name] = unique(f"{ident}-{token}{orphan}", ext)
     return used
 
 

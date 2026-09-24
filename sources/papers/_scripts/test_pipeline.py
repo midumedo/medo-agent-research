@@ -147,6 +147,32 @@ class VisualNamingTests(unittest.TestCase):
         self.assertIn("\ttab", out)
         self.assertIn("next\r\n", out)
 
+    def test_orphan_images_named_eq_when_all_equations(self):
+        """无 img_path 的条目全是 equation 时，孤儿图可以确证是公式。"""
+        items = [{"img_path": "images/a.jpg", "kind": "image", "number": "1",
+                  "caption": None, "page": 0},
+                 {"img_path": "", "kind": "equation", "number": None,
+                  "caption": None, "page": 1},
+                 {"img_path": "", "kind": "equation", "number": None,
+                  "caption": None, "page": 2}]
+        m = mineru.name_map(items, "arxiv-1v1",
+                            ["images/a.jpg", "images/b.jpg", "images/c.jpg"])
+        self.assertEqual(m["images/a.jpg"], "arxiv-1v1-fig1.jpg")
+        self.assertEqual(m["images/b.jpg"], "arxiv-1v1-eq1.jpg")
+        self.assertEqual(m["images/c.jpg"], "arxiv-1v1-eq2.jpg")
+
+    def test_orphan_images_are_img_when_kinds_mix(self):
+        """混了 table 就无法确证哪张是公式，归 others 用 img。"""
+        items = [{"img_path": "", "kind": "equation", "number": None, "caption": None, "page": 1},
+                 {"img_path": "", "kind": "table", "number": None, "caption": None, "page": 2}]
+        m = mineru.name_map(items, "arxiv-1v1", ["images/b.jpg", "images/c.jpg"])
+        self.assertTrue(all("-img" in v for v in m.values()), m)
+
+    def test_orphan_images_are_img_when_content_list_says_nothing(self):
+        """content_list 完全没提的图，不能说它们是公式。"""
+        m = mineru.name_map([], "arxiv-1v1", ["images/b.jpg"])
+        self.assertEqual(m["images/b.jpg"], "arxiv-1v1-img1.jpg")
+
     def test_chart_caption_is_read(self):
         """chart 的图注在 `chart_caption`，不是 `image_caption`——拿错就是空的。"""
         items = [{"type": "chart", "img_path": "images/x.jpg",

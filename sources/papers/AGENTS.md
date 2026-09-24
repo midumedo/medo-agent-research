@@ -116,9 +116,10 @@ MinerU 的结果 zip 里有 `images/`，`full.md` 用 `![](images/x.jpg)` 引用
 |---|---|---|
 | content_list 有 `img_path`、图注带编号 | `<id>-<kind><N>` | `arxiv-2504.19413v1-fig3.jpg` |
 | content_list 有 `img_path`、图注无编号 | `<id>-<kind><N>`（顺序号） | `arxiv-2504.19413v1-chart1.jpg` |
-| content_list 没有记录（行间公式一类的图） | `<id>-img<N>` | `arxiv-2502.12110v11-img1.jpg` |
+| 有类型但**无 `img_path`**，且这些类型全是 `equation` | `<id>-eq<N>` | `arxiv-2504.13501-eq1.jpg` |
+| 同上，但类型里混了 `table` 等（无法判定哪张是哪类）；或 content_list 完全没提 | `<id>-img<N>` | `arxiv-2512.13564-img1.jpg` |
 
-第三类用中性的 `img` 而不写 `eq`：这些图在 content_list 里没有条目，既没类型也没路径，「是公式」只是数量吻合的推断，不写成事实。
+后两类是 MinerU 切出来、但 content_list 没给路径的图（`equation` 块为主，少数是 `table`）。**只有能确证全是公式时才写 `eq`**；类型一混就无从判断哪张是哪类，退回中性的 `img`（others）。全库当前：`eq` 98 张、`img` 30 张、`fig`/`table`/`chart` 591 张。
 
 3. **没有 manifest**。图注在 md 里紧贴图片引用（`![](…fig1.jpg)` 下面那段就是），图号在文件名里，字节本身进了版本库——再加一份清单只是把已有信息抄第三遍。
 4. 重取图片：`mineru_cloud.py --force <词干>`；`--no-images` 可只登记不落字节。
