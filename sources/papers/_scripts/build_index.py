@@ -95,8 +95,8 @@ def main():
                      or stem.sanitize_name((entry.get("title") or "").split(":")[0])),
             # The md register is where keywords are written; index.csv is derived.
             "keywords": split_multi(fields.get("keywords")) or old.get("keywords") or [],
-            "date": (stem.normalize_date(fields.get("date")) or old.get("date")
-                     or stem.normalize_date(entry.get("date")) or ""),
+            "revised": (stem.normalize_date(fields.get("revised")) or old.get("revised")
+                        or stem.normalize_date(entry.get("revised")) or ""),
         })
 
     if args.check:

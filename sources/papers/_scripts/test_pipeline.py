@@ -86,7 +86,7 @@ class PipelineTests(unittest.TestCase):
 
     def test_unknown_version_is_not_guessed(self):
         with patch.object(download, "fetch_meta", return_value={"exists": True, "versioned_id": None}), \
-             patch.object(download, "resolve_meta", return_value=(None, None)), \
+             patch.object(download, "resolve_meta", return_value=(None, None, None)), \
              patch.object(download, "fetch_pdf", side_effect=AssertionError("must not download")):
             message = download.download_one(STEM, self.meta, self.provenance)
         self.assertIn("version unresolved", message)
@@ -220,23 +220,25 @@ class IndexCsvTests(unittest.TestCase):
 
     def test_index_csv_roundtrip(self):
         stem.write_index([{"id": "arxiv-1v1", "name": "A-Mem",
-                           "keywords": ["memory", "context"], "date": "2025-04-28"}])
+                           "keywords": ["memory", "context"], "revised": "2025-10-08"}])
         back = stem.read_index()
         self.assertEqual(len(back), 1)
         self.assertEqual(back[0]["id"], "arxiv-1v1")
         self.assertEqual(back[0]["name"], "A-Mem")
         self.assertEqual(back[0]["keywords"], ["memory", "context"])
-        self.assertEqual(back[0]["date"], "2025-04-28")
+        self.assertEqual(back[0]["revised"], "2025-10-08")
+        self.assertNotIn("date", back[0], "date 已由 revised 取代")
 
     def test_front_matter_fields(self):
         text = stem.front_matter("a-v1", {"a-v1": {"title": "T"}}, {"id": "arxiv-1v1"},
                                  {"pdf_sha256": "x", "source_url": "https://arxiv.org/abs/xv1"},
-                                 keywords=["memory"], abstract="abs", date="2025-04-28",
+                                 keywords=["memory"], abstract="abs", revised="2025-10-08",
                                  parser="mineru-cloud", state=["converted"])
-        for key in ("stem:", "id:", "keywords:", "abstract:", "date:", "source:",
+        for key in ("stem:", "id:", "keywords:", "abstract:", "revised:", "source:",
                     "parser:", "converted_at:", "state:"):
             self.assertIn(key, text)
         self.assertIn("https://arxiv.org/abs/xv1", text)
+        self.assertNotIn("\ndate:", text, "date 字段已由 revised 取代")
         self.assertNotIn("registry:", text)
         self.assertNotIn("native_id:", text)
         self.assertNotIn("pdf_sha256:", text)

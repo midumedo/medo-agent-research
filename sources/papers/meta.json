@@ -16,7 +16,8 @@
     "url": "https://arxiv.org/abs/2410.10813v2",
     "versioned_id": "2410.10813v2",
     "native_id": "2410.10813",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-03-04"
   },
   "arxiv-2501.13956v1.Zep": {
     "id": "arxiv-2501.13956",
@@ -34,7 +35,8 @@
     "url": "https://arxiv.org/abs/2501.13956v1",
     "versioned_id": "2501.13956v1",
     "native_id": "2501.13956",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-01-20"
   },
   "arxiv-2502.12110v11.A-Mem": {
     "id": "arxiv-2502.12110",
@@ -53,7 +55,8 @@
     "url": "https://arxiv.org/abs/2502.12110v11",
     "versioned_id": "2502.12110v11",
     "native_id": "2502.12110",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-10-08"
   },
   "arxiv-2504.14225v2.Know Me Respond to Me": {
     "id": "arxiv-2504.14225",
@@ -75,7 +78,8 @@
     "url": "https://arxiv.org/abs/2504.14225v2",
     "versioned_id": "2504.14225v2",
     "native_id": "2504.14225",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-10-27"
   },
   "arxiv-2504.19413v1.Mem0": {
     "id": "arxiv-2504.19413",
@@ -93,7 +97,8 @@
     "url": "https://arxiv.org/abs/2504.19413v1",
     "versioned_id": "2504.19413v1",
     "native_id": "2504.19413",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-04-28"
   },
   "arxiv-2506.06326v1.Memory OS": {
     "id": "arxiv-2506.06326",
@@ -110,7 +115,8 @@
     "url": "https://arxiv.org/abs/2506.06326v1",
     "versioned_id": "2506.06326v1",
     "native_id": "2506.06326",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-05-30"
   },
   "arxiv-2506.21605v1.MemBench": {
     "id": "arxiv-2506.21605",
@@ -129,7 +135,8 @@
     "url": "https://arxiv.org/abs/2506.21605v1",
     "versioned_id": "2506.21605v1",
     "native_id": "2506.21605",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-06-20"
   },
   "arxiv-2507.03724v4.MemOS": {
     "id": "arxiv-2507.03724",
@@ -181,7 +188,8 @@
     "url": "https://arxiv.org/abs/2507.03724v4",
     "versioned_id": "2507.03724v4",
     "native_id": "2507.03724",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-12-03"
   },
   "arxiv-2507.07957v1.MIRIX": {
     "id": "arxiv-2507.07957",
@@ -196,7 +204,8 @@
     "url": "https://arxiv.org/abs/2507.07957v1",
     "versioned_id": "2507.07957v1",
     "native_id": "2507.07957",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-07-10"
   },
   "arxiv-2510.17281v7.MemoryBench": {
     "id": "arxiv-2510.17281",
@@ -215,7 +224,8 @@
     "url": "https://arxiv.org/abs/2510.17281v7",
     "versioned_id": "2510.17281v7",
     "native_id": "2510.17281",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-06-03"
   },
   "arxiv-2601.01885v3.Agentic Memory": {
     "id": "arxiv-2601.01885",
@@ -235,7 +245,8 @@
     "url": "https://arxiv.org/abs/2601.01885v3",
     "versioned_id": "2601.01885v3",
     "native_id": "2601.01885",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-07-23"
   },
   "arxiv-2601.02163v2.EverMemOS": {
     "id": "arxiv-2601.02163",
@@ -259,7 +270,8 @@
     "url": "https://arxiv.org/abs/2601.02163v2",
     "versioned_id": "2601.02163v2",
     "native_id": "2601.02163",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-01-09"
   },
   "arxiv-2601.02553v3.SimpleMem": {
     "id": "arxiv-2601.02553",
@@ -280,7 +292,8 @@
     "url": "https://arxiv.org/abs/2601.02553v3",
     "versioned_id": "2601.02553v3",
     "native_id": "2601.02553",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-01-29"
   },
   "arxiv-2601.08323v3.AtomMem": {
     "id": "arxiv-2601.08323",
@@ -298,7 +311,8 @@
     "url": "https://arxiv.org/abs/2601.08323v3",
     "versioned_id": "2601.08323v3",
     "native_id": "2601.08323",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-03-27"
   },
   "arxiv-2602.16313v2.MemoryArena": {
     "id": "arxiv-2602.16313",
@@ -325,7 +339,8 @@
     "url": "https://arxiv.org/abs/2602.16313v2",
     "versioned_id": "2602.16313v2",
     "native_id": "2602.16313",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-09-17"
   },
   "arxiv-2602.22769v4.AMA-Bench": {
     "id": "arxiv-2602.22769",
@@ -350,7 +365,8 @@
     "url": "https://arxiv.org/abs/2602.22769v4",
     "versioned_id": "2602.22769v4",
     "native_id": "2602.22769",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-05-27"
   },
   "arxiv-2605.12493v1.LongMemEval-V2": {
     "id": "arxiv-2605.12493",
@@ -370,7 +386,8 @@
     "url": "https://arxiv.org/abs/2605.12493v1",
     "versioned_id": "2605.12493v1",
     "native_id": "2605.12493",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-05-12"
   },
   "arxiv-2507.05257v4.MemoryAgentBench": {
     "id": "arxiv-2507.05257",
@@ -386,7 +403,8 @@
     "url": "https://arxiv.org/abs/2507.05257v4",
     "versioned_id": "2507.05257v4",
     "native_id": "2507.05257",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-06-28"
   },
   "arxiv-2505.00675.Rethinking Memory": {
     "id": "arxiv-2505.00675",
@@ -406,7 +424,8 @@
     "exists": true,
     "url": "https://arxiv.org/abs/2505.00675",
     "native_id": "2505.00675",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2025-12-24"
   },
   "arxiv-2402.17753v1.Long-Term Chat Memory": {
     "id": "arxiv-2402.17753",
@@ -425,7 +444,8 @@
     "url": "https://arxiv.org/abs/2402.17753v1",
     "versioned_id": "2402.17753v1",
     "native_id": "2402.17753",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2024-02-27"
   },
   "arxiv-2404.13501.Memory Mechanism": {
     "id": "arxiv-2404.13501",
@@ -446,7 +466,8 @@
     "exists": true,
     "url": "https://arxiv.org/abs/2404.13501",
     "native_id": "2404.13501",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2024-04-21"
   },
   "arxiv-2510.27246v2.Million-Token Memory": {
     "id": "arxiv-2510.27246",
@@ -465,7 +486,8 @@
     "url": "https://arxiv.org/abs/2510.27246v2",
     "versioned_id": "2510.27246v2",
     "native_id": "2510.27246",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-02-21"
   },
   "arxiv-2512.13564.Age of Agent Memory": {
     "id": "arxiv-2512.13564",
@@ -524,7 +546,8 @@
     "exists": true,
     "url": "https://arxiv.org/abs/2512.13564",
     "native_id": "2512.13564",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-01-13"
   },
   "arxiv-2602.06052.Agent Memory Survey": {
     "id": "arxiv-2602.06052",
@@ -596,7 +619,8 @@
     "exists": true,
     "url": "https://arxiv.org/abs/2602.06052",
     "native_id": "2602.06052",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-08-04"
   },
   "arxiv-2603.07670.Autonomous Memory": {
     "id": "arxiv-2603.07670",
@@ -609,7 +633,8 @@
     "exists": true,
     "url": "https://arxiv.org/abs/2603.07670",
     "native_id": "2603.07670",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-03-08"
   },
   "arxiv-2606.06448.Memory Workloads": {
     "id": "arxiv-2606.06448",
@@ -630,7 +655,8 @@
     "exists": true,
     "url": "https://arxiv.org/abs/2606.06448",
     "native_id": "2606.06448",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-09-22"
   },
   "arxiv-2607.16848.Scientific Memory": {
     "id": "arxiv-2607.16848",
@@ -645,6 +671,7 @@
     "exists": true,
     "url": "https://arxiv.org/abs/2607.16848",
     "native_id": "2607.16848",
-    "registry": "arxiv"
+    "registry": "arxiv",
+    "revised": "2026-07-18"
   }
 }

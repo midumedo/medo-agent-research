@@ -37,7 +37,8 @@
       "downloaded",
       "converted",
       "imaged"
-    ]
+    ],
+    "revised": "2025-03-04"
   },
   "arxiv-2501.13956v1.Zep": {
     "source_url": "https://arxiv.org/abs/2501.13956v1",
@@ -60,7 +61,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2025-01-20"
   },
   "arxiv-2502.12110v11.A-Mem": {
     "source_url": "https://arxiv.org/abs/2502.12110v11",
@@ -99,7 +101,8 @@
       "downloaded",
       "converted",
       "imaged"
-    ]
+    ],
+    "revised": "2025-10-08"
   },
   "arxiv-2504.14225v2.Know Me Respond to Me": {
     "source_url": "https://arxiv.org/abs/2504.14225v2",
@@ -122,7 +125,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2025-10-27"
   },
   "arxiv-2504.19413v1.Mem0": {
     "source_url": "https://arxiv.org/abs/2504.19413v1",
@@ -161,7 +165,8 @@
       "downloaded",
       "converted",
       "imaged"
-    ]
+    ],
+    "revised": "2025-04-28"
   },
   "arxiv-2506.06326v1.Memory OS": {
     "source_url": "https://arxiv.org/abs/2506.06326v1",
@@ -184,7 +189,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2025-05-30"
   },
   "arxiv-2506.21605v1.MemBench": {
     "source_url": "https://arxiv.org/abs/2506.21605v1",
@@ -207,7 +213,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2025-06-20"
   },
   "arxiv-2507.03724v4.MemOS": {
     "source_url": "https://arxiv.org/abs/2507.03724v4",
@@ -230,7 +237,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2025-12-03"
   },
   "arxiv-2507.07957v1.MIRIX": {
     "source_url": "https://arxiv.org/abs/2507.07957v1",
@@ -253,7 +261,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2025-07-10"
   },
   "arxiv-2510.17281v7.MemoryBench": {
     "source_url": "https://arxiv.org/abs/2510.17281v7",
@@ -276,7 +285,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-06-03"
   },
   "arxiv-2601.01885v3.Agentic Memory": {
     "source_url": "https://arxiv.org/abs/2601.01885v3",
@@ -299,7 +309,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-07-23"
   },
   "arxiv-2601.02163v2.EverMemOS": {
     "source_url": "https://arxiv.org/abs/2601.02163v2",
@@ -322,7 +333,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-01-09"
   },
   "arxiv-2601.02553v3.SimpleMem": {
     "source_url": "https://arxiv.org/abs/2601.02553v3",
@@ -345,7 +357,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-01-29"
   },
   "arxiv-2601.08323v3.AtomMem": {
     "source_url": "https://arxiv.org/abs/2601.08323v3",
@@ -368,7 +381,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-03-27"
   },
   "arxiv-2602.16313v2.MemoryArena": {
     "source_url": "https://arxiv.org/abs/2602.16313v2",
@@ -391,7 +405,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-09-17"
   },
   "arxiv-2602.22769v4.AMA-Bench": {
     "source_url": "https://arxiv.org/abs/2602.22769v4",
@@ -414,7 +429,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-05-27"
   },
   "arxiv-2605.12493v1.LongMemEval-V2": {
     "source_url": "https://arxiv.org/abs/2605.12493v1",
@@ -437,7 +453,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-05-12"
   },
   "arxiv-2507.05257v4.MemoryAgentBench": {
     "source_url": "https://arxiv.org/abs/2507.05257v4",
@@ -460,7 +477,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-06-28"
   },
   "arxiv-2505.00675.Rethinking Memory": {
     "source_url": "https://arxiv.org/abs/2505.00675",
@@ -481,7 +499,8 @@
       "visual_verification": false,
       "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
       "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
+    },
+    "revised": "2025-12-24"
   },
   "arxiv-2402.17753v1.Long-Term Chat Memory": {
     "source_url": "https://arxiv.org/abs/2402.17753v1",
@@ -504,7 +523,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2024-02-27"
   },
   "arxiv-2404.13501.Memory Mechanism": {
     "source_url": "https://arxiv.org/abs/2404.13501",
@@ -525,7 +545,8 @@
       "visual_verification": false,
       "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
       "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
+    },
+    "revised": "2024-04-21"
   },
   "arxiv-2510.27246v2.Million-Token Memory": {
     "source_url": "https://arxiv.org/abs/2510.27246v2",
@@ -548,7 +569,8 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
+    },
+    "revised": "2026-02-21"
   },
   "arxiv-2512.13564.Age of Agent Memory": {
     "source_url": "https://arxiv.org/abs/2512.13564",
@@ -569,7 +591,8 @@
       "visual_verification": false,
       "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
       "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
+    },
+    "revised": "2026-01-13"
   },
   "arxiv-2602.06052.Agent Memory Survey": {
     "source_url": "https://arxiv.org/abs/2602.06052",
@@ -590,7 +613,8 @@
       "visual_verification": false,
       "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
       "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
+    },
+    "revised": "2026-08-04"
   },
   "arxiv-2603.07670.Autonomous Memory": {
     "source_url": "https://arxiv.org/abs/2603.07670",
@@ -611,7 +635,8 @@
       "visual_verification": false,
       "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
       "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
+    },
+    "revised": "2026-03-08"
   },
   "arxiv-2606.06448.Memory Workloads": {
     "source_url": "https://arxiv.org/abs/2606.06448",
@@ -632,7 +657,8 @@
       "visual_verification": false,
       "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
       "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
+    },
+    "revised": "2026-09-22"
   },
   "arxiv-2607.16848.Scientific Memory": {
     "source_url": "https://arxiv.org/abs/2607.16848",
@@ -653,6 +679,7 @@
       "visual_verification": false,
       "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
       "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
+    },
+    "revised": "2026-07-18"
   }
 }

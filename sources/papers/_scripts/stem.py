@@ -25,9 +25,9 @@ ID_RE = re.compile(r"^(?:%s)-[a-z0-9][a-z0-9.-]*$" % "|".join(REGISTRIES))
 VERSION_RE = re.compile(r"v[1-9]\d*$")
 
 # index.csv is a pointer table: enough to locate a paper, nothing more.
-INDEX_FIELDS = ["id", "name", "keywords", "date"]
+INDEX_FIELDS = ["id", "name", "keywords", "revised"]
 # md front matter is the per-paper register: 8 fields, no duplicates of index.csv.
-FRONT_FIELDS = ["stem", "id", "keywords", "abstract", "date", "source",
+FRONT_FIELDS = ["stem", "id", "keywords", "abstract", "revised", "source",
                 "parser", "converted_at", "state"]
 
 
@@ -283,7 +283,7 @@ def yaml_quote(value):
 
 
 LIST_KEYS = ("keywords", "state")
-BARE = {"stem", "id", "parser", "date"}
+BARE = {"stem", "id", "parser", "revised"}
 EMPTY_TOKENS = ("", "null", "none")
 
 
@@ -317,7 +317,7 @@ def read_front_matter(stem):
 
 
 def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
-                 keywords=None, abstract=None, date=None, source=None,
+                 keywords=None, abstract=None, revised=None, source=None,
                  parser=None, state=None, ident=None):
     """The eight-field register block above the parser output.
 
@@ -351,7 +351,7 @@ def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
         ("id", ident or pick("id", index_record.get("id")) or identity(meta, prov)),
         ("keywords", keywords or pick("keywords", index_record.get("keywords"))),
         ("abstract", abstract or pick("abstract", meta.get("abstract"))),
-        ("date", date or pick("date", normalize_date(meta.get("date")), prov.get("published_at"))),
+        ("revised", revised or pick("revised", normalize_date(meta.get("revised")))),
         ("source", source or pick("source", prov.get("source_url"), meta.get("url"))),
         ("parser", parser or pick("parser", conversion.get("parser"))),
         ("converted_at", pick("converted_at", conversion.get("converted_at"))),
