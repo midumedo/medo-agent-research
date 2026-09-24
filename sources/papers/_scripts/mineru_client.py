@@ -2,7 +2,7 @@
 
 MinerU itself lives outside this project (heavy models, own environment). This
 client only talks to a running service and writes the result into the paper
-archive with the same provenance discipline as pdf2md.py.
+archive with the same provenance discipline as the cloud client.
 
 Usage:
     mineru_client.py [--service URL] [--backend pipeline|hybrid|vlm]

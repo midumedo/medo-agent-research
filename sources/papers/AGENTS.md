@@ -91,17 +91,15 @@ papers/
 ```text
 <python> _scripts/download_arxiv.py --all                 # 按 watchlist.txt（词干一行一个）
 <python> _scripts/download_arxiv.py 2504.19413            # 也可以用编号或标题
-<python> _scripts/pdf2md.py                               # 转换所有缺 md 的 PDF
-<python> _scripts/pdf2md.py --force --kind benchmark <词干>
 <python> _scripts/mineru_cloud.py <词干> <词干>           # 高保真重转，一次批量提交
 <python> _scripts/check_arxiv.py 2504.19413               # 核对编号与修订日期
 ```
 
 ## 转换走哪条路
 
-- **全文快速检索、看结构**：`_scripts/pdf2md.py`（`pymupdf4llm`），快、依赖轻，对表格公式多栏损失大。
-- **表格、公式、多栏要保真**：MinerU。用 **mineru-pdf-convert** skill（项目级 `.workbuddy/skills/`），它默认走云端 API，本地服务是备选。
-- 两种结果可以并存：先用快的拿全文，遇到关键表格或数字再用高保真的重转核对，`provenance.json` 保留最近一次转换记录，历史由 Git 追。
+**只有 MinerU 一条路**：`_scripts/mineru_cloud.py`（云端 API，`mineru-pdf-convert` skill）。它输出表格、公式、多栏的保真度高，且**整个 papers 工具链零第三方依赖**——只用标准库。
+
+早期那条 `pymupdf4llm` 本地路径（`pdf2md.py`）已删除：它虽快，但对表格公式多栏损失大，而且会把 `pymupdf`/`pymupdf-layout`/`onnxruntime` 一串重依赖拖进环境，与"主路径零依赖"冲突。需要更快的本地预览时，宁可接受云端几十秒的等待，也别把重依赖装回来。
 
 ## 图片怎么管
 

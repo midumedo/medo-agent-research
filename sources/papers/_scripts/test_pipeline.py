@@ -32,7 +32,7 @@ def module(name):
 import stem
 
 download = module("download_arxiv")
-convert = module("pdf2md")
+mineru = module("mineru_cloud")
 
 STEM = "arxiv-2512.13564.Memory in the Age of AI Agents"
 AID = "2512.13564"
@@ -124,45 +124,6 @@ class PipelineTests(unittest.TestCase):
         with patch.object(download, "get", return_value=(200, b"<html>" + b"x" * 21000)):
             with self.assertRaises(ValueError):
                 download.fetch_pdf(self.aid + "v2")
-
-    def test_existing_conversion_is_preserved_without_parser(self):
-        (self.base / "pdf" / (STEM + ".pdf")).write_bytes(b"existing PDF")
-        out = self.base / "md" / (STEM + ".md")
-        out.parent.mkdir()
-        out.write_bytes(b"existing conversion")
-        convert.convert(STEM, self.meta)
-        self.assertEqual(out.read_bytes(), b"existing conversion")
-
-    def test_conversion_records_real_parser_and_rejects_changed_pdf(self):
-        import pymupdf
-        pdf_path = self.base / "pdf" / (STEM + ".pdf")
-        doc = pymupdf.open()
-        page = doc.new_page()
-        page.insert_text((72, 72), "Memory pipeline source preservation check.")
-        doc.save(pdf_path)
-        doc.close()
-        convert.convert(STEM, self.meta)
-        out = self.base / "md" / (STEM + ".md")
-        raw = out.read_bytes()
-        front, rest = raw.split(b"\n---\n\n", 1)
-        header, body = rest.split(b"\n---\n\n", 1)
-        self.assertIn(b"Memory pipeline source preservation check.", body)
-        self.assertIn(b"stem: " + STEM.encode(), front)
-        self.assertIn(b"id: " + ID.encode(), front)
-        self.assertNotIn("导航卡".encode(), header)
-        record = json.loads((self.base / "provenance.json").read_text(encoding="utf-8"))[STEM]
-        self.assertEqual(record["conversion"]["body_sha256"], hashlib.sha256(body).hexdigest())
-        self.assertTrue(record["conversion"]["parser_version"])
-        self.assertFalse(record["conversion"]["visual_verification"])
-        with pdf_path.open("ab") as stream:
-            stream.write(b"changed")
-        with self.assertRaisesRegex(ValueError, "SHA256"):
-            convert.convert(STEM, self.meta, force=True)
-        self.assertEqual(out.read_bytes(), raw)
-
-
-mineru = module("mineru_cloud")
-
 
 class VisualNamingTests(unittest.TestCase):
     """图注解析、命名映射与引用改写：纯函数，不联网、不建 zip。"""

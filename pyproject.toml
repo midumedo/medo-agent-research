@@ -1,0 +1,18 @@
+[project]
+name = "memory-research"
+version = "0.0.0"
+description = "Memory / Context / Harness research notes, and the source pipeline behind them"
+requires-python = ">=3.11"
+# 零第三方运行时依赖：papers 的全部脚本只用标准库
+# （urllib / zipfile / csv / json / xml.etree / http.client）。
+# MinerU 转换走云端 API，模型与服务端都在外部。
+dependencies = []
+
+[dependency-groups]
+# 开发期也只需要这些：测试用标准库 unittest。
+# 故意不声明 pymupdf / pymupdf4llm —— 它们会拖进 pymupdf-layout 与
+# onnxruntime 一串重依赖，而 pymupdf4llm 那条本地转换路径已删除。
+dev = []
+
+[tool.uv]
+package = false

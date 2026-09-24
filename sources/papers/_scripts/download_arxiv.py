@@ -114,7 +114,7 @@ def download_one(token, meta, provenance):
         # Do not fetch latest metadata for a legacy/cached PDF.
         return f"[{stem}] cached PDF and metadata preserved; version: {provenance.get(stem, {}).get('version') or 'unknown'}"
     if not aid or not re.fullmatch(r"\d{4}\.\d{4,5}(?:v[1-9]\d*)?", aid):
-        return f"[{token}] 只有 arXiv 来源能自动下载：给出 arXiv 编号或已入库的标识／标题；非 arXiv 请手工放入 pdf/ 再跑 pdf2md.py"
+        return f"[{token}] 只有 arXiv 来源能自动下载：给出 arXiv 编号或已入库的标识／标题；非 arXiv 请手工放入 pdf/ 再跑 mineru_cloud.py"
 
     candidate = fetch_meta(aid)
     if not candidate.get("exists"):
