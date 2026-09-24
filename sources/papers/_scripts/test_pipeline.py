@@ -57,7 +57,7 @@ class PipelineTests(unittest.TestCase):
         stem.save_meta(self.meta)
         stem.save_provenance(self.provenance)
         stem.save_index({"papers": [{"id": ID, "name": NAME,
-                                     "keywords": [], "date": ""}]})
+                                     "keywords": [], "revised": ""}]})
         self.original_meta = (self.base / "meta.json").read_bytes()
 
     def test_cached_pdf_never_fetches_or_replaces_metadata(self):

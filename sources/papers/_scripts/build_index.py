@@ -1,6 +1,6 @@
 """Rebuild papers/index.csv from the files, meta.json and md front matter.
 
-index.csv is a pointer table: `stem, id, keywords, date`. `keywords` is a
+index.csv is a pointer table: `id, name, keywords, revised`. `keywords` is a
 judgement column — it is carried over from the previous index.csv (or read from
 an md front matter when the index does not exist yet) and is never overwritten
 by a rebuild. Titles, abstracts and provenance live elsewhere on purpose:
