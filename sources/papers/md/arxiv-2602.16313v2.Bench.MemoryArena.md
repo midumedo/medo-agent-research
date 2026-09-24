@@ -6,20 +6,6 @@ abstract: "Existing evaluations of agents with memory typically assess memorizat
 revised: 2026-09-17
 source: "https://arxiv.org/abs/2602.16313v2"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:34.714652+00:00
-- 本地 PDF SHA256: `7478c3b9294b483a32350a5844be6fa596e3ee18abc6dba33b1827780a86af0d`
-- 图片: 39 个，4501 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks

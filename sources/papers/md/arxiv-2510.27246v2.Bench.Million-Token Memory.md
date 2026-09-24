@@ -6,20 +6,6 @@ abstract: "Evaluating the abilities of large language models (LLMs) for tasks th
 revised: 2026-02-21
 source: "https://arxiv.org/abs/2510.27246v2"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# Beyond a Million Tokens: Benchmarking and Enhancing Long-Term Memory in LLMs
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:19.077832+00:00
-- 本地 PDF SHA256: `8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303`
-- 图片: 25 个，3700 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # BEYOND A MILLION TOKENS: BENCHMARKING AND ENHANCING LONG-TERM MEMORY IN LLMS

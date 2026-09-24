@@ -6,20 +6,6 @@ abstract: "Long-term memory is becoming a core component of LLM agents, but most
 revised: 2026-07-18
 source: "https://arxiv.org/abs/2607.16848"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:39.248127+00:00
-- 本地 PDF SHA256: `09dd5520b628bbce492110aa73efd70d40d7e48eba379ab24dc6bda2cad68069`
-- 图片: 27 个，1594 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration

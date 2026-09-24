@@ -6,20 +6,6 @@ abstract: "Large Language Models (LLMs) are increasingly used as autonomous agen
 revised: 2026-05-27
 source: "https://arxiv.org/abs/2602.22769v4"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# AMA-Bench: Evaluating Long-Horizon Memory for Agentic Applications
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:36.416246+00:00
-- 本地 PDF SHA256: `2bb21d3d335839da888c8f16543065d4964cf09b5ca2b39d92e80655bd8b7611`
-- 图片: 36 个，1741 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # AMA-Bench: Evaluating Long-Horizon Memory for Agentic Applications

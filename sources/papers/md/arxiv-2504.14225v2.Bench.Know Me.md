@@ -6,20 +6,6 @@ abstract: "Large Language Models (LLMs) have emerged as personalized assistants 
 revised: 2025-10-27
 source: "https://arxiv.org/abs/2504.14225v2"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# Know Me, Respond to Me: Benchmarking LLMs for Dynamic User Profiling and Personalized Responses at Scale
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:12.067435+00:00
-- 本地 PDF SHA256: `24633e985675243f324b546daee7e27ff177a5af516b239c8f59be60a3bf58c6`
-- 图片: 27 个，2884 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # Know Me, Respond to Me: Benchmarking LLMs for Dynamic User Profiling and Personalized Responses at Scale

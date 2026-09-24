@@ -6,20 +6,6 @@ abstract: "Large Language Models (LLMs) are increasingly deployed as long-term i
 revised: 2026-01-09
 source: "https://arxiv.org/abs/2601.02163v2"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:24.886585+00:00
-- 本地 PDF SHA256: `265314799f9803a841a3aeb6fca949ce5eb6923d1d8a450de26843993e1605fd`
-- 图片: 22 个，1098 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning

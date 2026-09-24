@@ -6,20 +6,6 @@ abstract: "Memory has emerged, and will continue to remain, a core capability of
 revised: 2026-01-13
 source: "https://arxiv.org/abs/2512.13564"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# Memory in the Age of AI Agents
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:23.431126+00:00
-- 本地 PDF SHA256: `10de3c050903bfa1113c9a954380e2786f42d25a9ea24478bf6cc69fef2e2b42`
-- 图片: 39 个，5048 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # Memory in the Age of AI Agents: A Survey

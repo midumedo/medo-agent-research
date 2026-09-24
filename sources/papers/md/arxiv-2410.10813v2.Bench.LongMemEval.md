@@ -6,20 +6,6 @@ abstract: "Recent large language model (LLM)-driven chat assistant systems have 
 revised: 2025-03-04
 source: "https://arxiv.org/abs/2410.10813v2"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged, abstracted, keyworded]
----
-
-# LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory
-
-- 解析器: mineru-cloud vlm（语言 en）
-- 转换时间: 2026-09-24T12:53:16.479772+00:00
-- 本地 PDF SHA256: `05c5d055201466a241a56e082cdd02d39ad566fa04b3804891983e4e069a3fda`
-- 图片: 28 个，2534 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # LONGMEMEVAL: BENCHMARKING CHAT ASSIST-ANTS ON LONG-TERM INTERACTIVE MEMORY

@@ -6,20 +6,6 @@ abstract: "Large language model (LLM) agents face fundamental limitations in lon
 revised: 2026-07-23
 source: "https://arxiv.org/abs/2601.01885v3"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:23.972721+00:00
-- 本地 PDF SHA256: `03ccd0aeabb6ee742d376034ec95ef5a692cbbb6a9af9cf3f2371260b8c61622`
-- 图片: 46 个，784 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents

@@ -6,20 +6,6 @@ abstract: "Research in artificial intelligence is shifting from model innovation
 revised: 2026-08-04
 source: "https://arxiv.org/abs/2602.06052"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# A Survey of Agent Memory in the Second Half: Towards Self-Evolving and Long-Horizon Agents
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:33.266690+00:00
-- 本地 PDF SHA256: `497e95492cb4bd8a8b45f813afabbb1d202c98076fb5f091be316a9b271b46a6`
-- 图片: 17 个，3236 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # A Survey of Agent Memory in the Second Half: Towards Self-Evolving and Long-Horizon Agents

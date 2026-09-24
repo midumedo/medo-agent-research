@@ -6,20 +6,6 @@ abstract: "Large language model (LLM) based agents have recently attracted much 
 revised: 2024-04-21
 source: "https://arxiv.org/abs/2404.13501"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# A Survey on the Memory Mechanism of Large Language Model based Agents
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:10.371675+00:00
-- 本地 PDF SHA256: `aae2f9537f748f30f0ca59fd66c499b7df7bdb199d24ce43cab0a6170f7dceef`
-- 图片: 17 个，1111 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # A Survey on the Memory Mechanism of Large Language Model based Agents

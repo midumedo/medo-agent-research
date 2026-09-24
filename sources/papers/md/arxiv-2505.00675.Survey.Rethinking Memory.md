@@ -6,20 +6,6 @@ abstract: "Memory is fundamental to large language model (LLM)-based agents, but
 revised: 2025-12-24
 source: "https://arxiv.org/abs/2505.00675"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# Rethinking Memory in LLM based Agents: Representations, Operations, and Emerging Topics
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:12.617111+00:00
-- 本地 PDF SHA256: `23724df6e6a38bdffc97c8bccb132581bf1e21fa534d5c19f84c80d5ab0e741d`
-- 图片: 68 个，3944 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # Rethinking Memory in LLM based Agents: Representations, Operations, and Emerging Topics

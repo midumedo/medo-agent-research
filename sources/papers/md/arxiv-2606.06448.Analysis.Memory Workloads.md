@@ -6,20 +6,6 @@ abstract: "LLM agents are increasingly deployed on long-horizon tasks requiring 
 revised: 2026-09-22
 source: "https://arxiv.org/abs/2606.06448"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:38.325675+00:00
-- 本地 PDF SHA256: `b9d840d861da993e05ecc9e2295e9754ee9289ebc595270f6af18c55e57b8782`
-- 图片: 20 个，744 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads

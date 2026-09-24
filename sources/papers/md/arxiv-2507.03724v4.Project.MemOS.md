@@ -6,20 +6,6 @@ abstract: "Large Language Models (LLMs) have become an essential infrastructure 
 revised: 2025-12-03
 source: "https://arxiv.org/abs/2507.03724v4"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# MemOS: A Memory OS for AI System
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:14.917360+00:00
-- 本地 PDF SHA256: `9b9b71b61487ce9f01d2de014b80201d9a30c4fd43effa33e84ef7d2db824977`
-- 图片: 26 个，1783 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # MemOS: A Memory OS for AI System

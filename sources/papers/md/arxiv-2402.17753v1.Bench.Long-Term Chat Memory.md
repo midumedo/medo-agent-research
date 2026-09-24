@@ -6,20 +6,6 @@ abstract: "Existing works on long-term open-domain dialogues focus on evaluating
 revised: 2024-02-27
 source: "https://arxiv.org/abs/2402.17753v1"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged]
----
-
-# Evaluating Very Long-Term Conversational Memory of LLM Agents
-
-- 解析器: mineru-cloud 3.4.4（语言 en）
-- 转换时间: 2026-09-24T15:35:09.843036+00:00
-- 本地 PDF SHA256: `218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539`
-- 图片: 18 个，1497 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # Evaluating Very Long-Term Conversational Memory of LLM Agents
