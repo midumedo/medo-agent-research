@@ -22,10 +22,12 @@ venv/
 node_modules/
 # Rivet 运行时状态：本地数据库、备份、缓存与技能草稿不入库。
 /.rivet/
-# 论文库的重件不进版本库：pdf/ 是 arXiv 原件（按 id 可确定性重下），assets/ 是从那些
-# PDF 派生的图片。跟踪的只有 index.csv、md/（转换正文）与工具脚本；缺哪份用
-# _scripts/fetch_material.py 现取。
+# 论文库的重件不进版本库：pdf/ 是 arXiv 原件（按 id 可确定性重下），md/ 是 MinerU 的
+# 转换正文（可重转），assets/ 是从那些 PDF 派生的图片。跟踪的只有 index.csv、工具脚本
+# 与文档；缺哪份用 sources/papers/_scripts/pipeline.py 现取，本块由
+# sources/papers/_scripts/status.py --sync 维护。
 /sources/papers/pdf/
+/sources/papers/md/
 /sources/papers/assets/
 /sources/papers/logs/
 /analysis/archive/**/main_agent_context*

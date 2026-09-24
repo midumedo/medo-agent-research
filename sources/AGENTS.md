@@ -19,7 +19,7 @@
 
 另有「去哪找更多论文」的公开清单索引：paper-sources.md——它不是本项目收录的材料，只是入口。
 
-`repos/` 不进版本库（见 `.gitignore`），所以它的索引放在 `sources/` 这一层；`papers/` 进版本库，索引就放在它自己里面。
+`repos/` 不进版本库（见 `.gitignore`），所以它的索引放在 `sources/` 这一层；`papers/` 的 `index.csv` 与工具脚本进版本库，索引就放在它自己里面——同一目录下的 `pdf/`、`md/`、`assets/` 重件同样未追踪。
 
 ## 引用要求
 

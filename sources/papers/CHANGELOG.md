@@ -26,3 +26,7 @@
 - 2026-09-24 · 新增 · `sources/paper-sources.md` · 登记四个公开的论文清单／调研入口（MemoryPapers.org、Agent-Memory-Paper-List、Awesome Efficient Agents、Toward Efficient Agents），只记地址与核实状态，不下载内容。
 - 2026-09-25 · 清理 · 全库 · md 顶部只保留 YAML front matter 一个登记块，删掉其后的第二个头块（`解析器`/`转换时间`/`本地 PDF SHA256`/`图片`——与 front matter 登记同一件事且版本号已不一致）；同时删 `state`（可从磁盘推导，且 4 篇与 23 篇早已不一致）、把「词干」旧术语改回「文件名」。`_scripts/index_query.py` 的删除一并补记（2026-09-22 只记了它的新增）。
 - 2026-09-25 · 修复 · `_scripts/mineru_cloud.py` · `write_document()`：旧写法 `with open(path, "w") as f: f.write(front_matter(...))` 在句柄已截断之后才去读旧文件，导致 `--force` 重转把 `abstract`/`revised`/`source` 洗成空值——在一次真实重转中复现。改为文本先构建、后开文件，并加回归测试 `DocumentWriteTests`。
+- 2026-09-26 · 结构 · `_scripts/` · 工具链拆成六步单一职责脚本：① `meta.py`（元数据）② `pdf.py`（原件）③ `convert.py`（转换，原 `mineru_cloud.py`）④ `build_index.py`（索引对账）⑤ `keywords.py`（打词）⑥ `status.py`（反追踪状态）；编排统一走 `pipeline.py`（原 `fetch_material.py`），`download_arxiv.py` 拆为 ①②。
+- 2026-09-26 · 结构 · 全库 · 取消 `md/` 的版本追踪，与 `pdf/`、`assets/` 一致：三者都按 `index.csv` 现取。`build_index.py` 由「从磁盘派生」反转为「以 `index.csv` 为账本」（**只增不删**，`--prune` 才删行），磁盘无料时不再清空索引；`pipeline.py` 的完整性终检把「缺 md」计入不齐（此前漏判为假绿）。
+- 2026-09-26 · 修复 · ③ `convert.py` · 新转一篇不再丢登记块：转换前由 ① `meta.py` 取回 `abstract`（API summary → abs 页 → 人工判读）与 `revised`、`source` 写进 md 表头——此前新转的这三字段恒为 `null`。`revised` 以 `index.csv` 账本为准，避免 abs 页的 v1 日期覆盖已核实的修订日。
+- 2026-09-26 · 新增 · ⑤⑥ · `keywords.py`（**只由 abstract 判词**：`--missing` 导出 `id/name/abstract`、`--set` 回写 `index.csv`）与 `status.py`（`--check` 交付门、`--sync` 幂等维护 `.gitignore` 与 git 索引）。摘要提取的困难案例追加进 `_scripts/abstract_trace.md`。

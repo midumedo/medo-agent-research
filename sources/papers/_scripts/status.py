@@ -67,8 +67,14 @@ def ensure_gitignore():
 
 
 def untrack():
-    """`git rm --cached` the derived dirs; index only, disk untouched."""
-    result = subprocess.run(["git", "rm", "-r", "--cached", "--quiet", "--"] + derived_paths(),
+    """`git rm --cached` the derived dirs; index only, disk untouched.
+
+    `--ignore-unmatch` matters: pdf/ and assets/ are usually already untracked,
+    and without it `git rm` refuses the whole command when any pathspec matches
+    nothing — which would block untracking md/.
+    """
+    result = subprocess.run(["git", "rm", "-r", "--cached", "--quiet", "--ignore-unmatch", "--"]
+                            + derived_paths(),
                             cwd=str(repo_root()), capture_output=True, text=True)
     message = (result.stdout + result.stderr).strip()
     return result.returncode, message

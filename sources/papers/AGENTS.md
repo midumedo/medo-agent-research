@@ -14,18 +14,19 @@
 
 ```text
 papers/
-  index.csv       指路表：id, name, keywords, revised（一行一版本）
+  index.csv       指路表：id, name, keywords, revised（一行一版本）——唯一入库的数据
   CHANGELOG.md    只追加的入库与修订日志
   AGENTS.md README.md
-  pdf/ md/        按表示形式分，同一文件名同名路由
-  assets/         转换抽出的图片，平铺，按 id 与图号命名
+  _scripts/       六步工具：① meta ② pdf ③ convert ④ build_index ⑤ keywords ⑥ status
+  pdf/ md/        按表示形式分，同一文件名同名路由〔派生·未追踪〕
+  assets/         转换抽出的图片，平铺，按 id 与图号命名〔派生·未追踪〕
   variants/       同一篇的额外版本，默认不存在
-  _scripts/ logs/ 工具与运行记录，不属于外部证据
+  logs/           运行记录，不属于外部证据〔未追踪〕
 ```
 
 **同一文件名在 `pdf/` 与 `md/` 下同名路由**：给一个文件名就能取到该论文的原件与转换正文，不需要查表。`assets/` 里的图片按 `id` 前缀归篇——前缀相同即同一篇。
 
-`pdf/` 与 `md/` 分开而不是合并：目录只表达「表示形式」这一个维度；语义全部交给 `index.csv` 与 front matter。分开后可以按格式做不同处理（二进制与文本的 git 属性不同），也能用两者的差集直接看出哪些还没转换。
+`pdf/` 与 `md/` 分开而不是合并：目录只表达「表示形式」这一个维度；语义全部交给 `index.csv` 与 front matter。分开后可以按格式做不同处理（二进制与文本的 git 属性不同），也能用两者的差集直接看出哪些还没转换。三个重件目录（`pdf/`、`md/`、`assets/`）都不进版本库——它们是 `index.csv` 的派生件，缺哪份用 `_scripts/pipeline.py` 现取。
 
 ## 命名：文件名 = `<id>.<名称>`
 
@@ -79,18 +80,21 @@ papers/
 
 `index.csv` 是**指路**——四列就够筛「有没有、什么主题、哪版」。要判断一篇讲什么，再打开它的 `md/` 读 front matter 的 `abstract`（**简介**）。要论证、比数字，才读 `md/` 正文并回 `pdf/` 定位原文（**全文**）。
 
-分级落在**文件边界**上，所以 `index.csv` **不加摘要列**：加了就是把 md 的 abstract 抄第二遍，与「只留两份，其余现取」和「不重复 index.csv 已有的信息」直接冲突。轻量筛选读四列，需要简介时才打开 md。
+分级落在**文件边界**上，所以 `index.csv` **不加摘要列**：加了就是把 md 的 abstract 抄第二遍，与「只留两份，其余现取」和「不重复 index.csv 已有的信息」直接冲突。轻量筛选读四列；需要简介时打开该篇的 md（不在本地就先跑 `pipeline.py` 现取）。
 
-重件（`pdf/` 与 `assets/`）不进入版本库；缺哪份用 `sources/papers/_scripts/pipeline.py` 按 `id` 现取（PDF 重下、图由 MinerU 重转）。跟踪的只有 `index.csv`、`md/`、`_scripts/` 与文档。
+重件（`pdf/`、`md/`、`assets/`）都不进入版本库；缺哪份用 `sources/papers/_scripts/pipeline.py` 按 `id` 现取（PDF 重下、md 重转、图随之重出）。**跟踪的只有 `index.csv`、`_scripts/` 与文档**——`index.csv` 是账本（身份、名称、关键词、修订日都在这里），md 是它的派生视图。
 
 ## 只留两份，其余现取
 
-读论文只需要这两处，各有一个不可替代的角色：
+入库的只有**两样**：索引 `index.csv` 与 `_scripts/` 工具。`md/`、`pdf/`、`assets/` 全是可重建的派生件：
 
 | 文件 | 独有信息 | 谁在读 | 定位 |
 |---|---|---|---|
-| `index.csv` | 无——它就是权威：`id`／`name`／`keywords`／`revised` | AI 与人的第一入口 | **指路表** |
-| `md/*.md` 的登记块 | 每篇的摘要、关键词、来源、解析器版本 | 读单篇时 | **单篇登记** |
+| `index.csv` | 无——它就是权威：`id`／`name`／`keywords`／`revised` | AI 与人的第一入口 | **账本·入库** |
+| `md/*.md` 的登记块 | 每篇的摘要、来源、解析器版本 | 读单篇时 | **单篇登记·现取** |
+| `pdf/`、`assets/` | 无——arXiv 原件与派生图 | 核原文时 | **重件·现取** |
+
+缺哪份就跑 `pipeline.py`：PDF 重下、md 重转、图随之重出。md 表头里的 `abstract`／`revised`／`source` 由 ① `meta.py` 在转换时回填，`revised` 与 `keywords` 以 `index.csv` 为准，所以重建不会把已核实的字段改差。
 
 **判断一个文件该不该留，问三件事**（缺一不可）：① 它的信息别处能不能取到？② **取它费劲吗**？③ 留着要付什么（会腐坏吗、要跟着改名搬吗）？
 
@@ -105,11 +109,11 @@ papers/
 ## 入库流程
 
 1. **取原件** → `pdf/<id>.<名称>.pdf`。arXiv 用 `sources/papers/_scripts/pdf.py`（给编号、已入库标识或标题都行）；非 arXiv 手工放入，按上面的规则定名称。
-2. **登记** → 转换会在 md 顶部写出登记块；`abstract`、`keywords`、`revised` 由人／agent **现查 arXiv 页面后填进登记块**（不再另存快照）。缺的字段留空或写 `unknown`，**不推测**。
+2. **登记** → 转换时 ① `meta.py` 会把 `abstract`、`revised`、`source` 自动写进 md 顶部的登记块（摘要取不到才留空，**不推测**）；`keywords` 由 `keywords.py` 从 abstract 判词后回写 `index.csv`。
 3. **转换** → `md/<id>.<名称>.md`（见下）；结构化输出不落盘，只在转换时读一次用来抽图注。
-4. **入索引** → 跑 `build_index.py`，再在 CHANGELOG 追加一行。
+4. **入索引** → 跑 `build_index.py` 对账（**只增不删**，删行需 `--prune`），再在 CHANGELOG 追加一行。
 
-已有非空 `md/` 不会被覆盖，除非显式 `--force`。PDF 是否变过由 git 判断（它是受版本控制的文件），不再另存指纹基线。
+已有非空 `md/` 不会被覆盖，除非显式 `--force`。**不保留任何哈希或指纹**：md 与 pdf 都是可重建的派生件，重建「基本一致」即够（文件命名稳定、`id` 定位不变），不做逐字节校验。
 
 在仓库根运行（环境由根目录的 `pyproject.toml` + `.python-version` 管理，Python 3.13，**零第三方依赖**，不需要 `pip install`）：
 
@@ -123,6 +127,8 @@ uv run python sources/papers/_scripts/pipeline.py --all      # 按 index.csv 补
 <python> sources/papers/_scripts/meta.py 2504.19413         # 只取元数据（标题／版本／摘要）
 <python> sources/papers/_scripts/convert.py <id 或 名称>     # 只转换，一次批量提交
 <python> sources/papers/_scripts/check_arxiv.py 2504.19413  # 核对编号与修订日期
+<python> sources/papers/_scripts/keywords.py --missing       # 导出缺关键词的篇目（id/name/abstract）
+<python> sources/papers/_scripts/status.py --check           # 反追踪与完整性对账（缺料非零退出）
 ```
 
 ## 转换走哪条路
@@ -147,12 +153,12 @@ MinerU 的结果 zip 里有 `images/`，`full.md` 用 `![](images/x.jpg)` 引用
 
 后两类是 MinerU 切出来、但 content_list 没给路径的图（`equation` 块为主，少数是 `table`）。**只有能确证全是公式时才写 `eq`**；类型一混就无从判断哪张是哪类，退回中性的 `img`（others）。全库当前：`eq` 98 张、`img` 30 张、`fig`/`table`/`chart` 591 张。
 
-3. **没有 manifest**。图注在 md 里紧贴图片引用（`![](…fig1.jpg)` 下面那段就是），图号在文件名里，字节本身进了版本库——再加一份清单只是把已有信息抄第三遍。
+3. **没有 manifest**。图注在 md 里紧贴图片引用（`![](…fig1.jpg)` 下面那段就是），图号在文件名里，字节随转换重出——再加一份清单只是把已有信息抄第三遍。
 4. 重取图片：`convert.py --force <id 或 名称>`；`--no-images` 可只登记不落字节。
 
 ## keywords：打词用的关注词表
 
-`md/` 的 front matter 与 `index.csv` 各有一列 `keywords`，由人／AI 判定，脚本**不自动生成**（重建索引时不覆盖）。打词时优先从下表选；表里没有但确实重要的可以新增，并回填本表——词表随库生长。
+`index.csv` 与 `md/` 的 front matter 各有一列 `keywords`。**只由 abstract 判定**（不读全文，省 token）；脚本**不自动生成词**——`keywords.py --missing` 把 `id / name / abstract` 导出给模型，判完用 `--set` 回写 `index.csv`。摘要缺失时（个别综述可能没有）回退标题，仍不足就留空，**不推测**。打词时优先从下表选；表里没有但确实重要的可以新增，并回填本表——词表随库生长。
 
 ```text
 memory, context, harness, agent, benchmark, survey, framework,

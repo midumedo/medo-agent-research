@@ -34,11 +34,11 @@ uv run python _scripts/convert.py --no-images <token>     # 只登记，不写�
 
 **限制**：单文件 ≤ 200 MB、≤ 200 页；账号每天 1000 页优先额度，超出仍可跑但优先级低。报错 `-60018` 是每日任务数到顶——改为批量提交或次日再跑。
 
-**产物**：`md/<文件名>.md`（front matter 登记块 + 转换正文）与平铺的 `assets/<id>-<kind><n>.<ext>`。**不写 `json/`、不写 manifest、不写 provenance**：结构化输出只在转换时读一次用来抽图注，随即丢弃。
+**产物**：`md/<文件名>.md`（front matter 登记块 + 转换正文）与平铺的 `assets/<id>-<kind><n>.<ext>`。两者连同 `pdf/` 都**不进版本库**，缺哪份用 `sources/papers/_scripts/pipeline.py` 现取。**不写 `json/`、不写 manifest、不写 provenance**：结构化输出只在转换时读一次用来抽图注，随即丢弃。
 
 ## 登记块只有一份
 
-md 顶部是 YAML front matter（`stem` / `id` / `keywords` / `abstract` / `revised` / `source` / `parser`），其后**直接**是 MinerU 的正文。没有第二个头块——早先版本曾在 front matter 之后另写一段「解析器 / 转换时间 / 本地 PDF SHA256 / 图片」，它与 front matter 登记同一件事却已漂移（`parser` 版本号都不一致），2026-09-25 随本次收敛移除。
+md 顶部是 YAML front matter（`stem` / `id` / `keywords` / `abstract` / `revised` / `source` / `parser`），其后**直接**是 MinerU 的正文。`abstract` / `revised` / `source` 在转换前由 `_scripts/meta.py` 取回并写入（`revised` 以 `index.csv` 账本为准），取不到才留空——所以重转不会丢摘要。没有第二个头块——早先版本曾在 front matter 之后另写一段「解析器 / 转换时间 / 本地 PDF SHA256 / 图片」，它与 front matter 登记同一件事却已漂移（`parser` 版本号都不一致），2026-09-25 随本次收敛移除。
 
 写盘由 `write_document()` 负责：**文本先构建、后开文件**。`open(path, "w")` 一调用就截断，而 `front_matter()` 靠读旧文件来保留 `abstract` / `revised` / `source`——顺序颠倒会把这三个字段洗成空（实测发生过）。因此 `--force` 重转是安全的：这三项会被保留。
 
@@ -73,7 +73,7 @@ MinerU 的版本号**不在 API 响应里**——提交返回只有 `code/msg/tr
 
 ## 收尾
 
-转换完跑一次 `_scripts/build_index.py` 刷新 `index.csv`，并在 `CHANGELOG.md` 追加一行。
+转换完跑一次 `_scripts/build_index.py` 对账 `index.csv`（只增不删），并在 `CHANGELOG.md` 追加一行。全库缺料与反追踪状态用 `_scripts/status.py --check` 复核。
 
 ## 边界
 
