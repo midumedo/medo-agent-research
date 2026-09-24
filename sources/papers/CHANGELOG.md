@@ -15,3 +15,4 @@
 - 2026-09-24 · 索引 · 全库 · `index.json` 退役为 `index.csv`（`id, name, keywords, date`），文件名由 `id` + `name` 推导，不再单列 stem；`kinds`/`tags` 两列合并为 `keywords`。
 - 2026-09-24 · 图片 · 全库 · 图片取消 `assets/<词干>/` 分目录，改为平铺并按 `id` 命名（`<id>-fig3.jpg`）；content_list 没有记录的图（行间公式一类）命名为 `<id>-img<N>.jpg`，不再保留 MinerU 的 hash 名。`manifest.json` 取消：图注在 md、图号在文件名、字节已入库。
 - 2026-09-24 · 转换 · 3 篇 · 试点用 MinerU 云端重转（mem0 v1、LongMemEval v2、A-MEM v11），产出 86 张图。修掉四处缺陷：上传需绕开 urllib 注入的 Content-Type（OSS 签名会拒）、`id` 须由元数据推导、转换记录须在写 md 前就位、重跑须累积 `state`。
+- 2026-09-24 · 命名 · 全库 · 名字改为 `<类型>.<名称>`：类型（`Survey`/`Bench`/`Project`/`Model`/`Method`/`Analysis`）首字母大写、用 `.` 与后半段相连，如 `arxiv-2502.12110v11.Project.A-Mem`。类型已说明的词从后半段去掉（`AMA-Bench` → `Bench.AMA`）。规则由测试把守。

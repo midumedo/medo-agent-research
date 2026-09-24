@@ -1,5 +1,5 @@
 {
-  "arxiv-2402.17753v1.bench-Long-Term Chat Memory": {
+  "arxiv-2402.17753v1.Bench.Long-Term Chat Memory": {
     "id": "arxiv-2402.17753",
     "title": "Evaluating Very Long-Term Conversational Memory of LLM Agents",
     "authors": [
@@ -19,7 +19,7 @@
     "registry": "arxiv",
     "revised": "2024-02-27"
   },
-  "arxiv-2404.13501.survey-Memory Mechanism": {
+  "arxiv-2404.13501.Survey.Memory Mechanism": {
     "id": "arxiv-2404.13501",
     "title": "A Survey on the Memory Mechanism of Large Language Model based Agents",
     "authors": [
@@ -41,7 +41,7 @@
     "registry": "arxiv",
     "revised": "2024-04-21"
   },
-  "arxiv-2410.10813v2.bench-LongMemEval": {
+  "arxiv-2410.10813v2.Bench.LongMemEval": {
     "id": "arxiv-2410.10813",
     "title": "LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory",
     "authors": [
@@ -61,7 +61,7 @@
     "registry": "arxiv",
     "revised": "2025-03-04"
   },
-  "arxiv-2501.13956v1.project-Zep": {
+  "arxiv-2501.13956v1.Project.Zep": {
     "id": "arxiv-2501.13956",
     "title": "Zep: A Temporal Knowledge Graph Architecture for Agent Memory",
     "authors": [
@@ -80,7 +80,7 @@
     "registry": "arxiv",
     "revised": "2025-01-20"
   },
-  "arxiv-2502.12110v11.project-A-Mem": {
+  "arxiv-2502.12110v11.Project.A-Mem": {
     "id": "arxiv-2502.12110",
     "title": "A-MEM: Agentic Memory for LLM Agents",
     "authors": [
@@ -100,7 +100,7 @@
     "registry": "arxiv",
     "revised": "2025-10-08"
   },
-  "arxiv-2504.14225v2.bench-Know Me": {
+  "arxiv-2504.14225v2.Bench.Know Me": {
     "id": "arxiv-2504.14225",
     "title": "Know Me, Respond to Me: Benchmarking LLMs for Dynamic User Profiling and Personalized Responses at Scale",
     "authors": [
@@ -123,7 +123,7 @@
     "registry": "arxiv",
     "revised": "2025-10-27"
   },
-  "arxiv-2504.19413v1.project-Mem0": {
+  "arxiv-2504.19413v1.Project.Mem0": {
     "id": "arxiv-2504.19413",
     "title": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory",
     "authors": [
@@ -142,7 +142,7 @@
     "registry": "arxiv",
     "revised": "2025-04-28"
   },
-  "arxiv-2505.00675.survey-Rethinking Memory": {
+  "arxiv-2505.00675.Survey.Rethinking Memory": {
     "id": "arxiv-2505.00675",
     "title": "Rethinking Memory in LLM based Agents: Representations, Operations, and Emerging Topics",
     "authors": [
@@ -163,7 +163,7 @@
     "registry": "arxiv",
     "revised": "2025-12-24"
   },
-  "arxiv-2506.06326v1.project-Memory OS": {
+  "arxiv-2506.06326v1.Project.Memory OS": {
     "id": "arxiv-2506.06326",
     "title": "Memory OS of AI Agent",
     "authors": [
@@ -181,7 +181,7 @@
     "registry": "arxiv",
     "revised": "2025-05-30"
   },
-  "arxiv-2506.21605v1.bench-MemBench": {
+  "arxiv-2506.21605v1.Bench.MemBench": {
     "id": "arxiv-2506.21605",
     "title": "MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents",
     "authors": [
@@ -201,7 +201,7 @@
     "registry": "arxiv",
     "revised": "2025-06-20"
   },
-  "arxiv-2507.03724v4.project-MemOS": {
+  "arxiv-2507.03724v4.Project.MemOS": {
     "id": "arxiv-2507.03724",
     "title": "MemOS: A Memory OS for AI System",
     "authors": [
@@ -254,7 +254,7 @@
     "registry": "arxiv",
     "revised": "2025-12-03"
   },
-  "arxiv-2507.05257v4.bench-MemoryAgentBench": {
+  "arxiv-2507.05257v4.Bench.MemoryAgentBench": {
     "id": "arxiv-2507.05257",
     "title": "Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions",
     "authors": [
@@ -271,7 +271,7 @@
     "registry": "arxiv",
     "revised": "2026-06-28"
   },
-  "arxiv-2507.07957v1.project-MIRIX": {
+  "arxiv-2507.07957v1.Project.MIRIX": {
     "id": "arxiv-2507.07957",
     "title": "MIRIX: Multi-Agent Memory System for LLM-Based Agents",
     "authors": [
@@ -287,7 +287,7 @@
     "registry": "arxiv",
     "revised": "2025-07-10"
   },
-  "arxiv-2510.17281v7.bench-MemoryBench": {
+  "arxiv-2510.17281v7.Bench.MemoryBench": {
     "id": "arxiv-2510.17281",
     "title": "MemoryBench: A Benchmark for Memory and Continual Learning in LLM Systems",
     "authors": [
@@ -307,7 +307,7 @@
     "registry": "arxiv",
     "revised": "2026-06-03"
   },
-  "arxiv-2510.27246v2.bench-Million-Token Memory": {
+  "arxiv-2510.27246v2.Bench.Million-Token Memory": {
     "id": "arxiv-2510.27246",
     "title": "Beyond a Million Tokens: Benchmarking and Enhancing Long-Term Memory in LLMs",
     "authors": [
@@ -327,7 +327,7 @@
     "registry": "arxiv",
     "revised": "2026-02-21"
   },
-  "arxiv-2512.13564.survey-Age of Agent Memory": {
+  "arxiv-2512.13564.Survey.Age of Agent Memory": {
     "id": "arxiv-2512.13564",
     "title": "Memory in the Age of AI Agents",
     "authors": [
@@ -387,7 +387,7 @@
     "registry": "arxiv",
     "revised": "2026-01-13"
   },
-  "arxiv-2601.01885v3.method-Agentic Memory": {
+  "arxiv-2601.01885v3.Method.Agentic Memory": {
     "id": "arxiv-2601.01885",
     "title": "Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents",
     "authors": [
@@ -408,7 +408,7 @@
     "registry": "arxiv",
     "revised": "2026-07-23"
   },
-  "arxiv-2601.02163v2.project-EverMemOS": {
+  "arxiv-2601.02163v2.Project.EverMemOS": {
     "id": "arxiv-2601.02163",
     "title": "EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning",
     "authors": [
@@ -433,7 +433,7 @@
     "registry": "arxiv",
     "revised": "2026-01-09"
   },
-  "arxiv-2601.02553v3.project-SimpleMem": {
+  "arxiv-2601.02553v3.Project.SimpleMem": {
     "id": "arxiv-2601.02553",
     "title": "SimpleMem: Efficient Lifelong Memory for LLM Agents",
     "authors": [
@@ -455,7 +455,7 @@
     "registry": "arxiv",
     "revised": "2026-01-29"
   },
-  "arxiv-2601.08323v3.model-AtomMem": {
+  "arxiv-2601.08323v3.Model.AtomMem": {
     "id": "arxiv-2601.08323",
     "title": "AtomMem : Learnable Dynamic Agentic Memory with Atomic Memory Operation",
     "authors": [
@@ -474,7 +474,7 @@
     "registry": "arxiv",
     "revised": "2026-03-27"
   },
-  "arxiv-2602.06052.survey-Agent Memory": {
+  "arxiv-2602.06052.Survey.Agent Memory": {
     "id": "arxiv-2602.06052",
     "title": "A Survey of Agent Memory in the Second Half: Towards Self-Evolving and Long-Horizon Agents",
     "authors": [
@@ -547,7 +547,7 @@
     "registry": "arxiv",
     "revised": "2026-08-04"
   },
-  "arxiv-2602.16313v2.bench-MemoryArena": {
+  "arxiv-2602.16313v2.Bench.MemoryArena": {
     "id": "arxiv-2602.16313",
     "title": "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks",
     "authors": [
@@ -575,7 +575,7 @@
     "registry": "arxiv",
     "revised": "2026-09-17"
   },
-  "arxiv-2602.22769v4.bench-AMA": {
+  "arxiv-2602.22769v4.Bench.AMA": {
     "id": "arxiv-2602.22769",
     "title": "AMA-Bench: Evaluating Long-Horizon Memory for Agentic Applications",
     "authors": [
@@ -601,7 +601,7 @@
     "registry": "arxiv",
     "revised": "2026-05-27"
   },
-  "arxiv-2603.07670.survey-Autonomous Memory": {
+  "arxiv-2603.07670.Survey.Autonomous Memory": {
     "id": "arxiv-2603.07670",
     "title": "Memory for Autonomous LLM Agents:Mechanisms, Evaluation, and Emerging Frontiers",
     "authors": [
@@ -615,7 +615,7 @@
     "registry": "arxiv",
     "revised": "2026-03-08"
   },
-  "arxiv-2605.12493v1.bench-LongMemEval-V2": {
+  "arxiv-2605.12493v1.Bench.LongMemEval-V2": {
     "id": "arxiv-2605.12493",
     "title": "LongMemEval-V2: Evaluating Long-Term Agent Memory Toward Experienced Colleagues",
     "authors": [
@@ -636,7 +636,7 @@
     "registry": "arxiv",
     "revised": "2026-05-12"
   },
-  "arxiv-2606.06448.analysis-Memory Workloads": {
+  "arxiv-2606.06448.Analysis.Memory Workloads": {
     "id": "arxiv-2606.06448",
     "title": "Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads",
     "authors": [
@@ -658,7 +658,7 @@
     "registry": "arxiv",
     "revised": "2026-09-22"
   },
-  "arxiv-2607.16848.bench-Scientific Memory": {
+  "arxiv-2607.16848.Bench.Scientific Memory": {
     "id": "arxiv-2607.16848",
     "title": "Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration",
     "authors": [

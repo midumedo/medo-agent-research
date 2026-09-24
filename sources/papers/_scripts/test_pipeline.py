@@ -262,15 +262,16 @@ def fake_zip(entries):
 class NamesAndAssetsTests(unittest.TestCase):
     """文件名拼装、非法字符替换、图片全覆盖命名、manifest 取消。"""
 
-    TYPE_TOKENS = ("survey", "bench", "project", "model", "method", "analysis")
+    TYPE_TOKENS = ("Survey", "Bench", "Project", "Model", "Method", "Analysis")
 
     def test_every_name_carries_a_type_prefix(self):
-        """名字一律是 `<类型>-<领域或名字>`，类型取自封闭小集。"""
+        """名字一律是 `<类型>.<领域或名字>`，类型首字母大写、取自封闭小集。"""
         rows = stem.read_index()
         self.assertTrue(rows, "索引为空，无法校验命名规则")
         for row in rows:
             name = row.get("name") or ""
-            token, _, rest = name.partition("-")
+            token, sep, rest = name.partition(".")
+            self.assertEqual(sep, ".", f"{row['id']}: 类型与名称之间要用 `.` 连接")
             self.assertIn(token, self.TYPE_TOKENS,
                           f"{row['id']}: 类型前缀 {token!r} 不在词表内")
             self.assertTrue(rest.strip(), f"{row['id']}: 类型后没有领域或名字")
