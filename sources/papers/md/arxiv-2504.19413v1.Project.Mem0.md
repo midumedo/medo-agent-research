@@ -6,20 +6,6 @@ abstract: "Large Language Models (LLMs) have demonstrated remarkable prowess in 
 revised: 2025-04-28
 source: "https://arxiv.org/abs/2504.19413v1"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged, abstracted, keyworded]
----
-
-# Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory
-
-- 解析器: mineru-cloud vlm（语言 en）
-- 转换时间: 2026-09-24T12:53:15.506913+00:00
-- 本地 PDF SHA256: `bec870b657aa73405275a6d8fe27bcd4271799e028bc62986ab9c4cd27a3712d`
-- 图片: 7 个，597 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory

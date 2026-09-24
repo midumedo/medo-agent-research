@@ -6,20 +6,6 @@ abstract: "To support long-term interaction in complex environments, LLM agents 
 revised: 2026-01-29
 source: "https://arxiv.org/abs/2601.02553v3"
 parser: mineru-cloud 3.4.4
-state: [downloaded, converted, imaged, abstracted, keyworded]
----
-
-# SimpleMem: Efficient Lifelong Memory for LLM Agents
-
-- 解析器: mineru-cloud vlm（语言 en）
-- 转换时间: 2026-09-24T15:20:46.676036+00:00
-- 本地 PDF SHA256: `8752aa223e004ca286995bc1e8cbde8e89e67ad3aeb9ba0266f3ccab3cc11078`
-- 图片: 16 个，986 KB；字节已写入 assets/
-
-> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。
-> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。
-> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。
-
 ---
 
 # SimpleMem: Efficient Lifelong Memory for LLM Agents

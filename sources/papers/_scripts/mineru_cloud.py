@@ -29,10 +29,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
-from datetime import datetime, timezone
-
 from stem import (assets_root, find, front_matter, md_path, pdf_dir, pdf_path,
-                  read_front_matter, slugify, stem_of)
+                  slugify, stem_of)
 
 API = "https://mineru.net/api/v4"
 UA = "MemoryResearch/1.0 (mineru cloud client)"
@@ -49,19 +47,32 @@ CAPTION_FALLBACKS = ("image_caption", "table_caption", "chart_caption",
 KIND_TOKEN = {"image": "fig", "table": "table", "chart": "chart", "equation": "eq"}
 NUM_RE = re.compile(r"(?:figure|fig\.?|图|table|tab\.?|表)\s*([0-9]+[a-z]?)", re.I)
 TAG_RE = re.compile(r"<[^>]+>")
-STATE_ORDER = ["downloaded", "converted", "imaged", "abstracted", "keyworded", "reviewed"]
+def render_document(stem, record, ident, parser, md_text):
+    """The md file is front matter + parser body, with nothing in between.
 
-
-def merge_state(existing, steps):
-    """Union of what is already recorded and what just happened.
-
-    Re-running the converter must not erase steps that came after it — the
-    abstract and keywords are written outside this script.
+    The register block lives only in the front matter; the body then starts at
+    the parser's own first heading. A second, hand-written header used to be
+    written here and drifted from the front matter (its parser version and the
+    front matter's disagreed); it is gone, and this is the single place that
+    decides what the file looks like.
     """
-    keep = existing if isinstance(existing, list) else ([existing] if existing else [])
-    merged = {str(s).strip() for s in list(keep) + list(steps) if str(s).strip()}
-    return sorted(merged, key=lambda s: (STATE_ORDER.index(s) if s in STATE_ORDER
-                                         else len(STATE_ORDER), s))
+    return front_matter(stem, record, ident=ident, parser=parser) + md_text.strip() + "\n"
+
+
+def write_document(stem, record, ident, parser, md_text):
+    """Write md/<stem>.md, building the whole text **before** opening the file.
+
+    `open(path, "w")` truncates the file the moment it is called. `front_matter`
+    keeps the existing abstract / revised / source by reading the old file, so
+    if that read happened while the write handle was already open it would see
+    an empty file and blank all three fields. Building the text first is what
+    makes a re-conversion safe to run.
+    """
+    text = render_document(stem, record, ident, parser, md_text)
+    os.makedirs(os.path.dirname(md_path(stem)), exist_ok=True)
+    with open(md_path(stem), "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+    return text
 
 
 CONTROL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
@@ -427,26 +438,9 @@ def main():
             md_text = sanitize_text(rewrite_image_refs(zf.read(md_name).decode("utf-8", "replace"), mapping))
             assets = write_assets(zf, stem, ident, items, mapping, keep_images)
 
-            stamp = datetime.now(timezone.utc).isoformat()
             version, backend = mineru_version(zf)
             label = parser_label(result, args.model_version, version)
-            state = merge_state(read_front_matter(stem).get("state"),
-                                ["downloaded", "converted"] + (["imaged"] if assets["count"] else []))
-            os.makedirs(os.path.dirname(md_path(stem)), exist_ok=True)
-            with open(md_path(stem), "w", encoding="utf-8", newline="\n") as f:
-                f.write(front_matter(stem, find(stem), ident=ident,
-                                     parser=label, state=state))
-                f.write("\n".join([
-                    f"- 解析器: {label}（语言 {args.lang}）",
-                    f"- 转换时间: {stamp}",
-                    f"- 图片: {assets['count']} 个，{assets['bytes'] // 1024} KB；"
-                    + ("字节已写入 assets/" if assets["kept"] else "字节未保留，只写清单"),
-                    "",
-                    "> 本文件由 MinerU 云端接口转换，转换成功不等于已对 PDF 做视觉核验。",
-                    "> 表格、公式与图像仍需在使用时核对；引用具体数字请回 pdf/ 定位原文。",
-                    "> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。", "", "---", "",
-                ]) + "\n")
-                f.write(md_text.strip() + "\n")
+            write_document(stem, find(stem), ident, label, md_text)
             print(f"[{stem}] -> {md_path(stem)}（{len(md_text.splitlines())} 行，"
                   f"图 {assets['count']} 个{'，字节已落盘' if assets['kept'] else '，仅清单'}）")
     print("转换完成；运行 _scripts/build_index.py 刷新 index.csv。")

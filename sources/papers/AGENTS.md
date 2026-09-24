@@ -75,6 +75,14 @@ papers/
 
 **CHANGELOG.md 只追加**：入库、重转、更正、结构变动各记一行，日期 · 动作 · 对象 · 说明。它不重复 `index.csv` 已有的信息，也不承担清单职责。
 
+## 三级读法：先指路、再简介、后全文
+
+`index.csv` 是**指路**——四列就够筛「有没有、什么主题、哪版」。要判断一篇讲什么，再打开它的 `md/` 读 front matter 的 `abstract`（**简介**）。要论证、比数字，才读 `md/` 正文并回 `pdf/` 定位原文（**全文**）。
+
+分级落在**文件边界**上，所以 `index.csv` **不加摘要列**：加了就是把 md 的 abstract 抄第二遍，与「只留两份，其余现取」和「不重复 index.csv 已有的信息」直接冲突。轻量筛选读四列，需要简介时才打开 md。
+
+重件（`pdf/` 与 `assets/`）不进入版本库；缺哪份用 `_scripts/fetch_material.py` 按 `id` 现取（PDF 重下、图由 MinerU 重转）。跟踪的只有 `index.csv`、`md/`、`_scripts/` 与文档。
+
 ## 只留两份，其余现取
 
 读论文只需要这两处，各有一个不可替代的角色：
@@ -82,7 +90,7 @@ papers/
 | 文件 | 独有信息 | 谁在读 | 定位 |
 |---|---|---|---|
 | `index.csv` | 无——它就是权威：`id`／`name`／`keywords`／`revised` | AI 与人的第一入口 | **指路表** |
-| `md/*.md` 的登记块 | 每篇的摘要、关键词、来源、解析器版本、进度 | 读单篇时 | **单篇登记** |
+| `md/*.md` 的登记块 | 每篇的摘要、关键词、来源、解析器版本 | 读单篇时 | **单篇登记** |
 
 **判断一个文件该不该留，问三件事**（缺一不可）：① 它的信息别处能不能取到？② **取它费劲吗**？③ 留着要付什么（会腐坏吗、要跟着改名搬吗）？
 
@@ -157,7 +165,7 @@ long-term-memory, context-window, retrieval, rag, evaluation, personalization
 ## 阅读与引用纪律
 
 - md 是**机器转换文本**，不是原文。引用具体数字、表格、公式前，回到 `pdf/` 定位原文位置核对。
-- md 顶部有 YAML front matter（`stem`、`id`、`keywords`、`abstract`、`revised`、`source`、`parser`（含 MinerU 版本）、`state`）。身份以 front matter 与 `index.csv` 为准；正文是**最后一个 `---` 之后**的内容。
+- md 顶部有 YAML front matter（`stem`、`id`、`keywords`、`abstract`、`revised`、`source`、`parser`（含 MinerU 版本））。身份以 front matter 与 `index.csv` 为准；front matter 是文件开头**唯一**一对 `---`，其后的首个 `# 标题` 起即转换正文——正文里不再有第二个登记块。
 - 引用时给出 `id` + 版本 + 章节或图表；版本 unknown 就写 unknown。
 - 转换成功不等于做过视觉核验，`visual_verification` 默认是 `false`。
 

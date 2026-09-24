@@ -1,6 +1,6 @@
 """Offline regression checks for source preservation and version pairing.
 
-Run with a Python environment containing pymupdf4llm and pymupdf:
+Run with any Python 3.13 (the toolchain is stdlib-only):
     python -B test_pipeline.py
 All downloads are mocked; conversion uses a tiny PDF created in a temp folder.
 """
@@ -205,7 +205,7 @@ class VisualNamingTests(unittest.TestCase):
 
 
 class IndexCsvTests(unittest.TestCase):
-    """index.csv 四列往返 + md front matter 八字段。"""
+    """index.csv 四列往返 + md front matter 七字段。"""
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -229,9 +229,9 @@ class IndexCsvTests(unittest.TestCase):
         text = stem.front_matter("a-v1", {"id": "arxiv-1v1"},
                                  source="https://arxiv.org/abs/xv1",
                                  keywords=["memory"], abstract="abs", revised="2025-10-08",
-                                 parser="mineru-cloud", state=["converted"])
+                                 parser="mineru-cloud")
         for key in ("stem:", "id:", "keywords:", "abstract:", "revised:", "source:",
-                    "parser:", "state:"):
+                    "parser:"):
             self.assertIn(key, text)
         self.assertIn("https://arxiv.org/abs/xv1", text)
         self.assertNotIn("converted_at", text, "转换时间由 git 承载，不进登记块")
@@ -333,6 +333,40 @@ class NamesAndAssetsTests(unittest.TestCase):
                 files = sorted(os.listdir(os.path.join(tmp, "assets")))
                 self.assertEqual(files, ["arxiv-1v1-fig1.jpg", "arxiv-1v1-img1.jpg"])
                 self.assertNotIn("manifest", info)
+
+
+class DocumentWriteTests(unittest.TestCase):
+    """写 md 的单一入口：文本先构建、后开文件，登记块只有 front matter 一个。"""
+
+    def test_write_document_preserves_register_fields(self):
+        """重转不得洗掉 abstract/revised/source。
+
+        `open(path, "w")` 一调用就截断；`front_matter` 却靠读旧文件来保留这三个
+        字段。若读发生在句柄打开之后，读到的是空文件，三个字段全变 null —— 这是
+        实测过的真实事故（一次 --force 探针把一篇的 abstract/revised/source 洗空）。
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(stem, "BASE", tmp):
+                os.makedirs(os.path.join(tmp, "md"))
+                stem_name = "arxiv-1v1.A-Mem"
+                with open(stem.md_path(stem_name), "w", encoding="utf-8", newline="\n") as f:
+                    f.write(stem.front_matter(stem_name, {"id": "arxiv-1v1"},
+                                              keywords=["memory"], abstract="keep me",
+                                              revised="2025-01-01",
+                                              source="https://arxiv.org/abs/1v1")
+                            + "old body\n")
+                mineru.write_document(stem_name, {"id": "arxiv-1v1"}, "arxiv-1v1",
+                                      "mineru-cloud 3.4.4", "# new body")
+                got = stem.read_front_matter(stem_name)
+                self.assertEqual(got["abstract"], "keep me")
+                self.assertEqual(got["revised"], "2025-01-01")
+                self.assertEqual(got["source"], "https://arxiv.org/abs/1v1")
+                self.assertEqual(got["parser"], "mineru-cloud 3.4.4")
+                text = open(stem.md_path(stem_name), encoding="utf-8").read()
+                self.assertTrue(text.endswith("# new body\n"))
+                for marker in ("- 解析器:", "- 转换时间:", "- 本地 PDF SHA256:", "- 图片:"):
+                    self.assertNotIn(marker, text, "正文里不该再有第二个登记块")
+                self.assertEqual(text.count("\n---\n"), 1, "只允许 front matter 那一对分隔线")
 
 
 if __name__ == "__main__":

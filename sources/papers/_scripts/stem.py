@@ -28,7 +28,7 @@ VERSION_RE = re.compile(r"v[1-9]\d*$")
 INDEX_FIELDS = ["id", "name", "keywords", "revised"]
 # md front matter is the per-paper register: 8 fields, no duplicates of index.csv.
 FRONT_FIELDS = ["stem", "id", "keywords", "abstract", "revised", "source",
-                "parser", "state"]
+                "parser"]
 
 
 def base():
@@ -225,7 +225,7 @@ def to_stem(token):
     if record:
         return stem_of(record)
     if ARXIV_RE.match(token) or re.fullmatch(r"arxiv-\d{4}\.\d{4,5}(?:v[1-9]\d*)?", token):
-        raise ValueError(f"[{token}] 尚未入库，无法解析为词干；先下载或用标题运行")
+        raise ValueError(f"[{token}] 尚未入库，无法解析为文件名；先下载或用标题运行")
     return slugify(token)
 
 
@@ -255,7 +255,7 @@ def yaml_quote(value):
     return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
-LIST_KEYS = ("keywords", "state")
+LIST_KEYS = ("keywords",)
 BARE = {"stem", "id", "parser", "revised"}
 EMPTY_TOKENS = ("", "null", "none")
 
@@ -291,8 +291,8 @@ def read_front_matter(stem):
 
 def front_matter(stem, index_record=None, kind=None, keywords=None,
                  abstract=None, revised=None, source=None,
-                 parser=None, state=None, ident=None):
-    """The eight-field register block above the parser output.
+                 parser=None, ident=None):
+    """The seven-field register block above the parser output.
 
     Everything after the closing `---` is the untouched parser text; this block
     is the only place the project writes its own judgement.
@@ -324,7 +324,6 @@ def front_matter(stem, index_record=None, kind=None, keywords=None,
         ("revised", revised or pick("revised")),
         ("source", source or pick("source")),
         ("parser", parser or pick("parser")),
-        ("state", state or pick("state")),
     ]
     lines = ["---"]
     for key, value in fields:

@@ -1,10 +1,9 @@
-"""Rebuild papers/index.csv from the files, meta.json and md front matter.
+"""Rebuild papers/index.csv from the pdf/ and md/ file names plus the md front matter.
 
 index.csv is a pointer table: `id, name, keywords, revised`. `keywords` is a
 judgement column — it is carried over from the previous index.csv (or read from
 an md front matter when the index does not exist yet) and is never overwritten
-by a rebuild. Titles, abstracts and provenance live elsewhere on purpose:
-titles and abstracts in the md front matter, fingerprints in provenance.json.
+by a rebuild. Titles and abstracts live in the md front matter on purpose.
 
 Usage: build_index.py [--check]
 """

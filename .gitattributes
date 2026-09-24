@@ -15,6 +15,5 @@ archive/** -text
 analysis/archive/** -text
 analysis/landscape/memory-landscape-2026-09.md -text
 
-# 论文转换文本按仓库默认的 eol=lf 归一：它们是机器转换产物，原件是 pdf/ 下的 PDF，
-# provenance.json 里的正文指纹在写入前计算，与文件换行无关。
+# 论文转换文本按仓库默认的 eol=lf 归一：它们是机器转换产物，原件是 pdf/ 下的 PDF。
 # 旧的 surveys/*.md 曾单独用 -text 保留 CRLF；2026-09-22 随扁平化一并归一。

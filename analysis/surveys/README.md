@@ -6,7 +6,7 @@
 
 下列三点针对 `2512.13564` 做了局部检查，依据是本地转换正文与元数据，未重新联网确认版本，也未做 PDF 视觉核验：
 
-- [元数据](../../sources/papers/meta.json) 中作者数组有 **47** 人，转换文件的作者头部也写 47。旧导航中的“48 位作者”已更正。
+- 作者数组有 **47** 人，转换文件的作者头部也写 47（作者数现查 arXiv abs 页即可，不再另存元数据快照）。旧导航中的“48 位作者”已更正。
 - [正文 §4.2.3 Skill-based Memory](../../sources/papers/md/memory-in-the-age-of-ai-agents.md#423-skill-based-memory) 明确讨论 **Code Snippets、Functions and Scripts、APIs、MCPs**，并在 MCP 段落提到按需加载与降低上下文开销。因此撤回“程序性记忆只在 taxonomy 表里出现”的旧判断。
 - 这段原文只足以纠正上述缺席断言；它没有自动证明某个工程方案有效，也不能代替对整篇论文及其余六篇材料的复核。
 

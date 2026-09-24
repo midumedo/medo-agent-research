@@ -4,7 +4,7 @@
 > 卡片是**我方阅读判断**，不是论文原文；每张标注版本与本地路径，引用具体数字前回到 [论文库](../sources/papers/README.md) 的对应文件。
 > 与 [综述阅读与比较](surveys/README.md) 的分工：那一份按问题选入口并跟踪待调查项，这一份是按材料查"这篇到底讲了什么"。
 
-本地版本以 `sources/papers/provenance.json` 记录为准；下表"版本"列只写已确认的 arXiv 版本，缺失的写 unknown。
+本地版本以 `sources/papers/index.csv` 记录为准；下表"版本"列只写已确认的 arXiv 版本，缺失的写 unknown。
 
 ---
 
