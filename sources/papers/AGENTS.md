@@ -152,7 +152,7 @@ long-term-memory, context-window, retrieval, rag, evaluation, personalization
 
 - arXiv 的元数据里**没有**论文自报的关键词（只有学科分类，如 `cs.CL`），所以关键词不能"搬过来"，只能读标题与摘要后判定。
 - `keywords` 取代了早期的 `kinds` 与 `tags` 两列：体裁词（`survey`／`benchmark`／`framework`）现在也直接作 keyword，不再单设类型列。
-- 轻量筛选只读 `index.csv` 的前几列（`stem`、`id`、`keywords`、`date`）就够；要看某篇讲了什么，再打开那篇 md 读 front matter 的 `abstract`。
+- 轻量筛选只读 `index.csv` 的四列（`id`、`name`、`keywords`、`revised`）就够；要看某篇讲了什么，再打开那篇 md 读 front matter 的 `abstract`。
 
 ## 阅读与引用纪律
 
@@ -166,5 +166,5 @@ long-term-memory, context-window, retrieval, rag, evaluation, personalization
 - 不按类型建子目录（分类靠 `keywords`，可多值、可改）。
 - md 的 front matter 是本项目的**登记区**（身份、摘要、关键词、状态），`---` 之后是转换原文——不往正文里写本项目的判断与阅读建议。
 - 不改 PDF 原件，不改已冻结文件名里的 `id` 段，不删 CHANGELOG 行。
-- 不手改 `index.csv` 的生成字段（`id`、`date`）；`name` 与 `keywords` 是人工与 AI 的判断，重建时按规则保留。不因为转换成功就宣称已核实，不在缺失字段上补推测值。
+- 不手改 `index.csv` 的生成字段（`id`、`revised`）；`name` 与 `keywords` 是人工与 AI 的判断，重建时按规则保留。不因为转换成功就宣称已核实，不在缺失字段上补推测值。
 - 不把本目录的文件当作已确立的证据——它只是可定位的材料。
