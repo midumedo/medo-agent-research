@@ -22,3 +22,5 @@
 - 2026-09-24 · 图片 · 全库 · 无 `img_path` 的图改名：当一篇里这类条目**全是 `equation`** 时命名为 `<id>-eq<N>`（可确证是公式），一旦混入 `table` 等就退回 `<id>-img<N>`（others）。98 张改为 `eq`、30 张保持 `img`，md 引用同步，零缺失。
 - 2026-09-24 · 整理 · 顶层文档 · `watchlist.txt` 重写：原先 27 条全是旧词干、**一条也解析不出来**，改为 `id` 一行一个（按类型分组），复验 27/27 可解析。`AGENTS.md` 清掉所有「词干」旧术语（改为「文件名」「名称」），`README.md` 去掉不存在的 `logs/` 与会腐的硬编码份数。
 - 2026-09-24 · 整理 · 顶层 · 删 `watchlist.txt`：实测其内容与 `index.csv` 的 `id` 列**完全相等**，无独有信息；`download_arxiv.py --all` 改为按 `index.csv` 取 id。`AGENTS.md` 新增「三个数据文件，各管一段」一节，写明每个文件的独有信息与定位；`README.md` 重写为「一篇由什么组成／怎么找／怎么读／收录不等于核实」。
+- 2026-09-24 · 清理 · `_scripts/` · 删 `mineru_client.py`（本地 MinerU 服务客户端）：从未被使用，且需要本地装模型，与「工具链零第三方依赖」冲突；`mineru-pdf-convert` skill 里的「本地服务」一节改为说明其已移除。
+- 2026-09-24 · 新增 · `sources/paper-sources.md` · 登记四个公开的论文清单／调研入口（MemoryPapers.org、Agent-Memory-Paper-List、Awesome Efficient Agents、Toward Efficient Agents），只记地址与核实状态，不下载内容。

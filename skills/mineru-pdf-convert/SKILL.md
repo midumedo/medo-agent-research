@@ -47,13 +47,9 @@ cd D:/workspace/memory/sources/papers
 - md 里的 `![](images/x.jpg)` 会被改写成 `](../assets/<词干>/x.jpg)`，引用与 md 的位置解耦。
 - 真的要看图：`--keep-images`。字节不进 Git（见 `.gitignore`），随时能按同一 API 与版本再生成，清单可用来验证重新生成的结果一致。
 
-## 本地服务（备选）
+## 本地服务：已移除
 
-云端不可用或不想外网传输时用。服务装在项目外（重、带模型），默认 `http://127.0.0.1:8000`。
-
-1. 先看 `http://127.0.0.1:8000/health` 是否有响应。
-2. 没在跑就说明情况让用户决定——**不要自动启动服务或安装依赖**。
-3. 跑：`python _scripts/mineru_client.py --backend hybrid <词干>`（`--backend`：`pipeline`／`hybrid`／`vlm`）。
+曾有一个 `mineru_client.py` 对接本地 MinerU 服务，从未被使用过——它需要本地装模型（一串重依赖，与「工具链零第三方依赖」直接冲突），而云端 API 够用。2026-09-24 删除；确实需要本地解析时**再写**，不必预置。
 
 ## 版本：只在 zip 里，别处都没有
 

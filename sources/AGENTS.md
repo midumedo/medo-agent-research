@@ -17,6 +17,8 @@
 | `papers/` | 论文原件与机器转换文本，按 `<id>.<简称>` 路由 | index.csv（数据）· papers/AGENTS.md（规则与字段） |
 | `repos/` | 第三方仓库 checkout，用源码前先确认文件真的可读 | [repos-sources.md](repos-sources.md) |
 
+另有「去哪找更多论文」的公开清单索引：paper-sources.md——它不是本项目收录的材料，只是入口。
+
 `repos/` 不进版本库（见 `.gitignore`），所以它的索引放在 `sources/` 这一层；`papers/` 进版本库，索引就放在它自己里面。
 
 ## 引用要求
