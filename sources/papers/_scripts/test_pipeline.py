@@ -15,6 +15,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
+from contextlib import redirect_stdout
 from unittest.mock import patch
 
 sys.dont_write_bytecode = True
@@ -26,6 +27,8 @@ import pdf  # noqa: E402
 import convert  # noqa: E402
 import build_index  # noqa: E402
 import pipeline  # noqa: E402
+import keywords  # noqa: E402
+import status  # noqa: E402
 
 STEM = "arxiv-2512.13564.Memory in the Age of AI Agents"
 AID = "2512.13564"
@@ -484,6 +487,83 @@ class MaterialCheckTests(unittest.TestCase):
                                    "keywords": [], "revised": ""}])
                 with patch.object(sys, "argv", ["pipeline.py", "--check"]):
                     pipeline.main()      # 不抛即通过
+
+
+class KeywordsTests(unittest.TestCase):
+    """打词只搬运不生成：--set 只改命中行，--missing 只列缺词的行并带上摘要。"""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        active = patch.object(stem, "BASE", self.temp.name)
+        active.start()
+        self.addCleanup(active.stop)
+        os.makedirs(os.path.join(self.temp.name, "md"))
+        stem.write_index([{"id": "arxiv-1v1", "name": "Project.A",
+                           "keywords": ["memory"], "revised": ""},
+                          {"id": "arxiv-2v1", "name": "Bench.B",
+                           "keywords": [], "revised": ""}])
+
+    def test_set_touches_only_the_target_row(self):
+        with patch.object(sys, "argv", ["keywords.py", "--set", "arxiv-2v1", "memory;benchmark"]):
+            keywords.main()
+        rows = {r["id"]: r for r in stem.read_index()}
+        self.assertEqual(rows["arxiv-2v1"]["keywords"], ["memory", "benchmark"])
+        self.assertEqual(rows["arxiv-1v1"]["keywords"], ["memory"], "其余行不得改动")
+
+    def test_set_refuses_an_unknown_id(self):
+        with patch.object(sys, "argv", ["keywords.py", "--set", "arxiv-9v9", "x"]):
+            with self.assertRaises(SystemExit):
+                keywords.main()
+
+    def test_missing_lists_the_abstract_of_untagged_rows(self):
+        name = "arxiv-2v1.Bench.B"
+        with open(stem.md_path(name), "w", encoding="utf-8", newline="\n") as f:
+            f.write(stem.front_matter(name, {"id": "arxiv-2v1"}, abstract="an abstract") + "body\n")
+        buf = io.StringIO()
+        with patch.object(sys, "argv", ["keywords.py", "--missing"]), redirect_stdout(buf):
+            keywords.main()
+        out = buf.getvalue()
+        self.assertIn("arxiv-2v1", out)
+        self.assertIn("an abstract", out)
+        self.assertNotIn("arxiv-1v1", out, "已有关键词的行不再列出")
+
+
+class StatusTests(unittest.TestCase):
+    """反追踪状态：缺料要报，--sync 幂等地把派生目录移出索引。"""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.base = self.root / "sources" / "papers"
+        self.base.mkdir(parents=True)
+        active = patch.object(stem, "BASE", str(self.base))
+        active.start()
+        self.addCleanup(active.stop)
+        stem.write_index([{"id": "arxiv-1v1", "name": "Project.A",
+                           "keywords": [], "revised": ""}])
+
+    def test_check_fails_when_md_is_absent(self):
+        with patch.object(sys, "argv", ["status.py", "--check"]):
+            with self.assertRaises(SystemExit):
+                status.main()
+
+    def test_sync_adds_every_derived_ignore_line(self):
+        with patch.object(sys, "argv", ["status.py", "--sync"]):
+            status.main()
+        text = (self.root / ".gitignore").read_text(encoding="utf-8")
+        for name in status.DERIVED:
+            self.assertIn(f"/sources/papers/{name}/", text)
+
+    def test_sync_is_idempotent(self):
+        with patch.object(sys, "argv", ["status.py", "--sync"]):
+            status.main()
+        once = (self.root / ".gitignore").read_text(encoding="utf-8")
+        with patch.object(sys, "argv", ["status.py", "--sync"]):
+            status.main()
+        twice = (self.root / ".gitignore").read_text(encoding="utf-8")
+        self.assertEqual(once, twice)
 
 
 if __name__ == "__main__":
