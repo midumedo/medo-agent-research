@@ -24,6 +24,8 @@ import stem  # noqa: E402
 import meta  # noqa: E402
 import pdf  # noqa: E402
 import convert  # noqa: E402
+import build_index  # noqa: E402
+import pipeline  # noqa: E402
 
 STEM = "arxiv-2512.13564.Memory in the Age of AI Agents"
 AID = "2512.13564"
@@ -358,6 +360,130 @@ class DocumentWriteTests(unittest.TestCase):
                 for marker in ("- 解析器:", "- 转换时间:", "- 本地 PDF SHA256:", "- 图片:"):
                     self.assertNotIn(marker, text, "正文里不该再有第二个登记块")
                 self.assertEqual(text.count("\n---\n"), 1, "只允许 front matter 那一对分隔线")
+
+
+class LedgerTests(unittest.TestCase):
+    """index.csv 是账本：磁盘缺料不能把它清空，删行只能显式 --prune。"""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        active = patch.object(stem, "BASE", self.temp.name)
+        active.start()
+        self.addCleanup(active.stop)
+
+    def test_build_index_keeps_the_ledger_when_disk_is_empty(self):
+        stem.write_index([{"id": "arxiv-1v1", "name": "Project.A",
+                           "keywords": ["memory"], "revised": "2025-01-01"},
+                          {"id": "arxiv-2v1", "name": "Bench.B",
+                           "keywords": [], "revised": ""}])
+        before = open(stem.index_path(), encoding="utf-8").read()
+        with patch.object(sys, "argv", ["build_index.py"]):
+            build_index.main()
+        after = open(stem.index_path(), encoding="utf-8").read()
+        self.assertEqual(before, after, "磁盘上没有 pdf/md 时不得清空索引")
+
+    def test_build_index_check_passes_on_an_empty_disk(self):
+        stem.write_index([{"id": "arxiv-1v1", "name": "Project.A",
+                           "keywords": [], "revised": ""}])
+        with patch.object(sys, "argv", ["build_index.py", "--check"]):
+            build_index.main()          # 不抛 SystemExit 即通过
+
+    def test_prune_is_the_only_way_to_drop_a_row(self):
+        stem.write_index([{"id": "arxiv-1v1", "name": "Project.A",
+                           "keywords": [], "revised": ""}])
+        with patch.object(sys, "argv", ["build_index.py", "--prune"]):
+            build_index.main()
+        self.assertEqual(stem.read_index(), [])
+
+
+class AbstractChainTests(unittest.TestCase):
+    """摘要提取链：API summary → abs 页 → 人工判读；取不到就 None，绝不编造。"""
+
+    ATOM_FEED = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<feed xmlns="http://www.w3.org/2005/Atom"><entry>'
+        '<id>http://arxiv.org/abs/2504.19413v2</id>'
+        '<updated>2025-04-28T01:49:46Z</updated>'
+        '<published>2025-04-10T00:00:00Z</published>'
+        '<title>Mem0:  Building   Production-Ready Agents</title>'
+        '<summary>Abstract:  We  introduce  Mem0. </summary>'
+        '</entry></feed>')
+
+    def test_normalize_abstract_flattens_and_strips_label(self):
+        self.assertEqual(meta.normalize_abstract("Abstract:  a  b "), "a b")
+        self.assertIsNone(meta.normalize_abstract(""))
+        self.assertIsNone(meta.normalize_abstract(None))
+
+    def test_api_entry_reads_the_summary(self):
+        with patch.object(meta, "get", return_value=(200, self.ATOM_FEED.encode())):
+            entry = meta.api_entry("2504.19413")
+        self.assertEqual(entry["versioned_id"], "2504.19413v2")
+        self.assertEqual(entry["abstract"], "We introduce Mem0.")
+        self.assertEqual(entry["updated"], "2025-04-28T01:49:46Z")
+
+    def test_arxiv_meta_prefers_the_summary(self):
+        def fake_get(url):
+            if "export.arxiv.org" in url:
+                return 200, self.ATOM_FEED.encode()
+            return 200, b'<html><meta name="citation_title" content="Mem0"></html>'
+
+        with patch.object(meta, "get", side_effect=fake_get):
+            info = meta.arxiv_meta("2504.19413")
+        self.assertEqual(info["abstract"], "We introduce Mem0.")
+        self.assertEqual(info["revised"], "2025-04-28")
+        self.assertEqual(info["versioned_id"], "2504.19413v2")
+        self.assertEqual(info["source"], "https://arxiv.org/abs/2504.19413v2")
+
+    def test_arxiv_meta_is_none_when_nothing_is_reachable(self):
+        with patch.object(meta, "get", side_effect=OSError("offline")):
+            self.assertIsNone(meta.arxiv_meta("2504.19413"))
+
+    def test_convert_fills_the_register_from_metadata(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(stem, "BASE", tmp):
+                stem_name = "arxiv-1v1.Project.A"
+                convert.write_document(stem_name, {"id": "arxiv-1v1"}, "arxiv-1v1",
+                                       "mineru-cloud 3.4.4", "# body",
+                                       abstract="the abstract", revised="2025-01-01",
+                                       source="https://arxiv.org/abs/1v1")
+                got = stem.read_front_matter(stem_name)
+                self.assertEqual(got["abstract"], "the abstract")
+                self.assertEqual(got["revised"], "2025-01-01")
+                self.assertEqual(got["source"], "https://arxiv.org/abs/1v1")
+
+
+class MaterialCheckTests(unittest.TestCase):
+    """编排的完整性终检：缺 md 也算不齐，不再假绿。"""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        active = patch.object(stem, "BASE", self.temp.name)
+        active.start()
+        self.addCleanup(active.stop)
+        stem.write_index([{"id": "arxiv-1v1", "name": "Project.A",
+                           "keywords": [], "revised": ""}])
+
+    def test_check_fails_when_md_is_absent(self):
+        with patch.object(sys, "argv", ["pipeline.py", "--check"]):
+            with self.assertRaises(SystemExit):
+                pipeline.main()
+
+    def test_check_passes_when_md_and_its_images_are_present(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(stem, "BASE", tmp):
+                os.makedirs(os.path.join(tmp, "md"))
+                os.makedirs(os.path.join(tmp, "assets"))
+                with open(os.path.join(tmp, "assets", "arxiv-1v1-fig1.jpg"), "wb") as f:
+                    f.write(b"x")
+                name = "arxiv-1v1.Project.A"
+                with open(stem.md_path(name), "w", encoding="utf-8", newline="\n") as f:
+                    f.write("![](../assets/arxiv-1v1-fig1.jpg)\n")
+                stem.write_index([{"id": "arxiv-1v1", "name": "Project.A",
+                                   "keywords": [], "revised": ""}])
+                with patch.object(sys, "argv", ["pipeline.py", "--check"]):
+                    pipeline.main()      # 不抛即通过
 
 
 if __name__ == "__main__":

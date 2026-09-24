@@ -73,7 +73,7 @@ def convert(stem_name):
     after = sha256(md) if os.path.exists(md) else None
     if before is None:
         return "md 已生成"
-    return "md 未变" if before == after else "⚠ md 内容已变（是跟踪文件，请 git diff 复核）"
+    return "md 未变" if before == after else "⚠ md 内容已变（重转与上次不同，属正常）"
 
 
 def main():
@@ -104,10 +104,13 @@ def main():
             else:
                 print(" ".join(line + ["下载 PDF…"]), flush=True)
                 print("   ", pdf.download_one(name))
-        absent = missing_images(name)
-        if absent is None and not args.check:
-            print(" ".join(line + ["转换…"]), flush=True)
-            print("   ", convert(name))
+        absent = missing_images(name)          # None = md 本身就不在磁盘上
+        if absent is None:
+            if args.check:
+                line.append("缺 md")
+            else:
+                print(" ".join(line + ["转换…"]), flush=True)
+                print("   ", convert(name))
         elif absent:
             if args.check:
                 line.append(f"缺 {len(absent)} 张图：{absent[:3]}")
@@ -117,17 +120,19 @@ def main():
         if line:
             print(" ".join(line))
 
-    # final verification: every reference must resolve
+    # final verification: 每篇的 md 与它引用的图都必须落在磁盘上
     bad = {}
     for record in rows:
         absent = missing_images(stem.stem_of(record))
-        if absent:
+        if absent is None:
+            bad[record.get("id")] = ["md 缺失"]
+        elif absent:
             bad[record.get("id")] = absent
     if bad:
         for ident, names in bad.items():
-            print(f"✗ {ident}: {len(names)} 张图仍缺（例 {names[0]}）")
+            print(f"✗ {ident}: {names[0]}")
         raise SystemExit(f"仍有 {len(bad)} 篇不完整")
-    print("✓ 全部 27 篇的 pdf/md/assets 齐备")
+    print(f"✓ 全部 {len(rows)} 篇的 pdf/md/assets 齐备")
 
 
 if __name__ == "__main__":

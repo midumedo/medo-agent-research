@@ -64,31 +64,38 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true",
                     help="fail if index.csv differs from a fresh build")
+    ap.add_argument("--prune", action="store_true",
+                    help="删除索引里磁盘上已不存在的行（默认只增不删）")
     args = ap.parse_args()
 
-    # Keyed by id, never by the filename stem: the stem carries the name, and the
-    # name is allowed to change — a rename must not drop the keywords.
-    previous = {r["id"]: r for r in stem.read_index() if r.get("id")}
+    # index.csv 是账本，不是磁盘的投影：md/ 与 pdf/ 都不在本地时它必须原样不动。
+    # 行以 `id` 为键、永不以文件名为键——名称允许改，改名不该丢关键词。
+    rows = {r["id"]: dict(r) for r in stem.read_index() if r.get("id")}
 
     stems = {os.path.splitext(f)[0] for d in (stem.pdf_dir(), stem.md_dir())
              if os.path.isdir(d)
              for f in os.listdir(d) if os.path.splitext(f)[1] in {".pdf", ".md"}}
 
-    papers = []
+    seen = set()
     for entry_stem in sorted(stems):
         fields = front_fields(stem.md_path(entry_stem))
         ident = fields.get("id") or entry_stem
-        old = previous.get(ident) or {}
-        papers.append({
+        seen.add(ident)
+        old = rows.get(ident) or {}
+        rows[ident] = {
             "id": ident,
-            # The file name is `<id>.<name>`, so the name can be read back off it.
-            "name": (stem.name_from_stem(entry_stem, ident) or old.get("name")
-                     or ""),
-            # The md register is where keywords are written; index.csv is derived.
+            # 文件名是 `<id>.<name>`，名称可以直接从文件名校回。
+            "name": (stem.name_from_stem(entry_stem, ident) or old.get("name") or ""),
+            # keywords 写在 md 登记块；磁盘上没有 md 时保留账本里的判断。
             "keywords": split_multi(fields.get("keywords")) or old.get("keywords") or [],
-            "revised": (stem.normalize_date(fields.get("revised"))
-                        or old.get("revised") or ""),
-        })
+            "revised": (stem.normalize_date(fields.get("revised")) or old.get("revised") or ""),
+        }
+
+    if args.prune:
+        for ident in [i for i in rows if i not in seen]:
+            del rows[ident]
+
+    papers = list(rows.values())
 
     if args.check:
         current = (open(stem.index_path(), encoding="utf-8").read()

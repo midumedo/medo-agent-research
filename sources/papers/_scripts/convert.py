@@ -31,6 +31,7 @@ import urllib.request
 import zipfile
 from stem import (assets_root, find, front_matter, md_path, pdf_dir, pdf_path,
                   slugify, stem_of)
+import meta  # noqa: E402
 
 API = "https://mineru.net/api/v4"
 UA = "MemoryResearch/1.0 (mineru cloud client)"
@@ -47,7 +48,8 @@ CAPTION_FALLBACKS = ("image_caption", "table_caption", "chart_caption",
 KIND_TOKEN = {"image": "fig", "table": "table", "chart": "chart", "equation": "eq"}
 NUM_RE = re.compile(r"(?:figure|fig\.?|图|table|tab\.?|表)\s*([0-9]+[a-z]?)", re.I)
 TAG_RE = re.compile(r"<[^>]+>")
-def render_document(stem, record, ident, parser, md_text):
+def render_document(name, record, ident, parser, md_text,
+                    abstract=None, revised=None, source=None):
     """The md file is front matter + parser body, with nothing in between.
 
     The register block lives only in the front matter; the body then starts at
@@ -55,12 +57,18 @@ def render_document(stem, record, ident, parser, md_text):
     written here and drifted from the front matter (its parser version and the
     front matter's disagreed); it is gone, and this is the single place that
     decides what the file looks like.
+
+    `abstract` / `revised` / `source` come from ① `meta.py`; when they are None
+    the front matter keeps what the old file already had — never a guess.
     """
-    return front_matter(stem, record, ident=ident, parser=parser) + md_text.strip() + "\n"
+    head = front_matter(name, record, ident=ident, parser=parser,
+                        abstract=abstract, revised=revised, source=source)
+    return head + md_text.strip() + "\n"
 
 
-def write_document(stem, record, ident, parser, md_text):
-    """Write md/<stem>.md, building the whole text **before** opening the file.
+def write_document(name, record, ident, parser, md_text,
+                   abstract=None, revised=None, source=None):
+    """Write md/<name>.md, building the whole text **before** opening the file.
 
     `open(path, "w")` truncates the file the moment it is called. `front_matter`
     keeps the existing abstract / revised / source by reading the old file, so
@@ -68,9 +76,10 @@ def write_document(stem, record, ident, parser, md_text):
     an empty file and blank all three fields. Building the text first is what
     makes a re-conversion safe to run.
     """
-    text = render_document(stem, record, ident, parser, md_text)
-    os.makedirs(os.path.dirname(md_path(stem)), exist_ok=True)
-    with open(md_path(stem), "w", encoding="utf-8", newline="\n") as f:
+    text = render_document(name, record, ident, parser, md_text,
+                           abstract=abstract, revised=revised, source=source)
+    os.makedirs(os.path.dirname(md_path(name)), exist_ok=True)
+    with open(md_path(name), "w", encoding="utf-8", newline="\n") as f:
         f.write(text)
     return text
 
@@ -440,7 +449,16 @@ def main():
 
             version, backend = mineru_version(zf)
             label = parser_label(result, args.model_version, version)
-            write_document(stem, find(stem), ident, label, md_text)
+            # ① 元数据喂给 ③：表头的 abstract / revised / source 由这里重建；
+            # 取不到就是 None——front_matter 保留旧值或留空，不编造。
+            # `revised` 以 index.csv 的账本为准，避免重转把已核实的修订日改差。
+            native = meta.native_id(stem)
+            info = meta.arxiv_meta(native) if native else None
+            record = find(stem)
+            write_document(stem, record, ident, label, md_text,
+                           abstract=(info or {}).get("abstract"),
+                           revised=(record or {}).get("revised") or (info or {}).get("revised"),
+                           source=(info or {}).get("source"))
             print(f"[{stem}] -> {md_path(stem)}（{len(md_text.splitlines())} 行，"
                   f"图 {assets['count']} 个{'，字节已落盘' if assets['kept'] else '，仅清单'}）")
     print("转换完成；运行 _scripts/build_index.py 刷新 index.csv。")
