@@ -1,49 +1,5 @@
 {
   "_comment": "2026-09-20 建立的本地文件记录。SHA256 只标识当前文件，不证明来源真实性、版本或 PDF 到 Markdown 转换准确性。null 表示缺失。",
-  "arxiv-2402.17753v1.Evaluation of Long-Term Conversational Memory": {
-    "source_url": "https://arxiv.org/abs/2402.17753v1",
-    "pdf_url": "https://arxiv.org/pdf/2402.17753v1",
-    "version": "2402.17753v1",
-    "retrieved_at": "2026-09-21T02:33:16.027781+00:00",
-    "pdf_path": "pdf/arxiv-2402.17753v1.Evaluation of Long-Term Conversational Memory.pdf",
-    "pdf_sha256": "218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539",
-    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
-    "conversion": {
-      "path": "md/evaluating-very-long-term-conversational-memory-of-llm-agents.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:36:13.755239+00:00",
-      "pdf_sha256": "218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539",
-      "body_sha256": "507cee4e018b67be53e095e99b5f656d8bb9a055929fae321cc92cd1bc2c8334",
-      "options": {
-        "write_images": false,
-        "show_progress": false
-      },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
-      "visual_verification": false
-    }
-  },
-  "arxiv-2404.13501.Survey of Agent Memory Mechanism": {
-    "source_url": "https://arxiv.org/abs/2404.13501",
-    "version": null,
-    "retrieved_at": null,
-    "pdf_path": "pdf/arxiv-2404.13501.Survey of Agent Memory Mechanism.pdf",
-    "pdf_sha256": "aae2f9537f748f30f0ca59fd66c499b7df7bdb199d24ce43cab0a6170f7dceef",
-    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
-    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
-    "conversion": {
-      "path": "md/a-survey-on-the-memory-mechanism-of-large-language-model-based-agents.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "2f3243b93a9a44b7199f53ac60d7c78d15a7302cdce6c60550a9ee321a9b1ddf",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
-  },
   "arxiv-2410.10813v2.LongMemEval": {
     "source_url": "https://arxiv.org/abs/2410.10813v2",
     "pdf_url": "https://arxiv.org/pdf/2410.10813v2",
@@ -207,27 +163,6 @@
       "imaged"
     ]
   },
-  "arxiv-2505.00675.Rethinking Memory in Agents": {
-    "source_url": "https://arxiv.org/abs/2505.00675",
-    "version": null,
-    "retrieved_at": null,
-    "pdf_path": "pdf/arxiv-2505.00675.Rethinking Memory in Agents.pdf",
-    "pdf_sha256": "23724df6e6a38bdffc97c8bccb132581bf1e21fa534d5c19f84c80d5ab0e741d",
-    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
-    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
-    "conversion": {
-      "path": "md/rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "b6832176e0c46ec22bea245d81fb413428f4f4187dca70e2d27773fc1d512c7b",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
-  },
   "arxiv-2506.06326v1.Memory OS": {
     "source_url": "https://arxiv.org/abs/2506.06326v1",
     "pdf_url": "https://arxiv.org/pdf/2506.06326v1",
@@ -297,29 +232,6 @@
       "visual_verification": false
     }
   },
-  "arxiv-2507.05257v4.Memory Evaluation via Multi-Turn Interaction": {
-    "source_url": "https://arxiv.org/abs/2507.05257v4",
-    "pdf_url": "https://arxiv.org/pdf/2507.05257v4",
-    "version": "2507.05257v4",
-    "retrieved_at": "2026-09-21T02:33:35.613690+00:00",
-    "pdf_path": "pdf/arxiv-2507.05257v4.Memory Evaluation via Multi-Turn Interaction.pdf",
-    "pdf_sha256": "022d3771fd643d3bece04841e71331ef6963ff0eba43166849072caeb1b79508",
-    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
-    "conversion": {
-      "path": "md/evaluating-memory-in-llm-agents-via-incremental-multi-turn-interactions.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:37:00.981736+00:00",
-      "pdf_sha256": "022d3771fd643d3bece04841e71331ef6963ff0eba43166849072caeb1b79508",
-      "body_sha256": "be873dd4aecdebff1339b3f5bb06cf07af31c558eecbed7e009972139d06c5cc",
-      "options": {
-        "write_images": false,
-        "show_progress": false
-      },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
-      "visual_verification": false
-    }
-  },
   "arxiv-2507.07957v1.MIRIX": {
     "source_url": "https://arxiv.org/abs/2507.07957v1",
     "pdf_url": "https://arxiv.org/pdf/2507.07957v1",
@@ -364,50 +276,6 @@
       },
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
-    }
-  },
-  "arxiv-2510.27246v2.Beyond a Million Tokens": {
-    "source_url": "https://arxiv.org/abs/2510.27246v2",
-    "pdf_url": "https://arxiv.org/pdf/2510.27246v2",
-    "version": "2510.27246v2",
-    "retrieved_at": "2026-09-21T02:33:40.305557+00:00",
-    "pdf_path": "pdf/arxiv-2510.27246v2.Beyond a Million Tokens.pdf",
-    "pdf_sha256": "8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303",
-    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
-    "conversion": {
-      "path": "md/beyond-a-million-tokens-benchmarking-and-enhancing-long-term-memory-in-llms.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:37:58.414418+00:00",
-      "pdf_sha256": "8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303",
-      "body_sha256": "f46d654034938b4ef943e103bc57775ae6cb57234e2585234bbdfa89ce4f1e41",
-      "options": {
-        "write_images": false,
-        "show_progress": false
-      },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
-      "visual_verification": false
-    }
-  },
-  "arxiv-2512.13564.Memory in the Age of AI Agents": {
-    "source_url": "https://arxiv.org/abs/2512.13564",
-    "version": null,
-    "retrieved_at": null,
-    "pdf_path": "pdf/arxiv-2512.13564.Memory in the Age of AI Agents.pdf",
-    "pdf_sha256": "10de3c050903bfa1113c9a954380e2786f42d25a9ea24478bf6cc69fef2e2b42",
-    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
-    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
-    "conversion": {
-      "path": "md/memory-in-the-age-of-ai-agents.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "9f595dbcc72fef6bc920128efe8c1e66e5434733c9c961706068271436dac18f",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
     }
   },
   "arxiv-2601.01885v3.Agentic Memory": {
@@ -502,27 +370,6 @@
       "visual_verification": false
     }
   },
-  "arxiv-2602.06052.Survey of Agent Memory": {
-    "source_url": "https://arxiv.org/abs/2602.06052",
-    "version": null,
-    "retrieved_at": null,
-    "pdf_path": "pdf/arxiv-2602.06052.Survey of Agent Memory.pdf",
-    "pdf_sha256": "497e95492cb4bd8a8b45f813afabbb1d202c98076fb5f091be316a9b271b46a6",
-    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
-    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
-    "conversion": {
-      "path": "md/a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "3ed13b62513787a68f9a84418a258f46a225d32dafbc39619187fb7cec063a76",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
-  },
   "arxiv-2602.16313v2.MemoryArena": {
     "source_url": "https://arxiv.org/abs/2602.16313v2",
     "pdf_url": "https://arxiv.org/pdf/2602.16313v2",
@@ -569,27 +416,6 @@
       "visual_verification": false
     }
   },
-  "arxiv-2603.07670.Memory for Autonomous LLM Agents": {
-    "source_url": "https://arxiv.org/abs/2603.07670",
-    "version": null,
-    "retrieved_at": null,
-    "pdf_path": "pdf/arxiv-2603.07670.Memory for Autonomous LLM Agents.pdf",
-    "pdf_sha256": "ca7d6c5dfb712921da92542454e07af2a09751d61811e76a29066e89dd57cc51",
-    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
-    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
-    "conversion": {
-      "path": "md/memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "673fa6b58a7cf4ab925dcd28b0578f5a9cf02d76527eb6fe75abb6177816c150",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
-    }
-  },
   "arxiv-2605.12493v1.LongMemEval-V2": {
     "source_url": "https://arxiv.org/abs/2605.12493v1",
     "pdf_url": "https://arxiv.org/pdf/2605.12493v1",
@@ -613,11 +439,185 @@
       "visual_verification": false
     }
   },
-  "arxiv-2606.06448.Agent Memory Characterization": {
+  "arxiv-2507.05257v4.MemoryAgentBench": {
+    "source_url": "https://arxiv.org/abs/2507.05257v4",
+    "pdf_url": "https://arxiv.org/pdf/2507.05257v4",
+    "version": "2507.05257v4",
+    "retrieved_at": "2026-09-21T02:33:35.613690+00:00",
+    "pdf_path": "pdf/arxiv-2507.05257v4.MemoryAgentBench.pdf",
+    "pdf_sha256": "022d3771fd643d3bece04841e71331ef6963ff0eba43166849072caeb1b79508",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "md/evaluating-memory-in-llm-agents-via-incremental-multi-turn-interactions.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:37:00.981736+00:00",
+      "pdf_sha256": "022d3771fd643d3bece04841e71331ef6963ff0eba43166849072caeb1b79508",
+      "body_sha256": "be873dd4aecdebff1339b3f5bb06cf07af31c558eecbed7e009972139d06c5cc",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "arxiv-2505.00675.Rethinking Memory": {
+    "source_url": "https://arxiv.org/abs/2505.00675",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/arxiv-2505.00675.Rethinking Memory.pdf",
+    "pdf_sha256": "23724df6e6a38bdffc97c8bccb132581bf1e21fa534d5c19f84c80d5ab0e741d",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "md/rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "b6832176e0c46ec22bea245d81fb413428f4f4187dca70e2d27773fc1d512c7b",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "arxiv-2402.17753v1.Long-Term Chat Memory": {
+    "source_url": "https://arxiv.org/abs/2402.17753v1",
+    "pdf_url": "https://arxiv.org/pdf/2402.17753v1",
+    "version": "2402.17753v1",
+    "retrieved_at": "2026-09-21T02:33:16.027781+00:00",
+    "pdf_path": "pdf/arxiv-2402.17753v1.Long-Term Chat Memory.pdf",
+    "pdf_sha256": "218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "md/evaluating-very-long-term-conversational-memory-of-llm-agents.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:36:13.755239+00:00",
+      "pdf_sha256": "218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539",
+      "body_sha256": "507cee4e018b67be53e095e99b5f656d8bb9a055929fae321cc92cd1bc2c8334",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "arxiv-2404.13501.Memory Mechanism": {
+    "source_url": "https://arxiv.org/abs/2404.13501",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/arxiv-2404.13501.Memory Mechanism.pdf",
+    "pdf_sha256": "aae2f9537f748f30f0ca59fd66c499b7df7bdb199d24ce43cab0a6170f7dceef",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "md/a-survey-on-the-memory-mechanism-of-large-language-model-based-agents.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "2f3243b93a9a44b7199f53ac60d7c78d15a7302cdce6c60550a9ee321a9b1ddf",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "arxiv-2510.27246v2.Million-Token Memory": {
+    "source_url": "https://arxiv.org/abs/2510.27246v2",
+    "pdf_url": "https://arxiv.org/pdf/2510.27246v2",
+    "version": "2510.27246v2",
+    "retrieved_at": "2026-09-21T02:33:40.305557+00:00",
+    "pdf_path": "pdf/arxiv-2510.27246v2.Million-Token Memory.pdf",
+    "pdf_sha256": "8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "md/beyond-a-million-tokens-benchmarking-and-enhancing-long-term-memory-in-llms.md",
+      "parser": "pymupdf4llm",
+      "parser_version": "1.28.2",
+      "converted_at": "2026-09-21T02:37:58.414418+00:00",
+      "pdf_sha256": "8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303",
+      "body_sha256": "f46d654034938b4ef943e103bc57775ae6cb57234e2585234bbdfa89ce4f1e41",
+      "options": {
+        "write_images": false,
+        "show_progress": false
+      },
+      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "visual_verification": false
+    }
+  },
+  "arxiv-2512.13564.Age of Agent Memory": {
+    "source_url": "https://arxiv.org/abs/2512.13564",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/arxiv-2512.13564.Age of Agent Memory.pdf",
+    "pdf_sha256": "10de3c050903bfa1113c9a954380e2786f42d25a9ea24478bf6cc69fef2e2b42",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "md/memory-in-the-age-of-ai-agents.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "9f595dbcc72fef6bc920128efe8c1e66e5434733c9c961706068271436dac18f",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "arxiv-2602.06052.Agent Memory Survey": {
+    "source_url": "https://arxiv.org/abs/2602.06052",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/arxiv-2602.06052.Agent Memory Survey.pdf",
+    "pdf_sha256": "497e95492cb4bd8a8b45f813afabbb1d202c98076fb5f091be316a9b271b46a6",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "md/a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "3ed13b62513787a68f9a84418a258f46a225d32dafbc39619187fb7cec063a76",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "arxiv-2603.07670.Autonomous Memory": {
+    "source_url": "https://arxiv.org/abs/2603.07670",
+    "version": null,
+    "retrieved_at": null,
+    "pdf_path": "pdf/arxiv-2603.07670.Autonomous Memory.pdf",
+    "pdf_sha256": "ca7d6c5dfb712921da92542454e07af2a09751d61811e76a29066e89dd57cc51",
+    "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
+    "recorded_at": "2026-09-20T05:59:43.686923+00:00",
+    "conversion": {
+      "path": "md/memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers.md",
+      "parser": "pymupdf4llm (recorded by legacy script)",
+      "parser_version": null,
+      "converted_at": null,
+      "pdf_sha256": null,
+      "body_sha256": "673fa6b58a7cf4ab925dcd28b0578f5a9cf02d76527eb6fe75abb6177816c150",
+      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
+      "visual_verification": false,
+      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
+      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+    }
+  },
+  "arxiv-2606.06448.Memory Workloads": {
     "source_url": "https://arxiv.org/abs/2606.06448",
     "version": null,
     "retrieved_at": null,
-    "pdf_path": "pdf/arxiv-2606.06448.Agent Memory Characterization.pdf",
+    "pdf_path": "pdf/arxiv-2606.06448.Memory Workloads.pdf",
     "pdf_sha256": "b9d840d861da993e05ecc9e2295e9754ee9289ebc595270f6af18c55e57b8782",
     "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
     "recorded_at": "2026-09-20T05:59:43.686923+00:00",
@@ -634,11 +634,11 @@
       "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
     }
   },
-  "arxiv-2607.16848.Beyond Memory Leaderboards": {
+  "arxiv-2607.16848.Scientific Memory": {
     "source_url": "https://arxiv.org/abs/2607.16848",
     "version": null,
     "retrieved_at": null,
-    "pdf_path": "pdf/arxiv-2607.16848.Beyond Memory Leaderboards.pdf",
+    "pdf_path": "pdf/arxiv-2607.16848.Scientific Memory.pdf",
     "pdf_sha256": "09dd5520b628bbce492110aa73efd70d40d7e48eba379ab24dc6bda2cad68069",
     "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
     "recorded_at": "2026-09-20T05:59:43.686923+00:00",

@@ -1,44 +1,4 @@
 {
-  "arxiv-2402.17753v1.Evaluation of Long-Term Conversational Memory": {
-    "id": "arxiv-2402.17753",
-    "title": "Evaluating Very Long-Term Conversational Memory of LLM Agents",
-    "authors": [
-      "Maharana, Adyasha",
-      "Lee, Dong-Ho",
-      "Tulyakov, Sergey",
-      "Bansal, Mohit",
-      "Barbieri, Francesco",
-      "Fang, Yuwei"
-    ],
-    "date": "2024/02/27",
-    "abstract": "Existing works on long-term open-domain dialogues focus on evaluating model responses within contexts spanning no more than five chat sessions. Despite advancements in long-context large language models (LLMs) and retrieval augmented generation (RAG) techniques, their efficacy in very long-term dialogues remains unexplored. To address this research gap, we introduce a machine-human pipeline to generate high-quality, very long-term dialogues by leveraging LLM-based agent architectures and grounding their dialogues on personas and temporal event graphs. Moreover, we equip each agent with the capability of sharing and reacting to images. The generated conversations are verified and edited by human annotators for long-range consistency and grounding to the event graphs. Using this pipeline, we collect LoCoMo, a dataset of very long-term conversations, each encompassing 300 turns and 9K tokens on avg., over up to 35 sessions. Based on LoCoMo, we present a comprehensive evaluation benchmark to measure long-term memory in models, encompassing question answering, event summarization, and multi-modal dialogue generation tasks. Our experimental results indicate that LLMs exhibit challenges in understanding lengthy conversations and comprehending long-range temporal and causal dynamics within dialogues. Employing strategies like long-context LLMs or RAG can offer improvements but these models still substantially lag behind human performance.",
-    "exists": true,
-    "url": "https://arxiv.org/abs/2402.17753v1",
-    "versioned_id": "2402.17753v1",
-    "native_id": "2402.17753",
-    "registry": "arxiv"
-  },
-  "arxiv-2404.13501.Survey of Agent Memory Mechanism": {
-    "id": "arxiv-2404.13501",
-    "title": "A Survey on the Memory Mechanism of Large Language Model based Agents",
-    "authors": [
-      "Zhang, Zeyu",
-      "Bo, Xiaohe",
-      "Ma, Chen",
-      "Li, Rui",
-      "Chen, Xu",
-      "Dai, Quanyu",
-      "Zhu, Jieming",
-      "Dong, Zhenhua",
-      "Wen, Ji-Rong"
-    ],
-    "date": "2024/04/21",
-    "abstract": "Large language model (LLM) based agents have recently attracted much attention from the research and industry communities. Compared with original LLMs, LLM-based agents are featured in their self-evolving capability, which is the basis for solving real-world problems that need long-term and complex agent-environment interactions. The key component to support agent-environment interactions is the memory of the agents. While previous studies have proposed many promising memory mechanisms, they are scattered in different papers, and there lacks a systematical review to summarize and compare these works from a holistic perspective, failing to abstract common and effective designing patterns for inspiring future studies. To bridge this gap, in this paper, we propose a comprehensive survey on the memory mechanism of LLM-based agents. In specific, we first discuss &#39;&#39;what is&#39;&#39; and &#39;&#39;why do we need&#39;&#39; the memory in LLM-based agents. Then, we systematically review previous studies on how to design and evaluate the memory module. In addition, we also present many agent applications, where the memory module plays an important role. At last, we analyze the limitations of existing work and show important future directions. To keep up with the latest advances in this field, we create a repository at \\url{ this https URL }.",
-    "exists": true,
-    "url": "https://arxiv.org/abs/2404.13501",
-    "native_id": "2404.13501",
-    "registry": "arxiv"
-  },
   "arxiv-2410.10813v2.LongMemEval": {
     "id": "arxiv-2410.10813",
     "title": "LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory",
@@ -135,26 +95,6 @@
     "native_id": "2504.19413",
     "registry": "arxiv"
   },
-  "arxiv-2505.00675.Rethinking Memory in Agents": {
-    "id": "arxiv-2505.00675",
-    "title": "Rethinking Memory in LLM based Agents: Representations, Operations, and Emerging Topics",
-    "authors": [
-      "Du, Yiming",
-      "Huang, Wenyu",
-      "Zheng, Danna",
-      "Wang, Zhaowei",
-      "Montella, Sebastien",
-      "Lapata, Mirella",
-      "Wong, Kam-Fai",
-      "Pan, Jeff Z."
-    ],
-    "date": "2025/05/01",
-    "abstract": "Memory is fundamental to large language model (LLM)-based agents, but existing surveys emphasize application-level use (e.g., personalized dialogue), while overlooking the atomic operations governing memory dynamics. This work categorizes memory into parametric (implicit in model weights) and contextual (explicit external data, structured/unstructured) forms, and defines six core operations: Consolidation, Updating, Indexing, Forgetting, Retrieval, and Condensation. Mapping these dimensions reveals four key research topics: long-term, long-context, parametric modification, and multi-source memory. The taxonomy provides a structured view of memory-related research, benchmarks, and tools, clarifying functional interactions in LLM-based agents and guiding future advancements. The datasets, papers, and tools are publicly available at this https URL .",
-    "exists": true,
-    "url": "https://arxiv.org/abs/2505.00675",
-    "native_id": "2505.00675",
-    "registry": "arxiv"
-  },
   "arxiv-2506.06326v1.Memory OS": {
     "id": "arxiv-2506.06326",
     "title": "Memory OS of AI Agent",
@@ -243,22 +183,6 @@
     "native_id": "2507.03724",
     "registry": "arxiv"
   },
-  "arxiv-2507.05257v4.Memory Evaluation via Multi-Turn Interaction": {
-    "id": "arxiv-2507.05257",
-    "title": "Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions",
-    "authors": [
-      "Hu, Yuanzhe",
-      "Wang, Yu",
-      "McAuley, Julian"
-    ],
-    "date": "2025/07/07",
-    "abstract": "Recent benchmarks for Large Language Model (LLM) agents primarily focus on evaluating reasoning, planning, and execution capabilities, while another critical component-memory, encompassing how agents memorize, update, and retrieve long-term information-is under-evaluated due to the lack of benchmarks. We term agents with memory mechanisms as memory agents. In this paper, based on classic theories from memory science and cognitive science, we identify four core competencies essential for memory agents: accurate retrieval, test-time learning, long-range understanding, and selective forgetting. Existing benchmarks either rely on limited context lengths or are tailored for static, long-context settings like book-based QA, which do not reflect the interactive, multi-turn nature of memory agents that incrementally accumulate information. Moreover, no existing benchmarks cover all four competencies. We introduce MemoryAgentBench, a new benchmark specifically designed for memory agents. Our benchmark transforms existing long-context datasets and incorporates newly constructed datasets into a multi-turn format, effectively simulating the incremental information processing characteristic of memory agents. By carefully selecting and curating datasets, our benchmark provides comprehensive coverage of the four core memory competencies outlined above, thereby offering a systematic and challenging testbed for assessing memory quality. We evaluate a diverse set of memory agents, ranging from simple context-based and retrieval-augmented generation (RAG) systems to advanced agents with external memory modules and tool integration. Empirical results reveal that current methods fall short of mastering all four competencies, underscoring the need for further research into comprehensive memory mechanisms for LLM agents.",
-    "exists": true,
-    "url": "https://arxiv.org/abs/2507.05257v4",
-    "versioned_id": "2507.05257v4",
-    "native_id": "2507.05257",
-    "registry": "arxiv"
-  },
   "arxiv-2507.07957v1.MIRIX": {
     "id": "arxiv-2507.07957",
     "title": "MIRIX: Multi-Agent Memory System for LLM-Based Agents",
@@ -291,84 +215,6 @@
     "url": "https://arxiv.org/abs/2510.17281v7",
     "versioned_id": "2510.17281v7",
     "native_id": "2510.17281",
-    "registry": "arxiv"
-  },
-  "arxiv-2510.27246v2.Beyond a Million Tokens": {
-    "id": "arxiv-2510.27246",
-    "title": "Beyond a Million Tokens: Benchmarking and Enhancing Long-Term Memory in LLMs",
-    "authors": [
-      "Tavakoli, Mohammad",
-      "Salemi, Alireza",
-      "Ye, Carrie",
-      "Abdalla, Mohamed",
-      "Zamani, Hamed",
-      "Mitchell, J Ross"
-    ],
-    "date": "2025/10/31",
-    "abstract": "Evaluating the abilities of large language models (LLMs) for tasks that require long-term memory and thus long-context reasoning, for example in conversational settings, is hampered by the existing benchmarks, which often lack narrative coherence, cover narrow domains, and only test simple recall-oriented tasks. This paper introduces a comprehensive solution to these challenges. First, we present a novel framework for automatically generating long (up to 10M tokens), coherent, and topically diverse conversations, accompanied by probing questions targeting a wide range of memory abilities. From this, we construct BEAM, a new benchmark comprising 100 conversations and 2,000 validated questions. Second, to enhance model performance, we propose LIGHT-a framework inspired by human cognition that equips LLMs with three complementary memory systems: a long-term episodic memory, a short-term working memory, and a scratchpad for accumulating salient facts. Our experiments on BEAM reveal that even LLMs with 1M token context windows (with and without retrieval-augmentation) struggle as dialogues lengthen. In contrast, LIGHT consistently improves performance across various models, achieving an average improvement of 3.5%-12.69% over the strongest baselines, depending on the backbone LLM. An ablation study further confirms the contribution of each memory component.",
-    "exists": true,
-    "url": "https://arxiv.org/abs/2510.27246v2",
-    "versioned_id": "2510.27246v2",
-    "native_id": "2510.27246",
-    "registry": "arxiv"
-  },
-  "arxiv-2512.13564.Memory in the Age of AI Agents": {
-    "id": "arxiv-2512.13564",
-    "title": "Memory in the Age of AI Agents",
-    "authors": [
-      "Hu, Yuyang",
-      "Liu, Shichun",
-      "Yue, Yanwei",
-      "Zhang, Guibin",
-      "Liu, Boyang",
-      "Zhu, Fangyi",
-      "Lin, Jiahang",
-      "Guo, Honglin",
-      "Dou, Shihan",
-      "Xi, Zhiheng",
-      "Jin, Senjie",
-      "Tan, Jiejun",
-      "Yin, Yanbin",
-      "Liu, Jiongnan",
-      "Zhang, Zeyu",
-      "Sun, Zhongxiang",
-      "Zhu, Yutao",
-      "Sun, Hao",
-      "Peng, Boci",
-      "Cheng, Zhenrong",
-      "Fan, Xuanbo",
-      "Guo, Jiaxin",
-      "Yu, Xinlei",
-      "Zhou, Zhenhong",
-      "Hu, Zewen",
-      "Huo, Jiahao",
-      "Wang, Junhao",
-      "Niu, Yuwei",
-      "Wang, Yu",
-      "Yin, Zhenfei",
-      "Hu, Xiaobin",
-      "Liao, Yue",
-      "Li, Qiankun",
-      "Wang, Kun",
-      "Zhou, Wangchunshu",
-      "Liu, Yixin",
-      "Cheng, Dawei",
-      "Zhang, Qi",
-      "Gui, Tao",
-      "Pan, Shirui",
-      "Zhang, Yan",
-      "Torr, Philip",
-      "Dou, Zhicheng",
-      "Wen, Ji-Rong",
-      "Huang, Xuanjing",
-      "Jiang, Yu-Gang",
-      "Yan, Shuicheng"
-    ],
-    "date": "2025/12/15",
-    "abstract": "Memory has emerged, and will continue to remain, a core capability of foundation model-based agents. As research on agent memory rapidly expands and attracts unprecedented attention, the field has also become increasingly fragmented. Existing works that fall under the umbrella of agent memory often differ substantially in their motivations, implementations, and evaluation protocols, while the proliferation of loosely defined memory terminologies has further obscured conceptual clarity. Traditional taxonomies such as long/short-term memory have proven insufficient to capture the diversity of contemporary agent memory systems. This work aims to provide an up-to-date landscape of current agent memory research. We begin by clearly delineating the scope of agent memory and distinguishing it from related concepts such as LLM memory, retrieval augmented generation (RAG), and context engineering. We then examine agent memory through the unified lenses of forms, functions, and dynamics. From the perspective of forms, we identify three dominant realizations of agent memory, namely token-level, parametric, and latent memory. From the perspective of functions, we propose a finer-grained taxonomy that distinguishes factual, experiential, and working memory. From the perspective of dynamics, we analyze how memory is formed, evolved, and retrieved over time. To support practical development, we compile a comprehensive summary of memory benchmarks and open-source frameworks. Beyond consolidation, we articulate a forward-looking perspective on emerging research frontiers, including memory automation, reinforcement learning integration, multimodal memory, multi-agent memory, and trustworthiness issues. We hope this survey serves not only as a reference for existing work, but also as a conceptual foundation for rethinking memory as a first-class primitive in the design of future agentic intelligence.",
-    "exists": true,
-    "url": "https://arxiv.org/abs/2512.13564",
-    "native_id": "2512.13564",
     "registry": "arxiv"
   },
   "arxiv-2601.01885v3.Agentic Memory": {
@@ -454,7 +300,233 @@
     "native_id": "2601.08323",
     "registry": "arxiv"
   },
-  "arxiv-2602.06052.Survey of Agent Memory": {
+  "arxiv-2602.16313v2.MemoryArena": {
+    "id": "arxiv-2602.16313",
+    "title": "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks",
+    "authors": [
+      "He, Zexue",
+      "Wang, Yu",
+      "Zhi, Churan",
+      "Hu, Yuanzhe",
+      "Chen, Tzu-Ping",
+      "Yin, Lang",
+      "Chen, Ze",
+      "Wu, Tong Arthur",
+      "Ouyang, Siru",
+      "Wang, Zihan",
+      "Pei, Jiaxin",
+      "McAuley, Julian",
+      "Choi, Yejin",
+      "Pentland, Alex"
+    ],
+    "date": "2026/02/18",
+    "abstract": "Existing evaluations of agents with memory typically assess memorization and action in isolation. One class of benchmarks evaluates memorization by testing recall of past conversations or text but fails to capture how memory is used to guide future decisions. Another class focuses on agents acting in single-session tasks without the need for long-term memory. However, in realistic settings, memorization and action are tightly coupled: agents acquire memory while interacting with the environment, and subsequently rely on that memory to solve future tasks. To capture this setting, we introduce MemoryArena, a unified evaluation gym for benchmarking agent memory in multi-session Memory-Agent-Environment loops. The benchmark consists of human-crafted agentic tasks with explicitly interdependent subtasks, where agents must learn from earlier actions and feedback by distilling experiences into memory, and subsequently use that memory to guide later actions to solve the overall task. MemoryArena supports evaluation across web navigation, preference-constrained planning, progressive information search, and sequential formal reasoning, and reveals that agents with near-saturated performance on existing long-context memory benchmarks like LoCoMo perform poorly in our agentic setting, exposing a gap in current evaluations for agents with memory. MemoryArena is now released at this https URL .",
+    "exists": true,
+    "url": "https://arxiv.org/abs/2602.16313v2",
+    "versioned_id": "2602.16313v2",
+    "native_id": "2602.16313",
+    "registry": "arxiv"
+  },
+  "arxiv-2602.22769v4.AMA-Bench": {
+    "id": "arxiv-2602.22769",
+    "title": "AMA-Bench: Evaluating Long-Horizon Memory for Agentic Applications",
+    "authors": [
+      "Zhao, Yujie",
+      "Yuan, Boqin",
+      "Huang, Junbo",
+      "Yuan, Haocheng",
+      "Yu, Zhongming",
+      "Xu, Haozhou",
+      "Hu, Lanxiang",
+      "Shankarampeta, Abhilash",
+      "Huang, Zimeng",
+      "Ni, Wentao",
+      "Tian, Yuandong",
+      "Zhao, Jishen"
+    ],
+    "date": "2026/02/26",
+    "abstract": "Large Language Models (LLMs) are increasingly used as autonomous agents in complex, long-horizon applications, where effective memory is critical for sustained performance. Yet existing memory benchmarks are largely dialogue-centric, while real agent memory consists of continuous agent-environment interaction trajectories composed of states, actions, observations, and tool outputs. To address this gap, we introduce **AMA-Bench** (**A**gent **M**emory with **A**ny length), a benchmark for evaluating long-horizon memory in realistic agentic settings. AMA-Bench combines real-world agent trajectories from representative applications with expert-curated QA, as well as synthetic trajectories that scale to arbitrary horizons with rule-based QA. Our study shows that existing memory systems underperform because they fail to capture causal and objective information and rely heavily on lossy similarity-based retrieval. We further propose **AMA-Agent**, a memory system based on causality-graph construction and tool-augmented retrieval. AMA-Agent achieves **57.22%** accuracy on AMA-Bench, outperforming the strongest baseline by **11.16%**. Resources are available at: [ this https URL ]( this https URL ).",
+    "exists": true,
+    "url": "https://arxiv.org/abs/2602.22769v4",
+    "versioned_id": "2602.22769v4",
+    "native_id": "2602.22769",
+    "registry": "arxiv"
+  },
+  "arxiv-2605.12493v1.LongMemEval-V2": {
+    "id": "arxiv-2605.12493",
+    "title": "LongMemEval-V2: Evaluating Long-Term Agent Memory Toward Experienced Colleagues",
+    "authors": [
+      "Wu, Di",
+      "Ji, Zixiang",
+      "Kawatkar, Asmi",
+      "Kwan, Bryan",
+      "Gu, Jia-Chen",
+      "Peng, Nanyun",
+      "Chang, Kai-Wei"
+    ],
+    "date": "2026/05/12",
+    "abstract": "Long-term memory is crucial for agents in specialized web environments, where success depends on recalling interface affordances, state dynamics, workflows, and recurring failure modes. However, existing memory benchmarks for agents mostly focus on user histories, short traces, or downstream task success, leaving open how to directly evaluate whether memory systems effectively internalize environment-specific experience. To address this gap, we introduce LongMemEval-V2 (LME-V2), a benchmark for evaluating whether memory systems can help agents acquire the experience needed to become knowledgeable colleagues in customized environments. LME-V2 contains 451 manually curated questions covering five core memory abilities for web agents: static state recall, dynamic state tracking, workflow knowledge, environment gotchas, and premise awareness. Questions are paired with history trajectories containing up to 500 trajectories and 115M tokens. We use a context gathering formulation: memory systems consume history trajectories and return compact evidence for downstream question answering. We propose a suite of two memory methods: AgentRunbook-R, an efficient RAG-based memory with knowledge pools for raw state observations, events, and strategy notes, and AgentRunbook-C, which stores trajectories as files and invokes a coding agent to gather evidence in an augmented sandbox. Experiments show that AgentRunbook-C achieves the best performance with 72.5% average accuracy, outperforming the strongest RAG baseline (48.5%) and the off-the-shelf coding agent baseline (69.3%). Despite the strong performance gains, coding agent based methods have high latency costs. While AgentRunbook-C advances the accuracy-latency Pareto frontier, substantial room for improvement remains. Together, these results establish LME-V2 as a challenging testbed for developing long-term memory systems for environment experience.",
+    "exists": true,
+    "url": "https://arxiv.org/abs/2605.12493v1",
+    "versioned_id": "2605.12493v1",
+    "native_id": "2605.12493",
+    "registry": "arxiv"
+  },
+  "arxiv-2507.05257v4.MemoryAgentBench": {
+    "id": "arxiv-2507.05257",
+    "title": "Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions",
+    "authors": [
+      "Hu, Yuanzhe",
+      "Wang, Yu",
+      "McAuley, Julian"
+    ],
+    "date": "2025/07/07",
+    "abstract": "Recent benchmarks for Large Language Model (LLM) agents primarily focus on evaluating reasoning, planning, and execution capabilities, while another critical component-memory, encompassing how agents memorize, update, and retrieve long-term information-is under-evaluated due to the lack of benchmarks. We term agents with memory mechanisms as memory agents. In this paper, based on classic theories from memory science and cognitive science, we identify four core competencies essential for memory agents: accurate retrieval, test-time learning, long-range understanding, and selective forgetting. Existing benchmarks either rely on limited context lengths or are tailored for static, long-context settings like book-based QA, which do not reflect the interactive, multi-turn nature of memory agents that incrementally accumulate information. Moreover, no existing benchmarks cover all four competencies. We introduce MemoryAgentBench, a new benchmark specifically designed for memory agents. Our benchmark transforms existing long-context datasets and incorporates newly constructed datasets into a multi-turn format, effectively simulating the incremental information processing characteristic of memory agents. By carefully selecting and curating datasets, our benchmark provides comprehensive coverage of the four core memory competencies outlined above, thereby offering a systematic and challenging testbed for assessing memory quality. We evaluate a diverse set of memory agents, ranging from simple context-based and retrieval-augmented generation (RAG) systems to advanced agents with external memory modules and tool integration. Empirical results reveal that current methods fall short of mastering all four competencies, underscoring the need for further research into comprehensive memory mechanisms for LLM agents.",
+    "exists": true,
+    "url": "https://arxiv.org/abs/2507.05257v4",
+    "versioned_id": "2507.05257v4",
+    "native_id": "2507.05257",
+    "registry": "arxiv"
+  },
+  "arxiv-2505.00675.Rethinking Memory": {
+    "id": "arxiv-2505.00675",
+    "title": "Rethinking Memory in LLM based Agents: Representations, Operations, and Emerging Topics",
+    "authors": [
+      "Du, Yiming",
+      "Huang, Wenyu",
+      "Zheng, Danna",
+      "Wang, Zhaowei",
+      "Montella, Sebastien",
+      "Lapata, Mirella",
+      "Wong, Kam-Fai",
+      "Pan, Jeff Z."
+    ],
+    "date": "2025/05/01",
+    "abstract": "Memory is fundamental to large language model (LLM)-based agents, but existing surveys emphasize application-level use (e.g., personalized dialogue), while overlooking the atomic operations governing memory dynamics. This work categorizes memory into parametric (implicit in model weights) and contextual (explicit external data, structured/unstructured) forms, and defines six core operations: Consolidation, Updating, Indexing, Forgetting, Retrieval, and Condensation. Mapping these dimensions reveals four key research topics: long-term, long-context, parametric modification, and multi-source memory. The taxonomy provides a structured view of memory-related research, benchmarks, and tools, clarifying functional interactions in LLM-based agents and guiding future advancements. The datasets, papers, and tools are publicly available at this https URL .",
+    "exists": true,
+    "url": "https://arxiv.org/abs/2505.00675",
+    "native_id": "2505.00675",
+    "registry": "arxiv"
+  },
+  "arxiv-2402.17753v1.Long-Term Chat Memory": {
+    "id": "arxiv-2402.17753",
+    "title": "Evaluating Very Long-Term Conversational Memory of LLM Agents",
+    "authors": [
+      "Maharana, Adyasha",
+      "Lee, Dong-Ho",
+      "Tulyakov, Sergey",
+      "Bansal, Mohit",
+      "Barbieri, Francesco",
+      "Fang, Yuwei"
+    ],
+    "date": "2024/02/27",
+    "abstract": "Existing works on long-term open-domain dialogues focus on evaluating model responses within contexts spanning no more than five chat sessions. Despite advancements in long-context large language models (LLMs) and retrieval augmented generation (RAG) techniques, their efficacy in very long-term dialogues remains unexplored. To address this research gap, we introduce a machine-human pipeline to generate high-quality, very long-term dialogues by leveraging LLM-based agent architectures and grounding their dialogues on personas and temporal event graphs. Moreover, we equip each agent with the capability of sharing and reacting to images. The generated conversations are verified and edited by human annotators for long-range consistency and grounding to the event graphs. Using this pipeline, we collect LoCoMo, a dataset of very long-term conversations, each encompassing 300 turns and 9K tokens on avg., over up to 35 sessions. Based on LoCoMo, we present a comprehensive evaluation benchmark to measure long-term memory in models, encompassing question answering, event summarization, and multi-modal dialogue generation tasks. Our experimental results indicate that LLMs exhibit challenges in understanding lengthy conversations and comprehending long-range temporal and causal dynamics within dialogues. Employing strategies like long-context LLMs or RAG can offer improvements but these models still substantially lag behind human performance.",
+    "exists": true,
+    "url": "https://arxiv.org/abs/2402.17753v1",
+    "versioned_id": "2402.17753v1",
+    "native_id": "2402.17753",
+    "registry": "arxiv"
+  },
+  "arxiv-2404.13501.Memory Mechanism": {
+    "id": "arxiv-2404.13501",
+    "title": "A Survey on the Memory Mechanism of Large Language Model based Agents",
+    "authors": [
+      "Zhang, Zeyu",
+      "Bo, Xiaohe",
+      "Ma, Chen",
+      "Li, Rui",
+      "Chen, Xu",
+      "Dai, Quanyu",
+      "Zhu, Jieming",
+      "Dong, Zhenhua",
+      "Wen, Ji-Rong"
+    ],
+    "date": "2024/04/21",
+    "abstract": "Large language model (LLM) based agents have recently attracted much attention from the research and industry communities. Compared with original LLMs, LLM-based agents are featured in their self-evolving capability, which is the basis for solving real-world problems that need long-term and complex agent-environment interactions. The key component to support agent-environment interactions is the memory of the agents. While previous studies have proposed many promising memory mechanisms, they are scattered in different papers, and there lacks a systematical review to summarize and compare these works from a holistic perspective, failing to abstract common and effective designing patterns for inspiring future studies. To bridge this gap, in this paper, we propose a comprehensive survey on the memory mechanism of LLM-based agents. In specific, we first discuss &#39;&#39;what is&#39;&#39; and &#39;&#39;why do we need&#39;&#39; the memory in LLM-based agents. Then, we systematically review previous studies on how to design and evaluate the memory module. In addition, we also present many agent applications, where the memory module plays an important role. At last, we analyze the limitations of existing work and show important future directions. To keep up with the latest advances in this field, we create a repository at \\url{ this https URL }.",
+    "exists": true,
+    "url": "https://arxiv.org/abs/2404.13501",
+    "native_id": "2404.13501",
+    "registry": "arxiv"
+  },
+  "arxiv-2510.27246v2.Million-Token Memory": {
+    "id": "arxiv-2510.27246",
+    "title": "Beyond a Million Tokens: Benchmarking and Enhancing Long-Term Memory in LLMs",
+    "authors": [
+      "Tavakoli, Mohammad",
+      "Salemi, Alireza",
+      "Ye, Carrie",
+      "Abdalla, Mohamed",
+      "Zamani, Hamed",
+      "Mitchell, J Ross"
+    ],
+    "date": "2025/10/31",
+    "abstract": "Evaluating the abilities of large language models (LLMs) for tasks that require long-term memory and thus long-context reasoning, for example in conversational settings, is hampered by the existing benchmarks, which often lack narrative coherence, cover narrow domains, and only test simple recall-oriented tasks. This paper introduces a comprehensive solution to these challenges. First, we present a novel framework for automatically generating long (up to 10M tokens), coherent, and topically diverse conversations, accompanied by probing questions targeting a wide range of memory abilities. From this, we construct BEAM, a new benchmark comprising 100 conversations and 2,000 validated questions. Second, to enhance model performance, we propose LIGHT-a framework inspired by human cognition that equips LLMs with three complementary memory systems: a long-term episodic memory, a short-term working memory, and a scratchpad for accumulating salient facts. Our experiments on BEAM reveal that even LLMs with 1M token context windows (with and without retrieval-augmentation) struggle as dialogues lengthen. In contrast, LIGHT consistently improves performance across various models, achieving an average improvement of 3.5%-12.69% over the strongest baselines, depending on the backbone LLM. An ablation study further confirms the contribution of each memory component.",
+    "exists": true,
+    "url": "https://arxiv.org/abs/2510.27246v2",
+    "versioned_id": "2510.27246v2",
+    "native_id": "2510.27246",
+    "registry": "arxiv"
+  },
+  "arxiv-2512.13564.Age of Agent Memory": {
+    "id": "arxiv-2512.13564",
+    "title": "Memory in the Age of AI Agents",
+    "authors": [
+      "Hu, Yuyang",
+      "Liu, Shichun",
+      "Yue, Yanwei",
+      "Zhang, Guibin",
+      "Liu, Boyang",
+      "Zhu, Fangyi",
+      "Lin, Jiahang",
+      "Guo, Honglin",
+      "Dou, Shihan",
+      "Xi, Zhiheng",
+      "Jin, Senjie",
+      "Tan, Jiejun",
+      "Yin, Yanbin",
+      "Liu, Jiongnan",
+      "Zhang, Zeyu",
+      "Sun, Zhongxiang",
+      "Zhu, Yutao",
+      "Sun, Hao",
+      "Peng, Boci",
+      "Cheng, Zhenrong",
+      "Fan, Xuanbo",
+      "Guo, Jiaxin",
+      "Yu, Xinlei",
+      "Zhou, Zhenhong",
+      "Hu, Zewen",
+      "Huo, Jiahao",
+      "Wang, Junhao",
+      "Niu, Yuwei",
+      "Wang, Yu",
+      "Yin, Zhenfei",
+      "Hu, Xiaobin",
+      "Liao, Yue",
+      "Li, Qiankun",
+      "Wang, Kun",
+      "Zhou, Wangchunshu",
+      "Liu, Yixin",
+      "Cheng, Dawei",
+      "Zhang, Qi",
+      "Gui, Tao",
+      "Pan, Shirui",
+      "Zhang, Yan",
+      "Torr, Philip",
+      "Dou, Zhicheng",
+      "Wen, Ji-Rong",
+      "Huang, Xuanjing",
+      "Jiang, Yu-Gang",
+      "Yan, Shuicheng"
+    ],
+    "date": "2025/12/15",
+    "abstract": "Memory has emerged, and will continue to remain, a core capability of foundation model-based agents. As research on agent memory rapidly expands and attracts unprecedented attention, the field has also become increasingly fragmented. Existing works that fall under the umbrella of agent memory often differ substantially in their motivations, implementations, and evaluation protocols, while the proliferation of loosely defined memory terminologies has further obscured conceptual clarity. Traditional taxonomies such as long/short-term memory have proven insufficient to capture the diversity of contemporary agent memory systems. This work aims to provide an up-to-date landscape of current agent memory research. We begin by clearly delineating the scope of agent memory and distinguishing it from related concepts such as LLM memory, retrieval augmented generation (RAG), and context engineering. We then examine agent memory through the unified lenses of forms, functions, and dynamics. From the perspective of forms, we identify three dominant realizations of agent memory, namely token-level, parametric, and latent memory. From the perspective of functions, we propose a finer-grained taxonomy that distinguishes factual, experiential, and working memory. From the perspective of dynamics, we analyze how memory is formed, evolved, and retrieved over time. To support practical development, we compile a comprehensive summary of memory benchmarks and open-source frameworks. Beyond consolidation, we articulate a forward-looking perspective on emerging research frontiers, including memory automation, reinforcement learning integration, multimodal memory, multi-agent memory, and trustworthiness issues. We hope this survey serves not only as a reference for existing work, but also as a conceptual foundation for rethinking memory as a first-class primitive in the design of future agentic intelligence.",
+    "exists": true,
+    "url": "https://arxiv.org/abs/2512.13564",
+    "native_id": "2512.13564",
+    "registry": "arxiv"
+  },
+  "arxiv-2602.06052.Agent Memory Survey": {
     "id": "arxiv-2602.06052",
     "title": "A Survey of Agent Memory in the Second Half: Towards Self-Evolving and Long-Horizon Agents",
     "authors": [
@@ -526,59 +598,7 @@
     "native_id": "2602.06052",
     "registry": "arxiv"
   },
-  "arxiv-2602.16313v2.MemoryArena": {
-    "id": "arxiv-2602.16313",
-    "title": "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks",
-    "authors": [
-      "He, Zexue",
-      "Wang, Yu",
-      "Zhi, Churan",
-      "Hu, Yuanzhe",
-      "Chen, Tzu-Ping",
-      "Yin, Lang",
-      "Chen, Ze",
-      "Wu, Tong Arthur",
-      "Ouyang, Siru",
-      "Wang, Zihan",
-      "Pei, Jiaxin",
-      "McAuley, Julian",
-      "Choi, Yejin",
-      "Pentland, Alex"
-    ],
-    "date": "2026/02/18",
-    "abstract": "Existing evaluations of agents with memory typically assess memorization and action in isolation. One class of benchmarks evaluates memorization by testing recall of past conversations or text but fails to capture how memory is used to guide future decisions. Another class focuses on agents acting in single-session tasks without the need for long-term memory. However, in realistic settings, memorization and action are tightly coupled: agents acquire memory while interacting with the environment, and subsequently rely on that memory to solve future tasks. To capture this setting, we introduce MemoryArena, a unified evaluation gym for benchmarking agent memory in multi-session Memory-Agent-Environment loops. The benchmark consists of human-crafted agentic tasks with explicitly interdependent subtasks, where agents must learn from earlier actions and feedback by distilling experiences into memory, and subsequently use that memory to guide later actions to solve the overall task. MemoryArena supports evaluation across web navigation, preference-constrained planning, progressive information search, and sequential formal reasoning, and reveals that agents with near-saturated performance on existing long-context memory benchmarks like LoCoMo perform poorly in our agentic setting, exposing a gap in current evaluations for agents with memory. MemoryArena is now released at this https URL .",
-    "exists": true,
-    "url": "https://arxiv.org/abs/2602.16313v2",
-    "versioned_id": "2602.16313v2",
-    "native_id": "2602.16313",
-    "registry": "arxiv"
-  },
-  "arxiv-2602.22769v4.AMA-Bench": {
-    "id": "arxiv-2602.22769",
-    "title": "AMA-Bench: Evaluating Long-Horizon Memory for Agentic Applications",
-    "authors": [
-      "Zhao, Yujie",
-      "Yuan, Boqin",
-      "Huang, Junbo",
-      "Yuan, Haocheng",
-      "Yu, Zhongming",
-      "Xu, Haozhou",
-      "Hu, Lanxiang",
-      "Shankarampeta, Abhilash",
-      "Huang, Zimeng",
-      "Ni, Wentao",
-      "Tian, Yuandong",
-      "Zhao, Jishen"
-    ],
-    "date": "2026/02/26",
-    "abstract": "Large Language Models (LLMs) are increasingly used as autonomous agents in complex, long-horizon applications, where effective memory is critical for sustained performance. Yet existing memory benchmarks are largely dialogue-centric, while real agent memory consists of continuous agent-environment interaction trajectories composed of states, actions, observations, and tool outputs. To address this gap, we introduce **AMA-Bench** (**A**gent **M**emory with **A**ny length), a benchmark for evaluating long-horizon memory in realistic agentic settings. AMA-Bench combines real-world agent trajectories from representative applications with expert-curated QA, as well as synthetic trajectories that scale to arbitrary horizons with rule-based QA. Our study shows that existing memory systems underperform because they fail to capture causal and objective information and rely heavily on lossy similarity-based retrieval. We further propose **AMA-Agent**, a memory system based on causality-graph construction and tool-augmented retrieval. AMA-Agent achieves **57.22%** accuracy on AMA-Bench, outperforming the strongest baseline by **11.16%**. Resources are available at: [ this https URL ]( this https URL ).",
-    "exists": true,
-    "url": "https://arxiv.org/abs/2602.22769v4",
-    "versioned_id": "2602.22769v4",
-    "native_id": "2602.22769",
-    "registry": "arxiv"
-  },
-  "arxiv-2603.07670.Memory for Autonomous LLM Agents": {
+  "arxiv-2603.07670.Autonomous Memory": {
     "id": "arxiv-2603.07670",
     "title": "Memory for Autonomous LLM Agents:Mechanisms, Evaluation, and Emerging Frontiers",
     "authors": [
@@ -591,27 +611,7 @@
     "native_id": "2603.07670",
     "registry": "arxiv"
   },
-  "arxiv-2605.12493v1.LongMemEval-V2": {
-    "id": "arxiv-2605.12493",
-    "title": "LongMemEval-V2: Evaluating Long-Term Agent Memory Toward Experienced Colleagues",
-    "authors": [
-      "Wu, Di",
-      "Ji, Zixiang",
-      "Kawatkar, Asmi",
-      "Kwan, Bryan",
-      "Gu, Jia-Chen",
-      "Peng, Nanyun",
-      "Chang, Kai-Wei"
-    ],
-    "date": "2026/05/12",
-    "abstract": "Long-term memory is crucial for agents in specialized web environments, where success depends on recalling interface affordances, state dynamics, workflows, and recurring failure modes. However, existing memory benchmarks for agents mostly focus on user histories, short traces, or downstream task success, leaving open how to directly evaluate whether memory systems effectively internalize environment-specific experience. To address this gap, we introduce LongMemEval-V2 (LME-V2), a benchmark for evaluating whether memory systems can help agents acquire the experience needed to become knowledgeable colleagues in customized environments. LME-V2 contains 451 manually curated questions covering five core memory abilities for web agents: static state recall, dynamic state tracking, workflow knowledge, environment gotchas, and premise awareness. Questions are paired with history trajectories containing up to 500 trajectories and 115M tokens. We use a context gathering formulation: memory systems consume history trajectories and return compact evidence for downstream question answering. We propose a suite of two memory methods: AgentRunbook-R, an efficient RAG-based memory with knowledge pools for raw state observations, events, and strategy notes, and AgentRunbook-C, which stores trajectories as files and invokes a coding agent to gather evidence in an augmented sandbox. Experiments show that AgentRunbook-C achieves the best performance with 72.5% average accuracy, outperforming the strongest RAG baseline (48.5%) and the off-the-shelf coding agent baseline (69.3%). Despite the strong performance gains, coding agent based methods have high latency costs. While AgentRunbook-C advances the accuracy-latency Pareto frontier, substantial room for improvement remains. Together, these results establish LME-V2 as a challenging testbed for developing long-term memory systems for environment experience.",
-    "exists": true,
-    "url": "https://arxiv.org/abs/2605.12493v1",
-    "versioned_id": "2605.12493v1",
-    "native_id": "2605.12493",
-    "registry": "arxiv"
-  },
-  "arxiv-2606.06448.Agent Memory Characterization": {
+  "arxiv-2606.06448.Memory Workloads": {
     "id": "arxiv-2606.06448",
     "title": "Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads",
     "authors": [
@@ -632,7 +632,7 @@
     "native_id": "2606.06448",
     "registry": "arxiv"
   },
-  "arxiv-2607.16848.Beyond Memory Leaderboards": {
+  "arxiv-2607.16848.Scientific Memory": {
     "id": "arxiv-2607.16848",
     "title": "Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration",
     "authors": [

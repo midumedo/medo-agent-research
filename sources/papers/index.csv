@@ -1,28 +1,28 @@
 id,name,keywords,date
-arxiv-2402.17753v1,Evaluation of Long-Term Conversational Memory,benchmark,2024-02-27
-arxiv-2404.13501,Survey of Agent Memory Mechanism,survey,2024-04-21
+arxiv-2402.17753v1,Long-Term Chat Memory,benchmark,2024-02-27
+arxiv-2404.13501,Memory Mechanism,survey,2024-04-21
 arxiv-2410.10813v2,LongMemEval,memory;benchmark;evaluation;long-term-memory,2024-10-14
 arxiv-2501.13956v1,Zep,framework,2025-01-20
 arxiv-2502.12110v11,A-Mem,memory;framework;agent;retrieval,2025-02-17
 arxiv-2504.14225v2,Know Me Respond to Me,benchmark,2025-04-19
 arxiv-2504.19413v1,Mem0,memory;framework;long-term-memory;retrieval,2025-04-28
-arxiv-2505.00675,Rethinking Memory in Agents,survey,2025-05-01
+arxiv-2505.00675,Rethinking Memory,survey,2025-05-01
 arxiv-2506.06326v1,Memory OS,framework,2025-05-30
 arxiv-2506.21605v1,MemBench,benchmark,2025-06-20
 arxiv-2507.03724v4,MemOS,framework,2025-07-04
-arxiv-2507.05257v4,Memory Evaluation via Multi-Turn Interaction,benchmark,2025-07-07
+arxiv-2507.05257v4,MemoryAgentBench,benchmark,2025-07-07
 arxiv-2507.07957v1,MIRIX,framework,2025-07-10
 arxiv-2510.17281v7,MemoryBench,benchmark,2025-10-20
-arxiv-2510.27246v2,Beyond a Million Tokens,benchmark,2025-10-31
-arxiv-2512.13564,Memory in the Age of AI Agents,survey,2025-12-15
+arxiv-2510.27246v2,Million-Token Memory,benchmark,2025-10-31
+arxiv-2512.13564,Age of Agent Memory,survey,2025-12-15
 arxiv-2601.01885v3,Agentic Memory,framework,2026-01-05
 arxiv-2601.02163v2,EverMemOS,framework,2026-01-05
 arxiv-2601.02553v3,SimpleMem,framework,2026-01-05
 arxiv-2601.08323v3,AtomMem,framework,2026-01-13
-arxiv-2602.06052,Survey of Agent Memory,survey,2026-01-14
+arxiv-2602.06052,Agent Memory Survey,survey,2026-01-14
 arxiv-2602.16313v2,MemoryArena,benchmark,2026-02-18
 arxiv-2602.22769v4,AMA-Bench,benchmark,2026-02-26
-arxiv-2603.07670,Memory for Autonomous LLM Agents,survey,2026-03-08
+arxiv-2603.07670,Autonomous Memory,survey,2026-03-08
 arxiv-2605.12493v1,LongMemEval-V2,benchmark,2026-05-12
-arxiv-2606.06448,Agent Memory Characterization,survey;分类未复核,2026-06-04
-arxiv-2607.16848,Beyond Memory Leaderboards,survey;分类未复核,2026-07-18
+arxiv-2606.06448,Memory Workloads,survey;分类未复核,2026-06-04
+arxiv-2607.16848,Scientific Memory,survey;分类未复核,2026-07-18
