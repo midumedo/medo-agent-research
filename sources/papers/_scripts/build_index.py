@@ -47,6 +47,17 @@ def split_multi(value):
     return [v for v in re.split(r"[;,]", value or "") if v]
 
 
+# 文件名是 `<id>.<名称>`，名称一律以大写类型词开头（Survey/Bench/…，由测试把守）。
+# 没有 md front matter 时，`<id>` 就是第一个 `.<大写>` 之前的部分。
+ID_PREFIX = re.compile(r"^([a-z]+-[0-9a-z][0-9a-z.\-]*?)(?=\.[A-Z])")
+
+
+def ident_from_stem(entry_stem):
+    """The `<id>` prefix of a filename, used only when no md front matter exists."""
+    match = ID_PREFIX.match(entry_stem)
+    return match.group(1) if match else entry_stem
+
+
 
 def render_index(papers):
     """The exact text write_index() produces, for --check comparison."""
@@ -71,6 +82,8 @@ def main():
     # index.csv 是账本，不是磁盘的投影：md/ 与 pdf/ 都不在本地时它必须原样不动。
     # 行以 `id` 为键、永不以文件名为键——名称允许改，改名不该丢关键词。
     rows = {r["id"]: dict(r) for r in stem.read_index() if r.get("id")}
+    # 账本的 `<id>.<名称>` → id：md 不在本地时靠它把文件名认回原来的行。
+    by_stem = {stem.stem_of(r): r["id"] for r in rows.values()}
 
     stems = {os.path.splitext(f)[0] for d in (stem.pdf_dir(), stem.md_dir())
              if os.path.isdir(d)
@@ -79,7 +92,7 @@ def main():
     seen = set()
     for entry_stem in sorted(stems):
         fields = front_fields(stem.md_path(entry_stem))
-        ident = fields.get("id") or entry_stem
+        ident = fields.get("id") or by_stem.get(entry_stem) or ident_from_stem(entry_stem)
         seen.add(ident)
         old = rows.get(ident) or {}
         rows[ident] = {

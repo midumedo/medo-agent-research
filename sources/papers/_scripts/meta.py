@@ -113,6 +113,10 @@ def fetch_meta(aid):
             # Only use the displayed arXiv identity, not dates or history order.
             identity = re.search(r'<span class="arxivid">(.*?)</span>', txt, re.S)
             match = re.search(rf"arXiv:\s*({re.escape(base)}v[1-9]\d*)\b", identity.group(1)) if identity else None
+        if not match:
+            # 页面改版后前两处都可能不带版本号，但版本串仍在正文里。这是最后一道页内
+            # 兜底——不依赖官方接口（它在部分环境直接 406）。
+            match = re.search(rf"\b({re.escape(base)}v[1-9]\d*)\b", txt)
         version = match.group(1) if match else None
     abstract_match = re.search(r'<blockquote class="abstract[^"]*">(.*?)</blockquote>', txt, re.S)
     abstract = normalize_abstract(abstract_match.group(1)) if abstract_match else None

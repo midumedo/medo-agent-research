@@ -108,7 +108,7 @@ papers/
 
 ## 入库流程
 
-1. **取原件** → `pdf/<id>.<名称>.pdf`。arXiv 用 `sources/papers/_scripts/pdf.py`（给编号、已入库标识或标题都行）；非 arXiv 手工放入，按上面的规则定名称。
+1. **取原件** → `pdf/<id>.<名称>.pdf`。arXiv 用 `sources/papers/_scripts/pdf.py`（给编号、已入库标识或标题都行）；编号带不带版本都可以——`id` 里带版本最稳，不带时脚本从 abs 页取版本，取不到就报 `version unresolved`，不猜。非 arXiv 手工放入，按上面的规则定名称。
 2. **登记** → 转换时 ① `meta.py` 会把 `abstract`、`revised`、`source` 自动写进 md 顶部的登记块（摘要取不到才留空，**不推测**）；`keywords` 由 `keywords.py` 从 abstract 判词后回写 `index.csv`。
 3. **转换** → `md/<id>.<名称>.md`（见下）；结构化输出不落盘，只在转换时读一次用来抽图注。
 4. **入索引** → 跑 `build_index.py` 对账（**只增不删**，删行需 `--prune`），再在 CHANGELOG 追加一行。

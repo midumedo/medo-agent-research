@@ -399,6 +399,19 @@ class LedgerTests(unittest.TestCase):
             build_index.main()
         self.assertEqual(stem.read_index(), [])
 
+    def test_disk_file_without_md_still_matches_its_ledger_row(self):
+        """PDF 在、md 不在时，文件名 `<id>.<名称>` 要认回原行，不能另起一行。"""
+        stem.write_index([{"id": "arxiv-2504.19413v1", "name": "Project.Mem0",
+                           "keywords": ["memory"], "revised": "2025-04-28"}])
+        os.makedirs(os.path.join(self.temp.name, "pdf"))
+        with open(os.path.join(self.temp.name, "pdf",
+                               "arxiv-2504.19413v1.Project.Mem0.pdf"), "wb") as f:
+            f.write(b"%PDF")
+        with patch.object(sys, "argv", ["build_index.py", "--check"]):
+            build_index.main()          # 不抛即通过
+        self.assertEqual(build_index.ident_from_stem("arxiv-2504.19413v1.Project.Mem0"),
+                         "arxiv-2504.19413v1")
+
 
 class AbstractChainTests(unittest.TestCase):
     """摘要提取链：API summary → abs 页 → 人工判读；取不到就 None，绝不编造。"""
@@ -441,6 +454,16 @@ class AbstractChainTests(unittest.TestCase):
     def test_arxiv_meta_is_none_when_nothing_is_reachable(self):
         with patch.object(meta, "get", side_effect=OSError("offline")):
             self.assertIsNone(meta.arxiv_meta("2504.19413"))
+
+    def test_fetch_meta_reads_version_from_the_page_text(self):
+        """abs 页改版后 pdf_url 与 arxivid 都不带版本，版本串仍在正文里。"""
+        page = (b'<html><meta name="citation_title" content="T">'
+                b'<meta name="citation_pdf_url" content="https://arxiv.org/pdf/2607.27958">'
+                b'<a href="/abs/2607.27958v1">arXiv:2607.27958v1</a>'
+                b'</html>')
+        with patch.object(meta, "get", return_value=(200, page)):
+            info = meta.fetch_meta("2607.27958")
+        self.assertEqual(info["versioned_id"], "2607.27958v1")
 
     def test_convert_fills_the_register_from_metadata(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -487,6 +510,20 @@ class MaterialCheckTests(unittest.TestCase):
                                    "keywords": [], "revised": ""}])
                 with patch.object(sys, "argv", ["pipeline.py", "--check"]):
                     pipeline.main()      # 不抛即通过
+
+
+class FindTokenTests(unittest.TestCase):
+    """编号到行的解析：id 里带不带版本、带不带登记处前缀，都要命中同一行。"""
+
+    def test_find_resolves_a_versioned_native_id(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(stem, "BASE", tmp):
+                stem.write_index([{"id": "arxiv-2504.19413v1", "name": "Project.Mem0",
+                                   "keywords": [], "revised": ""}])
+                for token in ("2504.19413", "2504.19413v1", "arxiv-2504.19413v1", "Project.Mem0"):
+                    self.assertIsNotNone(stem.find(token), token)
+                self.assertEqual(stem.stem_of(stem.find("2504.19413v1")),
+                                 "arxiv-2504.19413v1.Project.Mem0")
 
 
 class KeywordsTests(unittest.TestCase):

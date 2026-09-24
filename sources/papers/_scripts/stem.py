@@ -202,14 +202,19 @@ def records():
 
 
 def find(token):
-    """Resolve a stem, an id, a name, or the bare native id to an index record."""
+    """Resolve a stem, an id, a name, or a native id (with or without version)."""
     token = (token or "").strip()
     if not token:
         return None
     for record in records():
         if token in (stem_of(record), record.get("id"), record.get("name")):
             return record
-        if token == native_from_id(record.get("id")):
+        ident = record.get("id") or ""
+        # `2504.19413` / `2504.19413v1` / `arxiv-2504.19413v1` 都要命中同一行——
+        # 从 index.csv 起手的入库流程就靠这个把编号解析回 <id>.<名称>。
+        if token == native_from_id(ident):
+            return record
+        if "-" in ident and token == ident.split("-", 1)[1]:
             return record
     slug = slugify(token)
     for record in records():
