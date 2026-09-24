@@ -33,14 +33,22 @@ papers/
 
 **`id` 是身份，`名称` 是给人看的简称，两者拼成文件名。**
 
-`id` 形如 `arxiv-2502.12110v11`（登记处 + 编号 + 版本），含版本、全库唯一；`名称` 是短的可读名。例：`arxiv-2502.12110v11.A-Mem.md`。引用锚点是 `id`，不是文件名。
+`id` 形如 `arxiv-2502.12110v11`（登记处 + 编号 + 版本），含版本、全库唯一；`名称` 是 `<类型>-<领域或名字>`，如 `project-A-Mem`。合起来：`arxiv-2502.12110v11.project-A-Mem.md`。引用锚点是 `id`，不是文件名。
 
-### 名称的两条来源
+### 名称 = `<类型>-<领域或名字>`
 
-| 论文类型 | 命名方式 | 例 |
+类型取自封闭小集、写在名字最前面，让目录列表先说清「这是什么」：
+
+| 类型 | 用在哪 | 例 |
 |---|---|---|
-| 有专名（框架、系统、基准、数据集） | 用专名，保留原文大小写 | `Mem0`、`A-Mem`、`LongMemEval`、`Zep` |
-| 无专名（综述、方法类） | 类型 + 领域 | `Survey of Agent Memory`、`Evaluation of Long-Term Conversational Memory` |
+| `survey-` | 综述 | `survey-Agent Memory` |
+| `bench-` | 基准与评测集 | `bench-LongMemEval` |
+| `project-` | 开源系统或项目 | `project-Mem0`、`project-Zep` |
+| `model-` | 提出的模型 | `model-AtomMem` |
+| `method-` | 提出的方法或机制 | `method-Agentic Memory` |
+| `analysis-` | 特性分析与测量 | `analysis-Memory Workloads` |
+
+类型之后跟论文自称的名字（有的话）或领域：`bench-MemoryAgentBench`、`survey-Memory Mechanism`。**类型已经说明的词要从后半段去掉**（`AMA-Bench` → `bench-AMA`）。这条规则由测试把守：名字必须是 `<类型>-<非空>`，类型不在词表内就报错。
 
 专名的判定标准是「标题里作者反复使用的那个名字」；没有就别硬造缩写。
 
