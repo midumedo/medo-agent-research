@@ -25,7 +25,7 @@ ID_RE = re.compile(r"^(?:%s)-[a-z0-9][a-z0-9.-]*$" % "|".join(REGISTRIES))
 VERSION_RE = re.compile(r"v[1-9]\d*$")
 
 # index.csv is a pointer table: enough to locate a paper, nothing more.
-INDEX_FIELDS = ["stem", "id", "keywords", "date"]
+INDEX_FIELDS = ["id", "name", "keywords", "date"]
 # md front matter is the per-paper register: 8 fields, no duplicates of index.csv.
 FRONT_FIELDS = ["stem", "id", "keywords", "abstract", "date", "source",
                 "parser", "converted_at", "state"]
@@ -110,6 +110,34 @@ def identity(meta, prov=None):
     return f"{meta.get('registry') or 'arxiv'}-{native}{suffix}"
 
 
+ILLEGAL_NAME_CHARS = re.compile(r'[<>:"/\\|?*]')
+
+
+def sanitize_name(text):
+    """Replace the characters Windows forbids in a filename with `.`.
+
+    Case is preserved on purpose: the name is what a person reads, and `A-Mem`
+    is the paper's name while `a-mem` is not.
+    """
+    cleaned = ILLEGAL_NAME_CHARS.sub(".", (text or "").strip())
+    cleaned = re.sub(r"\.{2,}", ".", cleaned)
+    return cleaned.strip(". ")
+
+
+def stem_of(record):
+    """The filename stem: `<id>.<name>`. One rule, applied in one place."""
+    record = record or {}
+    return f"{record.get('id') or ''}.{record.get('name') or ''}"
+
+
+def name_from_stem(stem, ident):
+    """Recover `<name>` from `<id>.<name>`; '' when the stem does not start with that id."""
+    prefix = f"{ident or ''}."
+    if not ident or not stem.startswith(prefix):
+        return ""
+    return stem[len(prefix):]
+
+
 def slugify(title, limit=SLUG_LIMIT):
     """Deterministic filename slug: lowercase, ASCII alphanumerics and CJK kept,
     everything else becomes a separator, cut on a word boundary at `limit`."""
@@ -182,7 +210,7 @@ def write_index(papers):
     with open(index_path(), "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=INDEX_FIELDS, lineterminator="\n")
         writer.writeheader()
-        for record in sorted(papers, key=lambda r: r.get("stem") or ""):
+        for record in sorted(papers, key=stem_of):
             row = {key: record.get(key) for key in INDEX_FIELDS}
             row["keywords"] = ";".join(record.get("keywords") or [])
             writer.writerow(row)
@@ -201,39 +229,44 @@ def records():
 
 
 def find(token):
-    """Resolve a stem, an id, or the bare native id to an index record."""
+    """Resolve a stem, an id, a name, or the bare native id to an index record."""
     token = (token or "").strip()
     if not token:
         return None
     for record in records():
-        if token in (record.get("stem"), record.get("id")):
+        if token in (stem_of(record), record.get("id"), record.get("name")):
             return record
         if token == native_from_id(record.get("id")):
             return record
     slug = slugify(token)
     for record in records():
-        if record.get("stem") == slug:
+        if slugify(stem_of(record)) == slug:
             return record
     return None
 
 
 def to_stem(token):
-    """Stem for a CLI argument: a known stem/id/title, or the slug of a new title."""
+    """Filename stem for a CLI argument: a known stem/id/name, or a new title's slug."""
     token = (token or "").strip()
     record = find(token)
     if record:
-        return record["stem"]
-    if token.startswith("arxiv-") or ARXIV_RE.match(token):
+        return stem_of(record)
+    if ARXIV_RE.match(token) or re.fullmatch(r"arxiv-\d{4}\.\d{4,5}(?:v[1-9]\d*)?", token):
         raise ValueError(f"[{token}] 尚未入库，无法解析为词干；先下载或用标题运行")
     return slugify(token)
 
 
 def native_for(token, record=None):
-    """arXiv native id behind a token, for scripts that must hit the arXiv API."""
+    """arXiv native id behind a token, for scripts that must hit the arXiv API.
+
+    A filename stem now starts with `arxiv-` too, so the bare-id form is matched
+    in full; a prefix test would swallow `arxiv-2512.13564.Memory in the Age…`.
+    """
     if ARXIV_RE.match(token):
         return token
-    if token.startswith("arxiv-"):
-        return token.split("-", 1)[1]
+    match = re.fullmatch(r"arxiv-(\d{4}\.\d{4,5}(?:v[1-9]\d*)?)", (token or "").strip())
+    if match:
+        return match.group(1)
     if record:
         return native_from_id(record.get("id")) or None
     return None

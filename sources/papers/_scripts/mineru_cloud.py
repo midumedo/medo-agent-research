@@ -33,7 +33,7 @@ from datetime import datetime, timezone
 
 from stem import (assets_root, base, find, front_matter, identity, load_meta,
                   load_provenance, md_path, pdf_dir, pdf_path, read_front_matter,
-                  save_provenance, slugify)
+                  save_provenance, slugify, stem_of)
 
 API = "https://mineru.net/api/v4"
 UA = "MemoryResearch/1.0 (mineru cloud client)"
@@ -238,26 +238,38 @@ def parse_visual(items):
     return out
 
 
-def name_map(items, ident):
-    """img_path -> `<ident>-<token><n>.<ext>`; duplicates get `-2`, `-3`.
+def name_map(items, ident, zip_names=()):
+    """img_path -> `<ident>-<token><n>.<ext>`; **every** zip image gets a name.
 
-    Naming by figure number is what makes a caption findable without opening the
-    image; numbers without a caption fall back to that kind's running sequence.
+    Figure numbers come from captions. Images content_list never recorded (the
+    inline formulas MinerU also cuts out) are numbered `<ident>-img<N>`, so no
+    file is left carrying the parser's hash as its name.
     """
     used, seq, dup = {}, {}, {}
+
+    def unique(base, ext):
+        name = base + ext
+        while name in used.values():
+            dup[base] = dup.get(base, 1) + 1
+            name = f"{base}-{dup[base]}{ext}"
+        return name
+
     for item in items:
         path = item["img_path"]
         if not path:
             continue
         kind_token = KIND_TOKEN[item["kind"]]
         seq[kind_token] = seq.get(kind_token, 0) + 1
-        stem_name = f"{ident}-{kind_token}{item['number'] or seq[kind_token]}"
         ext = os.path.splitext(path)[1].lower() or ".png"
-        name = stem_name + ext
-        while name in used.values():
-            dup[stem_name] = dup.get(stem_name, 1) + 1
-            name = f"{stem_name}-{dup[stem_name]}{ext}"
-        used[path] = name
+        used[path] = unique(f"{ident}-{kind_token}{item['number'] or seq[kind_token]}", ext)
+
+    orphan = 0
+    for name in zip_names:
+        if name in used:
+            continue
+        orphan += 1
+        ext = os.path.splitext(name)[1].lower() or ".png"
+        used[name] = unique(f"{ident}-img{orphan}", ext)
     return used
 
 
@@ -278,7 +290,12 @@ def rewrite_image_refs(md_text, mapping):
 
 
 def write_assets(zf, stem, ident, items, mapping, keep_images):
-    """Images land flat in assets/, renamed by figure number; the manifest always lands."""
+    """Images land flat in assets/, each under its mapped name. No manifest.
+
+    The bytes are versioned, the figure numbers are in the file names, and the
+    captions sit right next to the image references in the md — a manifest would
+    be a third copy of what already exists.
+    """
     directory = assets_root()
     entries = sorted(image_entries(zf))
     images = []
@@ -292,21 +309,9 @@ def write_assets(zf, stem, ident, items, mapping, keep_images):
                 f.write(payload)
         images.append({"file": target, "bytes": len(payload),
                        "sha256": hashlib.sha256(payload).hexdigest()})
-    figures = [{"n": index + 1, "kind": item["kind"], "number": item["number"],
-                "page": item["page"], "caption": item["caption"],
-                "file": mapping.get(item["img_path"])}
-               for index, item in enumerate(items)]
-    manifest = None
-    if entries:
-        manifest = os.path.join(directory, f"{stem}.manifest.json")
-        with open(manifest, "w", encoding="utf-8", newline="\n") as f:
-            json.dump({"stem": stem, "id": ident, "images": images, "figures": figures},
-                      f, ensure_ascii=False, indent=2)
-            f.write("\n")
     return {"count": len(images),
             "bytes": sum(i["bytes"] for i in images),
-            "kept": bool(keep_images and images),
-            "manifest": f"assets/{stem}.manifest.json" if manifest else None}
+            "kept": bool(keep_images and images)}
 
 
 def parser_label(result, model_version):
@@ -336,7 +341,7 @@ def main():
     stems = []
     for raw in args.tokens:
         record = find(raw)
-        stems.append(record["stem"] if record else slugify(raw))
+        stems.append(stem_of(record) if record else slugify(raw))
     if not stems:
         stems = sorted(os.path.splitext(f)[0] for f in os.listdir(pdf_dir()) if f.lower().endswith(".pdf"))
     stems = [s for s in stems if os.path.exists(pdf_path(s))]
@@ -383,7 +388,7 @@ def main():
             record = provenance[stem]
             ident = identity(entry_meta, record) or stem
             items = parse_visual(load_content_list(zf, pick(zf, "_content_list.json")))
-            mapping = name_map(items, ident)
+            mapping = name_map(items, ident, image_entries(zf))
             md_text = rewrite_image_refs(zf.read(md_name).decode("utf-8", "replace"), mapping)
             assets = write_assets(zf, stem, ident, items, mapping, keep_images)
 

@@ -23,7 +23,7 @@ ARXIV_API = "http://export.arxiv.org/api/query?id_list={}&max_results=1"
 
 
 from stem import find, load_meta, load_provenance, native_for, pdf_path, save_meta, \
-    save_provenance, slugify
+    save_provenance, slugify, stem_of
 
 WATCHLIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "watchlist.txt")
 UA = "MemoryResearch/1.0 (local paper archive)"
@@ -110,7 +110,7 @@ def fetch_pdf(versioned_id):
 def download_one(token, meta, provenance):
     record = find(token)
     aid = native_for(token, record)
-    stem = record["stem"] if record else None
+    stem = stem_of(record) if record else None
     if stem and os.path.exists(pdf_path(stem)):
         # Do not fetch latest metadata for a legacy/cached PDF.
         return f"[{stem}] cached PDF and metadata preserved; version: {provenance.get(stem, {}).get('version') or 'unknown'}"

@@ -81,7 +81,7 @@ def render_index(papers):
     buf = io.StringIO()
     writer = csv.DictWriter(buf, fieldnames=stem.INDEX_FIELDS, lineterminator="\n")
     writer.writeheader()
-    for record in sorted(papers, key=lambda r: r.get("stem") or ""):
+    for record in sorted(papers, key=stem.stem_of):
         row = {key: record.get(key) for key in stem.INDEX_FIELDS}
         row["keywords"] = ";".join(record.get("keywords") or [])
         writer.writerow(row)
@@ -96,7 +96,7 @@ def main():
 
     meta = stem.load_meta()
     prov = stem.load_provenance()
-    previous = {r["stem"]: r for r in stem.read_index() if r.get("stem")}
+    previous = {stem.stem_of(r): r for r in stem.read_index() if r.get("id")}
 
     stems = {os.path.splitext(f)[0] for d in (stem.pdf_dir(), stem.md_dir())
              if os.path.isdir(d)
@@ -104,17 +104,21 @@ def main():
 
     seed = legacy_seed()
     papers = []
-    for name in sorted(stems):
-        fields = front_fields(stem.md_path(name))
-        old = previous.get(name) or {}
-        entry = meta.get(name) or {}
-        record = prov.get(name) or {}
+    for entry_stem in sorted(stems):
+        fields = front_fields(stem.md_path(entry_stem))
+        old = previous.get(entry_stem) or {}
+        entry = meta.get(entry_stem) or {}
+        record = prov.get(entry_stem) or {}
+        ident = (fields.get("id") or old.get("id")
+                 or identity_from(entry_stem, entry, record))
         papers.append({
-            "stem": name,
-            "id": fields.get("id") or old.get("id") or identity_from(name, entry, record),
+            "id": ident,
+            # The file name is `<id>.<name>`, so the name can be read back off it.
+            "name": (stem.name_from_stem(entry_stem, ident) or old.get("name")
+                     or stem.sanitize_name((entry.get("title") or "").split(":")[0])),
             # The md register is where keywords are written; index.csv is derived.
             "keywords": (split_multi(fields.get("keywords")) or old.get("keywords")
-                         or seed.get(name, [])),
+                         or seed.get(entry_stem, [])),
             "date": (stem.normalize_date(fields.get("date")) or old.get("date")
                      or stem.normalize_date(entry.get("date")) or ""),
         })

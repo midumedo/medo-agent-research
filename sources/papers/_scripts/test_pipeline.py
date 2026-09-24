@@ -7,11 +7,15 @@ All downloads are mocked; conversion uses a tiny PDF created in a temp folder.
 
 import hashlib
 import importlib.util
+import io
 import json
+import os
 from pathlib import Path
+import re
 import sys
 import tempfile
 import unittest
+import zipfile
 from unittest.mock import patch
 
 sys.dont_write_bytecode = True
@@ -30,9 +34,10 @@ import stem
 download = module("download_arxiv")
 convert = module("pdf2md")
 
-STEM = "memory-in-the-age-of-ai-agents"
+STEM = "arxiv-2512.13564.Memory in the Age of AI Agents"
 AID = "2512.13564"
 ID = "arxiv-2512.13564"
+NAME = "Memory in the Age of AI Agents"
 
 
 class PipelineTests(unittest.TestCase):
@@ -51,8 +56,8 @@ class PipelineTests(unittest.TestCase):
         self.provenance = {STEM: {"version": None}}
         stem.save_meta(self.meta)
         stem.save_provenance(self.provenance)
-        stem.save_index({"papers": [{"stem": STEM, "id": ID, "registry": "arxiv",
-                                     "native_id": AID, "title": "Existing title"}]})
+        stem.save_index({"papers": [{"id": ID, "name": NAME,
+                                     "keywords": [], "date": ""}]})
         self.original_meta = (self.base / "meta.json").read_bytes()
 
     def test_cached_pdf_never_fetches_or_replaces_metadata(self):
@@ -214,11 +219,12 @@ class IndexCsvTests(unittest.TestCase):
         self.addCleanup(active.stop)
 
     def test_index_csv_roundtrip(self):
-        stem.write_index([{"stem": "a-v1", "id": "arxiv-1v1",
+        stem.write_index([{"id": "arxiv-1v1", "name": "A-Mem",
                            "keywords": ["memory", "context"], "date": "2025-04-28"}])
         back = stem.read_index()
         self.assertEqual(len(back), 1)
         self.assertEqual(back[0]["id"], "arxiv-1v1")
+        self.assertEqual(back[0]["name"], "A-Mem")
         self.assertEqual(back[0]["keywords"], ["memory", "context"])
         self.assertEqual(back[0]["date"], "2025-04-28")
 
@@ -239,6 +245,57 @@ class IndexCsvTests(unittest.TestCase):
         self.assertEqual(stem.version_suffix("2504.19413v11"), "v11")
         self.assertEqual(stem.version_suffix(None), "")
         self.assertEqual(stem.version_suffix("unknown"), "")
+
+
+def fake_zip(entries):
+    """A real in-memory zip, so the asset pipeline is exercised without a network."""
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as zf:
+        for name, payload in entries.items():
+            zf.writestr(name, payload)
+    buf.seek(0)
+    return zipfile.ZipFile(buf)
+
+
+class NamesAndAssetsTests(unittest.TestCase):
+    """文件名拼装、非法字符替换、图片全覆盖命名、manifest 取消。"""
+
+    def test_stem_of_composes_filename(self):
+        self.assertEqual(stem.stem_of({"id": "arxiv-1v1", "name": "A-Mem"}),
+                         "arxiv-1v1.A-Mem")
+
+    def test_sanitize_name_replaces_illegal(self):
+        self.assertEqual(stem.sanitize_name("A-Mem: Agentic Memory"),
+                         "A-Mem. Agentic Memory")
+
+    def test_sanitize_name_keeps_case(self):
+        self.assertEqual(stem.sanitize_name("Mem0: Building X"), "Mem0. Building X")
+
+    def test_name_map_covers_every_zip_image(self):
+        items = [{"img_path": "images/a.jpg", "kind": "image", "number": "1",
+                  "caption": "Figure 1: x", "page": 0}]
+        mapping = mineru.name_map(items, "arxiv-1v1",
+                                  ["images/a.jpg", "images/b.jpg", "images/c.jpg"])
+        self.assertEqual(mapping["images/a.jpg"], "arxiv-1v1-fig1.jpg")
+        for path in ("images/b.jpg", "images/c.jpg"):
+            self.assertIn(path, mapping)
+            self.assertFalse(re.fullmatch(r"[0-9a-f]{64}\.[a-z]+", mapping[path]),
+                             "没有 content_list 记录的图不得保留 hash 名")
+        self.assertEqual(len(set(mapping.values())), 3, "三个名字必须互不相同")
+
+    def test_write_assets_writes_no_manifest(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(stem, "BASE", tmp):
+                zf = fake_zip({"images/a.jpg": b"a" * 10, "images/b.jpg": b"b" * 20})
+                items = [{"img_path": "images/a.jpg", "kind": "image", "number": "1",
+                          "caption": "Figure 1: x", "page": 0}]
+                mapping = mineru.name_map(items, "arxiv-1v1",
+                                          ["images/a.jpg", "images/b.jpg"])
+                info = mineru.write_assets(zf, "arxiv-1v1.A-Mem", "arxiv-1v1",
+                                           items, mapping, True)
+                files = sorted(os.listdir(os.path.join(tmp, "assets")))
+                self.assertEqual(files, ["arxiv-1v1-fig1.jpg", "arxiv-1v1-img1.jpg"])
+                self.assertNotIn("manifest", info)
 
 
 if __name__ == "__main__":
