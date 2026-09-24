@@ -1,0 +1,671 @@
+{
+  "stem": "a-mem-agentic-memory-for-llm-agents-v11",
+  "id": "arxiv-2502.12110v11",
+  "images": [
+    {
+      "file": "arxiv-2502.12110v11-chart2.jpg",
+      "bytes": 12653,
+      "sha256": "3c3f31c5c2b924acdcd6bc2b258b8b68496bac866806f03efba4f127422cd5a2"
+    },
+    {
+      "file": "07df3a772f8f1be058e5fad4e128ce8a70e1014f96d59d7f98963752588d3a96.jpg",
+      "bytes": 4870,
+      "sha256": "dfaf94b1e6848e6e5c5535701b092d39231a814d57d2a08767a3f6aa4ce42f0a"
+    },
+    {
+      "file": "085b764605a7ddf7db0c0fe2ccee190e97cfb3c6d7c52e55408cee9a3e315a9e.jpg",
+      "bytes": 13640,
+      "sha256": "4a4f5bac68dd9365466209659bc78a3a0a47505f3919577f1db0b317d8883bb3"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart10.jpg",
+      "bytes": 16496,
+      "sha256": "568c6c7aad0324582b71efc8226998123110626fba2982434e570bbc426a5b0a"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart4.jpg",
+      "bytes": 11920,
+      "sha256": "c634084deb6251f3f3b1c93c88f696e68796f118a22def43edf13fabaf7a3443"
+    },
+    {
+      "file": "12d5396623fa9d5252b3e487320aca4f23b6e9edb30d06245c6444912d2118ef.jpg",
+      "bytes": 5173,
+      "sha256": "cb51891c8755bfcdb34b7a68d3f2da5acb5746cec141c51aa80b0565cdc355dd"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart5.jpg",
+      "bytes": 11985,
+      "sha256": "68cb1d80d360bdc9560ce4c329af1a2550a20b8cb186ab496583efc291d521d4"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart7.jpg",
+      "bytes": 20649,
+      "sha256": "cefd577424dc41c1f0b746738c56405c141ded05a5be38d80659cd8a2c10aa57"
+    },
+    {
+      "file": "1a46342952b17c605923601c845ead4b0065f8081597efa6d66250b9349d2683.jpg",
+      "bytes": 3958,
+      "sha256": "cecd48340f6b2e7a8dfad5df52b45d48f3a1a2a5010253a373bd2a7e43cd9013"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart15.jpg",
+      "bytes": 17219,
+      "sha256": "2718dc3b1ca0bf581182492e0cd539ecb654e9607e109229b8cc8af582c84dfa"
+    },
+    {
+      "file": "2a5c715674db6954d60b588d69149ca3b55c5022512718136129f7f285d3039a.jpg",
+      "bytes": 5353,
+      "sha256": "e355923dce981276b297f895fa4ea5b8fd442b64666115873e73089346db1ab6"
+    },
+    {
+      "file": "30b93eff74f46c8570fcd63cc3d298beb45105dfd9584bf0fac7eb440c2384c6.jpg",
+      "bytes": 3848,
+      "sha256": "a64d3a3ca68fc429d674727a9f0ae435ef3965a22f7bebbcff0a156c4e64b582"
+    },
+    {
+      "file": "arxiv-2502.12110v11-table5.jpg",
+      "bytes": 195201,
+      "sha256": "a65ab67a467a1e5ad14761fa9a6c1f265073da5695386bb3c77253dacf3b2892"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart13.jpg",
+      "bytes": 17118,
+      "sha256": "4235b735a639c281236dad5b5b918a7bcc5dacffb23659be779df071f46759ad"
+    },
+    {
+      "file": "420406ee6487c34c208a4b8c2b8e5f724d4efce8f40c59eaaa463235dc938de6.jpg",
+      "bytes": 4919,
+      "sha256": "a255a0e07f6ea6b8926a30ba8f70f47a48d976938e43972ca309f34eaed6b1d6"
+    },
+    {
+      "file": "42ede7d94de81e658aef80affd67b8b0f36f2d8a0c7c7d17ea547aeba78965a4.jpg",
+      "bytes": 7706,
+      "sha256": "7653968bd118874bba0c75bde6338479bdf56c383383898fa8adb05258ed8171"
+    },
+    {
+      "file": "arxiv-2502.12110v11-fig1.jpg",
+      "bytes": 9488,
+      "sha256": "0f1971373dcdbe47c283f5d1bdcf981726a774a483164e5fa3c57950b4fff110"
+    },
+    {
+      "file": "555ca2a93c82abd01651013c8ba4b16b6d945b3e7af2274c5488bd901f61d29a.jpg",
+      "bytes": 5981,
+      "sha256": "73165ec5ba2bcec1c74d3b1d65fd394f492b19cc98840d3139c30537faac13e9"
+    },
+    {
+      "file": "5978512b7e9ea87e5cf709fb9789926b49bb129ef5770fa626872558a0805da9.jpg",
+      "bytes": 4206,
+      "sha256": "a0b3fe1da8214236bcdf82c3b0f83babd0729f9a9874e4408060d1c94d5e117d"
+    },
+    {
+      "file": "5c0292896cd3e386d0406042bc2329ec424ee6db5fb021a19aba4c858ef6b02e.jpg",
+      "bytes": 3920,
+      "sha256": "d1686fc5472a7a6e5b4673ccbebe5ccb92508101a4495949f9431601345f40d0"
+    },
+    {
+      "file": "63dc6378189e6a5945152205d21721506e47e53a33c3f31d133e9907b6ee632a.jpg",
+      "bytes": 6908,
+      "sha256": "20eb6d47a85a0620b270d6a91699102d610b7f1792bdaae8a0406da3380136f5"
+    },
+    {
+      "file": "644d87217e26a1147fb8cf02210d32528d8dc498cf6673b0585aa9e7e6974597.jpg",
+      "bytes": 3612,
+      "sha256": "1c4419be4a1acdd77db0fd808bf2c62ecacee06d1522b2a54f70d126b4d39a5c"
+    },
+    {
+      "file": "arxiv-2502.12110v11-fig2.jpg",
+      "bytes": 77293,
+      "sha256": "ea69341952de468451acf72e581ddf0a5fc2467a70148fe3013ea86021b2503f"
+    },
+    {
+      "file": "arxiv-2502.12110v11-table1.jpg",
+      "bytes": 204591,
+      "sha256": "29c289d55945348065f4237f120966a6405f9e445c3d143a28d27b9cc23cb194"
+    },
+    {
+      "file": "arxiv-2502.12110v11-table8.jpg",
+      "bytes": 29288,
+      "sha256": "9c48e1cc7e538189e3bae32e62261166b9435080ca6aacecadada6f804682f44"
+    },
+    {
+      "file": "arxiv-2502.12110v11-fig1-2.jpg",
+      "bytes": 12135,
+      "sha256": "5e4aec14cba5bab7e383eb9923e4d8115394058704bc58b0194424174c0c5048"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart11.jpg",
+      "bytes": 16699,
+      "sha256": "69549638d534c3119564fb79c08b4bb0a55a33f372d080f8b4cfa6f834be31e8"
+    },
+    {
+      "file": "87e724d0bb7a09e6e86ec3ae5a94f42b132c1afeb608dc4464946e0c908cdfaf.jpg",
+      "bytes": 4406,
+      "sha256": "8b98e3314bcb09d095a2d5f571f7ba05283f6dccd098754704c71d0f19c957b4"
+    },
+    {
+      "file": "8899945f7f0cf283adc444294b93d626ffff3a4145623b30873e30e421505217.jpg",
+      "bytes": 3454,
+      "sha256": "11433d03a31608a13ef1a2cadaf9939865d59d46babb0d990f12fdbf60cacc3d"
+    },
+    {
+      "file": "8bc51fc01617ca10011f5380445f5acb49c69fa80ecb44d9fc1136c364ad958e.jpg",
+      "bytes": 1962,
+      "sha256": "71cda5794617540940e2fd0a215baab8661db75e08345045048696dcb10e7a09"
+    },
+    {
+      "file": "8bd6fc020b22df344583fd97db346a05fab7a150a021d41efffa68e73abcfd57.jpg",
+      "bytes": 5429,
+      "sha256": "68eea27410951d9e570f10acd11bfc2a4f12cb7f1bdf2e8d288e231a90f7b62f"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart1.jpg",
+      "bytes": 12153,
+      "sha256": "2c1f38b8992971cff8eb42f75be3ff628307203017bd49d1bee2e26da28b5b4e"
+    },
+    {
+      "file": "97fa2f01335f8c497cc8f0af7e6f0ed4ac36827d34a99704a868b1a718167178.jpg",
+      "bytes": 5540,
+      "sha256": "b4400f82ba5cc11d2b6c939153eb5c3967bfc8052c9c18d53819b48118937bcb"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart12.jpg",
+      "bytes": 16721,
+      "sha256": "5b6a9952e9c547f3668ead8972f9188948b10f8a086897306eef0a08817e2877"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart8.jpg",
+      "bytes": 16934,
+      "sha256": "9cf03b39da0a0e0cd168a2dfafcf9a1d84ec0f2328df65ed15effdbb86a47f3e"
+    },
+    {
+      "file": "b57abb92390176f0813900ace1f9cf486499f5d379b0bc65859302b7ba5dadf2.jpg",
+      "bytes": 4249,
+      "sha256": "09e143666d2d07470f74965c7d0b808c0a5c873137288734c2c1585b7c7922ee"
+    },
+    {
+      "file": "bbddbc072395fd8cdf5b7ca43309f327994fe33dcd8f8c088e05fe3432e3e0af.jpg",
+      "bytes": 3405,
+      "sha256": "76ce38f76202fd29dfc174b63680ea4106247b6fc83ee42a662e402a7a83ae49"
+    },
+    {
+      "file": "bdcec7f0998edbc14dcf4bb1b4730fb4849f8136f55e6b3adde9edd4c99d059f.jpg",
+      "bytes": 5598,
+      "sha256": "40bf658a21cc1ee0d0d297ea8fd668c723986b3bf931cdbe04e0cb87335cafd0"
+    },
+    {
+      "file": "arxiv-2502.12110v11-table2.jpg",
+      "bytes": 20196,
+      "sha256": "a4ecb8392a38777761cfc23b8bf8d07427c953ca10ef70f05c736942dff2b214"
+    },
+    {
+      "file": "c940bb4f6da17ef725b82a66c586622fe51b440cf9fa07a24d39ef430ce3f4b3.jpg",
+      "bytes": 7514,
+      "sha256": "b5dd512f27e62d7ceaf6892accf4337296c840d74648b876ff4bee283bac0420"
+    },
+    {
+      "file": "arxiv-2502.12110v11-table7.jpg",
+      "bytes": 100434,
+      "sha256": "fb5e7aa56c8f411b300db33c81533ccd8e475ca0d0212ced83fc1d3e52be9ecd"
+    },
+    {
+      "file": "cfb68eea27f2067e2012a65b98a1825fa23b2ef85ad27ded7143370eeca40b81.jpg",
+      "bytes": 2990,
+      "sha256": "8899780b0526c011b42951ebeb58c3cba596923a13f4f90f9f9406d22e8d22fa"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart3.jpg",
+      "bytes": 12499,
+      "sha256": "7a8fa622d756d556784552777a66c29e37f21df9c84b2c6e3a6d16716c02469b"
+    },
+    {
+      "file": "arxiv-2502.12110v11-table3.jpg",
+      "bytes": 36244,
+      "sha256": "5d2a035291dc0a8f49d8d49df2e53389a85b4ac9d706b0c5a584f292a8da28b9"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart14.jpg",
+      "bytes": 16292,
+      "sha256": "517bd0e67561137fab853ce568f057964508633021e9110415a48c6423c43f43"
+    },
+    {
+      "file": "e0fca28d9441616ba628efe6dba93e0d9727cc1c6316b2179740276e1e491b98.jpg",
+      "bytes": 3698,
+      "sha256": "04d70988c409c0eac089590ea14aadb80b7e5c5f5e970ed90c8d76807cce41ac"
+    },
+    {
+      "file": "e1c107d5f8088514d2bac13c7e70925268723960714b8a66a26553bd689fcf0f.jpg",
+      "bytes": 3266,
+      "sha256": "bde54cba4e73a834bd1b6891bd30bda38df0336f2bcbb847cb0301418c5bba67"
+    },
+    {
+      "file": "arxiv-2502.12110v11-table4.jpg",
+      "bytes": 55072,
+      "sha256": "24883ba8c9deada161822cbe384460448bd7e28c209abae94d3b5d98ec3ee529"
+    },
+    {
+      "file": "arxiv-2502.12110v11-table6.jpg",
+      "bytes": 221147,
+      "sha256": "86fc7b6f4136824379bb84a49b7c08f989fdb47010632710defeb94de3deaa2d"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart9.jpg",
+      "bytes": 15659,
+      "sha256": "4cc2614c983d044fb027eb28b8b00fd0a641b6c3b1bca114016bae0a99676f71"
+    },
+    {
+      "file": "arxiv-2502.12110v11-chart6.jpg",
+      "bytes": 21249,
+      "sha256": "ad6580eea0557065d624f5961b6219005f748700a27de496cb9b030a2ed11ca1"
+    }
+  ],
+  "figures": [
+    {
+      "n": 1,
+      "kind": "image",
+      "number": null,
+      "page": 1,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-fig1.jpg"
+    },
+    {
+      "n": 2,
+      "kind": "image",
+      "number": "1",
+      "page": 1,
+      "caption": "(a) Traditional memory system. (b) Our proposed agentic memory. Figure 1: Traditional memory systems require predefined memory access patterns specified in the workflow, limiting their adaptability to diverse scenarios. Contrastly, our A-MEM enhances the flexibility of LLM agents by enabling dynamic memory operations.",
+      "file": "arxiv-2502.12110v11-fig1-2.jpg"
+    },
+    {
+      "n": 3,
+      "kind": "image",
+      "number": "2",
+      "page": 2,
+      "caption": "Figure 2: Our A-MEM architecture comprises three integral parts in memory storage. During note construction, the system processes new interaction memories and stores them as notes with multiple attributes. The link generation process first retrieves the most relevant historical memories and then employs an LLM to determine whether connections should be established between them. The concept of a ’box’ describes that related memories become interconnected through their similar contextual descriptions, analogous to the Zettelkasten method. However, our approach allows individual memories to exist simultaneously within multiple different boxes. During the memory retrieval stage, we extract query embeddings using a text encoding model and search the memory database for relevant matches. When related memory is retrieved, similar memories that are linked within the same box are also automatically accessed.",
+      "file": "arxiv-2502.12110v11-fig2.jpg"
+    },
+    {
+      "n": 4,
+      "kind": "equation",
+      "number": null,
+      "page": 3,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 5,
+      "kind": "equation",
+      "number": null,
+      "page": 3,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 6,
+      "kind": "equation",
+      "number": null,
+      "page": 3,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 7,
+      "kind": "equation",
+      "number": null,
+      "page": 3,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 8,
+      "kind": "equation",
+      "number": null,
+      "page": 3,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 9,
+      "kind": "equation",
+      "number": null,
+      "page": 3,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 10,
+      "kind": "equation",
+      "number": null,
+      "page": 4,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 11,
+      "kind": "equation",
+      "number": null,
+      "page": 4,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 12,
+      "kind": "equation",
+      "number": null,
+      "page": 4,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 13,
+      "kind": "equation",
+      "number": null,
+      "page": 4,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 14,
+      "kind": "table",
+      "number": "1",
+      "page": 5,
+      "caption": "Table 1: Experimental results on LoCoMo dataset of QA tasks across five categories (Multi Hop, Temporal, Open Domain, Single Hop, and Adversial) using different methods. Results are reported in F1 and BLEU-1 (%) scores. The best performance is marked in bold, and our proposed method A-MEM (highlighted in gray) demonstrates competitive performance across six foundation language models.",
+      "file": "arxiv-2502.12110v11-table1.jpg"
+    },
+    {
+      "n": 15,
+      "kind": "table",
+      "number": "2",
+      "page": 6,
+      "caption": "Table 2: Comparison of different memory mechanisms across multiple evaluation metrics on DialSim [16]. Higher scores indicate better performance, with A-MEM showing superior results across all metrics. Table 3: An ablation study was conducted to evaluate our proposed method against the GPT-4o-mini base model. The notation ’w/o’ indicates experiments where specific modules were removed. The abbreviations LG and ME denote the link generation module and memory evolution module, respectively.",
+      "file": "arxiv-2502.12110v11-table2.jpg"
+    },
+    {
+      "n": 16,
+      "kind": "table",
+      "number": null,
+      "page": 6,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-table3.jpg"
+    },
+    {
+      "n": 17,
+      "kind": "chart",
+      "number": null,
+      "page": 7,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart1.jpg"
+    },
+    {
+      "n": 18,
+      "kind": "chart",
+      "number": null,
+      "page": 7,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart2.jpg"
+    },
+    {
+      "n": 19,
+      "kind": "chart",
+      "number": null,
+      "page": 7,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart3.jpg"
+    },
+    {
+      "n": 20,
+      "kind": "chart",
+      "number": null,
+      "page": 7,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart4.jpg"
+    },
+    {
+      "n": 21,
+      "kind": "chart",
+      "number": null,
+      "page": 7,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart5.jpg"
+    },
+    {
+      "n": 22,
+      "kind": "table",
+      "number": "4",
+      "page": 7,
+      "caption": "Table 4: Comparison of memory usage and retrieval time across different memory methods and scales.",
+      "file": "arxiv-2502.12110v11-table4.jpg"
+    },
+    {
+      "n": 23,
+      "kind": "chart",
+      "number": null,
+      "page": 8,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart6.jpg"
+    },
+    {
+      "n": 24,
+      "kind": "chart",
+      "number": null,
+      "page": 8,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart7.jpg"
+    },
+    {
+      "n": 25,
+      "kind": "equation",
+      "number": null,
+      "page": 13,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 26,
+      "kind": "equation",
+      "number": null,
+      "page": 13,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 27,
+      "kind": "equation",
+      "number": null,
+      "page": 13,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 28,
+      "kind": "equation",
+      "number": null,
+      "page": 13,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 29,
+      "kind": "equation",
+      "number": null,
+      "page": 13,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 30,
+      "kind": "equation",
+      "number": null,
+      "page": 13,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 31,
+      "kind": "equation",
+      "number": null,
+      "page": 14,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 32,
+      "kind": "equation",
+      "number": null,
+      "page": 14,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 33,
+      "kind": "equation",
+      "number": null,
+      "page": 14,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 34,
+      "kind": "equation",
+      "number": null,
+      "page": 14,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 35,
+      "kind": "equation",
+      "number": null,
+      "page": 14,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 36,
+      "kind": "equation",
+      "number": null,
+      "page": 14,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 37,
+      "kind": "equation",
+      "number": null,
+      "page": 14,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 38,
+      "kind": "equation",
+      "number": null,
+      "page": 14,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 39,
+      "kind": "equation",
+      "number": null,
+      "page": 14,
+      "caption": null,
+      "file": null
+    },
+    {
+      "n": 40,
+      "kind": "table",
+      "number": "5",
+      "page": 15,
+      "caption": "Table 5: Experimental results on LoCoMo dataset of QA tasks across five categories (Multi Hop, Temporal, Open Domain, Single Hop, and Adversial) using different methods. Results are reported in ROUGE-2 and ROUGE-L scores, abbreviated to RGE-2 and RGE-L. The best performance is marked in bold, and our proposed method A-MEM (highlighted in gray) demonstrates competitive performance across six foundation language models.",
+      "file": "arxiv-2502.12110v11-table5.jpg"
+    },
+    {
+      "n": 41,
+      "kind": "table",
+      "number": "6",
+      "page": 16,
+      "caption": "Table 6: Experimental results on LoCoMo dataset of QA tasks across five categories (Multi Hop, Temporal, Open Domain, Single Hop, and Adversial) using different methods. Results are reported in METEOR and SBERT Similarity scores, abbreviated to ME and SBERT. The best performance is marked in bold, and our proposed method A-MEM (highlighted in gray) demonstrates competitive performance across six foundation language models.",
+      "file": "arxiv-2502.12110v11-table6.jpg"
+    },
+    {
+      "n": 42,
+      "kind": "table",
+      "number": "7",
+      "page": 16,
+      "caption": "Table 7: Experimental results on LoCoMo dataset of QA tasks across five categories (Multi Hop, Temporal, Open Domain, Single Hop, and Adversial) using different methods. Results are reported in F1 and BLEU-1 (%) scores with different foundation models.",
+      "file": "arxiv-2502.12110v11-table7.jpg"
+    },
+    {
+      "n": 43,
+      "kind": "chart",
+      "number": null,
+      "page": 17,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart8.jpg"
+    },
+    {
+      "n": 44,
+      "kind": "chart",
+      "number": null,
+      "page": 17,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart9.jpg"
+    },
+    {
+      "n": 45,
+      "kind": "chart",
+      "number": null,
+      "page": 17,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart10.jpg"
+    },
+    {
+      "n": 46,
+      "kind": "chart",
+      "number": null,
+      "page": 17,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart11.jpg"
+    },
+    {
+      "n": 47,
+      "kind": "chart",
+      "number": null,
+      "page": 17,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart12.jpg"
+    },
+    {
+      "n": 48,
+      "kind": "chart",
+      "number": null,
+      "page": 17,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart13.jpg"
+    },
+    {
+      "n": 49,
+      "kind": "chart",
+      "number": null,
+      "page": 17,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart14.jpg"
+    },
+    {
+      "n": 50,
+      "kind": "chart",
+      "number": null,
+      "page": 17,
+      "caption": null,
+      "file": "arxiv-2502.12110v11-chart15.jpg"
+    },
+    {
+      "n": 51,
+      "kind": "table",
+      "number": "8",
+      "page": 17,
+      "caption": "Table 8: Selection of k values in retriever across specific categories and model choices.",
+      "file": "arxiv-2502.12110v11-table8.jpg"
+    }
+  ]
+}

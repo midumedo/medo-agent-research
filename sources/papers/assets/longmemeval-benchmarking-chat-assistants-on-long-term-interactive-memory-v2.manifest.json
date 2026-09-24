@@ -1,0 +1,372 @@
+{
+  "stem": "longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory-v2",
+  "id": "arxiv-2410.10813v2",
+  "images": [
+    {
+      "file": "arxiv-2410.10813v2-fig2.jpg",
+      "bytes": 137396,
+      "sha256": "90e40c6883d6f7a756c16501ed9c4d6cb8cb6222e1059c54c20275cb0f793489"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table4.jpg",
+      "bytes": 61731,
+      "sha256": "5ba8f7191cd844bd366491a2e3af9d742a53a29975b9d06ed1b328091212f408"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table10.jpg",
+      "bytes": 125136,
+      "sha256": "436ad37a815422b3b3a7ba23b6e91a08826f2f7b274efc8f44d828f3a5d53cf8"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table3.jpg",
+      "bytes": 46364,
+      "sha256": "98fd242b0293e681492d666a7f97eb3126b0f23733c9cfcc9617a03ff26eee67"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table2.jpg",
+      "bytes": 23601,
+      "sha256": "61e51368b32657f60ba46b1086f5c5413a016c2f4b9506fc956c3fec6d66be5a"
+    },
+    {
+      "file": "arxiv-2410.10813v2-fig13.jpg",
+      "bytes": 88392,
+      "sha256": "a316ebd5688ae64984c6dff9719e0b3b0df2aa168e65737393a3eaa6b313c692"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table3-2.jpg",
+      "bytes": 126238,
+      "sha256": "b6aafe43c33bf74a43779540775529b231fe14c6391b7e27138bd5958d296d42"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table7.jpg",
+      "bytes": 320163,
+      "sha256": "b3fdf162d0235b1bf176eb7fc9544c17f3d95031046bdae32510926d7f344ae8"
+    },
+    {
+      "file": "arxiv-2410.10813v2-fig4-2.jpg",
+      "bytes": 61333,
+      "sha256": "81badc50008a12c0f5a64e3bae05cf68e89e1b627aa73eb598aba6d31dad5124"
+    },
+    {
+      "file": "arxiv-2410.10813v2-fig10.jpg",
+      "bytes": 342327,
+      "sha256": "d991d905c64446108538eb7ecee0f30c551365474a479c89ab867cd32316cb0b"
+    },
+    {
+      "file": "arxiv-2410.10813v2-chart5.jpg",
+      "bytes": 8545,
+      "sha256": "b5d838cb7e882eda9056d1f4fbd7f245d024073c295fe862884c4eeb2816dae9"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table8.jpg",
+      "bytes": 45845,
+      "sha256": "9000e83a02caeb4f9f850e88149c5b80308cf3935858e6a92ff3da495ea87f61"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table7-2.jpg",
+      "bytes": 32904,
+      "sha256": "ed1b857a172c69161f8af2e0e290ef40cd7833784edf75b945ecff93960b9a75"
+    },
+    {
+      "file": "arxiv-2410.10813v2-chart4.jpg",
+      "bytes": 8587,
+      "sha256": "7ba5b817217f30944b3f987ed41052d55bcf343b15432d99739a080f44326108"
+    },
+    {
+      "file": "arxiv-2410.10813v2-fig7-2.jpg",
+      "bytes": 165217,
+      "sha256": "c6c310ff0136fe19bcbefde9725da1b1bf7148c4ae88b84f78813b07f777a914"
+    },
+    {
+      "file": "arxiv-2410.10813v2-chart3.jpg",
+      "bytes": 12993,
+      "sha256": "c54ba772cf7044fdb68041d54ff3ff221bf00008efce0a475f00f34deeaa1b1b"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table6.jpg",
+      "bytes": 51823,
+      "sha256": "90258bd1cfb03d8f8a196b2fd578869dd6561a157a3cf2c100e68467dbdd987a"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table9.jpg",
+      "bytes": 100704,
+      "sha256": "14f6197e4f1e78390e10c340b704133b6f97eb0211e6842df6d3be55d83a7a83"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table2-2.jpg",
+      "bytes": 67065,
+      "sha256": "896a82cc18dd6394eb73b1541c2c01f0300a1401d9f8bc38de0d85d17828938d"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table1.jpg",
+      "bytes": 55350,
+      "sha256": "842a1bfebef95ba74c78ef9b8d1f133deb83a043cd7ab436b87370039e42a85a"
+    },
+    {
+      "file": "arxiv-2410.10813v2-fig7.jpg",
+      "bytes": 113557,
+      "sha256": "fc4ef64cb232f0a47e5de7a596b61ab82a20196eaa6133bac5635861a8360dfd"
+    },
+    {
+      "file": "arxiv-2410.10813v2-fig11.jpg",
+      "bytes": 121430,
+      "sha256": "c5a4973c70e54ce0e35693908f3c9f97b599ec74089ad687dc2485cd7c81209c"
+    },
+    {
+      "file": "arxiv-2410.10813v2-chart2.jpg",
+      "bytes": 41755,
+      "sha256": "0a52931fd3247f41713cb6d767216d5c2aec01cdd68e93da72e5e61c75ef5c24"
+    },
+    {
+      "file": "arxiv-2410.10813v2-fig4.jpg",
+      "bytes": 42468,
+      "sha256": "51619a051c6e45c4b5fc3c88c3d603a489d92b9f72a59012861cdc941ec44e91"
+    },
+    {
+      "file": "arxiv-2410.10813v2-fig1.jpg",
+      "bytes": 180619,
+      "sha256": "7ab3aa5732275a1c691e1c05180d6c0a2adf91d0994fb6fc86ebafe066ba0152"
+    },
+    {
+      "file": "arxiv-2410.10813v2-chart1.jpg",
+      "bytes": 44078,
+      "sha256": "35d9ff81cbff2144c4a01647cc60adc520b3655596f74fe40b9e4b457d590445"
+    },
+    {
+      "file": "arxiv-2410.10813v2-table11.jpg",
+      "bytes": 139484,
+      "sha256": "055e04559c9299132bdf1f6aabd1b215b6bd11310eb1607dfdc4e0016ab509bd"
+    },
+    {
+      "file": "arxiv-2410.10813v2-chart6.jpg",
+      "bytes": 30468,
+      "sha256": "10ae99a259e8300c77f48733f3ca5e279c2ae0c4906d2c9630340ea17612e365"
+    }
+  ],
+  "figures": [
+    {
+      "n": 1,
+      "kind": "table",
+      "number": "1",
+      "page": 2,
+      "caption": "Table 1: A comparison between LONGMEMEVAL and existing long-term memory benchmarks. We use different colors to denote human-human and human-AI dialogue. #Sess and #Q denote the total number of sessions and questions. Context depth is defined as the number of tokens in the history. Finally, we compare the coverage of five core abilities: information extraction (IE), multi-session reasoning (MR), knowledge update (KU), temporal reasoning (TR), and abstaining on unanswerable questions (ABS). ∗Not reported in the paper, based on our approximation. ∗∗at most 2 sessions.",
+      "file": "arxiv-2410.10813v2-table1.jpg"
+    },
+    {
+      "n": 2,
+      "kind": "image",
+      "number": "1",
+      "page": 2,
+      "caption": "Figure 1: Examples of the seven question types in LONGMEMEVAL. For each example, we show the associated evidence statements on the left and the question with the answer on the right.",
+      "file": "arxiv-2410.10813v2-fig1.jpg"
+    },
+    {
+      "n": 3,
+      "kind": "image",
+      "number": "2",
+      "page": 4,
+      "caption": "Figure 2: Data creation pipeline of LONGMEMEVAL. (a) Human experts construct all the questions and evidence statements. (b) Then, the evidence sessions are LLM-simulated and human-edited. (c) The full user-AI chat history is constructed at test time, whose length is freely configurable.",
+      "file": "arxiv-2410.10813v2-fig2.jpg"
+    },
+    {
+      "n": 4,
+      "kind": "table",
+      "number": null,
+      "page": 5,
+      "caption": "(a) Commercial memory-augmented chat assistants exhibit weak performance on LONGMEMEVAL. The accuracy of ChatGPT and Coze degrades by a large amount compared to directly reading the context (“Offline Reading”) with the same LLM. Specifically, ChatGPT and Coze instantiated with GPT-4o exhibits 37% and 64% performance drop, respectively.",
+      "file": "arxiv-2410.10813v2-table2.jpg"
+    },
+    {
+      "n": 5,
+      "kind": "table",
+      "number": "3",
+      "page": 5,
+      "caption": "(b) Long-context LLMs exhibit large QA performance drops on LONGMEMEVALS (column “S”), compared to the accuracy of answering the questions based on only the evidence sessions (column “Oracle”). Figure 3: Pilot study of (a) commercial systems and (b) long-context LLMs on LONGMEMEVAL.",
+      "file": "arxiv-2410.10813v2-table3.jpg"
+    },
+    {
+      "n": 6,
+      "kind": "image",
+      "number": "4",
+      "page": 6,
+      "caption": "Figure 4: A unified view of a chat assistant with long-term memory in operation. We formulate three stages and four control points (CP). We provide further examples in Table 2 and Appendix C.",
+      "file": "arxiv-2410.10813v2-fig4.jpg"
+    },
+    {
+      "n": 7,
+      "kind": "table",
+      "number": "2",
+      "page": 7,
+      "caption": "Table 2: A comparison of nine memory-augmented frameworks through the lens of the proposed unified framework. We provide detailed references and discussions of each work in Appendix C. For ChatGPT and Coze, we skip several designs as they are unknown.",
+      "file": "arxiv-2410.10813v2-table2-2.jpg"
+    },
+    {
+      "n": 8,
+      "kind": "chart",
+      "number": null,
+      "page": 7,
+      "caption": null,
+      "file": "arxiv-2410.10813v2-chart1.jpg"
+    },
+    {
+      "n": 9,
+      "kind": "table",
+      "number": "3",
+      "page": 8,
+      "caption": "Table 3: Retrieval and end-to-end QA performance on LONGMEMEVAL with different key designs for indexing. L3.1 = Llama 3.1 Instruct. We find applying document expansion with the extracted user facts (row K = V + fact) greatly improves both retrieval and the downstream QA.",
+      "file": "arxiv-2410.10813v2-table3-2.jpg"
+    },
+    {
+      "n": 10,
+      "kind": "table",
+      "number": "4",
+      "page": 9,
+      "caption": "Table 4: Retrieval performance on the temporal reasoning subset of LONGMEMEVALM. Timeaware query expansion significantly facilitates retrieval by narrowing down the retrieval scope.",
+      "file": "arxiv-2410.10813v2-table4.jpg"
+    },
+    {
+      "n": 11,
+      "kind": "chart",
+      "number": null,
+      "page": 9,
+      "caption": null,
+      "file": "arxiv-2410.10813v2-chart2.jpg"
+    },
+    {
+      "n": 12,
+      "kind": "table",
+      "number": null,
+      "page": 16,
+      "caption": null,
+      "file": "arxiv-2410.10813v2-table7.jpg"
+    },
+    {
+      "n": 13,
+      "kind": "image",
+      "number": null,
+      "page": 17,
+      "caption": null,
+      "file": "arxiv-2410.10813v2-fig4-2.jpg"
+    },
+    {
+      "n": 14,
+      "kind": "image",
+      "number": "7",
+      "page": 17,
+      "caption": "Figure 7: The prompt for constructing user backgrounds based on an attribute. Figure 8: The prompt for instruction an LLM to act as a user and initiates a task-oriented dialogue with another LLM. Both the background and the evidence statement is provided. This prompt is used for the question type single-session. For the other question types, the prompt components are slightly different but the prompt overall follows the same style.",
+      "file": "arxiv-2410.10813v2-fig7.jpg"
+    },
+    {
+      "n": 15,
+      "kind": "chart",
+      "number": null,
+      "page": 18,
+      "caption": null,
+      "file": "arxiv-2410.10813v2-chart3.jpg"
+    },
+    {
+      "n": 16,
+      "kind": "chart",
+      "number": null,
+      "page": 18,
+      "caption": null,
+      "file": "arxiv-2410.10813v2-chart4.jpg"
+    },
+    {
+      "n": 17,
+      "kind": "chart",
+      "number": null,
+      "page": 18,
+      "caption": null,
+      "file": "arxiv-2410.10813v2-chart5.jpg"
+    },
+    {
+      "n": 18,
+      "kind": "image",
+      "number": "10",
+      "page": 19,
+      "caption": "Figure 10: Evaluation instructions for the GPT-4o judge. We provide the question, answer, and the model’s hypothesis after the instruction and ask GPT-4o to directly generate “yes” or “no”.",
+      "file": "arxiv-2410.10813v2-fig10.jpg"
+    },
+    {
+      "n": 19,
+      "kind": "table",
+      "number": "6",
+      "page": 20,
+      "caption": "Table 6: Meta-evaluation results of prompt-engineered GPT-4o judge. We observe a high evaluation accuracy across all the problem types in LONGMEMEVAL.",
+      "file": "arxiv-2410.10813v2-table6.jpg"
+    },
+    {
+      "n": 20,
+      "kind": "table",
+      "number": "7",
+      "page": 20,
+      "caption": "Table 7: Human evaluation results of two systems categorized by evaluated ability types. We use the questions from single-session-user for the IE column. For the temporal reasoning column (TR), we use the questions that do not require reasoning with metadata.",
+      "file": "arxiv-2410.10813v2-table7-2.jpg"
+    },
+    {
+      "n": 21,
+      "kind": "image",
+      "number": null,
+      "page": 23,
+      "caption": null,
+      "file": "arxiv-2410.10813v2-fig7-2.jpg"
+    },
+    {
+      "n": 22,
+      "kind": "image",
+      "number": "11",
+      "page": 23,
+      "caption": "Figure 11: Zero-shot prompts for extracting information from the value items for indexing. For user fact extraction, we additionally provide ten in-context examples. Figure 12: Zero-shot prompt for extracting timestamped events from the value items for indexing and the prompt for extracting time range from the user question. For both settings, we additionally provide ten in-context examples.",
+      "file": "arxiv-2410.10813v2-fig11.jpg"
+    },
+    {
+      "n": 23,
+      "kind": "image",
+      "number": "13",
+      "page": 24,
+      "caption": "Figure 13: The prompt for reading with recalled memory with and without Chain-of-Note.",
+      "file": "arxiv-2410.10813v2-fig13.jpg"
+    },
+    {
+      "n": 24,
+      "kind": "table",
+      "number": "8",
+      "page": 25,
+      "caption": "Table 8: Evaluation results using five additional LLMs of various sizes. “LC” indicates directly reading from the entire history without any memory operations. For the last four columns that have memory operations, we always use round as the value granularity.",
+      "file": "arxiv-2410.10813v2-table8.jpg"
+    },
+    {
+      "n": 25,
+      "kind": "table",
+      "number": "9",
+      "page": 26,
+      "caption": "Table 9: A comparison between three retrievers under different key-value indexing settings.",
+      "file": "arxiv-2410.10813v2-table9.jpg"
+    },
+    {
+      "n": 26,
+      "kind": "table",
+      "number": "10",
+      "page": 26,
+      "caption": "Table 10: Retrieval and end-to-end QA performance on LONGMEMEVALM with different key designs for indexing. L3.1 = Llama 3.1 Instruct. RM = Rank Merging and KM = Key Merging. E.4 STRONG AND WEAK LLMS FOR EXTRACTING TIME RANGES FROM QUERIES",
+      "file": "arxiv-2410.10813v2-table10.jpg"
+    },
+    {
+      "n": 27,
+      "kind": "table",
+      "number": "11",
+      "page": 27,
+      "caption": "Table 11: Example of time span extraction outputs from GPT-4o and Llama 3.1 8B Instruct.",
+      "file": "arxiv-2410.10813v2-table11.jpg"
+    },
+    {
+      "n": 28,
+      "kind": "chart",
+      "number": null,
+      "page": 27,
+      "caption": null,
+      "file": "arxiv-2410.10813v2-chart6.jpg"
+    }
+  ]
+}

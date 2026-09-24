@@ -170,29 +170,6 @@
       "visual_verification": false
     }
   },
-  "longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory": {
-    "source_url": "https://arxiv.org/abs/2410.10813v2",
-    "pdf_url": "https://arxiv.org/pdf/2410.10813v2",
-    "version": "2410.10813v2",
-    "retrieved_at": "2026-09-21T02:33:18.695833+00:00",
-    "pdf_path": "pdf/longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory.pdf",
-    "pdf_sha256": "05c5d055201466a241a56e082cdd02d39ad566fa04b3804891983e4e069a3fda",
-    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
-    "conversion": {
-      "path": "md/longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:36:35.400913+00:00",
-      "pdf_sha256": "05c5d055201466a241a56e082cdd02d39ad566fa04b3804891983e4e069a3fda",
-      "body_sha256": "503e46dbbb19a5cc2b55ce2a729dd0323b64251a81c5781ea4c987e5e33bdfb5",
-      "options": {
-        "write_images": false,
-        "show_progress": false
-      },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
-      "visual_verification": false
-    }
-  },
   "evaluating-memory-in-llm-agents-via-incremental-multi-turn-interactions": {
     "source_url": "https://arxiv.org/abs/2507.05257v4",
     "pdf_url": "https://arxiv.org/pdf/2507.05257v4",
@@ -400,29 +377,6 @@
       "visual_verification": false
     }
   },
-  "mem0-building-production-ready-ai-agents-with-scalable-long-term-memory": {
-    "source_url": "https://arxiv.org/abs/2504.19413v1",
-    "pdf_url": "https://arxiv.org/pdf/2504.19413v1",
-    "version": "2504.19413v1",
-    "retrieved_at": "2026-09-21T02:34:37.424074+00:00",
-    "pdf_path": "pdf/mem0-building-production-ready-ai-agents-with-scalable-long-term-memory.pdf",
-    "pdf_sha256": "bec870b657aa73405275a6d8fe27bcd4271799e028bc62986ab9c4cd27a3712d",
-    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
-    "conversion": {
-      "path": "md/mem0-building-production-ready-ai-agents-with-scalable-long-term-memory.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:40:57.247107+00:00",
-      "pdf_sha256": "bec870b657aa73405275a6d8fe27bcd4271799e028bc62986ab9c4cd27a3712d",
-      "body_sha256": "fd19b3abadab9632e7eadb8e9b128e17428e932099b84c48d8d36615a6fbbbe4",
-      "options": {
-        "write_images": false,
-        "show_progress": false
-      },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
-      "visual_verification": false
-    }
-  },
   "memos-a-memory-os-for-ai-system": {
     "source_url": "https://arxiv.org/abs/2507.03724v4",
     "pdf_url": "https://arxiv.org/pdf/2507.03724v4",
@@ -515,29 +469,6 @@
       "visual_verification": false
     }
   },
-  "a-mem-agentic-memory-for-llm-agents": {
-    "source_url": "https://arxiv.org/abs/2502.12110v11",
-    "pdf_url": "https://arxiv.org/pdf/2502.12110v11",
-    "version": "2502.12110v11",
-    "retrieved_at": "2026-09-21T02:34:58.343102+00:00",
-    "pdf_path": "pdf/a-mem-agentic-memory-for-llm-agents.pdf",
-    "pdf_sha256": "fec32b521c4a1f793442bf1aeb26139c583078350d1cd4ab8f4eccc54a0694f0",
-    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
-    "conversion": {
-      "path": "md/a-mem-agentic-memory-for-llm-agents.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:42:22.378582+00:00",
-      "pdf_sha256": "fec32b521c4a1f793442bf1aeb26139c583078350d1cd4ab8f4eccc54a0694f0",
-      "body_sha256": "b53d97d936c5c212f2f05c70f7ea1f232711f86298e048be398133b0c9fd23fa",
-      "options": {
-        "write_images": false,
-        "show_progress": false
-      },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
-      "visual_verification": false
-    }
-  },
   "simplemem-efficient-lifelong-memory-for-llm-agents": {
     "source_url": "https://arxiv.org/abs/2601.02553v3",
     "pdf_url": "https://arxiv.org/pdf/2601.02553v3",
@@ -606,5 +537,122 @@
       "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
       "visual_verification": false
     }
+  },
+  "mem0-building-production-ready-ai-agents-with-scalable-long-term-memory-v1": {
+    "source_url": "https://arxiv.org/abs/2504.19413v1",
+    "pdf_url": "https://arxiv.org/pdf/2504.19413v1",
+    "version": "2504.19413v1",
+    "retrieved_at": "2026-09-21T02:34:37.424074+00:00",
+    "pdf_path": "pdf/mem0-building-production-ready-ai-agents-with-scalable-long-term-memory-v1.pdf",
+    "pdf_sha256": "bec870b657aa73405275a6d8fe27bcd4271799e028bc62986ab9c4cd27a3712d",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "md/mem0-building-production-ready-ai-agents-with-scalable-long-term-memory-v1.md",
+      "parser": "mineru-cloud vlm",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "70168b43-1ec1-401a-a60e-d29b0f4b57e9",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-01/f7652c9d-4705-4cf6-84d7-a97c84be3796.zip",
+      "converted_at": "2026-09-24T12:53:15.506913+00:00",
+      "pdf_sha256": "bec870b657aa73405275a6d8fe27bcd4271799e028bc62986ab9c4cd27a3712d",
+      "body_sha256": "dcbe30990d129387c9d1ac3b4e06b390cdedd63a854aa92a3e5fd8bd861b98ef",
+      "images": {
+        "count": 7,
+        "bytes": 611787,
+        "kept": true,
+        "manifest": "assets/mem0-building-production-ready-ai-agents-with-scalable-long-term-memory-v1.manifest.json"
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
+    },
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
+  },
+  "longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory-v2": {
+    "source_url": "https://arxiv.org/abs/2410.10813v2",
+    "pdf_url": "https://arxiv.org/pdf/2410.10813v2",
+    "version": "2410.10813v2",
+    "retrieved_at": "2026-09-21T02:33:18.695833+00:00",
+    "pdf_path": "pdf/longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory-v2.pdf",
+    "pdf_sha256": "05c5d055201466a241a56e082cdd02d39ad566fa04b3804891983e4e069a3fda",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "md/longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory-v2.md",
+      "parser": "mineru-cloud vlm",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "70168b43-1ec1-401a-a60e-d29b0f4b57e9",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-11/6019e2ab-d0fd-4148-b6c4-ef12a254a8ac.zip",
+      "converted_at": "2026-09-24T12:53:16.479772+00:00",
+      "pdf_sha256": "05c5d055201466a241a56e082cdd02d39ad566fa04b3804891983e4e069a3fda",
+      "body_sha256": "5aeb2f296247541e26a9b0e151a968e11be2b391152a94ebc3bf94da2504f6f0",
+      "images": {
+        "count": 28,
+        "bytes": 2595573,
+        "kept": true,
+        "manifest": "assets/longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory-v2.manifest.json"
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
+    },
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
+  },
+  "a-mem-agentic-memory-for-llm-agents-v11": {
+    "source_url": "https://arxiv.org/abs/2502.12110v11",
+    "pdf_url": "https://arxiv.org/pdf/2502.12110v11",
+    "version": "2502.12110v11",
+    "retrieved_at": "2026-09-21T02:34:58.343102+00:00",
+    "pdf_path": "pdf/a-mem-agentic-memory-for-llm-agents-v11.pdf",
+    "pdf_sha256": "fec32b521c4a1f793442bf1aeb26139c583078350d1cd4ab8f4eccc54a0694f0",
+    "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
+    "conversion": {
+      "path": "md/a-mem-agentic-memory-for-llm-agents-v11.md",
+      "parser": "mineru-cloud vlm",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "70168b43-1ec1-401a-a60e-d29b0f4b57e9",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-07-30/26d7deaf-5b8e-46e5-92bd-492dbd565093.zip",
+      "converted_at": "2026-09-24T12:53:16.971762+00:00",
+      "pdf_sha256": "fec32b521c4a1f793442bf1aeb26139c583078350d1cd4ab8f4eccc54a0694f0",
+      "body_sha256": "2a979eb2c997acd88d84b9d70ac7dfb507a5f6c579855fad56afccdb13ff0057",
+      "images": {
+        "count": 51,
+        "bytes": 1322940,
+        "kept": true,
+        "manifest": "assets/a-mem-agentic-memory-for-llm-agents-v11.manifest.json"
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
+    },
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   }
 }
