@@ -138,6 +138,24 @@ class VisualNamingTests(unittest.TestCase):
          "table_caption": ["Table 2: Main results."], "page_idx": 5},
     ]
 
+    def test_control_characters_are_stripped(self):
+        """MinerU 偶尔在公式里吐出控制字节；NUL 会让 grep 把 md 当二进制。"""
+        raw = "E -ℓ\x00h, (x, y)\x03 end\ttab\nnext\r\n"
+        out = mineru.sanitize_text(raw)
+        self.assertNotIn("\x00", out)
+        self.assertNotIn("\x03", out)
+        self.assertIn("\ttab", out)
+        self.assertIn("next\r\n", out)
+
+    def test_chart_caption_is_read(self):
+        """chart 的图注在 `chart_caption`，不是 `image_caption`——拿错就是空的。"""
+        items = [{"type": "chart", "img_path": "images/x.jpg",
+                  "chart_caption": ["Figure 4: Latency comparison."],
+                  "page_idx": 1}]
+        out = mineru.parse_visual(items)
+        self.assertEqual(out[0]["caption"], "Figure 4: Latency comparison.")
+        self.assertEqual(out[0]["number"], "4")
+
     def test_figure_number_from_caption(self):
         mapping = mineru.name_map(mineru.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
         self.assertEqual(mapping["images/aaaa.jpg"], "arxiv-2504.19413v1-fig1.jpg")

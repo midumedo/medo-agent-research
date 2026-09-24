@@ -9,20 +9,37 @@
     "pdf_sha256": "218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/evaluating-very-long-term-conversational-memory-of-llm-agents.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:36:13.755239+00:00",
+      "path": "md/arxiv-2402.17753v1.Bench.Long-Term Chat Memory.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-11/39ed5d53-32af-463b-a5b7-88698880606e.zip",
+      "converted_at": "2026-09-24T15:35:09.843036+00:00",
       "pdf_sha256": "218188e1d66a553afe324491e3e5e5d0af107196c9ff32c65bb3640ebf638539",
-      "body_sha256": "507cee4e018b67be53e095e99b5f656d8bb9a055929fae321cc92cd1bc2c8334",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "34cfd4fe8ece5a8e195455da4bd40b2b1521d85dd80763079c9f608fe449cd0a",
+      "images": {
+        "count": 18,
+        "bytes": 1533225,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2024-02-27"
+    "revised": "2024-02-27",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2404.13501.Survey.Memory Mechanism": {
     "source_url": "https://arxiv.org/abs/2404.13501",
@@ -33,18 +50,37 @@
     "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
     "recorded_at": "2026-09-20T05:59:43.686923+00:00",
     "conversion": {
-      "path": "md/a-survey-on-the-memory-mechanism-of-large-language-model-based-agents.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "2f3243b93a9a44b7199f53ac60d7c78d15a7302cdce6c60550a9ee321a9b1ddf",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+      "path": "md/arxiv-2404.13501.Survey.Memory Mechanism.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-02/e3db5838-d2e3-4483-8326-936f811c486c.zip",
+      "converted_at": "2026-09-24T15:35:10.371675+00:00",
+      "pdf_sha256": "aae2f9537f748f30f0ca59fd66c499b7df7bdb199d24ce43cab0a6170f7dceef",
+      "body_sha256": "52d6fa7ba7e7dda8100de98964a74787a622aa5115d7c88e55ed8450475dd150",
+      "images": {
+        "count": 17,
+        "bytes": 1138518,
+        "kept": true
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
     },
-    "revised": "2024-04-21"
+    "revised": "2024-04-21",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2410.10813v2.Bench.LongMemEval": {
     "source_url": "https://arxiv.org/abs/2410.10813v2",
@@ -99,20 +135,37 @@
     "pdf_sha256": "d26f7eb599540e8b14d75e7efda58a07661abbb1b864e58323b5768475a15d42",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/zep-a-temporal-knowledge-graph-architecture-for-agent-memory.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:40:43.778642+00:00",
+      "path": "md/arxiv-2501.13956v1.Project.Zep.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-04/1db7d1bc-3ccd-449c-8ad9-8dc6306f1d94.zip",
+      "converted_at": "2026-09-24T15:35:10.782736+00:00",
       "pdf_sha256": "d26f7eb599540e8b14d75e7efda58a07661abbb1b864e58323b5768475a15d42",
-      "body_sha256": "a4b353305aaa025d132ebfa1a3adc00c99a1fa86d58174e765a1bc2d42fcf798",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "68298e60d15f7b1d438d9ae0204691e7bacd1dcf0b79b8bad4c657eb7154696e",
+      "images": {
+        "count": 8,
+        "bytes": 796187,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2025-01-20"
+    "revised": "2025-01-20",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2502.12110v11.Project.A-Mem": {
     "source_url": "https://arxiv.org/abs/2502.12110v11",
@@ -167,20 +220,37 @@
     "pdf_sha256": "24633e985675243f324b546daee7e27ff177a5af516b239c8f59be60a3bf58c6",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/know-me-respond-to-me-benchmarking-llms-for-dynamic-user-profiling-and-personalized-responses.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:40:10.754087+00:00",
+      "path": "md/arxiv-2504.14225v2.Bench.Know Me.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-09-24/b2c7608d-2313-460f-b012-c6a4fc171b55.zip",
+      "converted_at": "2026-09-24T15:35:12.067435+00:00",
       "pdf_sha256": "24633e985675243f324b546daee7e27ff177a5af516b239c8f59be60a3bf58c6",
-      "body_sha256": "9af9b1cd0a740caab75d8fee82f7314358f21475ecfd4b270e84c8d0dc5724df",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "f032f194b9c9c05f7734b2fc6e754310ee3cec9be6211f7b749f513c003f87c7",
+      "images": {
+        "count": 27,
+        "bytes": 2953941,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2025-10-27"
+    "revised": "2025-10-27",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2504.19413v1.Project.Mem0": {
     "source_url": "https://arxiv.org/abs/2504.19413v1",
@@ -235,18 +305,37 @@
     "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
     "recorded_at": "2026-09-20T05:59:43.686923+00:00",
     "conversion": {
-      "path": "md/rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "b6832176e0c46ec22bea245d81fb413428f4f4187dca70e2d27773fc1d512c7b",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+      "path": "md/arxiv-2505.00675.Survey.Rethinking Memory.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-18/bb8de76c-af4b-4968-9746-71c2e99358b2.zip",
+      "converted_at": "2026-09-24T15:35:12.617111+00:00",
+      "pdf_sha256": "23724df6e6a38bdffc97c8bccb132581bf1e21fa534d5c19f84c80d5ab0e741d",
+      "body_sha256": "3b2a10a101a717b93ef566f9a0eb244c0b918e79555b281ef5d21e46d72c6e53",
+      "images": {
+        "count": 68,
+        "bytes": 4039322,
+        "kept": true
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
     },
-    "revised": "2025-12-24"
+    "revised": "2025-12-24",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2506.06326v1.Project.Memory OS": {
     "source_url": "https://arxiv.org/abs/2506.06326v1",
@@ -257,20 +346,37 @@
     "pdf_sha256": "4b3cbeb6a94d6b5a996f7bbeabe651929fbf7dd15a5e00cd28e728530d9ff730",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/memory-os-of-ai-agent.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:41:49.306031+00:00",
+      "path": "md/arxiv-2506.06326v1.Project.Memory OS.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-11/4c09f504-c92a-410a-af2f-7ebdd38aa30a.zip",
+      "converted_at": "2026-09-24T15:35:13.288354+00:00",
       "pdf_sha256": "4b3cbeb6a94d6b5a996f7bbeabe651929fbf7dd15a5e00cd28e728530d9ff730",
-      "body_sha256": "ba627af2d95fe99df4f793b0f486d8c58ef2a640ed9d6f7030d3932acc8c0972",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "8738af83425e5f6c5a910ec261e5d4a4abe75e4de4a1f62b910e9148589f9583",
+      "images": {
+        "count": 17,
+        "bytes": 504894,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2025-05-30"
+    "revised": "2025-05-30",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2506.21605v1.Bench.MemBench": {
     "source_url": "https://arxiv.org/abs/2506.21605v1",
@@ -281,20 +387,37 @@
     "pdf_sha256": "499acafb5507457a69d57448ed61ff0911c93882abf1aaa4f95615d8ea13ffff",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/membench-towards-more-comprehensive-evaluation-on-the-memory-of-llm-based-agents.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:39:08.433176+00:00",
+      "path": "md/arxiv-2506.21605v1.Bench.MemBench.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-09-24/3eedbbe6-f695-41ef-b073-56e6a679b981.zip",
+      "converted_at": "2026-09-24T15:35:14.194871+00:00",
       "pdf_sha256": "499acafb5507457a69d57448ed61ff0911c93882abf1aaa4f95615d8ea13ffff",
-      "body_sha256": "d09bef559b9821d166fdb10feecdc5fead8bdc2983ded62596fdb4745bff833a",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "96b4d592b376d117b34db6174bf68ba311fde0298727f503a1139b3d90c03082",
+      "images": {
+        "count": 21,
+        "bytes": 1348926,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2025-06-20"
+    "revised": "2025-06-20",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2507.03724v4.Project.MemOS": {
     "source_url": "https://arxiv.org/abs/2507.03724v4",
@@ -305,20 +428,37 @@
     "pdf_sha256": "9b9b71b61487ce9f01d2de014b80201d9a30c4fd43effa33e84ef7d2db824977",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/memos-a-memory-os-for-ai-system.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:41:25.646056+00:00",
+      "path": "md/arxiv-2507.03724v4.Project.MemOS.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-17/2c7aa639-70b4-4363-a09f-0ad11c0ca6c6.zip",
+      "converted_at": "2026-09-24T15:35:14.917360+00:00",
       "pdf_sha256": "9b9b71b61487ce9f01d2de014b80201d9a30c4fd43effa33e84ef7d2db824977",
-      "body_sha256": "e248b22cf55630e8ec717131a62b6d4a9089e1b386180cd4ff99d45fdcfdb609",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "caa598e863ed8792ca9c8d1377c18e730a50f9456fbb0f0635a5e46e6f657bbc",
+      "images": {
+        "count": 26,
+        "bytes": 1826742,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2025-12-03"
+    "revised": "2025-12-03",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2507.05257v4.Bench.MemoryAgentBench": {
     "source_url": "https://arxiv.org/abs/2507.05257v4",
@@ -329,20 +469,37 @@
     "pdf_sha256": "022d3771fd643d3bece04841e71331ef6963ff0eba43166849072caeb1b79508",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/evaluating-memory-in-llm-agents-via-incremental-multi-turn-interactions.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:37:00.981736+00:00",
+      "path": "md/arxiv-2507.05257v4.Bench.MemoryAgentBench.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-07-30/2172cc4b-158e-4b5f-94b9-e8ef8dfbba9f.zip",
+      "converted_at": "2026-09-24T15:35:16.640397+00:00",
       "pdf_sha256": "022d3771fd643d3bece04841e71331ef6963ff0eba43166849072caeb1b79508",
-      "body_sha256": "be873dd4aecdebff1339b3f5bb06cf07af31c558eecbed7e009972139d06c5cc",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "93d2bc773c15e9ce1ad0f42a1791330af3ecf1032054e2ae5f5f41a9ef45c80e",
+      "images": {
+        "count": 25,
+        "bytes": 1740037,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2026-06-28"
+    "revised": "2026-06-28",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2507.07957v1.Project.MIRIX": {
     "source_url": "https://arxiv.org/abs/2507.07957v1",
@@ -353,20 +510,37 @@
     "pdf_sha256": "8204e2a238a86af14b358b28a7ef1f682956f1b41f7023d08cc7e2762e45c5ea",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/mirix-multi-agent-memory-system-for-llm-based-agents.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:42:01.103130+00:00",
+      "path": "md/arxiv-2507.07957v1.Project.MIRIX.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-05/c828d21e-5ae2-4aac-9d80-2790c5344955.zip",
+      "converted_at": "2026-09-24T15:35:17.697407+00:00",
       "pdf_sha256": "8204e2a238a86af14b358b28a7ef1f682956f1b41f7023d08cc7e2762e45c5ea",
-      "body_sha256": "52754a847b60ee1076183ddc751067a06cde0bd1c2e939d8584fdbeaf5cf738f",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "5db27907a066ab147df21ed0a45aea9437fe07f099ae09f9ef290203ecc0eb99",
+      "images": {
+        "count": 10,
+        "bytes": 687164,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2025-07-10"
+    "revised": "2025-07-10",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2510.17281v7.Bench.MemoryBench": {
     "source_url": "https://arxiv.org/abs/2510.17281v7",
@@ -377,20 +551,37 @@
     "pdf_sha256": "00b2aee7c582f53dadf1c3b5bf6cd7fbf3da242d1a0328edb1338b9aeb318bf8",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/memorybench-a-benchmark-for-memory-and-continual-learning-in-llm-systems.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:39:45.027250+00:00",
+      "path": "md/arxiv-2510.17281v7.Bench.MemoryBench.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-22/414b44df-9f37-43e4-93a4-097e809ce577.zip",
+      "converted_at": "2026-09-24T15:35:18.315442+00:00",
       "pdf_sha256": "00b2aee7c582f53dadf1c3b5bf6cd7fbf3da242d1a0328edb1338b9aeb318bf8",
-      "body_sha256": "0d449f35c12ca238349c08ae3ccabad46698e7a7281ec762f02b63f4dd4fc306",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "252ec0620712e65da092eeb124651c64abec5c6b0b1a227ddb24201efdce9628",
+      "images": {
+        "count": 55,
+        "bytes": 4237801,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2026-06-03"
+    "revised": "2026-06-03",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2510.27246v2.Bench.Million-Token Memory": {
     "source_url": "https://arxiv.org/abs/2510.27246v2",
@@ -401,20 +592,37 @@
     "pdf_sha256": "8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/beyond-a-million-tokens-benchmarking-and-enhancing-long-term-memory-in-llms.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:37:58.414418+00:00",
+      "path": "md/arxiv-2510.27246v2.Bench.Million-Token Memory.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-09-24/13ba3ba3-218c-4426-92c1-b965c035127c.zip",
+      "converted_at": "2026-09-24T15:35:19.077832+00:00",
       "pdf_sha256": "8ae85b00eb0f93f0717edb082f5471716f6c757670d7157dc5ba94df01fbb303",
-      "body_sha256": "f46d654034938b4ef943e103bc57775ae6cb57234e2585234bbdfa89ce4f1e41",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "e6f93d35e54d16d3684d6a91d77dda0de9518ce19f19a5aa7b6ce1e203db1d08",
+      "images": {
+        "count": 25,
+        "bytes": 3789650,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2026-02-21"
+    "revised": "2026-02-21",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2512.13564.Survey.Age of Agent Memory": {
     "source_url": "https://arxiv.org/abs/2512.13564",
@@ -425,18 +633,37 @@
     "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
     "recorded_at": "2026-09-20T05:59:43.686923+00:00",
     "conversion": {
-      "path": "md/memory-in-the-age-of-ai-agents.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "9f595dbcc72fef6bc920128efe8c1e66e5434733c9c961706068271436dac18f",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+      "path": "md/arxiv-2512.13564.Survey.Age of Agent Memory.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-11/d2573559-8d57-423e-9ccd-4b8e39d4c6f9.zip",
+      "converted_at": "2026-09-24T15:35:23.431126+00:00",
+      "pdf_sha256": "10de3c050903bfa1113c9a954380e2786f42d25a9ea24478bf6cc69fef2e2b42",
+      "body_sha256": "5e71f08896d4b87cd2e34fb024929def40cd84f9f72a236a04625981b2f2cdad",
+      "images": {
+        "count": 39,
+        "bytes": 5169572,
+        "kept": true
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
     },
-    "revised": "2026-01-13"
+    "revised": "2026-01-13",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2601.01885v3.Method.Agentic Memory": {
     "source_url": "https://arxiv.org/abs/2601.01885v3",
@@ -447,20 +674,37 @@
     "pdf_sha256": "03ccd0aeabb6ee742d376034ec95ef5a692cbbb6a9af9cf3f2371260b8c61622",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/agentic-memory-learning-unified-long-term-and-short-term-memory-management-for-large-language.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:43:10.625224+00:00",
+      "path": "md/arxiv-2601.01885v3.Method.Agentic Memory.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-04/36285816-aae4-4a80-9b20-1a6cd66bce68.zip",
+      "converted_at": "2026-09-24T15:35:23.972721+00:00",
       "pdf_sha256": "03ccd0aeabb6ee742d376034ec95ef5a692cbbb6a9af9cf3f2371260b8c61622",
-      "body_sha256": "d2a651b9c32cc8641ea895b4ca5601996ad56e169c202867ab6e94df794fa1b4",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "e044a18c60ef485bd8fbcb8271705a78627aefef27fb2cf0fa3cb931b1d39c83",
+      "images": {
+        "count": 46,
+        "bytes": 803014,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2026-07-23"
+    "revised": "2026-07-23",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2601.02163v2.Project.EverMemOS": {
     "source_url": "https://arxiv.org/abs/2601.02163v2",
@@ -471,20 +715,37 @@
     "pdf_sha256": "265314799f9803a841a3aeb6fca949ce5eb6923d1d8a450de26843993e1605fd",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/evermemos-a-self-organizing-memory-operating-system-for-structured-long-horizon-reasoning.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:41:41.167309+00:00",
+      "path": "md/arxiv-2601.02163v2.Project.EverMemOS.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-22/27c8647e-4269-448d-b82a-a24be7e56092.zip",
+      "converted_at": "2026-09-24T15:35:24.886585+00:00",
       "pdf_sha256": "265314799f9803a841a3aeb6fca949ce5eb6923d1d8a450de26843993e1605fd",
-      "body_sha256": "81cbda4193646f028234dec7dcd9bb42ebf20386c8970fe52222e631c4d1bb29",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "120af251e68dae1cb7ef11487ccdbd5d64dc1f12f34f9b0f8174fb4888b16a70",
+      "images": {
+        "count": 22,
+        "bytes": 1124540,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2026-01-09"
+    "revised": "2026-01-09",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2601.02553v3.Project.SimpleMem": {
     "source_url": "https://arxiv.org/abs/2601.02553v3",
@@ -538,20 +799,37 @@
     "pdf_sha256": "5fae3a91c69265a8232b2e5c2e6313569d55da7d7c6387164cda004871989e7a",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/atommem-learnable-dynamic-agentic-memory-with-atomic-memory-operation.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:42:47.801067+00:00",
+      "path": "md/arxiv-2601.08323v3.Model.AtomMem.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-23/ac56d9db-4e44-4f3c-80ee-e561086ab76f.zip",
+      "converted_at": "2026-09-24T15:35:25.579053+00:00",
       "pdf_sha256": "5fae3a91c69265a8232b2e5c2e6313569d55da7d7c6387164cda004871989e7a",
-      "body_sha256": "3c503cd84cbffa9e9497902020ec18a9c614bcba81ecddb7f5fd774753484271",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "b8f706c1516a67a6591af4818c1408a17ded9a3585e0d574f4a5c95f1c92d4ce",
+      "images": {
+        "count": 24,
+        "bytes": 1368065,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2026-03-27"
+    "revised": "2026-03-27",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2602.06052.Survey.Agent Memory": {
     "source_url": "https://arxiv.org/abs/2602.06052",
@@ -562,18 +840,37 @@
     "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
     "recorded_at": "2026-09-20T05:59:43.686923+00:00",
     "conversion": {
-      "path": "md/a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "3ed13b62513787a68f9a84418a258f46a225d32dafbc39619187fb7cec063a76",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+      "path": "md/arxiv-2602.06052.Survey.Agent Memory.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-11/bc33145c-f23e-4ef8-bf51-cc6bf0548172.zip",
+      "converted_at": "2026-09-24T15:35:33.266690+00:00",
+      "pdf_sha256": "497e95492cb4bd8a8b45f813afabbb1d202c98076fb5f091be316a9b271b46a6",
+      "body_sha256": "e0586a0d52a52ea0426ec8e78feba6490b136a2b61e07375b99776241a7280dc",
+      "images": {
+        "count": 17,
+        "bytes": 3314546,
+        "kept": true
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
     },
-    "revised": "2026-08-04"
+    "revised": "2026-08-04",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2602.16313v2.Bench.MemoryArena": {
     "source_url": "https://arxiv.org/abs/2602.16313v2",
@@ -584,20 +881,37 @@
     "pdf_sha256": "7478c3b9294b483a32350a5844be6fa596e3ee18abc6dba33b1827780a86af0d",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/memoryarena-benchmarking-agent-memory-in-interdependent-multi-session-agentic-tasks.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:40:34.200221+00:00",
+      "path": "md/arxiv-2602.16313v2.Bench.MemoryArena.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-09-24/1fe7ce95-9e73-4ee5-bbcd-c572dd719ac3.zip",
+      "converted_at": "2026-09-24T15:35:34.714652+00:00",
       "pdf_sha256": "7478c3b9294b483a32350a5844be6fa596e3ee18abc6dba33b1827780a86af0d",
-      "body_sha256": "c1a53d7953cf9c5d13631b93926d393502720b1dec08180d55e44db6105d1369",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "009ae682de46ae7763f5de4b1ebafe96feccff0f870b843c6d1d8b1c5f5e6fa7",
+      "images": {
+        "count": 39,
+        "bytes": 4609434,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2026-09-17"
+    "revised": "2026-09-17",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2602.22769v4.Bench.AMA": {
     "source_url": "https://arxiv.org/abs/2602.22769v4",
@@ -608,20 +922,37 @@
     "pdf_sha256": "2bb21d3d335839da888c8f16543065d4964cf09b5ca2b39d92e80655bd8b7611",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/ama-bench-evaluating-long-horizon-memory-for-agentic-applications.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:38:27.033421+00:00",
+      "path": "md/arxiv-2602.22769v4.Bench.AMA.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-09-01/74be6884-95c6-4ee5-8037-49c6e23e176a.zip",
+      "converted_at": "2026-09-24T15:35:36.416246+00:00",
       "pdf_sha256": "2bb21d3d335839da888c8f16543065d4964cf09b5ca2b39d92e80655bd8b7611",
-      "body_sha256": "bc8f996d7f5b6be3deb1e94e9adac3cd80816251d9363d1cd5d4ff168a559314",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "c655d02543a92e319cd46deacd209b3da3b8bf0f14f7465d70e867b052724cc8",
+      "images": {
+        "count": 36,
+        "bytes": 1783505,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2026-05-27"
+    "revised": "2026-05-27",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2603.07670.Survey.Autonomous Memory": {
     "source_url": "https://arxiv.org/abs/2603.07670",
@@ -632,18 +963,37 @@
     "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
     "recorded_at": "2026-09-20T05:59:43.686923+00:00",
     "conversion": {
-      "path": "md/memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "673fa6b58a7cf4ab925dcd28b0578f5a9cf02d76527eb6fe75abb6177816c150",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+      "path": "md/arxiv-2603.07670.Survey.Autonomous Memory.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-02/1aeb46c6-4263-43d3-8fdb-b7d070514aee.zip",
+      "converted_at": "2026-09-24T15:35:37.033823+00:00",
+      "pdf_sha256": "ca7d6c5dfb712921da92542454e07af2a09751d61811e76a29066e89dd57cc51",
+      "body_sha256": "5a67d2f838af4dc700b5c5b50846412d0657b406af600e65aeef33948c21ac34",
+      "images": {
+        "count": 4,
+        "bytes": 294270,
+        "kept": true
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
     },
-    "revised": "2026-03-08"
+    "revised": "2026-03-08",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2605.12493v1.Bench.LongMemEval-V2": {
     "source_url": "https://arxiv.org/abs/2605.12493v1",
@@ -654,20 +1004,37 @@
     "pdf_sha256": "5734ebfe844c4b8a846e2766fb7150aa8cbca62429c137935f3fbfc0ff2cd5c3",
     "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
     "conversion": {
-      "path": "md/longmemeval-v2-evaluating-long-term-agent-memory-toward-experienced-colleagues.md",
-      "parser": "pymupdf4llm",
-      "parser_version": "1.28.2",
-      "converted_at": "2026-09-21T02:38:51.675933+00:00",
+      "path": "md/arxiv-2605.12493v1.Bench.LongMemEval-V2.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-08-22/e2f84ab8-a6df-40fc-9a40-2581f52eb5e1.zip",
+      "converted_at": "2026-09-24T15:35:37.728624+00:00",
       "pdf_sha256": "5734ebfe844c4b8a846e2766fb7150aa8cbca62429c137935f3fbfc0ff2cd5c3",
-      "body_sha256": "8bc37ee57764a6d54f13094aced6ef3487bfe332fc065456559bcabb85a310fa",
-      "options": {
-        "write_images": false,
-        "show_progress": false
+      "body_sha256": "1ac950d538043ebe2fb2550616ed4adbfec30dc1f507ebae17294e3c9d928c74",
+      "images": {
+        "count": 26,
+        "bytes": 2992259,
+        "kept": true
       },
-      "postprocess": "clean(): normalize blank lines and remove dash-number-dash lines",
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
       "visual_verification": false
     },
-    "revised": "2026-05-12"
+    "revised": "2026-05-12",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2606.06448.Analysis.Memory Workloads": {
     "source_url": "https://arxiv.org/abs/2606.06448",
@@ -678,18 +1045,37 @@
     "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
     "recorded_at": "2026-09-20T05:59:43.686923+00:00",
     "conversion": {
-      "path": "md/agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "7d73672a343931c655c24bbf1d2a2e8077455ea6aa56b90041b11cca34c0c34a",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+      "path": "md/arxiv-2606.06448.Analysis.Memory Workloads.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-09-24/7a14c707-3f59-41c7-856a-e52fe9cf44e1.zip",
+      "converted_at": "2026-09-24T15:35:38.325675+00:00",
+      "pdf_sha256": "b9d840d861da993e05ecc9e2295e9754ee9289ebc595270f6af18c55e57b8782",
+      "body_sha256": "1fe85b18fec5dcd168f7dd4fd1c5f87b69e4515ff0b3b04e93e43ed367405268",
+      "images": {
+        "count": 20,
+        "bytes": 761899,
+        "kept": true
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
     },
-    "revised": "2026-09-22"
+    "revised": "2026-09-22",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   },
   "arxiv-2607.16848.Bench.Scientific Memory": {
     "source_url": "https://arxiv.org/abs/2607.16848",
@@ -700,17 +1086,36 @@
     "metadata_pdf_pairing": "unknown; existing metadata and PDF retained without refetching",
     "recorded_at": "2026-09-20T05:59:43.686923+00:00",
     "conversion": {
-      "path": "md/beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration.md",
-      "parser": "pymupdf4llm (recorded by legacy script)",
-      "parser_version": null,
-      "converted_at": null,
-      "pdf_sha256": null,
-      "body_sha256": "010ec650eb287e08c20ea0377cbc872a63f0f6d76ba87521026f161b2e9b138c",
-      "relationship_to_current_pdf": "unknown; legacy output not re-parsed or visually verified",
-      "visual_verification": false,
-      "header_updated_at": "2026-09-20T05:59:43.686923+00:00",
-      "body_preservation_check": "byte-identical to archive/2026-09-20-architecture-review-before after first separator and blank line"
+      "path": "md/arxiv-2607.16848.Bench.Scientific Memory.md",
+      "parser": "mineru-cloud 3.4.4",
+      "mineru_version": "3.4.4",
+      "mineru_backend": "hybrid",
+      "api": "https://mineru.net/api/v4",
+      "model_version": "vlm",
+      "lang": "en",
+      "batch_id": "ba478094-619b-41a5-9e39-081aeaa5c2fe",
+      "task_id": null,
+      "full_zip_url": "https://cdn-mineru.openxlab.org.cn/pdf/2026-09-24/1948e96b-9d11-4b78-8fc5-01948f9801dd.zip",
+      "converted_at": "2026-09-24T15:35:39.248127+00:00",
+      "pdf_sha256": "09dd5520b628bbce492110aa73efd70d40d7e48eba379ab24dc6bda2cad68069",
+      "body_sha256": "175121ca6d0df60a1b8ec78115c8ad18a819342a219ba4129e5467e56acef902",
+      "images": {
+        "count": 27,
+        "bytes": 1632582,
+        "kept": true
+      },
+      "options": {
+        "model_version": "vlm",
+        "lang": "en",
+        "keep_images": true
+      },
+      "visual_verification": false
     },
-    "revised": "2026-07-18"
+    "revised": "2026-07-18",
+    "state": [
+      "downloaded",
+      "converted",
+      "imaged"
+    ]
   }
 }

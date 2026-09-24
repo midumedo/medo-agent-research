@@ -44,8 +44,9 @@ IMAGE_EXT = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".svg"}
 # Content List V1 field names. The official name is `image_caption`; the older
 # spellings stay as fallbacks in case a server revision differs.
 CAPTION_KEY = {"image": "image_caption", "table": "table_caption",
-               "chart": "image_caption", "equation": None}
-CAPTION_FALLBACKS = ("image_caption", "table_caption", "caption", "img_caption")
+               "chart": "chart_caption", "equation": None}
+CAPTION_FALLBACKS = ("image_caption", "table_caption", "chart_caption",
+                     "code_caption", "caption", "img_caption")
 KIND_TOKEN = {"image": "fig", "table": "table", "chart": "chart", "equation": "eq"}
 NUM_RE = re.compile(r"(?:figure|fig\.?|图|table|tab\.?|表)\s*([0-9]+[a-z]?)", re.I)
 TAG_RE = re.compile(r"<[^>]+>")
@@ -62,6 +63,19 @@ def merge_state(existing, steps):
     merged = {str(s).strip() for s in list(keep) + list(steps) if str(s).strip()}
     return sorted(merged, key=lambda s: (STATE_ORDER.index(s) if s in STATE_ORDER
                                          else len(STATE_ORDER), s))
+
+
+CONTROL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+
+
+def sanitize_text(text):
+    """Drop C0 control bytes that MinerU occasionally emits inside formulas.
+
+    A single NUL is enough for grep and diff to treat the whole .md as binary,
+    which hides the file from ordinary searching. Tab, newline and carriage
+    return are kept: they are the text's own structure.
+    """
+    return CONTROL_RE.sub("", text)
 
 
 def clean_caption(text):
@@ -414,7 +428,7 @@ def main():
             ident = identity(entry_meta, record) or stem
             items = parse_visual(load_content_list(zf, pick(zf, "_content_list.json")))
             mapping = name_map(items, ident, image_entries(zf))
-            md_text = rewrite_image_refs(zf.read(md_name).decode("utf-8", "replace"), mapping)
+            md_text = sanitize_text(rewrite_image_refs(zf.read(md_name).decode("utf-8", "replace"), mapping))
             assets = write_assets(zf, stem, ident, items, mapping, keep_images)
 
             stamp = datetime.now(timezone.utc).isoformat()
