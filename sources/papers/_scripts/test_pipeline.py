@@ -6,7 +6,6 @@ All downloads are mocked; conversion uses a tiny PDF created in a temp folder.
 """
 
 import hashlib
-import importlib.util
 import io
 import json
 import os
@@ -21,18 +20,10 @@ from unittest.mock import patch
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-
-def module(name):
-    spec = importlib.util.spec_from_file_location(name, Path(__file__).with_name(name + ".py"))
-    value = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(value)
-    return value
-
-
-import stem
-
-download = module("download_arxiv")
-mineru = module("mineru_cloud")
+import stem  # noqa: E402
+import meta  # noqa: E402
+import pdf  # noqa: E402
+import convert  # noqa: E402
 
 STEM = "arxiv-2512.13564.Memory in the Age of AI Agents"
 AID = "2512.13564"
@@ -57,64 +48,64 @@ class PipelineTests(unittest.TestCase):
                                      "keywords": [], "revised": ""}]})
 
     def test_cached_pdf_never_fetches_or_replaces_metadata(self):
-        pdf = self.base / "pdf" / (STEM + ".pdf")
-        pdf.write_bytes(b"legacy PDF bytes")
-        with patch.object(download, "get", side_effect=AssertionError("network forbidden")):
-            message = download.download_one(STEM)
+        cached = self.base / "pdf" / (STEM + ".pdf")
+        cached.write_bytes(b"legacy PDF bytes")
+        with patch.object(meta, "get", side_effect=AssertionError("network forbidden")):
+            message = pdf.download_one(STEM)
         self.assertIn("preserved", message)
-        self.assertEqual(pdf.read_bytes(), b"legacy PDF bytes")
+        self.assertEqual(cached.read_bytes(), b"legacy PDF bytes")
 
     def test_metadata_failure_preserves_previous_records(self):
-        with patch.object(download, "get", side_effect=OSError("offline")):
-            message = download.download_one(STEM)
+        with patch.object(meta, "get", side_effect=OSError("offline")):
+            message = pdf.download_one(STEM)
         self.assertIn("preserved", message)
         self.assertFalse(list((self.base / "pdf").iterdir()))
 
     def test_pdf_failure_does_not_commit_new_metadata(self):
         candidate = {"exists": True, "title": "New title", "versioned_id": self.aid + "v2"}
-        with patch.object(download, "fetch_meta", return_value=candidate), \
-             patch.object(download, "fetch_pdf", side_effect=OSError("offline")):
-            message = download.download_one(STEM)
+        with patch.object(meta, "fetch_meta", return_value=candidate), \
+             patch.object(pdf, "fetch_pdf", side_effect=OSError("offline")):
+            message = pdf.download_one(STEM)
         self.assertIn("preserved", message)
 
     def test_unknown_version_is_not_guessed(self):
-        with patch.object(download, "fetch_meta", return_value={"exists": True, "versioned_id": None}), \
-             patch.object(download, "resolve_meta", return_value=(None, None, None)), \
-             patch.object(download, "fetch_pdf", side_effect=AssertionError("must not download")):
-            message = download.download_one(STEM)
+        with patch.object(meta, "fetch_meta", return_value={"exists": True, "versioned_id": None}), \
+             patch.object(meta, "resolve_meta", return_value=(None, None, None)), \
+             patch.object(pdf, "fetch_pdf", side_effect=AssertionError("must not download")):
+            message = pdf.download_one(STEM)
         self.assertIn("version unresolved", message)
 
     def test_refuses_a_source_it_cannot_resolve(self):
-        message = download.download_one("some-unknown-title")
+        message = pdf.download_one("some-unknown-title")
         self.assertIn("只有 arXiv 来源能自动下载", message)
 
     def test_download_refetches_metadata_for_same_pinned_version(self):
         version = self.aid + "v2"
         calls = []
-        pdf = b"%PDF-1.7\n" + b"x" * 20001
+        payload = b"%PDF-1.7\n" + b"x" * 20001
 
         def get(url):
             calls.append(url)
             if "/pdf/" in url:
                 self.assertTrue(url.endswith(version))
-                return 200, pdf
+                return 200, payload
             title = "Latest metadata" if url.endswith(self.aid) else "Pinned metadata"
             return 200, (f'<meta name="citation_title" content="{title}">'
                          f'<meta name="citation_pdf_url" content="https://arxiv.org/pdf/{version}">').encode()
 
-        with patch.object(download, "get", side_effect=get):
-            download.download_one(STEM)
+        with patch.object(meta, "get", side_effect=get):
+            pdf.download_one(STEM)
         self.assertEqual(calls, [f"https://arxiv.org/abs/{self.aid}",
                                  f"https://arxiv.org/abs/{version}", f"https://arxiv.org/pdf/{version}"])
         # 元数据不再另存：这里只保证按固定版本取回了 PDF。
-        self.assertEqual((self.base / "pdf" / (STEM + ".pdf")).read_bytes(), pdf)
+        self.assertEqual((self.base / "pdf" / (STEM + ".pdf")).read_bytes(), payload)
         self.assertFalse((self.base / "meta.json").exists())
         self.assertFalse((self.base / "provenance.json").exists())
 
     def test_non_pdf_response_is_rejected(self):
-        with patch.object(download, "get", return_value=(200, b"<html>" + b"x" * 21000)):
+        with patch.object(meta, "get", return_value=(200, b"<html>" + b"x" * 21000)):
             with self.assertRaises(ValueError):
-                download.fetch_pdf(self.aid + "v2")
+                pdf.fetch_pdf(self.aid + "v2")
 
 class VisualNamingTests(unittest.TestCase):
     """图注解析、命名映射与引用改写：纯函数，不联网、不建 zip。"""
@@ -132,7 +123,7 @@ class VisualNamingTests(unittest.TestCase):
     def test_control_characters_are_stripped(self):
         """MinerU 偶尔在公式里吐出控制字节；NUL 会让 grep 把 md 当二进制。"""
         raw = "E -ℓ\x00h, (x, y)\x03 end\ttab\nnext\r\n"
-        out = mineru.sanitize_text(raw)
+        out = convert.sanitize_text(raw)
         self.assertNotIn("\x00", out)
         self.assertNotIn("\x03", out)
         self.assertIn("\ttab", out)
@@ -146,7 +137,7 @@ class VisualNamingTests(unittest.TestCase):
                   "caption": None, "page": 1},
                  {"img_path": "", "kind": "equation", "number": None,
                   "caption": None, "page": 2}]
-        m = mineru.name_map(items, "arxiv-1v1",
+        m = convert.name_map(items, "arxiv-1v1",
                             ["images/a.jpg", "images/b.jpg", "images/c.jpg"])
         self.assertEqual(m["images/a.jpg"], "arxiv-1v1-fig1.jpg")
         self.assertEqual(m["images/b.jpg"], "arxiv-1v1-eq1.jpg")
@@ -156,12 +147,12 @@ class VisualNamingTests(unittest.TestCase):
         """混了 table 就无法确证哪张是公式，归 others 用 img。"""
         items = [{"img_path": "", "kind": "equation", "number": None, "caption": None, "page": 1},
                  {"img_path": "", "kind": "table", "number": None, "caption": None, "page": 2}]
-        m = mineru.name_map(items, "arxiv-1v1", ["images/b.jpg", "images/c.jpg"])
+        m = convert.name_map(items, "arxiv-1v1", ["images/b.jpg", "images/c.jpg"])
         self.assertTrue(all("-img" in v for v in m.values()), m)
 
     def test_orphan_images_are_img_when_content_list_says_nothing(self):
         """content_list 完全没提的图，不能说它们是公式。"""
-        m = mineru.name_map([], "arxiv-1v1", ["images/b.jpg"])
+        m = convert.name_map([], "arxiv-1v1", ["images/b.jpg"])
         self.assertEqual(m["images/b.jpg"], "arxiv-1v1-img1.jpg")
 
     def test_chart_caption_is_read(self):
@@ -169,21 +160,21 @@ class VisualNamingTests(unittest.TestCase):
         items = [{"type": "chart", "img_path": "images/x.jpg",
                   "chart_caption": ["Figure 4: Latency comparison."],
                   "page_idx": 1}]
-        out = mineru.parse_visual(items)
+        out = convert.parse_visual(items)
         self.assertEqual(out[0]["caption"], "Figure 4: Latency comparison.")
         self.assertEqual(out[0]["number"], "4")
 
     def test_figure_number_from_caption(self):
-        mapping = mineru.name_map(mineru.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
+        mapping = convert.name_map(convert.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
         self.assertEqual(mapping["images/aaaa.jpg"], "arxiv-2504.19413v1-fig1.jpg")
 
     def test_numberless_image_falls_back_to_seq(self):
-        mapping = mineru.name_map(mineru.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
+        mapping = convert.name_map(convert.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
         self.assertEqual(mapping["images/bbbb.jpg"], "arxiv-2504.19413v1-fig2.jpg")
         self.assertEqual(mapping["images/cccc.jpg"], "arxiv-2504.19413v1-fig3.jpg")
 
     def test_table_uses_table_caption(self):
-        mapping = mineru.name_map(mineru.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
+        mapping = convert.name_map(convert.parse_visual(self.ITEMS), "arxiv-2504.19413v1")
         self.assertEqual(mapping["images/dddd.jpg"], "arxiv-2504.19413v1-table2.jpg")
 
     def test_duplicate_number_gets_suffix(self):
@@ -191,13 +182,13 @@ class VisualNamingTests(unittest.TestCase):
                 "image_caption": ["Figure 3: First part."], "page_idx": 1},
                {"type": "image", "img_path": "images/q.jpg",
                 "image_caption": ["Figure 3: Second part."], "page_idx": 2}]
-        mapping = mineru.name_map(mineru.parse_visual(dup), "arxiv-1v1")
+        mapping = convert.name_map(convert.parse_visual(dup), "arxiv-1v1")
         self.assertEqual(mapping["images/p.jpg"], "arxiv-1v1-fig3.jpg")
         self.assertEqual(mapping["images/q.jpg"], "arxiv-1v1-fig3-2.jpg")
 
     def test_rewrite_refs_maps_names(self):
         mapping = {"aaaa.jpg": "arxiv-1v1-fig1.jpg"}
-        out = mineru.rewrite_image_refs(
+        out = convert.rewrite_image_refs(
             'see ![](images/aaaa.jpg) and <img src="images/aaaa.jpg">\n', mapping)
         self.assertIn("](../assets/arxiv-1v1-fig1.jpg)", out)
         self.assertIn('src="../assets/arxiv-1v1-fig1.jpg"', out)
@@ -287,7 +278,7 @@ class NamesAndAssetsTests(unittest.TestCase):
     def test_name_map_covers_every_zip_image(self):
         items = [{"img_path": "images/a.jpg", "kind": "image", "number": "1",
                   "caption": "Figure 1: x", "page": 0}]
-        mapping = mineru.name_map(items, "arxiv-1v1",
+        mapping = convert.name_map(items, "arxiv-1v1",
                                   ["images/a.jpg", "images/b.jpg", "images/c.jpg"])
         self.assertEqual(mapping["images/a.jpg"], "arxiv-1v1-fig1.jpg")
         for path in ("images/b.jpg", "images/c.jpg"):
@@ -301,18 +292,18 @@ class NamesAndAssetsTests(unittest.TestCase):
         zf = fake_zip({"layout.json":
                        '{"pdf_info": [], "_backend": "hybrid", "_effort": "medium",'
                        ' "_ocr_enable": false, "_version_name": "3.4.4"}'})
-        version, backend = mineru.mineru_version(zf)
+        version, backend = convert.mineru_version(zf)
         self.assertEqual(version, "3.4.4")
         self.assertEqual(backend, "hybrid")
 
     def test_mineru_version_absent_is_not_invented(self):
-        version, backend = mineru.mineru_version(fake_zip({"layout.json": '{"pdf_info": []}'}))
+        version, backend = convert.mineru_version(fake_zip({"layout.json": '{"pdf_info": []}'}))
         self.assertIsNone(version)
         self.assertIsNone(backend)
 
     def test_parser_label_prefers_the_reported_version(self):
-        self.assertEqual(mineru.parser_label({}, "vlm", "3.4.4"), "mineru-cloud 3.4.4")
-        self.assertEqual(mineru.parser_label({}, "vlm", None), "mineru-cloud vlm")
+        self.assertEqual(convert.parser_label({}, "vlm", "3.4.4"), "mineru-cloud 3.4.4")
+        self.assertEqual(convert.parser_label({}, "vlm", None), "mineru-cloud vlm")
 
     def test_front_matter_has_no_converted_at(self):
         """converted_at 由 revised 与 git 覆盖，不再进登记块。"""
@@ -326,9 +317,9 @@ class NamesAndAssetsTests(unittest.TestCase):
                 zf = fake_zip({"images/a.jpg": b"a" * 10, "images/b.jpg": b"b" * 20})
                 items = [{"img_path": "images/a.jpg", "kind": "image", "number": "1",
                           "caption": "Figure 1: x", "page": 0}]
-                mapping = mineru.name_map(items, "arxiv-1v1",
+                mapping = convert.name_map(items, "arxiv-1v1",
                                           ["images/a.jpg", "images/b.jpg"])
-                info = mineru.write_assets(zf, "arxiv-1v1.A-Mem", "arxiv-1v1",
+                info = convert.write_assets(zf, "arxiv-1v1.A-Mem", "arxiv-1v1",
                                            items, mapping, True)
                 files = sorted(os.listdir(os.path.join(tmp, "assets")))
                 self.assertEqual(files, ["arxiv-1v1-fig1.jpg", "arxiv-1v1-img1.jpg"])
@@ -355,7 +346,7 @@ class DocumentWriteTests(unittest.TestCase):
                                               revised="2025-01-01",
                                               source="https://arxiv.org/abs/1v1")
                             + "old body\n")
-                mineru.write_document(stem_name, {"id": "arxiv-1v1"}, "arxiv-1v1",
+                convert.write_document(stem_name, {"id": "arxiv-1v1"}, "arxiv-1v1",
                                       "mineru-cloud 3.4.4", "# new body")
                 got = stem.read_front_matter(stem_name)
                 self.assertEqual(got["abstract"], "keep me")

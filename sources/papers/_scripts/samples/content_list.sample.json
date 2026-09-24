@@ -14,7 +14,7 @@
     "3. 图注字段按类型分开：image 用 `image_caption`、chart 用 `chart_caption`、table 用 `table_caption`——拿错字段图注就是空的。",
     "4. 图号从图注文本里抽（`Fig. 3` → 3），抽不到就用同类型的顺序号。"
   ],
-  "_consumed_by": "mineru_cloud.py 的 parse_visual() / name_map()：只用 type、img_path、caption（为了拿图号）。正文不从这里取。",
+  "_consumed_by": "convert.py 的 parse_visual() / name_map()：只用 type、img_path、caption（为了拿图号）。正文不从这里取。",
   "field_map": {
     "aside_text": [
       "bbox",

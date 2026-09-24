@@ -10,7 +10,7 @@
 - `examples`：每种 `type` 一条真实样例（长值截断到 180 字符）
 - `_read`：从解包到取图号的四步
 - `_source`：取自哪篇、哪个批次、哪个模型档位
-- `_consumed_by`：这些字段谁在用（`mineru_cloud.py` 的 `parse_visual()` / `name_map()`）
+- `_consumed_by`：这些字段谁在用（`convert.py` 的 `parse_visual()` / `name_map()`）
 
 **已在本文件上核对过、也踩过坑的事实**：
 

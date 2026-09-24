@@ -8,7 +8,7 @@ agent_created: true
 
 ## 走哪条路
 
-只有一条：`_scripts/mineru_cloud.py`（MinerU 云端 API）。
+只有一条：`_scripts/convert.py`（MinerU 云端 API）。
 
 早期的本地 `pymupdf4llm` 路径（`pdf2md.py`）已删除：它虽快，但对表格、公式、多栏损失大，而且会把 `pymupdf`/`pymupdf-layout`/`onnxruntime` 一串重依赖拖进环境，与「工具链零第三方依赖」冲突。
 
@@ -18,11 +18,11 @@ agent_created: true
 
 ```text
 cd D:/workspace/memory/sources/papers
-uv run python _scripts/mineru_cloud.py <文件名 | id | arXiv编号 | 标题>
-uv run python _scripts/mineru_cloud.py <tokenA> <tokenB>       # 一次批量提交，省每日任务数
-uv run python _scripts/mineru_cloud.py --model-version pipeline <token>
-uv run python _scripts/mineru_cloud.py --force <token>         # 覆盖已有转换
-uv run python _scripts/mineru_cloud.py --no-images <token>     # 只登记，不写图片字节
+uv run python _scripts/convert.py <文件名 | id | arXiv编号 | 标题>
+uv run python _scripts/convert.py <tokenA> <tokenB>       # 一次批量提交，省每日任务数
+uv run python _scripts/convert.py --model-version pipeline <token>
+uv run python _scripts/convert.py --force <token>         # 覆盖已有转换
+uv run python _scripts/convert.py --no-images <token>     # 只登记，不写图片字节
 ```
 
 参数是**文件名**（`<id>.<名称>`）、`id`（`arxiv-2504.19413`）、arXiv 编号或标题，脚本都能查到；不给参数就转换 `pdf/` 下全部。

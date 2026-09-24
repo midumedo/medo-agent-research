@@ -81,7 +81,7 @@ papers/
 
 分级落在**文件边界**上，所以 `index.csv` **不加摘要列**：加了就是把 md 的 abstract 抄第二遍，与「只留两份，其余现取」和「不重复 index.csv 已有的信息」直接冲突。轻量筛选读四列，需要简介时才打开 md。
 
-重件（`pdf/` 与 `assets/`）不进入版本库；缺哪份用 `_scripts/fetch_material.py` 按 `id` 现取（PDF 重下、图由 MinerU 重转）。跟踪的只有 `index.csv`、`md/`、`_scripts/` 与文档。
+重件（`pdf/` 与 `assets/`）不进入版本库；缺哪份用 `sources/papers/_scripts/pipeline.py` 按 `id` 现取（PDF 重下、图由 MinerU 重转）。跟踪的只有 `index.csv`、`md/`、`_scripts/` 与文档。
 
 ## 只留两份，其余现取
 
@@ -104,7 +104,7 @@ papers/
 
 ## 入库流程
 
-1. **取原件** → `pdf/<id>.<名称>.pdf`。arXiv 用 `_scripts/download_arxiv.py`（给编号、已入库标识或标题都行）；非 arXiv 手工放入，按上面的规则定名称。
+1. **取原件** → `pdf/<id>.<名称>.pdf`。arXiv 用 `sources/papers/_scripts/pdf.py`（给编号、已入库标识或标题都行）；非 arXiv 手工放入，按上面的规则定名称。
 2. **登记** → 转换会在 md 顶部写出登记块；`abstract`、`keywords`、`revised` 由人／agent **现查 arXiv 页面后填进登记块**（不再另存快照）。缺的字段留空或写 `unknown`，**不推测**。
 3. **转换** → `md/<id>.<名称>.md`（见下）；结构化输出不落盘，只在转换时读一次用来抽图注。
 4. **入索引** → 跑 `build_index.py`，再在 CHANGELOG 追加一行。
@@ -118,15 +118,16 @@ papers/
 下面的 `<python>` 指 `uv run python`；直接用它本机 Python 也行（工具链只用标准库）：
 
 ```text
-uv run python _scripts/download_arxiv.py --all            # 按 index.csv 的 id 列批量核对／下载
-<python> _scripts/download_arxiv.py 2504.19413            # 也可以用编号或标题
-<python> _scripts/mineru_cloud.py <id 或 名称> <id 或 名称>           # 高保真重转，一次批量提交
-<python> _scripts/check_arxiv.py 2504.19413               # 核对编号与修订日期
+uv run python sources/papers/_scripts/pipeline.py --all      # 按 index.csv 补齐全库（缺 PDF 下、缺 md 转）
+<python> sources/papers/_scripts/pdf.py 2504.19413          # 只取原件；也可用编号或标题
+<python> sources/papers/_scripts/meta.py 2504.19413         # 只取元数据（标题／版本／摘要）
+<python> sources/papers/_scripts/convert.py <id 或 名称>     # 只转换，一次批量提交
+<python> sources/papers/_scripts/check_arxiv.py 2504.19413  # 核对编号与修订日期
 ```
 
 ## 转换走哪条路
 
-**只有 MinerU 一条路**：`_scripts/mineru_cloud.py`（云端 API，`mineru-pdf-convert` skill）。它输出表格、公式、多栏的保真度高，且**整个 papers 工具链零第三方依赖**——只用标准库。
+**只有 MinerU 一条路**：`sources/papers/_scripts/convert.py`（云端 API，`mineru-pdf-convert` skill）。它输出表格、公式、多栏的保真度高，且**整个 papers 工具链零第三方依赖**——只用标准库。
 
 早期那条 `pymupdf4llm` 本地路径（`pdf2md.py`）已删除：它虽快，但对表格公式多栏损失大，而且会把 `pymupdf`/`pymupdf-layout`/`onnxruntime` 一串重依赖拖进环境，与"主路径零依赖"冲突。需要更快的本地预览时，宁可接受云端几十秒的等待，也别把重依赖装回来。
 
@@ -147,7 +148,7 @@ MinerU 的结果 zip 里有 `images/`，`full.md` 用 `![](images/x.jpg)` 引用
 后两类是 MinerU 切出来、但 content_list 没给路径的图（`equation` 块为主，少数是 `table`）。**只有能确证全是公式时才写 `eq`**；类型一混就无从判断哪张是哪类，退回中性的 `img`（others）。全库当前：`eq` 98 张、`img` 30 张、`fig`/`table`/`chart` 591 张。
 
 3. **没有 manifest**。图注在 md 里紧贴图片引用（`![](…fig1.jpg)` 下面那段就是），图号在文件名里，字节本身进了版本库——再加一份清单只是把已有信息抄第三遍。
-4. 重取图片：`mineru_cloud.py --force <id 或 名称>`；`--no-images` 可只登记不落字节。
+4. 重取图片：`convert.py --force <id 或 名称>`；`--no-images` 可只登记不落字节。
 
 ## keywords：打词用的关注词表
 
