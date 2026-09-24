@@ -51,14 +51,6 @@ def index_path():
     return os.path.join(BASE, "index.csv")
 
 
-def meta_path():
-    return os.path.join(BASE, "meta.json")
-
-
-def provenance_path():
-    return os.path.join(BASE, "provenance.json")
-
-
 def pdf_path(stem):
     return os.path.join(pdf_dir(), f"{stem}.pdf")
 
@@ -96,18 +88,15 @@ def native_from_id(value):
     return text.split("-", 1)[1] if "-" in text else ""
 
 
-def identity(meta, prov=None):
-    """`<registry>-<native-id><vN>`, derived from the raw metadata.
+def identity(front=None, fallback=""):
+    """The `id` as the md register records it.
 
-    The filename never contributes: it is a label, this is the identity.
+    There is one copy of a paper's identity and it lives in the register block;
+    the filename's `<id>` segment is that same string, so nothing re-derives it
+    from a second file.
     """
-    meta = meta or {}
-    prov = prov or {}
-    native = meta.get("native_id") or ""
-    if not native:
-        return ""
-    suffix = version_suffix(prov.get("version") or meta.get("versioned_id") or "")
-    return f"{meta.get('registry') or 'arxiv'}-{native}{suffix}"
+    value = (front or {}).get("id") if isinstance(front, dict) else None
+    return value or fallback
 
 
 ILLEGAL_NAME_CHARS = re.compile(r'[<>:"/\\|?*]')
@@ -173,22 +162,6 @@ def save_json(path, data):
         json.dump(data, f, ensure_ascii=False, indent=2)
         f.write("\n")
     os.replace(temporary, path)
-
-
-def load_meta():
-    return load_json(meta_path())
-
-
-def save_meta(data):
-    save_json(meta_path(), data)
-
-
-def load_provenance():
-    return load_json(provenance_path())
-
-
-def save_provenance(data):
-    save_json(provenance_path(), data)
 
 
 def read_index():
@@ -316,18 +289,15 @@ def read_front_matter(stem):
     return fields
 
 
-def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
-                 keywords=None, abstract=None, revised=None, source=None,
+def front_matter(stem, index_record=None, kind=None, keywords=None,
+                 abstract=None, revised=None, source=None,
                  parser=None, state=None, ident=None):
     """The eight-field register block above the parser output.
 
     Everything after the closing `---` is the untouched parser text; this block
     is the only place the project writes its own judgement.
     """
-    meta = meta or {}
     index_record = index_record or {}
-    prov = prov or {}
-    conversion = prov.get("conversion") or {}
     existing = read_front_matter(stem)
 
     def missing(value):
@@ -348,13 +318,13 @@ def front_matter(stem, meta=None, index_record=None, prov=None, kind=None,
 
     fields = [
         ("stem", stem),
-        ("id", ident or pick("id", index_record.get("id")) or identity(meta, prov)),
+        ("id", pick("id", ident, index_record.get("id"))),
         ("keywords", keywords or pick("keywords", index_record.get("keywords"))),
-        ("abstract", abstract or pick("abstract", meta.get("abstract"))),
-        ("revised", revised or pick("revised", normalize_date(meta.get("revised")))),
-        ("source", source or pick("source", prov.get("source_url"), meta.get("url"))),
-        ("parser", parser or pick("parser", conversion.get("parser"))),
-        ("state", state or pick("state", prov.get("state"))),
+        ("abstract", abstract or pick("abstract")),
+        ("revised", revised or pick("revised")),
+        ("source", source or pick("source")),
+        ("parser", parser or pick("parser")),
+        ("state", state or pick("state")),
     ]
     lines = ["---"]
     for key, value in fields:

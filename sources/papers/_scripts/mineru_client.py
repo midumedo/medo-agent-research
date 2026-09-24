@@ -27,8 +27,7 @@ import zipfile
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from stem import (base, find, front_matter, load_meta, load_provenance, md_path,
-                  pdf_path, save_provenance, to_stem)
+from stem import find, front_matter, md_path, pdf_path, to_stem
 
 UA = "MemoryResearch/1.0 (mineru client)"
 
@@ -121,7 +120,7 @@ def header(stem, record, pdf_hash, info):
     return "\n".join(lines)
 
 
-def convert(token, args, provenance, meta_json, info):
+def convert(token, args, info):
     stem = to_stem(token)
     src = pdf_path(stem)
     if not os.path.exists(src):
@@ -133,10 +132,6 @@ def convert(token, args, provenance, meta_json, info):
     with open(src, "rb") as f:
         pdf_bytes = f.read()
     pdf_hash = hashlib.sha256(pdf_bytes).hexdigest()
-    record = provenance.setdefault(stem, {})
-    if record.get("pdf_sha256") and record["pdf_sha256"] != pdf_hash:
-        raise SystemExit(f"[{stem}] PDF 与已记录 SHA256 不一致，请先调查来源变化")
-
     fields = {
         "return_md": "true",
         "return_middle_json": "true",
@@ -151,30 +146,11 @@ def convert(token, args, provenance, meta_json, info):
 
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     stamp = datetime.now(timezone.utc).isoformat()
-    record.setdefault("version", None)
-    record.setdefault("retrieved_at", None)
-    record["pdf_sha256"] = pdf_hash
-    record["pdf_path"] = os.path.relpath(src, base()).replace(os.sep, "/")
     info["converted_at"] = stamp
     with open(dst, "w", encoding="utf-8", newline="") as f:
-        f.write(front_matter(stem, meta_json.get(stem, {}), find(stem), record))
-        f.write(header(stem, record, pdf_hash, info))
+        f.write(front_matter(stem, find(stem)))
+        f.write(header(stem, {}, pdf_hash, info))
         f.write(md.strip() + "\n")
-    record["conversion"] = {
-        "path": os.path.relpath(dst, base()).replace(os.sep, "/"),
-        "parser": "mineru",
-        "parser_version": info.get("parser_version"),
-        "service": info["service"],
-        "service_protocol_version": info.get("protocol_version"),
-        "backend": args.backend,
-        "lang": args.lang,
-        "converted_at": stamp,
-        "pdf_sha256": pdf_hash,
-        "body_sha256": hashlib.sha256(md.encode("utf-8")).hexdigest(),
-        "options": {"return_middle_json": True, "response_format_zip": True},
-        "visual_verification": False,
-    }
-    save_provenance(provenance)
     return f"[{stem}] -> {dst}（{len(md.splitlines())} 行）"
 
 
@@ -199,15 +175,13 @@ def main():
         "parser_version": args.parser_version,
         "protocol_version": info.get("protocol_version"),
     }
-    provenance = load_provenance()
-    meta_json = load_meta()
     for token in args.ids:
         try:
             stem = to_stem(token)
         except ValueError as error:
             print(f"[{token}] {error}")
             continue
-        print(convert(stem, args, provenance, meta_json, meta))
+        print(convert(stem, args, meta))
 
 
 if __name__ == "__main__":

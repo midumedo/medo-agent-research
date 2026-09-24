@@ -22,8 +22,7 @@ ATOM = "{http://www.w3.org/2005/Atom}"
 ARXIV_API = "http://export.arxiv.org/api/query?id_list={}&max_results=1"
 
 
-from stem import find, load_meta, load_provenance, native_for, pdf_path, save_meta, \
-    save_provenance, slugify, stem_of
+from stem import find, native_for, pdf_path, slugify, stem_of
 
 UA = "MemoryResearch/1.0 (local paper archive)"
 
@@ -105,13 +104,13 @@ def fetch_pdf(versioned_id):
     return data
 
 
-def download_one(token, meta, provenance):
+def download_one(token, meta=None, provenance=None):
     record = find(token)
     aid = native_for(token, record)
     stem = stem_of(record) if record else None
     if stem and os.path.exists(pdf_path(stem)):
         # Do not fetch latest metadata for a legacy/cached PDF.
-        return f"[{stem}] cached PDF and metadata preserved; version: {provenance.get(stem, {}).get('version') or 'unknown'}"
+        return f"[{stem}] cached PDF preserved; version lives in its filename"
     if not aid or not re.fullmatch(r"\d{4}\.\d{4,5}(?:v[1-9]\d*)?", aid):
         return f"[{token}] 只有 arXiv 来源能自动下载：给出 arXiv 编号或已入库的标识／标题；非 arXiv 请手工放入 pdf/ 再跑 mineru_cloud.py"
 
@@ -153,21 +152,8 @@ def download_one(token, meta, provenance):
         candidate["published_at"] = published_at
     if revised:
         candidate["revised"] = revised[:10]
-    meta[stem] = candidate
-    provenance[stem] = {
-        "source_url": f"https://arxiv.org/abs/{versioned_id}",
-        "pdf_url": f"https://arxiv.org/pdf/{versioned_id}",
-        "version": versioned_id,
-        "published_at": published_at,
-        "revised": revised[:10] if revised else None,
-        "retrieved_at": datetime.now(timezone.utc).isoformat(),
-        "pdf_path": f"pdf/{stem}.pdf",
-        "pdf_sha256": hashlib.sha256(data).hexdigest(),
-        "metadata_pdf_pairing": "same explicit arXiv version requested for both downloads",
-    }
-    # Save after each successful pair. Failed attempts never replace valid data.
-    save_provenance(provenance)
-    save_meta(meta)
+    # 元数据不再另存一份：转换后由人／agent 现查写入 md 的登记块。
+    # 需要时可随时重取，留一份快照只会随时间腐坏。
     return f"[{stem}] saved {versioned_id} ({len(data) // 1024} KB)"
 
 
@@ -179,9 +165,8 @@ def main():
     if not args:
         print("no ids given")
         return
-    meta, provenance = load_meta(), load_provenance()
     for aid in args:
-        print(download_one(aid, meta, provenance))
+        print(download_one(aid))
         if len(args) > 1:
             time.sleep(1.5)
 

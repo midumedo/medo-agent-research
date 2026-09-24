@@ -53,47 +53,39 @@ class PipelineTests(unittest.TestCase):
         self.aid = AID
         self.meta = {STEM: {"title": "Existing title", "exists": True, "native_id": AID,
                             "id": ID, "registry": "arxiv"}}
-        self.provenance = {STEM: {"version": None}}
-        stem.save_meta(self.meta)
-        stem.save_provenance(self.provenance)
         stem.save_index({"papers": [{"id": ID, "name": NAME,
                                      "keywords": [], "revised": ""}]})
-        self.original_meta = (self.base / "meta.json").read_bytes()
 
     def test_cached_pdf_never_fetches_or_replaces_metadata(self):
         pdf = self.base / "pdf" / (STEM + ".pdf")
         pdf.write_bytes(b"legacy PDF bytes")
         with patch.object(download, "get", side_effect=AssertionError("network forbidden")):
-            message = download.download_one(STEM, self.meta, self.provenance)
+            message = download.download_one(STEM)
         self.assertIn("preserved", message)
         self.assertEqual(pdf.read_bytes(), b"legacy PDF bytes")
-        self.assertEqual((self.base / "meta.json").read_bytes(), self.original_meta)
 
     def test_metadata_failure_preserves_previous_records(self):
         with patch.object(download, "get", side_effect=OSError("offline")):
-            message = download.download_one(STEM, self.meta, self.provenance)
+            message = download.download_one(STEM)
         self.assertIn("preserved", message)
-        self.assertEqual((self.base / "meta.json").read_bytes(), self.original_meta)
         self.assertFalse(list((self.base / "pdf").iterdir()))
 
     def test_pdf_failure_does_not_commit_new_metadata(self):
         candidate = {"exists": True, "title": "New title", "versioned_id": self.aid + "v2"}
         with patch.object(download, "fetch_meta", return_value=candidate), \
              patch.object(download, "fetch_pdf", side_effect=OSError("offline")):
-            message = download.download_one(STEM, self.meta, self.provenance)
+            message = download.download_one(STEM)
         self.assertIn("preserved", message)
-        self.assertEqual((self.base / "meta.json").read_bytes(), self.original_meta)
 
     def test_unknown_version_is_not_guessed(self):
         with patch.object(download, "fetch_meta", return_value={"exists": True, "versioned_id": None}), \
              patch.object(download, "resolve_meta", return_value=(None, None, None)), \
              patch.object(download, "fetch_pdf", side_effect=AssertionError("must not download")):
-            message = download.download_one(STEM, self.meta, self.provenance)
+            message = download.download_one(STEM)
         self.assertIn("version unresolved", message)
-        self.assertEqual((self.base / "meta.json").read_bytes(), self.original_meta)
 
     def test_refuses_a_source_it_cannot_resolve(self):
-        message = download.download_one("some-unknown-title", self.meta, self.provenance)
+        message = download.download_one("some-unknown-title")
         self.assertIn("只有 arXiv 来源能自动下载", message)
 
     def test_download_refetches_metadata_for_same_pinned_version(self):
@@ -111,14 +103,13 @@ class PipelineTests(unittest.TestCase):
                          f'<meta name="citation_pdf_url" content="https://arxiv.org/pdf/{version}">').encode()
 
         with patch.object(download, "get", side_effect=get):
-            download.download_one(STEM, self.meta, self.provenance)
+            download.download_one(STEM)
         self.assertEqual(calls, [f"https://arxiv.org/abs/{self.aid}",
                                  f"https://arxiv.org/abs/{version}", f"https://arxiv.org/pdf/{version}"])
-        self.assertEqual(self.meta[STEM]["title"], "Pinned metadata")
-        self.assertEqual(self.provenance[STEM]["pdf_sha256"], hashlib.sha256(pdf).hexdigest())
-        self.assertEqual(self.provenance[STEM]["version"], version)
-        self.assertEqual(self.meta[STEM]["native_id"], AID)
-        self.assertEqual(self.meta[STEM]["registry"], "arxiv")
+        # 元数据不再另存：这里只保证按固定版本取回了 PDF。
+        self.assertEqual((self.base / "pdf" / (STEM + ".pdf")).read_bytes(), pdf)
+        self.assertFalse((self.base / "meta.json").exists())
+        self.assertFalse((self.base / "provenance.json").exists())
 
     def test_non_pdf_response_is_rejected(self):
         with patch.object(download, "get", return_value=(200, b"<html>" + b"x" * 21000)):
@@ -235,8 +226,8 @@ class IndexCsvTests(unittest.TestCase):
         self.assertNotIn("date", back[0], "date 已由 revised 取代")
 
     def test_front_matter_fields(self):
-        text = stem.front_matter("a-v1", {"a-v1": {"title": "T"}}, {"id": "arxiv-1v1"},
-                                 {"pdf_sha256": "x", "source_url": "https://arxiv.org/abs/xv1"},
+        text = stem.front_matter("a-v1", {"id": "arxiv-1v1"},
+                                 source="https://arxiv.org/abs/xv1",
                                  keywords=["memory"], abstract="abs", revised="2025-10-08",
                                  parser="mineru-cloud", state=["converted"])
         for key in ("stem:", "id:", "keywords:", "abstract:", "revised:", "source:",
@@ -325,7 +316,7 @@ class NamesAndAssetsTests(unittest.TestCase):
 
     def test_front_matter_has_no_converted_at(self):
         """converted_at 由 revised 与 git 覆盖，不再进登记块。"""
-        text = stem.front_matter("a-v1", {}, {"id": "arxiv-1v1"}, {},
+        text = stem.front_matter("a-v1", {"id": "arxiv-1v1"},
                                  keywords=["memory"], parser="mineru-cloud 3.4.4")
         self.assertNotIn("converted_at", text)
 

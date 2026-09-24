@@ -31,9 +31,8 @@ import urllib.request
 import zipfile
 from datetime import datetime, timezone
 
-from stem import (assets_root, base, find, front_matter, identity, load_meta,
-                  load_provenance, md_path, pdf_dir, pdf_path, read_front_matter,
-                  save_provenance, slugify, stem_of)
+from stem import (assets_root, find, front_matter, md_path, pdf_dir, pdf_path,
+                  read_front_matter, slugify, stem_of)
 
 API = "https://mineru.net/api/v4"
 UA = "MemoryResearch/1.0 (mineru cloud client)"
@@ -395,17 +394,8 @@ def main():
         print("没有可转换的 PDF。")
         return
 
-    provenance = load_provenance()
-    meta = load_meta()
     todo = []
     for stem in stems:
-        with open(pdf_path(stem), "rb") as f:
-            pdf_hash = hashlib.sha256(f.read()).hexdigest()
-        record = provenance.setdefault(stem, {})
-        if record.get("pdf_sha256") and record["pdf_sha256"] != pdf_hash:
-            raise SystemExit(f"[{stem}] PDF 与已记录 SHA256 不一致，请先调查来源变化")
-        record["pdf_sha256"] = pdf_hash
-        record["pdf_path"] = os.path.relpath(pdf_path(stem), base()).replace(os.sep, "/")
         if os.path.exists(md_path(stem)) and os.path.getsize(md_path(stem)) > 0 and not args.force:
             print(f"[{stem}] 已存在，未重新转换（--force 可重转）")
             continue
@@ -430,9 +420,8 @@ def main():
             if not md_name:
                 print(f"[{stem}] zip 里没有 .md，跳过")
                 continue
-            entry_meta = meta.get(stem, {})
-            record = provenance[stem]
-            ident = identity(entry_meta, record) or stem
+            # 身份只有一份，记在 md 的登记块里；已入库的篇目可以从索引取到。
+            ident = (find(stem) or {}).get("id") or stem
             items = parse_visual(load_content_list(zf, pick(zf, "_content_list.json")))
             mapping = name_map(items, ident, image_entries(zf))
             md_text = sanitize_text(rewrite_image_refs(zf.read(md_name).decode("utf-8", "replace"), mapping))
@@ -443,37 +432,13 @@ def main():
             label = parser_label(result, args.model_version, version)
             state = merge_state(read_front_matter(stem).get("state"),
                                 ["downloaded", "converted"] + (["imaged"] if assets["count"] else []))
-            # Fill the conversion record before writing the md: the register block
-            # reads it, and leaving it to the end picks up a previous parser's stamp.
-            record["state"] = state
-            record["conversion"] = {
-                "path": os.path.relpath(md_path(stem), base()).replace(os.sep, "/"),
-                "parser": label,
-                "mineru_version": version,
-                "mineru_backend": backend,
-                "api": API,
-                "model_version": args.model_version,
-                "lang": args.lang,
-                "batch_id": batch_id,
-                "task_id": result.get("task_id"),
-                "full_zip_url": result.get("full_zip_url"),
-                "converted_at": stamp,
-                "pdf_sha256": record["pdf_sha256"],
-                "body_sha256": hashlib.sha256(md_text.encode("utf-8")).hexdigest(),
-                "images": assets,
-                "options": {"model_version": args.model_version, "lang": args.lang,
-                            "keep_images": keep_images},
-                "visual_verification": False,
-            }
             os.makedirs(os.path.dirname(md_path(stem)), exist_ok=True)
             with open(md_path(stem), "w", encoding="utf-8", newline="\n") as f:
-                f.write(front_matter(stem, entry_meta, find(stem), record,
-                                     ident=ident, parser=label, state=state))
+                f.write(front_matter(stem, find(stem), ident=ident,
+                                     parser=label, state=state))
                 f.write("\n".join([
-                    f"# {entry_meta.get('title') or stem}", "",
                     f"- 解析器: {label}（语言 {args.lang}）",
                     f"- 转换时间: {stamp}",
-                    f"- 本地 PDF SHA256: `{record['pdf_sha256']}`",
                     f"- 图片: {assets['count']} 个，{assets['bytes'] // 1024} KB；"
                     + ("字节已写入 assets/" if assets["kept"] else "字节未保留，只写清单"),
                     "",
@@ -482,7 +447,6 @@ def main():
                     "> 分隔线之后为转换正文，上方 front matter 是本项目的登记信息。", "", "---", "",
                 ]) + "\n")
                 f.write(md_text.strip() + "\n")
-            save_provenance(provenance)
             print(f"[{stem}] -> {md_path(stem)}（{len(md_text.splitlines())} 行，"
                   f"图 {assets['count']} 个{'，字节已落盘' if assets['kept'] else '，仅清单'}）")
     print("转换完成；运行 _scripts/build_index.py 刷新 index.csv。")

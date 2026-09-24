@@ -48,10 +48,6 @@ def split_multi(value):
     return [v for v in re.split(r"[;,]", value or "") if v]
 
 
-def identity_from(name, entry, record):
-    """`<registry>-<native-id><vN>`; the filename is not an identity."""
-    return stem.identity(entry, record) or name
-
 
 def render_index(papers):
     """The exact text write_index() produces, for --check comparison."""
@@ -71,8 +67,6 @@ def main():
                     help="fail if index.csv differs from a fresh build")
     args = ap.parse_args()
 
-    meta = stem.load_meta()
-    prov = stem.load_provenance()
     # Keyed by id, never by the filename stem: the stem carries the name, and the
     # name is allowed to change — a rename must not drop the keywords.
     previous = {r["id"]: r for r in stem.read_index() if r.get("id")}
@@ -84,19 +78,17 @@ def main():
     papers = []
     for entry_stem in sorted(stems):
         fields = front_fields(stem.md_path(entry_stem))
-        entry = meta.get(entry_stem) or {}
-        record = prov.get(entry_stem) or {}
-        ident = fields.get("id") or identity_from(entry_stem, entry, record)
+        ident = fields.get("id") or entry_stem
         old = previous.get(ident) or {}
         papers.append({
             "id": ident,
             # The file name is `<id>.<name>`, so the name can be read back off it.
             "name": (stem.name_from_stem(entry_stem, ident) or old.get("name")
-                     or stem.sanitize_name((entry.get("title") or "").split(":")[0])),
+                     or ""),
             # The md register is where keywords are written; index.csv is derived.
             "keywords": split_multi(fields.get("keywords")) or old.get("keywords") or [],
-            "revised": (stem.normalize_date(fields.get("revised")) or old.get("revised")
-                        or stem.normalize_date(entry.get("revised")) or ""),
+            "revised": (stem.normalize_date(fields.get("revised"))
+                        or old.get("revised") or ""),
         })
 
     if args.check:
