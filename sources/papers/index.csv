@@ -1,28 +1,28 @@
-stem,id,keywords,date
-a-mem-agentic-memory-for-llm-agents-v11,arxiv-2502.12110v11,memory;framework;agent;retrieval,2025-02-17
-a-survey-of-agent-memory-in-the-second-half-towards-self-evolving-and-long-horizon-agents,arxiv-2602.06052,survey,2026-01-14
-a-survey-on-the-memory-mechanism-of-large-language-model-based-agents,arxiv-2404.13501,survey,2024-04-21
-agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads,arxiv-2606.06448,survey;分类未复核,2026-06-04
-agentic-memory-learning-unified-long-term-and-short-term-memory-management-for-large-language,arxiv-2601.01885v3,framework,2026-01-05
-ama-bench-evaluating-long-horizon-memory-for-agentic-applications,arxiv-2602.22769v4,benchmark,2026-02-26
-atommem-learnable-dynamic-agentic-memory-with-atomic-memory-operation,arxiv-2601.08323v3,framework,2026-01-13
-beyond-a-million-tokens-benchmarking-and-enhancing-long-term-memory-in-llms,arxiv-2510.27246v2,benchmark,2025-10-31
-beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration,arxiv-2607.16848,survey;分类未复核,2026-07-18
-evaluating-memory-in-llm-agents-via-incremental-multi-turn-interactions,arxiv-2507.05257v4,benchmark,2025-07-07
-evaluating-very-long-term-conversational-memory-of-llm-agents,arxiv-2402.17753v1,benchmark,2024-02-27
-evermemos-a-self-organizing-memory-operating-system-for-structured-long-horizon-reasoning,arxiv-2601.02163v2,framework,2026-01-05
-know-me-respond-to-me-benchmarking-llms-for-dynamic-user-profiling-and-personalized-responses,arxiv-2504.14225v2,benchmark,2025-04-19
-longmemeval-benchmarking-chat-assistants-on-long-term-interactive-memory-v2,arxiv-2410.10813v2,memory;benchmark;evaluation;long-term-memory,2024-10-14
-longmemeval-v2-evaluating-long-term-agent-memory-toward-experienced-colleagues,arxiv-2605.12493v1,benchmark,2026-05-12
-mem0-building-production-ready-ai-agents-with-scalable-long-term-memory-v1,arxiv-2504.19413v1,memory;framework;long-term-memory;retrieval,2025-04-28
-membench-towards-more-comprehensive-evaluation-on-the-memory-of-llm-based-agents,arxiv-2506.21605v1,benchmark,2025-06-20
-memory-for-autonomous-llm-agents-mechanisms-evaluation-and-emerging-frontiers,arxiv-2603.07670,survey,2026-03-08
-memory-in-the-age-of-ai-agents,arxiv-2512.13564,survey,2025-12-15
-memory-os-of-ai-agent,arxiv-2506.06326v1,framework,2025-05-30
-memoryarena-benchmarking-agent-memory-in-interdependent-multi-session-agentic-tasks,arxiv-2602.16313v2,benchmark,2026-02-18
-memorybench-a-benchmark-for-memory-and-continual-learning-in-llm-systems,arxiv-2510.17281v7,benchmark,2025-10-20
-memos-a-memory-os-for-ai-system,arxiv-2507.03724v4,framework,2025-07-04
-mirix-multi-agent-memory-system-for-llm-based-agents,arxiv-2507.07957v1,framework,2025-07-10
-rethinking-memory-in-llm-based-agents-representations-operations-and-emerging-topics,arxiv-2505.00675,survey,2025-05-01
-simplemem-efficient-lifelong-memory-for-llm-agents,arxiv-2601.02553v3,framework,2026-01-05
-zep-a-temporal-knowledge-graph-architecture-for-agent-memory,arxiv-2501.13956v1,framework,2025-01-20
+id,name,keywords,date
+arxiv-2402.17753v1,Evaluation of Long-Term Conversational Memory,,2024-02-27
+arxiv-2404.13501,Survey of Agent Memory Mechanism,,2024-04-21
+arxiv-2410.10813v2,LongMemEval,memory;benchmark;evaluation;long-term-memory,2024-10-14
+arxiv-2501.13956v1,Zep,framework,2025-01-20
+arxiv-2502.12110v11,A-Mem,memory;framework;agent;retrieval,2025-02-17
+arxiv-2504.14225v2,Know Me Respond to Me,,2025-04-19
+arxiv-2504.19413v1,Mem0,memory;framework;long-term-memory;retrieval,2025-04-28
+arxiv-2505.00675,Rethinking Memory in Agents,,2025-05-01
+arxiv-2506.06326v1,Memory OS,,2025-05-30
+arxiv-2506.21605v1,MemBench,benchmark,2025-06-20
+arxiv-2507.03724v4,MemOS,framework,2025-07-04
+arxiv-2507.05257v4,Memory Evaluation via Multi-Turn Interaction,,2025-07-07
+arxiv-2507.07957v1,MIRIX,framework,2025-07-10
+arxiv-2510.17281v7,MemoryBench,benchmark,2025-10-20
+arxiv-2510.27246v2,Beyond a Million Tokens,benchmark,2025-10-31
+arxiv-2512.13564,Memory in the Age of AI Agents,survey,2025-12-15
+arxiv-2601.01885v3,Agentic Memory,framework,2026-01-05
+arxiv-2601.02163v2,EverMemOS,framework,2026-01-05
+arxiv-2601.02553v3,SimpleMem,framework,2026-01-05
+arxiv-2601.08323v3,AtomMem,framework,2026-01-13
+arxiv-2602.06052,Survey of Agent Memory,,2026-01-14
+arxiv-2602.16313v2,MemoryArena,benchmark,2026-02-18
+arxiv-2602.22769v4,AMA-Bench,benchmark,2026-02-26
+arxiv-2603.07670,Memory for Autonomous LLM Agents,survey,2026-03-08
+arxiv-2605.12493v1,LongMemEval-V2,benchmark,2026-05-12
+arxiv-2606.06448,Agent Memory Characterization,,2026-06-04
+arxiv-2607.16848,Beyond Memory Leaderboards,survey;分类未复核,2026-07-18
