@@ -1,28 +1,28 @@
 id,name,keywords,revised
-arxiv-2402.17753v1,Long-Term Chat Memory,benchmark,2024-02-27
-arxiv-2404.13501,Memory Mechanism,survey,2024-04-21
-arxiv-2410.10813v2,LongMemEval,memory;benchmark;evaluation;long-term-memory,2025-03-04
-arxiv-2501.13956v1,Zep,framework,2025-01-20
-arxiv-2502.12110v11,A-Mem,memory;framework;agent;retrieval,2025-10-08
-arxiv-2504.14225v2,Know Me Respond to Me,benchmark,2025-10-27
-arxiv-2504.19413v1,Mem0,memory;framework;long-term-memory;retrieval,2025-04-28
-arxiv-2505.00675,Rethinking Memory,survey,2025-12-24
-arxiv-2506.06326v1,Memory OS,framework,2025-05-30
-arxiv-2506.21605v1,MemBench,benchmark,2025-06-20
-arxiv-2507.03724v4,MemOS,framework,2025-12-03
-arxiv-2507.05257v4,MemoryAgentBench,benchmark,2026-06-28
-arxiv-2507.07957v1,MIRIX,framework,2025-07-10
-arxiv-2510.17281v7,MemoryBench,benchmark,2026-06-03
-arxiv-2510.27246v2,Million-Token Memory,benchmark,2026-02-21
-arxiv-2512.13564,Age of Agent Memory,survey,2026-01-13
-arxiv-2601.01885v3,Agentic Memory,framework,2026-07-23
-arxiv-2601.02163v2,EverMemOS,framework,2026-01-09
-arxiv-2601.02553v3,SimpleMem,framework,2026-01-29
-arxiv-2601.08323v3,AtomMem,framework,2026-03-27
-arxiv-2602.06052,Agent Memory Survey,survey,2026-08-04
-arxiv-2602.16313v2,MemoryArena,benchmark,2026-09-17
-arxiv-2602.22769v4,AMA-Bench,benchmark,2026-05-27
-arxiv-2603.07670,Autonomous Memory,survey,2026-03-08
-arxiv-2605.12493v1,LongMemEval-V2,benchmark,2026-05-12
-arxiv-2606.06448,Memory Workloads,survey;分类未复核,2026-09-22
-arxiv-2607.16848,Scientific Memory,survey;分类未复核,2026-07-18
+arxiv-2402.17753v1,bench-Long-Term Chat Memory,benchmark,2024-02-27
+arxiv-2404.13501,survey-Memory Mechanism,survey,2024-04-21
+arxiv-2410.10813v2,bench-LongMemEval,memory;benchmark;evaluation;long-term-memory,2025-03-04
+arxiv-2501.13956v1,project-Zep,framework,2025-01-20
+arxiv-2502.12110v11,project-A-Mem,memory;framework;agent;retrieval,2025-10-08
+arxiv-2504.14225v2,bench-Know Me,benchmark,2025-10-27
+arxiv-2504.19413v1,project-Mem0,memory;framework;long-term-memory;retrieval,2025-04-28
+arxiv-2505.00675,survey-Rethinking Memory,survey,2025-12-24
+arxiv-2506.06326v1,project-Memory OS,framework,2025-05-30
+arxiv-2506.21605v1,bench-MemBench,benchmark,2025-06-20
+arxiv-2507.03724v4,project-MemOS,framework,2025-12-03
+arxiv-2507.05257v4,bench-MemoryAgentBench,benchmark,2026-06-28
+arxiv-2507.07957v1,project-MIRIX,framework,2025-07-10
+arxiv-2510.17281v7,bench-MemoryBench,benchmark,2026-06-03
+arxiv-2510.27246v2,bench-Million-Token Memory,benchmark,2026-02-21
+arxiv-2512.13564,survey-Age of Agent Memory,survey,2026-01-13
+arxiv-2601.01885v3,method-Agentic Memory,framework,2026-07-23
+arxiv-2601.02163v2,project-EverMemOS,framework,2026-01-09
+arxiv-2601.02553v3,project-SimpleMem,framework,2026-01-29
+arxiv-2601.08323v3,model-AtomMem,framework,2026-03-27
+arxiv-2602.06052,survey-Agent Memory,survey,2026-08-04
+arxiv-2602.16313v2,bench-MemoryArena,benchmark,2026-09-17
+arxiv-2602.22769v4,bench-AMA,benchmark,2026-05-27
+arxiv-2603.07670,survey-Autonomous Memory,survey,2026-03-08
+arxiv-2605.12493v1,bench-LongMemEval-V2,benchmark,2026-05-12
+arxiv-2606.06448,analysis-Memory Workloads,survey;分类未复核,2026-09-22
+arxiv-2607.16848,bench-Scientific Memory,survey;分类未复核,2026-07-18
