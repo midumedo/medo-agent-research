@@ -2,7 +2,7 @@
 name = "memory-research"
 version = "0.0.0"
 description = "Memory / Context / Harness research notes, and the source pipeline behind them"
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 # 零第三方运行时依赖：papers 的全部脚本只用标准库
 # （urllib / zipfile / csv / json / xml.etree / http.client）。
 # MinerU 转换走云端 API，模型与服务端都在外部。

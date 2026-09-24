@@ -86,7 +86,11 @@ papers/
 
 已有非空 `md/` 不会被覆盖，除非显式 `--force`。PDF 与已记录指纹不一致时脚本会停下来——那是「先调查来源变化」，不是「覆盖」。
 
-在本目录运行，`<python>` 替换为本机 Python：
+在仓库根运行（环境由根目录的 `pyproject.toml` + `.python-version` 管理，Python 3.13，**零第三方依赖**，不需要 `pip install`）：
+
+    uv run python sources/papers/_scripts/<脚本>.py ...
+
+下面的 `<python>` 指 `uv run python`；直接用它本机 Python 也行（工具链只用标准库）：
 
 ```text
 <python> _scripts/download_arxiv.py --all                 # 按 watchlist.txt（词干一行一个）
