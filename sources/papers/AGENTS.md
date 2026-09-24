@@ -67,11 +67,11 @@ papers/
 | `id` | 身份，含版本；文件名前半段 |
 | `name` | 简称；文件名后半段 |
 | `keywords` | 多值（`;` 分隔）；人工与 AI 判定，重建时不覆盖 |
-| `date` | 发布日，到日 |
+| `revised` | 当前版本自己的修订日（`vN` 与之对应） |
 
 **文件名推导**：`stem = f"{id}.{name}"`（`stem.stem_of`）。这是唯一规则，脚本与文档都照它走；表里因此不再单列 `stem`。
 
-**只了解信息时读前几列**：想看「库里有什么」，读 `id`、`name`、`keywords`、`date` 就够；要某篇的细节，打开那篇 `md/` 读 front matter 的 `abstract`。
+**只了解信息时读前几列**：想看「库里有什么」，读 `id`、`name`、`keywords`、`revised` 就够；要某篇的细节，打开那篇 `md/` 读 front matter 的 `abstract`。
 
 **CHANGELOG.md 只追加**：入库、重转、更正、结构变动各记一行，日期 · 动作 · 对象 · 说明。它不重复 `index.csv` 已有的信息，也不承担清单职责。
 
@@ -157,7 +157,7 @@ long-term-memory, context-window, retrieval, rag, evaluation, personalization
 ## 阅读与引用纪律
 
 - md 是**机器转换文本**，不是原文。引用具体数字、表格、公式前，回到 `pdf/` 定位原文位置核对。
-- md 顶部有 YAML front matter（`stem`、`id`、`keywords`、`abstract`、`date`、`source`、`parser`（含 MinerU 版本）、`state`）。身份以 front matter 与 `index.csv` 为准；正文是**最后一个 `---` 之后**的内容。
+- md 顶部有 YAML front matter（`stem`、`id`、`keywords`、`abstract`、`revised`、`source`、`parser`（含 MinerU 版本）、`state`）。身份以 front matter 与 `index.csv` 为准；正文是**最后一个 `---` 之后**的内容。
 - 引用时给出 `id` + 版本 + 章节或图表；版本 unknown 就写 unknown。
 - 转换成功不等于做过视觉核验，`visual_verification` 默认是 `false`。
 
