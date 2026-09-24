@@ -1,28 +1,28 @@
 id,name,keywords,revised
-arxiv-2402.17753v1,Bench.Long-Term Chat Memory,benchmark,2024-02-27
-arxiv-2404.13501,Survey.Memory Mechanism,survey,2024-04-21
-arxiv-2410.10813v2,Bench.LongMemEval,memory;benchmark;evaluation;long-term-memory,2025-03-04
-arxiv-2501.13956v1,Project.Zep,framework,2025-01-20
-arxiv-2502.12110v11,Project.A-Mem,memory;framework;agent;retrieval,2025-10-08
-arxiv-2504.14225v2,Bench.Know Me,benchmark,2025-10-27
+arxiv-2402.17753v1,Bench.Long-Term Chat Memory,memory;benchmark;long-term-memory;rag,2024-02-27
+arxiv-2404.13501,Survey.Memory Mechanism,memory;agent;survey,2024-04-21
+arxiv-2410.10813v2,Bench.LongMemEval,memory;benchmark;long-term-memory;evaluation,2025-03-04
+arxiv-2501.13956v1,Project.Zep,memory;agent;framework;retrieval,2025-01-20
+arxiv-2502.12110v11,Project.A-Mem,memory;agent;framework;retrieval,2025-10-08
+arxiv-2504.14225v2,Bench.Know Me,memory;benchmark;personalization,2025-10-27
 arxiv-2504.19413v1,Project.Mem0,memory;framework;long-term-memory;retrieval,2025-04-28
-arxiv-2505.00675,Survey.Rethinking Memory,survey,2025-12-24
-arxiv-2506.06326v1,Project.Memory OS,framework,2025-05-30
-arxiv-2506.21605v1,Bench.MemBench,benchmark,2025-06-20
-arxiv-2507.03724v4,Project.MemOS,framework,2025-12-03
-arxiv-2507.05257v4,Bench.MemoryAgentBench,benchmark,2026-06-28
-arxiv-2507.07957v1,Project.MIRIX,framework,2025-07-10
-arxiv-2510.17281v7,Bench.MemoryBench,benchmark,2026-06-03
-arxiv-2510.27246v2,Bench.Million-Token Memory,benchmark,2026-02-21
-arxiv-2512.13564,Survey.Age of Agent Memory,survey,2026-01-13
-arxiv-2601.01885v3,Method.Agentic Memory,framework,2026-07-23
-arxiv-2601.02163v2,Project.EverMemOS,framework,2026-01-09
+arxiv-2505.00675,Survey.Rethinking Memory,memory;survey;long-term-memory;retrieval,2025-12-24
+arxiv-2506.06326v1,Project.Memory OS,memory;framework;long-term-memory;personalization,2025-05-30
+arxiv-2506.21605v1,Bench.MemBench,memory;agent;benchmark;evaluation,2025-06-20
+arxiv-2507.03724v4,Project.MemOS,memory;framework;retrieval;personalization,2025-12-03
+arxiv-2507.05257v4,Bench.MemoryAgentBench,memory;agent;benchmark;retrieval,2026-06-28
+arxiv-2507.07957v1,Project.MIRIX,memory;agent;framework;personalization,2025-07-10
+arxiv-2510.17281v7,Bench.MemoryBench,memory;benchmark;evaluation,2026-06-03
+arxiv-2510.27246v2,Bench.Million-Token Memory,memory;benchmark;long-term-memory;context-window,2026-02-21
+arxiv-2512.13564,Survey.Age of Agent Memory,memory;agent;survey;rag,2026-01-13
+arxiv-2601.01885v3,Method.Agentic Memory,memory;agent;framework;long-term-memory,2026-07-23
+arxiv-2601.02163v2,Project.EverMemOS,memory;agent;framework;retrieval,2026-01-09
 arxiv-2601.02553v3,Project.SimpleMem,memory;framework;retrieval,2026-01-29
-arxiv-2601.08323v3,Model.AtomMem,framework,2026-03-27
-arxiv-2602.06052,Survey.Agent Memory,survey,2026-08-04
-arxiv-2602.16313v2,Bench.MemoryArena,benchmark,2026-09-17
-arxiv-2602.22769v4,Bench.AMA,benchmark,2026-05-27
-arxiv-2603.07670,Survey.Autonomous Memory,survey,2026-03-08
-arxiv-2605.12493v1,Bench.LongMemEval-V2,benchmark,2026-05-12
-arxiv-2606.06448,Analysis.Memory Workloads,survey;分类未复核,2026-09-22
-arxiv-2607.16848,Bench.Scientific Memory,survey;分类未复核,2026-07-18
+arxiv-2601.08323v3,Model.AtomMem,memory;agent;framework;long-term-memory,2026-03-27
+arxiv-2602.06052,Survey.Agent Memory,memory;agent;survey;personalization,2026-08-04
+arxiv-2602.16313v2,Bench.MemoryArena,memory;agent;benchmark;evaluation,2026-09-17
+arxiv-2602.22769v4,Bench.AMA,memory;agent;benchmark;retrieval,2026-05-27
+arxiv-2603.07670,Survey.Autonomous Memory,memory;agent;survey;retrieval,2026-03-08
+arxiv-2605.12493v1,Bench.LongMemEval-V2,memory;agent;benchmark;rag,2026-05-12
+arxiv-2606.06448,Analysis.Memory Workloads,memory;harness;retrieval;evaluation,2026-09-22
+arxiv-2607.16848,Bench.Scientific Memory,memory;benchmark;retrieval;evaluation,2026-07-18

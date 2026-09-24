@@ -1,7 +1,7 @@
 ---
 stem: arxiv-2510.17281v7.Bench.MemoryBench
 id: arxiv-2510.17281v7
-keywords: [benchmark]
+keywords: [memory, benchmark, evaluation]
 abstract: "Scaling up data, parameters, and test-time computation has been the mainstream methods to improve LLM systems (LLMsys), but their upper bounds are almost reached due to the gradual depletion of high-quality data and marginal gains obtained from larger computational resource consumption. Inspired by the abilities of human and traditional AI systems in learning from practice, constructing memory and continual learning frameworks for LLMsys has become an important and popular research direction in recent literature. Yet, existing benchmarks for LLM memory often focus on evaluating the system on homogeneous reading comprehension tasks with long-form inputs rather than testing their abilities to learn from accumulated user feedback in service time. Therefore, we propose a user feedback simulation framework and a comprehensive benchmark covering multiple domains, languages, and types of tasks to evaluate the continual learning abilities of LLMsys. Experiments show that the effectiveness and efficiency of state-of-the-art baselines are far from satisfying, and we hope this benchmark could pave the way for future studies on LLM memory and optimization algorithms. Website: this https URL Code: this https URL Data: this https URL Data-Full: this https URL"
 revised: 2026-06-03
 source: "https://arxiv.org/abs/2510.17281v7"

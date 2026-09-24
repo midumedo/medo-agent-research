@@ -1,7 +1,7 @@
 ---
 stem: arxiv-2506.21605v1.Bench.MemBench
 id: arxiv-2506.21605v1
-keywords: [benchmark]
+keywords: [memory, agent, benchmark, evaluation]
 abstract: "Recent works have highlighted the significance of memory mechanisms in LLM-based agents, which enable them to store observed information and adapt to dynamic environments. However, evaluating their memory capabilities still remains challenges. Previous evaluations are commonly limited by the diversity of memory levels and interactive scenarios. They also lack comprehensive metrics to reflect the memory capabilities from multiple aspects. To address these problems, in this paper, we construct a more comprehensive dataset and benchmark to evaluate the memory capability of LLM-based agents. Our dataset incorporates factual memory and reflective memory as different levels, and proposes participation and observation as various interactive scenarios. Based on our dataset, we present a benchmark, named MemBench, to evaluate the memory capability of LLM-based agents from multiple aspects, including their effectiveness, efficiency, and capacity. To benefit the research community, we release our dataset and project at this https URL ."
 revised: 2025-06-20
 source: "https://arxiv.org/abs/2506.21605v1"

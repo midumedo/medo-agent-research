@@ -14,7 +14,7 @@
 
 ```text
 papers/
-  index.csv       指路表：id, name, keywords, date（一行一版本）
+  index.csv       指路表：id, name, keywords, revised（一行一版本）
   CHANGELOG.md    只追加的入库与修订日志
   AGENTS.md README.md
   pdf/ md/        按表示形式分，同一文件名同名路由
@@ -31,7 +31,7 @@ papers/
 
 **`id` 是身份，`名称` 是给人看的简称，两者拼成文件名。**
 
-`id` 形如 `arxiv-2502.12110v11`（登记处 + 编号 + 版本），含版本、全库唯一；`名称` 是 `<类型>-<领域或名字>`，如 `Project.A-Mem`。合起来：`arxiv-2502.12110v11.Project.A-Mem.md`。引用锚点是 `id`，不是文件名。
+`id` 形如 `arxiv-2502.12110v11`（登记处 + 编号 + 版本），含版本、全库唯一；`名称` 是 `<类型>.<领域或名字>`，如 `Project.A-Mem`。合起来：`arxiv-2502.12110v11.Project.A-Mem.md`。引用锚点是 `id`，不是文件名。
 
 ### 名称 = `<类型>.<领域或名字>`
 
@@ -39,14 +39,14 @@ papers/
 
 | 类型 | 用在哪 | 例 |
 |---|---|---|
-| `Survey` | 综述 | `survey-Agent Memory` |
-| `Bench` | 基准与评测集 | `bench-LongMemEval` |
-| `Project` | 开源系统或项目 | `project-Mem0`、`project-Zep` |
-| `Model` | 提出的模型 | `model-AtomMem` |
-| `Method` | 提出的方法或机制 | `method-Agentic Memory` |
-| `Analysis` | 特性分析与测量 | `analysis-Memory Workloads` |
+| `Survey` | 综述 | `Survey.Agent Memory` |
+| `Bench` | 基准与评测集 | `Bench.LongMemEval` |
+| `Project` | 开源系统或项目 | `Project.Mem0`、`Project.Zep` |
+| `Model` | 提出的模型 | `Model.AtomMem` |
+| `Method` | 提出的方法或机制 | `Method.Agentic Memory` |
+| `Analysis` | 特性分析与测量 | `Analysis.Memory Workloads` |
 
-类型之后跟论文自称的名字（有的话）或领域：`bench-MemoryAgentBench`、`survey-Memory Mechanism`。**类型已经说明的词要从后半段去掉**（`AMA-Bench` → `Bench.AMA`）。这条规则由测试把守：名字必须是 `<类型>.<非空>`，类型首字母大写，类型不在词表内就报错。
+类型之后跟论文自称的名字（有的话）或领域：`Bench.MemoryAgentBench`、`Survey.Memory Mechanism`。**类型已经说明的词要从后半段去掉**（`AMA-Bench` → `Bench.AMA`）。这条规则由测试把守：名字必须是 `<类型>.<非空>`，类型首字母大写，类型不在词表内就报错。
 
 专名的判定标准是「标题里作者反复使用的那个名字」；没有就别硬造缩写。
 

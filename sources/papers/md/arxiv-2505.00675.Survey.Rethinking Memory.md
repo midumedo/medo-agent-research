@@ -1,7 +1,7 @@
 ---
 stem: arxiv-2505.00675.Survey.Rethinking Memory
 id: arxiv-2505.00675
-keywords: [survey]
+keywords: [memory, survey, long-term-memory, retrieval]
 abstract: "Memory is fundamental to large language model (LLM)-based agents, but existing surveys emphasize application-level use (e.g., personalized dialogue), while overlooking the atomic operations governing memory dynamics. This work categorizes memory into parametric (implicit in model weights) and contextual (explicit external data, structured/unstructured) forms, and defines six core operations: Consolidation, Updating, Indexing, Forgetting, Retrieval, and Condensation. Mapping these dimensions reveals four key research topics: long-term, long-context, parametric modification, and multi-source memory. The taxonomy provides a structured view of memory-related research, benchmarks, and tools, clarifying functional interactions in LLM-based agents and guiding future advancements. The datasets, papers, and tools are publicly available at this https URL ."
 revised: 2025-12-24
 source: "https://arxiv.org/abs/2505.00675"
