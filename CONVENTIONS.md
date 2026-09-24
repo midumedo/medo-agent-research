@@ -16,7 +16,7 @@
 
 不设独立的条目层，不保留根级笔记目录。尚未成熟的想法留在对应研究稿；尚未形成研究的交流留在 Dialogue。
 
-论文库的文件名是**标题 slug**（路由 `pdf/`、`md/`、`json/`、`assets/`），`<registry>-<native-id>` 退为记在 `index.json` 与 front matter 里的**永久身份 `id`**。数据查 [index.json](sources/papers/index.json)，字段与查询见 [INDEX.md](sources/papers/INDEX.md)。命名规则、入库流程与图片管理见 [sources/papers/AGENTS.md](sources/papers/AGENTS.md)，选择理由见 [本轮决定](dialogue/2026-09-22-papers-layout-and-naming.md)。
+论文库的文件名是 **`<id>.<简称>`**（`arxiv-2502.12110v11.A-Mem` 这种；`id` 含登记处、编号与版本），`id` 是永久身份。数据查 index.csv，字段与读法见 sources/papers/AGENTS.md——命名规则、入库流程与图片管理也在这份 AGENTS 里。
 
 ## Deepdive：按对象展开，围绕项目重点选择范围
 

@@ -1,6 +1,6 @@
 # AGENTS.md · 论文库的操作约定
 
-进入 `sources/papers/` 时读这一篇。它规定**怎么做**；数据查 [index.json](index.json)（字段说明见 [INDEX.md](INDEX.md)），历史记在 [CHANGELOG.md](CHANGELOG.md)，给人看的说明在 [README.md](README.md)。四者分工固定，不互相复制。
+进入 `sources/papers/` 时读这一篇。它规定**怎么做**与**字段怎么读**；数据在 index.csv，历史记在 CHANGELOG.md，给人的入口是 README.md。分工固定，不互相复制。
 
 ## 这一层是什么
 
@@ -129,7 +129,7 @@ long-term-memory, context-window, retrieval, rag, evaluation, personalization
 ## 阅读与引用纪律
 
 - md 是**机器转换文本**，不是原文。引用具体数字、表格、公式前，回到 `pdf/` 定位原文位置核对。
-- md 顶部有 YAML front matter（`stem`、`id`、`title`、`registry`、`native_id`、`version`、`kinds`、PDF 指纹、解析器）。身份字段以 front matter 与 index.json 为准；正文是**最后一个 `---` 之后**的内容。
+- md 顶部有 YAML front matter（`stem`、`id`、`keywords`、`abstract`、`date`、`source`、`parser`、`converted_at`、`state`）。身份以 front matter 与 `index.csv` 为准；正文是**最后一个 `---` 之后**的内容。
 - 引用时给出 `id` + 版本 + 章节或图表；版本 unknown 就写 unknown。
 - 转换成功不等于做过视觉核验，`visual_verification` 默认是 `false`。
 
@@ -138,5 +138,5 @@ long-term-memory, context-window, retrieval, rag, evaluation, personalization
 - 不按类型建子目录（分类靠 `keywords`，可多值、可改）。
 - md 的 front matter 是本项目的**登记区**（身份、摘要、关键词、状态），`---` 之后是转换原文——不往正文里写本项目的判断与阅读建议。
 - 不改 PDF 原件，不改已冻结文件名里的 `id` 段，不删 CHANGELOG 行。
-- 不手改 index.json 的生成字段；不因为转换成功就宣称已核实；不在缺失字段上补推测值。
+- 不手改 `index.csv` 的生成字段（`id`、`date`）；`name` 与 `keywords` 是人工与 AI 的判断，重建时按规则保留。不因为转换成功就宣称已核实，不在缺失字段上补推测值。
 - 不把本目录的文件当作已确立的证据——它只是可定位的材料。
