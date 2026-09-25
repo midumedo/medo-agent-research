@@ -1,0 +1,98 @@
+{
+  "EverOS": {
+    "date": "2026-09-08",
+    "msg": "fix(rerank): back off between retries instead of spinning (#441) All three reran",
+    "sha": "5076683ab88d",
+    "slug": "EverMind-AI/EverOS"
+  },
+  "MemOS": {
+    "date": "2026-09-21",
+    "msg": "fix(plugin): harden memory evolution and Hermes installation (#2384) ## Summary ",
+    "sha": "12acdad694d0",
+    "slug": "MemTensor/MemOS"
+  },
+  "MemoryBear": {
+    "date": "2026-09-16",
+    "msg": "Merge pull request #2260 from SuanmoSuanyangTechnology/fix/mutil_dim_vector Fix/",
+    "sha": "c32b937f1ed0",
+    "slug": "SuanmoSuanyangTechnology/MemoryBear"
+  },
+  "OpenHands": {
+    "date": "2026-09-24",
+    "msg": "snapshot 2026-09-24（API 限流未取到 sha）",
+    "sha": "",
+    "slug": "All-Hands-AI/OpenHands"
+  },
+  "Raven": {
+    "date": "",
+    "note": "2026-09-20 抓取，落盘时未记提交指纹",
+    "sha": "",
+    "slug": "EverMind-AI/Raven"
+  },
+  "ReFind": {
+    "date": "2026-08-14",
+    "msg": "Add ReFind paper and citation",
+    "sha": "a80175ca0eeb",
+    "slug": "imlrz/ReFind"
+  },
+  "Tianshu-harness": {
+    "date": "",
+    "note": "2026-09-20 抓取，落盘时未记提交指纹",
+    "sha": "",
+    "slug": "huiliyi37/Tianshu-harness"
+  },
+  "cline": {
+    "date": "2026-09-24",
+    "msg": "snapshot 2026-09-24",
+    "sha": "dd2e190e5c55",
+    "slug": "cline/cline"
+  },
+  "codex": {
+    "date": "",
+    "note": "2026-09-20 抓取，落盘时未记提交指纹",
+    "sha": "",
+    "slug": "openai/codex"
+  },
+  "deepseek-harness": {
+    "date": "",
+    "note": "2026-09-20 抓取，落盘时未记提交指纹",
+    "sha": "",
+    "slug": "deepseek-ai/deepseek-harness"
+  },
+  "gemini-cli": {
+    "date": "2026-09-24",
+    "msg": "snapshot 2026-09-24",
+    "sha": "bedef96ef429",
+    "slug": "google-gemini/gemini-cli"
+  },
+  "mem0": {
+    "date": "2026-09-18",
+    "msg": "docs(cookbooks): Company Brain with Mem0 Platform + Supabase (#7309)",
+    "sha": "a39a802bbc93",
+    "slug": "mem0ai/mem0"
+  },
+  "memU": {
+    "date": "2026-09-10",
+    "msg": "feat(cli): batch developer memorize sessions (#695) Co-authored-by: MrXnneHang <",
+    "sha": "08e1ed4cdf4c",
+    "slug": "NevaMind-AI/memU"
+  },
+  "minimax-cli": {
+    "date": "",
+    "note": "2026-09-20 抓取，落盘时未记提交指纹；台账曾误记为 cli/",
+    "sha": "",
+    "slug": "MiniMax-AI/cli"
+  },
+  "qwen-code": {
+    "date": "2026-09-24",
+    "msg": "snapshot 2026-09-24",
+    "sha": "ffea2d024e52",
+    "slug": "QwenLM/qwen-code"
+  },
+  "vanilla-rag-memory": {
+    "date": "2026-08-11",
+    "msg": "fix: support full Add API contract",
+    "sha": "31ab7bf9cfa3",
+    "slug": "wenxiaof345-ctrl/vanilla-rag-memory"
+  }
+}
