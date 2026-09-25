@@ -99,9 +99,15 @@ def set_values(ident, kind, completeness, keywords):
     if keywords:
         words = [w.strip() for w in re.split(r"[;,]", keywords) if w.strip()]
         # 标记类关键词不能被 --set 抹掉：它们是账本自洽的判据，不是普通标签。
+        # 但要不要保留要看它现在是否还成立——`no-local-snapshot` 描述的是「没有本地目录」，
+        # 抓取成功之后这个标记必须消失，否则账本会声称一份它其实有了的快照不存在。
+        base, _ = repos.split_id(ident)
         for marker in (repos.NO_SNAPSHOT, repos.SNAPSHOT_UNKNOWN):
-            if repos.has_marker(target, marker) and marker not in words:
-                words.append(marker)
+            if not repos.has_marker(target, marker) or marker in words:
+                continue
+            if marker == repos.NO_SNAPSHOT and base in repos.scan_dirs():
+                continue
+            words.append(marker)
         target["keywords"] = words
     repos.write_index(rows)
     print(f"✓ {ident}: kind={target['kind'] or '-'} completeness={target['completeness'] or '-'} "

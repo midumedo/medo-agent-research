@@ -169,6 +169,10 @@ def validate(rows):
                 problems.append(
                     f"{ident}: 有本地目录却没有 snapshot——取不到指纹时要加 `{SNAPSHOT_UNKNOWN}` 标记"
                 )
+            if has_marker(row, NO_SNAPSHOT):
+                problems.append(
+                    f"{ident}: 有本地目录却带着 `{NO_SNAPSHOT}` 标记——抓到了就要把这个标记摘掉"
+                )
         elif not has_marker(row, NO_SNAPSHOT):
             problems.append(f"{ident}: 没有本地目录，但 keywords 缺 `{NO_SNAPSHOT}` 标记")
     return problems

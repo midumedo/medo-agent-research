@@ -33,7 +33,9 @@ def derive(rows, commits):
         meta = commits.get(entry) or {}
         by_id[entry] = {
             "id": entry,
-            "repo": old.get("repo") or meta.get("slug") or "",
+            # `repo` 是身份列，以抓取台账为准：仓库搬家时（如 block/goose → aaif-goose/goose）
+            # 上游 slug 会变，旧行里那份只是缓存。台账里没有该条时（非 git 快照对象）才用旧值。
+            "repo": meta.get("slug") or old.get("repo") or "",
             "keywords": list(old.get("keywords") or []),
             "kind": old.get("kind") or "",
             "completeness": old.get("completeness") or "",

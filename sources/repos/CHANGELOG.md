@@ -14,3 +14,7 @@
 - 2026-09-25 · 退役 · `sources/repos-sources.md` · 手工台账删除。清单进 `index.csv`、事件进本文件、使用规则与逐仓说明进 `AGENTS.md`。理由：它的清单与账本重复、日期与本文件重复，而两份来源不一致时以谁为准没有规定——它确实已经腐坏过一次（`cli/`）。
 - 2026-09-25 · 抓取 · `ZCode` · `zai-org/ZCode`（29628c9acdb8）。
 - 2026-09-25 · 抓取 · `vanilla-rag-memory` · `wenxiaof345-ctrl/vanilla-rag-memory`（31ab7bf9cfa3），旧快照存为 `vanilla-rag-memory@31ab7bf9cfa3/`。
+- 2026-09-25 · 抓取 · `goose` · `aaif-goose/goose`（61830521ad31）。
+- 2026-09-25 · 迁移 · `goose` · 上游由 `block/goose` 迁到 `aaif-goose/goose`，按新地址重抓（`61830521ad31`，349MB）。9-24 那次 900s 超时留下的 `_partial-goose-dl-failed-20260924/` 随之删除——它的存在只在本文里留痕，不再占磁盘。
+- 2026-09-25 · 移除 · `vanilla-rag-memory` · 按用户判断（项目过冷门、不值得占样本位）连同历史快照一起删除：目录两处、账本两行（含 `vanilla-rag-memory@31ab7bf9cfa3`）、`_commits.json` 一条同时清掉。9-21 的入库记录保留在上方，不抹掉曾经收过它这件事。
+- 2026-09-25 · 修复 · `_commits.json` · `fetch.py` 是「读-改-写」：下载动辄几分钟，这段时间里对账本的其它修改会在它落盘时被静默覆盖。实测——删掉的 `vanilla-rag-memory` 被 goose 那次抓取写了回来。这是并发写同一账本的结构缺口，尚未在代码里加锁，使用时避免「一边抓取一边改账本」。

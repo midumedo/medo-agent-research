@@ -83,8 +83,8 @@ repos/
 
 判据是**可机械检查**的，不是给人看的注释：
 
-- `no-local-snapshot`——**没有本地目录**的行（Claude Code 的 npm 产物、抓取失败的 goose、
-  尚未抓到的 ZCode）。防止「账本里有一行」被下游读成「本地有一份可读代码」。
+- `no-local-snapshot`——**没有本地目录**的行。当前只有 Claude Code：它的实现从未发布到 git
+  （发布物是 npm 包里的启动包装器加一个预编译二进制），本地不可能有一份快照。防止「账本里有一行」被下游读成「本地有一份可读代码」。
 - `snapshot-unknown`——**有本地目录但没记指纹**的行。留空而不标记，读不出「没记」，
   会被误读成「sha 就是空」。`status.py --check` 对两者都会拦。
 
@@ -142,11 +142,11 @@ python sources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + �
 
 账本语义：行以 `id` 为键，**只增不删**。一个 checkout 被移走，那一行仍留着——它记的是
 「我们曾在某个 sha 上看过这个仓库」，不是「磁盘现在有什么」。`--prune` 才删除，且带
-`no-local-snapshot` 的行永远不删。实测：把 `vanilla-rag-memory/` 移走后重建，行数不变、
-该行仍在，只多一条「没有本地目录但缺标记」的告警。
+`no-local-snapshot` 的行永远不删。这条语义可自行复现：临时把任意一个 checkout 目录移走再重建，
+行数不变、该行仍在，只多一条「没有本地目录但缺标记」的告警（把它移回来即恢复）。
 
-多版本也实测过：`fetch.py vanilla-rag-memory` 把旧目录改名为
-`vanilla-rag-memory@31ab7bf9cfa3/`，账本因此多一行同名行，判断列从当前快照继承；
+多版本也实测过：`fetch.py <id>` 在上游 sha 变化时把旧目录改名为 `<id>@<旧sha12>/`，账本因此
+多一行同名行，判断列从当前快照继承；
 再跑一次时因为 sha 未变而直接报「无需更新」，不再改名。删除某一行（例如待抓对象
 抓到了、占位的 `unknown` 行该退场）用 `build_index.py --drop <id>`。
 
@@ -179,9 +179,8 @@ python sources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + �
 | `MemOS` | MemTensor/MemOS，`12acdad694d0`。7 个 `SKILL.md` 在 `apps/memos-local-openclaw/skill/`，另有 `load_skill`。 |
 | `EverOS` | EverMind-AI/EverOS，`5076683ab88d`。5 个 `SKILL.md`。 |
 | `ReFind` | imlrz/ReFind，`a80175ca0eeb`。7 类关键词（`read_file`/`read_files`/`str_replace_editor`/`view_image`/`SKILL.md`/`load_skill`/`skill_loader`）整树零命中。 |
-| `vanilla-rag-memory` | wenxiaof345-ctrl/vanilla-rag-memory，`31ab7bf9cfa3`。同上零命中。 |
 | `claude-code` | anthropic/claude-code。**无本地快照**。npm 包 2.1.282 只有 27KB：`cli-wrapper.cjs`、`install.cjs`、`bin/claude.exe`（预编译）、`sdk-tools.d.ts`；读工具只以契约存在（`FileReadInput`），实现一行未发布。 |
-| `goose` | block/goose。**无本地快照**。2026-09-24 抓取超时、tar 只部分解压，已隔离为 `_partial-goose-dl-failed-20260924/`，**不得引用**。 |
+| `goose` | **aaif-goose/goose**（2026-09-25 从 `block/goose` 迁移后重抓），`61830521ad31`。Rust workspace：根 `Cargo.toml` + 子项目清单齐全、零预编译二进制 → `source`。读工具名 **`read`**，实现在 `crates/goose/src/acp/fs.rs:107`（描述 "Read a text file from disk."）；同族还有 `view_image`、`shell`、`search`。仓内 0 个 `SKILL.md`，但插件层会读它（`crates/goose/src/plugins/formats/gemini.rs` 等）。 |
 | `ZCode` | zai-org/ZCode，`29628c9acdb8`，Apache-2.0。**「仓库藏了东西」的实例**：`.gitignore:8-13` 排除了 `prebuilds/`、`bundled-resources/`、`packages/desktop/bundled-resources/`、`packages/desktop/bundled-agents/`、`packages/desktop/bundled-tools/`——README 说"包含 Agent CLI 与运行时源码"，但发行版装载的 agent 与工具不进版本库，所以判 `source-partial`。仓内确有 read 工具（`apps/zcode-cli/packages/core/src/tool/handlers/read.ts:468`，工具名 `Read`）与 skill 服务（`packages/services/src/skills/skillsService.ts` 1238 行、`skillDiscoveryWalk.ts`、`packages/shared/src/skill-scan-policy.ts`）。`harness/` 下只有一个 `remote/`（Docker SSH 沙箱），不是 agent 实现。 |
 
 ## 不做的事

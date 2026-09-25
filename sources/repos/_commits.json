@@ -70,6 +70,11 @@
     "sha": "bedef96ef429",
     "slug": "google-gemini/gemini-cli"
   },
+  "goose": {
+    "date": "2026-09-25",
+    "sha": "61830521ad3134fe1ffa32f62d95ede205216bfc",
+    "slug": "aaif-goose/goose"
+  },
   "mem0": {
     "date": "2026-09-18",
     "msg": "docs(cookbooks): Company Brain with Mem0 Platform + Supabase (#7309)",
@@ -93,10 +98,5 @@
     "msg": "snapshot 2026-09-24",
     "sha": "ffea2d024e52",
     "slug": "QwenLM/qwen-code"
-  },
-  "vanilla-rag-memory": {
-    "date": "2026-09-25",
-    "sha": "31ab7bf9cfa3ee3c4f986e82f6e7a00b134ba8ca",
-    "slug": "wenxiaof345-ctrl/vanilla-rag-memory"
   }
 }

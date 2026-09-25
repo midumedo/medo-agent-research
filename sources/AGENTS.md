@@ -19,7 +19,7 @@
 
 另有「去哪找更多论文」的公开清单索引：paper-sources.md——它不是本项目收录的材料，只是入口。
 
-`repos/` 不进版本库（见 `.gitignore`），所以它的索引放在 `sources/` 这一层；`papers/` 的 `index.csv` 与工具脚本进版本库，索引就放在它自己里面——同一目录下的 `pdf/`、`md/`、`assets/` 重件同样未追踪。
+`repos/` 的 **checkout 内容**不进版本库（见 `.gitignore`），但它的**元数据层**进——`index.csv`（账本）、`_commits.json`（抓取事实）、`AGENTS.md`、`CHANGELOG.md` 与 `_scripts/` 都放在 `repos/` 它自己里面，索引不再另起一层。`papers/` 同理：`index.csv` 与工具脚本进版本库、就放在它自己里面，同一目录下的 `pdf/`、`md/`、`assets/` 重件同样未追踪。
 
 ## 引用要求
 

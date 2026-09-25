@@ -12,10 +12,8 @@ cline,cline/cline,harness,read_files;monorepo-apps-and-sdk;skill-dirs,source,dd2
 codex,openai/codex,harness,read-tool-absent;exec-command-as-reader;skills-loader;snapshot-unknown,source,
 deepseek-harness,deepseek-ai/deepseek-harness,harness,read-tool;limit-2000;stream-10mb;session-skill-remote;snapshot-unknown,source,
 gemini-cli,google-gemini/gemini-cli,harness,read_file;read_many_files;limit-2000;file-size-20mb;skills-cli-subcommands,source,bedef96ef429
-goose,block/goose,harness,fetch-failed;partial-extract-quarantined;no-local-snapshot,unknown,
+goose,aaif-goose/goose,harness,rust-workspace;read-tool-acp-fs;view-image;shell-tool;skill-md-via-plugin,source,61830521ad31
 mem0,mem0ai/mem0,memory,56-skills-published;claude-code-plugin;antigravity-plugin,source,a39a802bbc93
 memU,NevaMind-AI/memU,memory,memory-cli;root-skill-md,source,08e1ed4cdf4c
 minimax-cli,MiniMax-AI/cli,tooling,capability-cli;not-a-harness;publishes-skill-md;snapshot-unknown,source,
 qwen-code,QwenLM/qwen-code,harness,read_file;pdf-pages;notebook;prior-read-enforcement,source,ffea2d024e52
-vanilla-rag-memory,wenxiaof345-ctrl/vanilla-rag-memory,memory,no-read-tool;no-skill-artifacts,source,31ab7bf9cfa3
-vanilla-rag-memory@31ab7bf9cfa3,wenxiaof345-ctrl/vanilla-rag-memory,memory,no-read-tool;no-skill-artifacts,source,31ab7bf9cfa3
