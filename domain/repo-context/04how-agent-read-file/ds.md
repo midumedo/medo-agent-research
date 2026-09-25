@@ -311,6 +311,10 @@ flowchart TD
 1. **harness 会不会自动拼接多文件**。codex 把指令做成多来源列表（`instruction_sources`，见 `sources/repos/codex/codex-rs/app-server-protocol/src/protocol/common.rs:3229-3233` 与 `:3290-3292`），按根到子目录拼接——这种情况下「拆」是零成本的，拆了反而让每份更贴上下文。反过来，如果 harness 只读一个固定文件，「拆」就意味着要么写注入规则，要么有一半内容不会被自动读到。
 2. **单块有没有超 harness 自己的阈值**。Tianshu-harness 把这件事量化了：`sources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:27` 定义 `LARGE_VOLATILE_PAYLOAD_CHARS = 12_000`，同文件 `sources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:49-54` 对 `project-instructions` 段设 **6000 字符**阈值，超了就直接给出建议原文 "split project instructions into always-on core plus task-routed details"。同文件还给了同族阈值：active-claims 条数 > 8（`:58-66`）、git-status > 1200 字符（`:70-76`）、historical-lessons > 800 字符（`:79-`）。模板侧也有一致的要求——`sources/repos/Tianshu-harness/src/bootstrap/__tests__/project-templates.test.ts:57` 断言项目模板「30–120 行，是通用版而不是完整的天枢 AGENTS.md」。
 
+**第三个数据点**：gemini-cli 把上下文文件名做成**可改写的常量 + 复数集合**，而不是硬编码一个字面量。`sources/repos/gemini-cli/packages/core/src/tools/memoryTool.ts:11` 定义 `DEFAULT_CONTEXT_FILENAME = 'GEMINI.md'`；`sources/repos/gemini-cli/packages/cli/src/config/config.ts:627` 用 `resetGeminiMdFilename(DEFAULT_CONTEXT_FILENAME)` 允许改写它；扩展配置接受复数形式 `contextFileNames`（`sources/repos/gemini-cli/packages/cli/src/commands/extensions/validate.ts:51`）；`/memory` 命令的自述原文是 "Lists the paths of the **GEMINI.md files** in use"（`sources/repos/gemini-cli/packages/a2a-server/src/commands/memory.ts:65`）——**复数**说明它本就同时吃多份。仓库根也确实有一份 `sources/repos/gemini-cli/GEMINI.md`。
+
+> 取证提示：早先对 `packages/` 搜字面量 `GEMINI.md` 零命中，一度被误读成「该版本没有这个文件名」。实际原因是代码走常量而非字面量。**搜不到字面量不等于机制不存在**——先找常量定义。
+
 **结论**：`AGENTS.md` 该拆还是该合，答案取决于「喂给谁」。给 codex 类的 harness，拆成层级化多文件是自然形态；给单文件注入的 harness，先用它的阈值判一次，超了就按「薄常驻 + 厚按需」切，且外置的那部分必须**能按需取回**——否则切了也读不到，只是把内容藏起来了。
 
 ### 7.2 账本 CSV 能不能加宽
