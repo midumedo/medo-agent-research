@@ -142,8 +142,13 @@ python sources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + �
 
 账本语义：行以 `id` 为键，**只增不删**。一个 checkout 被移走，那一行仍留着——它记的是
 「我们曾在某个 sha 上看过这个仓库」，不是「磁盘现在有什么」。`--prune` 才删除，且带
-`no-local-snapshot` 的行永远不删。实测：把 `vanilla-rag-memory/` 移走后重建，账本仍是
-19 行，该行仍在，只多一条「没有本地目录但缺标记」的告警。
+`no-local-snapshot` 的行永远不删。实测：把 `vanilla-rag-memory/` 移走后重建，行数不变、
+该行仍在，只多一条「没有本地目录但缺标记」的告警。
+
+多版本也实测过：`fetch.py vanilla-rag-memory` 把旧目录改名为
+`vanilla-rag-memory@31ab7bf9cfa3/`，账本因此多一行同名行，判断列从当前快照继承；
+再跑一次时因为 sha 未变而直接报「无需更新」，不再改名。删除某一行（例如待抓对象
+抓到了、占位的 `unknown` 行该退场）用 `build_index.py --drop <id>`。
 
 ## 取证纪律
 
@@ -177,7 +182,7 @@ python sources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + �
 | `vanilla-rag-memory` | wenxiaof345-ctrl/vanilla-rag-memory，`31ab7bf9cfa3`。同上零命中。 |
 | `claude-code` | anthropic/claude-code。**无本地快照**。npm 包 2.1.282 只有 27KB：`cli-wrapper.cjs`、`install.cjs`、`bin/claude.exe`（预编译）、`sdk-tools.d.ts`；读工具只以契约存在（`FileReadInput`），实现一行未发布。 |
 | `goose` | block/goose。**无本地快照**。2026-09-24 抓取超时、tar 只部分解压，已隔离为 `_partial-goose-dl-failed-20260924/`，**不得引用**。 |
-| `zcode` | 上游未知。**无本地快照**、尚无一手证据。抓取之后才能判定 `completeness`。 |
+| `ZCode` | zai-org/ZCode，`29628c9acdb8`，Apache-2.0。**「仓库藏了东西」的实例**：`.gitignore:8-13` 排除了 `prebuilds/`、`bundled-resources/`、`packages/desktop/bundled-resources/`、`packages/desktop/bundled-agents/`、`packages/desktop/bundled-tools/`——README 说"包含 Agent CLI 与运行时源码"，但发行版装载的 agent 与工具不进版本库，所以判 `source-partial`。仓内确有 read 工具（`apps/zcode-cli/packages/core/src/tool/handlers/read.ts:468`，工具名 `Read`）与 skill 服务（`packages/services/src/skills/skillsService.ts` 1238 行、`skillDiscoveryWalk.ts`、`packages/shared/src/skill-scan-policy.ts`）。`harness/` 下只有一个 `remote/`（Docker SSH 沙箱），不是 agent 实现。 |
 
 ## 不做的事
 

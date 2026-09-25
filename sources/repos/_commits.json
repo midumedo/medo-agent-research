@@ -41,6 +41,11 @@
     "sha": "",
     "slug": "huiliyi37/Tianshu-harness"
   },
+  "ZCode": {
+    "date": "2026-09-25",
+    "sha": "29628c9acdb81b703bbd4080c207a0e7ce5e276e",
+    "slug": "zai-org/ZCode"
+  },
   "cline": {
     "date": "2026-09-24",
     "msg": "snapshot 2026-09-24",
@@ -90,9 +95,8 @@
     "slug": "QwenLM/qwen-code"
   },
   "vanilla-rag-memory": {
-    "date": "2026-08-11",
-    "msg": "fix: support full Add API contract",
-    "sha": "31ab7bf9cfa3",
+    "date": "2026-09-25",
+    "sha": "31ab7bf9cfa3ee3c4f986e82f6e7a00b134ba8ca",
     "slug": "wenxiaof345-ctrl/vanilla-rag-memory"
   }
 }

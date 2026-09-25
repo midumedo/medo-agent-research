@@ -38,10 +38,12 @@ def derive(rows, commits):
             "kind": old.get("kind") or "",
             "completeness": old.get("completeness") or "",
             # 有指纹就用，没有就留空——由 `snapshot-unknown` 标记说明「没记」，不猜当前 sha。
-            "snapshot": old.get("snapshot") or (meta.get("sha") or ""),
+            # 无论来自旧行还是 `_commits.json`，账本一律只存前 12 位：完整 sha 留在
+            # `_commits.json`，账本要的是能一眼认出的版本号。
+            "snapshot": (old.get("snapshot") or meta.get("sha") or "")[:12],
         }
 
-    # 历史快照行（`<id>@<sha12>`）与非 checkout 行：原样保留，只把 repo/snapshot 补全。
+    # 历史快照行（`<id>@<sha12>`）与非 checkout 行：原样保留，只把 repo/snapshot/判断列补全。
     for ident, row in by_id.items():
         base, sha = repos.split_id(ident)
         if ident == base and base in dirs:
@@ -50,6 +52,13 @@ def derive(rows, commits):
             row["repo"] = (commits.get(base) or {}).get("slug") or ""
         if not row.get("snapshot") and sha:
             row["snapshot"] = sha
+        # 历史快照是新行、没有旧行可继承，判断列从当前快照继承——同一个仓库的开放度
+        # 不会因为「这是旧的哪一份」而改变。
+        current = by_id.get(base)
+        if current:
+            for field in repos.JUDGEMENT_FIELDS:
+                if not row.get(field):
+                    row[field] = current.get(field) or row.get(field)
     return list(by_id.values())
 
 
@@ -72,10 +81,16 @@ def main():
                     help="与重建结果逐字节比对，不一致则非零退出")
     ap.add_argument("--prune", action="store_true",
                     help="删除磁盘上已消失的行（带 no-local-snapshot 的永不删）")
+    ap.add_argument("--drop", action="append", default=[], metavar="ID",
+                    help="显式删除某一行（例：待抓对象抓到了，占位的 unknown 行该退场）")
     args = ap.parse_args()
 
     rows = derive(repos.read_index(), repos.read_commits())
     dropped = []
+    if args.drop:
+        wanted = set(args.drop)
+        dropped = [r["id"] for r in rows if r["id"] in wanted]
+        rows = [r for r in rows if r["id"] not in wanted]
     if args.prune:
         rows, dropped = prune(rows)
 
