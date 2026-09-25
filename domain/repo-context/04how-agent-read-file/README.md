@@ -13,12 +13,15 @@
 | 文件 | 内容 |
 |---|---|
 | `README.md`（本文件） | 范围、方法、证据边界、索引字段口径 |
-| `ds.md` | 主研究稿：逐对象拆解、横向对照、schema 与文案原文、开源形态判定，**以及第 7 节「read 能力如何反过来决定文档形态」** |
-| `insights.md` | **判断层**：五条见解，逐条「观察→推断→反例→待验证」。不可单独引用，引用必须回 `ds.md` 找锚点 |
-| `index.csv` | 索引本体：一行一个对象，11 列 |
+| `ds/read-tool-and-skill-loading.md` | 主研究稿：逐对象拆解、横向对照、schema 与文案原文、开源形态判定，**以及第 7 节「read 能力如何反过来决定文档形态」** |
+| `ds/insights.md` | **判断层**：五条见解，逐条「观察→推断→反例→待验证」。不可单独引用，引用必须回 `ds/read-tool-and-skill-loading.md` 找锚点 |
+| `index.csv` | 索引本体：一行一个对象，10 列 |
+
+`ds/` 是按产出者分的子目录（本项目约定：`{ai}/` 是该 AI 的工作区，见 `domain\repo-context\INDEX.md`），
+以后其它 AI 的稿子并列放进来即可，不必挤进同一个文件名前缀。
 
 事实层与判断层分家的理由：这份研究的过程性内容（哪些是读到的、哪些是我推的）比结论更重要。
-`ds.md` 每条都能指到 file:line 或命令；`insights.md` 每条都带反例与待验证项——**把两者混在
+`ds/read-tool-and-skill-loading.md` 每条都能指到 file:line 或命令；`ds/insights.md` 每条都带反例与待验证项——**把两者混在
 一份文档里，读者无法区分哪句可核对**。
 
 ## 方法：三条取证通道，只有两条能用
@@ -37,7 +40,6 @@
 |---|---|
 | `harness` | 本地目录名或产品名 |
 | `repo` | 上游仓库标识；闭源写 `—（闭源）` |
-| `license` | 只写实际读到的 LICENSE 首行结论；没读到的写 `未记录` |
 | `kind` | `coding-harness` / `capability-cli` / `memory-library` / `app-only-repo` / `closed-binary` / `closed-client` |
 | `read_tool` | **面向模型**的工具名；没有专用工具写 `（无）` |
 | `read_impl` | 实现文件与主入口行号；路径相对该对象自己的仓库根 |
@@ -46,6 +48,8 @@
 | `skill_impl` | 加载器或 SKILL.md 所在路径 |
 | `evidence` | 可复现的定位：file:line、命令、或下载时的 sha＋日期 |
 | `status` | **只取三值**，见下 |
+
+**为什么不设 `license` 列**：这是研究材料的索引，不是合规清单。许可证与「这条来源能不能被引用、能支撑什么结论」无关，且上游随时可改——放进账本只会引入一个与研究判断无关的 churn 源。个别对象的许可证写在各对象的正文里（如 ZCode 的 Apache-2.0、OpenHands 的 MIT）。
 
 `status` 三值（缺一不可的字面区分）：
 
@@ -57,5 +61,5 @@
 
 1. **`sources/repos/` 的提交指纹不完整**。`sources/repos/_commits.json` 现有 16 条，其中 6 个目录（codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands）**没有指纹记录**——账本以 `snapshot-unknown` 标记。对它们的断言必须带「该 checkout 版本」限定，不能写成产品当前行为。
 2. **手工台账 `sources/repos-sources.md` 已于 2026-09-25 退役**：清单进 `sources/repos/index.csv`、事件进 `sources/repos/CHANGELOG.md`、规则进 `sources/repos/AGENTS.md`。它腐坏过一次（把 `minimax-cli/` 记成 `cli/`），退役的正是这类重复来源。
-3. **`_partial-goose-dl-failed-20260924/` 是废料**：goose 的 tar.gz 在 900s 超时后只解压了一部分，目录内文件齐但不完整。不要引用它，也不要 `git add`（该目录本就在 `.gitignore` 内）。
+3. **goose 换过地址**：上游由 `block/goose` 迁到 `aaif-goose/goose`，2026-09-25 按新地址重抓（`61830521ad31`）并入账；此前 900s 超时留下的残缺目录 `_partial-goose-dl-failed-20260924/` 已删除。引用 goose 时以 `sources/repos/index.csv` 的 `snapshot` 列为准。
 4. **记忆库不是「与本题无关」**：mem0 发布 56 个 SKILL.md、MemOS 7 个、EverOS 5 个、MemoryBear 自建 `load_skill_tools`。它们扮演的是 skill 的**生产/消费方**，不是 harness。
