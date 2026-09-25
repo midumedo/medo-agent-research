@@ -38,8 +38,8 @@ Deepdive 与 Analysis 在根级并列，分别按对象和问题组织。Domain 
 
 ## 项目设计与协作
 
-[ARCHITECTURE.md](ARCHITECTURE.md) 解释整体设计；[本轮架构研究](analysis/knowledge-architecture-2026-09-20.md) 给出诊断、外部参考与取舍理由。AI 协作入口是 [AGENTS.md](AGENTS.md)，按任务读取相关材料，无需每轮遍读假设和历史。
+ARCHITECTURE.md 解释整体设计；[本轮架构研究](analysis/knowledge-architecture-2026-09-20.md) 给出诊断、外部参考与取舍理由。AI 协作入口是 AGENTS.md，按任务读取相关材料，无需每轮遍读假设和历史。
 
-修改文档参考 [CONVENTIONS.md](CONVENTIONS.md)，表达与证据参考 [STYLE.md](STYLE.md)，后期成品的内容选择参考 [TRADEOFFS.md](TRADEOFFS.md)。
+修改文档、表达与成品取舍的规则见 CONVENTIONS.md。
 
-项目已建立 Git 版本历史，后续改动通过提交追溯，不再逐轮复制快照。[.gitignore](.gitignore) 排除第三方仓库、本地凭据与缓存等；研究正文、论文原件与来源记录正常跟踪。既有 [历史快照](archive/2026-09-20-before-focused-research/SNAPSHOT.md) 保留原用途。
+项目已建立 Git 版本历史，后续改动通过提交追溯。[.gitignore](.gitignore) 排除第三方仓库、本地凭据与缓存等；研究正文、论文原件与来源记录正常跟踪。既有 [历史快照](archive/2026-09-20-before-focused-research/SNAPSHOT.md) 保留原用途。

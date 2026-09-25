@@ -2,7 +2,7 @@
 
 ## 项目与当前阶段
 
-面向已了解 LLM 与 Agent 的进阶读者，研究 Memory、Context 与 Harness，建立可审查、可纠错的认知体系。当前先拆项目、读论文、研究问题，再形成主题综合；教材和手册是后期产物，结构与顺序尚未定型。
+本项目要建立可审查、可纠错的认知体系；项目定位与读者见 README.md。当前先拆项目、读论文、研究问题，再形成主题综合；教材和手册是后期产物，结构与顺序尚未定型。
 
 这是个人项目且处于初期，允许破坏式重构，不要把注意力放在安全门禁等。
 
@@ -16,8 +16,8 @@
 
 ## 按当前任务读取
 
-研究具体对象或问题时，读对应正文与来源；需要了解积累时看 [README.md](README.md) 或 [主题入口](domain/index.md)。不要求每轮加载全部规则、研究假设与历史记录。
+研究具体对象或问题时，读对应正文与来源；需要了解积累时看 README.md 或 [主题入口](domain/index.md)。不要求每轮加载全部规则、研究假设与历史记录。
 
-子目录有自己的 AGENTS.md，进入该子树时以它为准：来源层见 [sources/AGENTS.md](sources/AGENTS.md)，论文库的标识、目录与入库流程见 [sources/papers/AGENTS.md](sources/papers/AGENTS.md)。
+各子树各有 AGENTS.md，进入时以该子树的那份为准。当前有 `sources/` 与 `domain/` 两族：来源层约定见 sources/AGENTS.md，论文库的标识、目录与入库流程见 sources/papers/AGENTS.md，领域主题约定见 domain/AGENTS.md。
 
-修改或迁移文档前读 [CONVENTIONS.md](CONVENTIONS.md) 的相关部分；撰写或修订论证时读 [STYLE.md](STYLE.md)。设计结构时参考 [ARCHITECTURE.md](ARCHITECTURE.md)，制作后期成品时再读 [TRADEOFFS.md](TRADEOFFS.md)。使用 Git 保存可审查版本，保留已有未提交工作；完成后检查受影响的链接与当前入口，不再为每次修改复制快照。
+修改或迁移文档前读 CONVENTIONS.md 的相关部分；撰写或修订论证时读 STYLE.md。设计结构时参考 ARCHITECTURE.md，制作后期成品时再读 TRADEOFFS.md。使用 Git 保存可审查版本，保留已有未提交工作；完成后检查受影响的链接与当前入口。

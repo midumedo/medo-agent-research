@@ -76,4 +76,4 @@ AI 先按任务找到对象、问题或主题，再读取相关正文与证据�
 
 目录归属和修改方式只在 [CONVENTIONS.md](CONVENTIONS.md) 维护，证据表达见 [STYLE.md](STYLE.md)。
 
-项目已使用 Git 保存文件版本，日常改动不再复制快照。既有历史材料保留引用。教材的暂定章节和组织理由从 [Output](output/README.md) 进入，它们是教学路线草案，不限制 Domain 的展开。
+项目版本与历史材料的保留方式见 CONVENTIONS.md。教材的暂定章节和组织理由从 [Output](output/README.md) 进入，它们是教学路线草案，不限制 Domain 的展开。
