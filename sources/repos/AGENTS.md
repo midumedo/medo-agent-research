@@ -55,13 +55,13 @@ repos/
   index.csv  _commits.json  CHANGELOG.md  AGENTS.md
   _scripts/            六步工具：repos / fetch / scan / build_index / status / pipeline
   <id>/                当前快照（目录名即身份）
-  <id>@<sha12>/        被替换下来的历史快照
   _partial-*/          抓取失败的残缺目录，不建账本行
 ```
 
 - **目录名即身份**，`id` 就是目录名，改名即换身份。
-- 更新一个已有仓库时，`fetch.py` 先把旧目录改名为 `<id>@<旧sha12>`，再把新快照解压进
-  `<id>/`。账本因此**一行一快照**，旧行保留，既有结论仍能回溯到当时的 sha。
+- 更新一个已有仓库时，`fetch.py` **就地覆盖**：先下到 `<id>.incoming/`，确认完整再换上去。
+  **不保留旧版本副本**——本项目要的是「现在这一版是什么」，不是版本考古；真要比某个历史版本，
+  按引用里的上游 sha 用 `fetch.py` 重现即可，没必要在本地囤一棵旧树（省下的是 2G 量级）。
 - 抓取失败的残缺目录用 `_partial-` 前缀隔离，`scan_dirs()` 会跳过它，账本里不建行——
   只在 `CHANGELOG.md` 记一条事件。
 
@@ -69,7 +69,7 @@ repos/
 
 | 列 | 语义 | 谁写 |
 |---|---|---|
-| `id` | 目录名；历史快照为 `<id>@<sha12>` | 脚本（从磁盘） |
+| `id` | 目录名，即身份（一个仓库一个目录，无副本） | 脚本（从磁盘） |
 | `repo` | 上游 `owner/name` | 脚本（从 `_commits.json`）或人工 |
 | `kind` | 类型，封闭集 | **人工/AI 判断**，重建保留 |
 | `keywords` | 关键词介绍，`;` 分隔，≤6 词 | **人工/AI 判断**，重建保留 |
@@ -135,7 +135,7 @@ python sources/repos/_scripts/build_index.py        # 以账本重建 index.csv�
 python sources/repos/_scripts/build_index.py --check # 与重建结果逐字节比对
 python sources/repos/_scripts/scan.py --all         # 逐仓开放度证据（kind/completeness 的判据）
 python sources/repos/_scripts/scan.py --set <id> --completeness source --kind harness --keywords a;b
-python sources/repos/_scripts/fetch.py <owner/name> # 抓取；已有目录则旧版改名 <id>@<sha12>
+python sources/repos/_scripts/fetch.py <owner/name> # 抓取；已有目录则就地覆盖（不留旧版本）
 python sources/repos/_scripts/fetch.py --all        # 按账本更新全部（不改判断列）
 python sources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + 终检
 ```
@@ -145,10 +145,10 @@ python sources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + �
 `no-local-snapshot` 的行永远不删。这条语义可自行复现：临时把任意一个 checkout 目录移走再重建，
 行数不变、该行仍在，只多一条「没有本地目录但缺标记」的告警（把它移回来即恢复）。
 
-多版本也实测过：`fetch.py <id>` 在上游 sha 变化时把旧目录改名为 `<id>@<旧sha12>/`，账本因此
-多一行同名行，判断列从当前快照继承；
-再跑一次时因为 sha 未变而直接报「无需更新」，不再改名。删除某一行（例如待抓对象
-抓到了、占位的 `unknown` 行该退场）用 `build_index.py --drop <id>`。
+更新实测过两条边界：**sha 未变时不下载**（`fetch.py <id>` 直接报「已是 …，无需更新」）；
+**下载失败不毁树**——先落 `<id>.incoming/`，确认完整才换上去，所以 404 或中途断线时本地原有
+那棵树原封不动（实测：对伪造 slug 抓取只留一条失败记录，`ReFind/` 的 24 个文件一个没动）。
+删除某一行（例如待抓对象抓到了、占位的 `unknown` 行该退场）用 `build_index.py --drop <id>`。
 
 ## 取证纪律
 
@@ -188,6 +188,5 @@ python sources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + �
 - 不手改 `index.csv` 的身份列（`id`/`repo`/`snapshot`）：改上游就 `fetch.py`，改目录就
   `build_index.py`。判断列随手改没问题。
 - 不在本目录写本项目的结论、阅读卡片或比较判断。
-- 不为「看起来该分类」而移动或重命名第三方 checkout——唯一允许的改名是 `fetch.py`
-  给旧快照加 `@<sha12>`。
+- 不为「看起来该分类」而移动或重命名第三方 checkout。更新只做就地覆盖，不产生副本目录。
 - 不因为「文件在本地」就宣称内容已核实；不在缺失字段上补推测值（尤其 `snapshot`）。

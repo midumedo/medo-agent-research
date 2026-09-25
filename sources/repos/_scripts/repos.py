@@ -10,9 +10,8 @@
 所以 `index.csv` 不能手改身份列：改上游就重抓（`fetch.py`），改目录就重跑
 `build_index.py`。判断列随手改没关系，重建会保留。
 
-目录名即身份：
-  `<id>/`              当前快照
-  `<id>@<sha12>/`      被替换下来的历史快照（`fetch.py` 自动改名），账本里各占一行
+目录名即身份：`<id>/` 就是该仓库当前快照，一个仓库只有一个目录。**不留多版本副本**——
+要特定版本就按引用里的上游 sha 用 `fetch.py` 重现，不在本地囤旧树（见 fetch.py 的更新语义）。
 """
 
 import csv
@@ -56,24 +55,6 @@ def index_path():
 
 def commits_path():
     return os.path.join(BASE, "_commits.json")
-
-
-def split_id(ident):
-    """`codex@a39a802bbc93` -> `("codex", "a39a802bbc93")`；后缀不是 sha 时 sha 为 `""`。"""
-    match = _ID_RE.match((ident or "").strip())
-    if not match:
-        return (ident or "").strip(), ""
-    return match.group(1), match.group(2) or ""
-
-
-def base_of(ident):
-    """目录名 -> 基础 id，**不看后缀是不是合法 sha**。
-
-    `codex@a39a802bbc93` 与 `codex@unknown-2026-09-25` 都要回到 `codex`。后者是
-    「落盘时没记指纹」的旧快照命名（见 fetch.py），它的 `split_id` 后缀取不到 sha，
-    早先因此被当成一个独立 id 处理，历史行于是拿不到该有的 `snapshot-unknown` 标记。
-    """
-    return (ident or "").strip().split("@", 1)[0]
 
 
 def scan_dirs():
@@ -146,7 +127,7 @@ def find(token):
         return None
     rows = read_index()
     for row in rows:
-        if token in (row.get("id"), split_id(row.get("id"))[0], row.get("repo")):
+        if token in (row.get("id"), row.get("repo")):
             return row
     for row in rows:
         if (row.get("repo") or "").split("/")[-1] == token:
@@ -172,8 +153,8 @@ def validate(rows):
         comp = row.get("completeness") or ""
         if comp and comp not in COMPLETENESS:
             problems.append(f"{ident}: completeness={comp} 不在封闭集内")
-        base = base_of(ident)
-        has_dir = ident in scan_dirs() or base in scan_dirs()
+        base = ident
+        has_dir = ident in scan_dirs()
         if has_dir:
             if not row.get("snapshot") and not has_marker(row, SNAPSHOT_UNKNOWN):
                 problems.append(

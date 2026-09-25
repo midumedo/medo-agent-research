@@ -3,12 +3,13 @@
 走 `codeload.github.com` 的 tar.gz（本环境 git 协议慢），因此落盘树**不含 `.git` 历史**。
 提交 sha 由 GitHub API 单独取；取不到就留空并标注，**不拿今天的 main 冒充落盘版本**。
 
-多版本规则：更新一个已有目录时，先把旧快照改名 `<id>@<旧sha12>`，再解压新的到 `<id>/`。
-账本因此一行一快照，旧行保留，既有结论仍能回溯到当时的版本。旧 sha 没记过时退化为
-`<id>@unknown-<今日>`，仍然是「这是旧的那一份」而不是假装它有版本号。
+更新语义：**就地替换，不留旧版本副本**。本项目不需要同一仓库的多个版本并存——要的是
+「现在这一版是什么」，而不是版本考古；真要做版本对比，引用里写明上游 sha 即可从 codeload
+重现那一份，没必要在本地多存一棵树。所以更新时先下到 `<id>.incoming/`，确认完整后再换上去，
+中途失败则原树不动。
 
 Usage:
-    fetch.py <owner/name> [--branch main] [--drop-old]
+    fetch.py <owner/name> [--branch main]
     fetch.py <id>                     # 已在 _commits.json 里的目录名
     fetch.py --all                    # 按账本更新全部（跳过没有本地目录的行）
 """
@@ -126,7 +127,7 @@ def changelog(line):
         f.write(line if line.endswith("\n") else line + "\n")
 
 
-def fetch(token, branch=None, drop_old=False, write_changelog=True):
+def fetch(token, branch=None, write_changelog=True):
     commits = repos.read_commits()
     today = datetime.date.today().isoformat()
 
@@ -149,38 +150,26 @@ def fetch(token, branch=None, drop_old=False, write_changelog=True):
 
     new_sha = default_branch_sha(slug, branch)
     # 账本里的旧 sha 只存 12 位，API 给的是 40 位——按前缀比，否则同版本也会被当成「变了」
-    # 而白改名一次（本轮实测踩到：upstream 没动，却生出了一个重复的历史快照目录）。
+    # 而白白重下一整包（本轮实测踩到：upstream 没动却重下了一次）。
     if existed and old_sha and new_sha and old_sha[:12] == new_sha[:12]:
         print(f"= {ident}: 已是 {new_sha[:12]}，无需更新")
         return True
 
-    if existed:
-        if old_sha:
-            old_name = f"{ident}@{old_sha[:12]}"
-        else:
-            old_name = f"{ident}@unknown-{today}"
-        print(f"→ 旧快照改名 {ident}/ → {old_name}/")
-        shutil.move(dest, os.path.join(repos.BASE, old_name))
-        if drop_old:
-            shutil.rmtree(os.path.join(repos.BASE, old_name))
-            print(f"  （--drop-old：已删除 {old_name}/）")
-    else:
-        os.makedirs(dest, exist_ok=True)
+    # 就地替换，**不留旧版本副本**——本项目不需要同一仓库的多个版本并存（见 AGENTS.md）。
+    # 但顺序要讲究：先下到临时目录，成功了再换上去。直接往 dest 里覆盖的话，
+    # 一次中途失败的下载就会把原本可用的一棵树搭进去。
+    incoming = dest + ".incoming"
+    shutil.rmtree(incoming, ignore_errors=True)
+    os.makedirs(incoming, exist_ok=True)
 
-    ok = download(slug, branch, dest)
-    if not ok:
-        if existed:
-            # 下载/解压失败时把旧的挪回来，别让目录停在半新半旧的状态。
-            if os.path.exists(dest):
-                shutil.rmtree(dest)
-            fallback = old_name if existed else None
-            if fallback and os.path.isdir(os.path.join(repos.BASE, fallback)):
-                shutil.move(os.path.join(repos.BASE, fallback), dest)
-                print(f"← 已还原 {ident}/（原快照回位）")
-        else:
-            if os.path.exists(dest):
-                shutil.rmtree(dest)
+    if not download(slug, branch, incoming):
+        shutil.rmtree(incoming, ignore_errors=True)
+        print(f"✗ {ident}: 未更新；本地保持原样{'（仍无快照）' if not existed else ''}")
         return False
+
+    if os.path.exists(dest):
+        shutil.rmtree(dest)
+    shutil.move(incoming, dest)
 
     commits[ident] = {
         "slug": slug,
@@ -191,9 +180,9 @@ def fetch(token, branch=None, drop_old=False, write_changelog=True):
     print(f"✓ {ident}: {slug} {new_sha[:12] or '(指纹未取到)'}")
 
     if write_changelog:
-        prior = f"，旧快照存为 `{old_name}/`" if existed and not drop_old else ""
         sha_text = new_sha[:12] if new_sha else "sha 未取到（API 限流）"
-        changelog(f"- {today} · 抓取 · `{ident}` · `{slug}`（{sha_text}）{prior}。")
+        changelog(f"- {today} · 抓取 · `{ident}` · `{slug}`（{sha_text}）"
+                  + ("，覆盖原有快照。" if existed else "。"))
     return True
 
 
@@ -201,7 +190,6 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("target", nargs="?", help="owner/name 或账本里的目录名")
     ap.add_argument("--branch", default=None, help="默认问 API 取默认分支，取不到回落 main")
-    ap.add_argument("--drop-old", action="store_true", help="不保留旧快照（默认保留为 <id>@<sha12>/）")
     ap.add_argument("--all", action="store_true", help="按账本更新全部有本地目录的行")
     ap.add_argument("--no-changelog", action="store_true")
     args = ap.parse_args()
@@ -216,8 +204,7 @@ def main():
 
     failed = []
     for token in targets:
-        if not fetch(token, branch=args.branch, drop_old=args.drop_old,
-                     write_changelog=not args.no_changelog):
+        if not fetch(token, branch=args.branch, write_changelog=not args.no_changelog):
             failed.append(token)
     if failed:
         print(f"\n{len(failed)} 个未成功：{'、'.join(failed)}")

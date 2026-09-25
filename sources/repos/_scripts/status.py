@@ -77,8 +77,8 @@ def main():
     problems.extend(repos.validate(rows))
 
     dirs = set(repos.scan_dirs())
-    # 逐目录比对**完整目录名**：历史快照的目录名就是 `<id>@<sha12>`，账本里也有一行同名。
-    # 早先这里把行 id 压成 base 再比，于是每个历史快照目录都被误报成「账本里没有行」。
+    # 直接用完整目录名比对：一个仓库一个目录，`id` 就是目录名。（早先允许 `<id>@<sha12>` 那种
+    # 历史快照目录，比对时得先把行 id 压成 base；现在不留副本，那层间接已随副本一起拆掉。）
     row_ids = {row["id"] for row in rows}
     for missing in sorted(dirs - row_ids):
         problems.append(f"{missing}: 磁盘上有 checkout，账本里没有行")
