@@ -59,11 +59,21 @@ def commits_path():
 
 
 def split_id(ident):
-    """`codex@a39a802bbc93` -> `("codex", "a39a802bbc93")`；无 `@` 时 sha 为 `""`。"""
+    """`codex@a39a802bbc93` -> `("codex", "a39a802bbc93")`；后缀不是 sha 时 sha 为 `""`。"""
     match = _ID_RE.match((ident or "").strip())
     if not match:
         return (ident or "").strip(), ""
     return match.group(1), match.group(2) or ""
+
+
+def base_of(ident):
+    """目录名 -> 基础 id，**不看后缀是不是合法 sha**。
+
+    `codex@a39a802bbc93` 与 `codex@unknown-2026-09-25` 都要回到 `codex`。后者是
+    「落盘时没记指纹」的旧快照命名（见 fetch.py），它的 `split_id` 后缀取不到 sha，
+    早先因此被当成一个独立 id 处理，历史行于是拿不到该有的 `snapshot-unknown` 标记。
+    """
+    return (ident or "").strip().split("@", 1)[0]
 
 
 def scan_dirs():
@@ -162,8 +172,8 @@ def validate(rows):
         comp = row.get("completeness") or ""
         if comp and comp not in COMPLETENESS:
             problems.append(f"{ident}: completeness={comp} 不在封闭集内")
-        base, _ = split_id(ident)
-        has_dir = base in scan_dirs()
+        base = base_of(ident)
+        has_dir = ident in scan_dirs() or base in scan_dirs()
         if has_dir:
             if not row.get("snapshot") and not has_marker(row, SNAPSHOT_UNKNOWN):
                 problems.append(

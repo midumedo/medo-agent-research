@@ -1,32 +1,27 @@
 {
   "EverOS": {
-    "date": "2026-09-08",
-    "msg": "fix(rerank): back off between retries instead of spinning (#441) All three reran",
-    "sha": "5076683ab88d",
+    "date": "2026-09-25",
+    "sha": "462ebf9fd59b55c03fefb8eec855c62500f2a3cf",
     "slug": "EverMind-AI/EverOS"
   },
   "MemOS": {
-    "date": "2026-09-21",
-    "msg": "fix(plugin): harden memory evolution and Hermes installation (#2384) ## Summary ",
-    "sha": "12acdad694d0",
+    "date": "2026-09-25",
+    "sha": "a7367d07e55db61099f7b4e2c1108bc5831a24f3",
     "slug": "MemTensor/MemOS"
   },
   "MemoryBear": {
-    "date": "2026-09-16",
-    "msg": "Merge pull request #2260 from SuanmoSuanyangTechnology/fix/mutil_dim_vector Fix/",
-    "sha": "c32b937f1ed0",
+    "date": "2026-09-25",
+    "sha": "85004dacaf2f05d2f596b58713116d65c7f6ccd3",
     "slug": "SuanmoSuanyangTechnology/MemoryBear"
   },
   "OpenHands": {
-    "date": "2026-09-24",
-    "msg": "snapshot 2026-09-24（API 限流未取到 sha）",
-    "sha": "",
+    "date": "2026-09-25",
+    "sha": "c17fc6538d573d45bbf6675814392b1e3b9bacda",
     "slug": "All-Hands-AI/OpenHands"
   },
   "Raven": {
-    "date": "",
-    "note": "2026-09-20 抓取，落盘时未记提交指纹",
-    "sha": "",
+    "date": "2026-09-25",
+    "sha": "e17694113b133a1522576a3daa46fc07aa0b8c4d",
     "slug": "EverMind-AI/Raven"
   },
   "ReFind": {
@@ -36,9 +31,8 @@
     "slug": "imlrz/ReFind"
   },
   "Tianshu-harness": {
-    "date": "",
-    "note": "2026-09-20 抓取，落盘时未记提交指纹",
-    "sha": "",
+    "date": "2026-09-25",
+    "sha": "79c10d30ba4fff8aaccfed30410d75050cecb451",
     "slug": "huiliyi37/Tianshu-harness"
   },
   "ZCode": {
@@ -53,15 +47,13 @@
     "slug": "cline/cline"
   },
   "codex": {
-    "date": "",
-    "note": "2026-09-20 抓取，落盘时未记提交指纹",
-    "sha": "",
+    "date": "2026-09-25",
+    "sha": "75e0e0aad97a86138b8b1ec87d9b544b4a35ecbf",
     "slug": "openai/codex"
   },
   "deepseek-harness": {
-    "date": "",
-    "note": "2026-09-20 抓取，落盘时未记提交指纹",
-    "sha": "",
+    "date": "2026-09-25",
+    "sha": "477b4f420553e8a52c2fbccc464d7561b239c443",
     "slug": "deepseek-ai/deepseek-harness"
   },
   "gemini-cli": {
@@ -76,27 +68,23 @@
     "slug": "aaif-goose/goose"
   },
   "mem0": {
-    "date": "2026-09-18",
-    "msg": "docs(cookbooks): Company Brain with Mem0 Platform + Supabase (#7309)",
-    "sha": "a39a802bbc93",
+    "date": "2026-09-25",
+    "sha": "989c7da0fc8e4df6342dbb8c448af9816d60d24c",
     "slug": "mem0ai/mem0"
   },
   "memU": {
-    "date": "2026-09-10",
-    "msg": "feat(cli): batch developer memorize sessions (#695) Co-authored-by: MrXnneHang <",
-    "sha": "08e1ed4cdf4c",
+    "date": "2026-09-25",
+    "sha": "2c050bc9681a4c0aff1af211a000e73d14f33356",
     "slug": "NevaMind-AI/memU"
   },
   "minimax-cli": {
-    "date": "",
-    "note": "2026-09-20 抓取，落盘时未记提交指纹；台账曾误记为 cli/",
-    "sha": "",
+    "date": "2026-09-25",
+    "sha": "33453cf123927f41c00e1935450e504d8a630763",
     "slug": "MiniMax-AI/cli"
   },
   "qwen-code": {
-    "date": "2026-09-24",
-    "msg": "snapshot 2026-09-24",
-    "sha": "ffea2d024e52",
+    "date": "2026-09-25",
+    "sha": "d124dd56cd0ab89a15c2e6edc552e5d86f32a7c3",
     "slug": "QwenLM/qwen-code"
   }
 }

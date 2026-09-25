@@ -45,15 +45,22 @@ def derive(rows, commits):
             "snapshot": (old.get("snapshot") or meta.get("sha") or "")[:12],
         }
 
-    # 历史快照行（`<id>@<sha12>`）与非 checkout 行：原样保留，只把 repo/snapshot/判断列补全。
+    # 历史快照行（`<id>@<sha12>` 或 `<id>@unknown-<日期>`）与非 checkout 行：原样保留，
+    # 只把 repo/snapshot/判断列补全。用 base_of 而不是 split_id——后者要求后缀是合法 sha，
+    # 会把 `@unknown-<日期>` 整串当成 id，于是那些行永远进不到这个分支。
     for ident, row in by_id.items():
-        base, sha = repos.split_id(ident)
-        if ident == base and base in dirs:
+        base = repos.base_of(ident)
+        historical = "@" in ident
+        if not historical and base in dirs:
             continue
         if not row.get("repo"):
             row["repo"] = (commits.get(base) or {}).get("slug") or ""
-        if not row.get("snapshot") and sha:
-            row["snapshot"] = sha
+        if not row.get("snapshot") and historical:
+            row["snapshot"] = repos.split_id(ident)[1]
+        # 落盘时没记指纹的旧快照，目录名退化为 `<id>@unknown-<日期>`，没有 sha 可填——
+        # 按约定挂 `snapshot-unknown`，别让账本留一个说不清的空格。
+        if historical and not row.get("snapshot") and not repos.has_marker(row, repos.SNAPSHOT_UNKNOWN):
+            row["keywords"] = list(row.get("keywords") or []) + [repos.SNAPSHOT_UNKNOWN]
         # 历史快照是新行、没有旧行可继承，判断列从当前快照继承——同一个仓库的开放度
         # 不会因为「这是旧的哪一份」而改变。
         current = by_id.get(base)

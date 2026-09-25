@@ -18,3 +18,18 @@
 - 2026-09-25 · 迁移 · `goose` · 上游由 `block/goose` 迁到 `aaif-goose/goose`，按新地址重抓（`61830521ad31`，349MB）。9-24 那次 900s 超时留下的 `_partial-goose-dl-failed-20260924/` 随之删除——它的存在只在本文里留痕，不再占磁盘。
 - 2026-09-25 · 移除 · `vanilla-rag-memory` · 按用户判断（项目过冷门、不值得占样本位）连同历史快照一起删除：目录两处、账本两行（含 `vanilla-rag-memory@31ab7bf9cfa3`）、`_commits.json` 一条同时清掉。9-21 的入库记录保留在上方，不抹掉曾经收过它这件事。
 - 2026-09-25 · 修复 · `_commits.json` · `fetch.py` 是「读-改-写」：下载动辄几分钟，这段时间里对账本的其它修改会在它落盘时被静默覆盖。实测——删掉的 `vanilla-rag-memory` 被 goose 那次抓取写了回来。这是并发写同一账本的结构缺口，尚未在代码里加锁，使用时避免「一边抓取一边改账本」。
+- 2026-09-25 · 抓取 · `EverOS` · `EverMind-AI/EverOS`（462ebf9fd59b），旧快照存为 `EverOS@5076683ab88d/`。
+- 2026-09-25 · 抓取 · `MemOS` · `MemTensor/MemOS`（a7367d07e55d），旧快照存为 `MemOS@12acdad694d0/`。
+- 2026-09-25 · 抓取 · `MemoryBear` · `SuanmoSuanyangTechnology/MemoryBear`（85004dacaf2f），旧快照存为 `MemoryBear@c32b937f1ed0/`。
+- 2026-09-25 · 抓取 · `OpenHands` · `All-Hands-AI/OpenHands`（c17fc6538d57），旧快照存为 `OpenHands@unknown-2026-09-25/`。
+- 2026-09-25 · 抓取 · `Raven` · `EverMind-AI/Raven`（e17694113b13），旧快照存为 `Raven@unknown-2026-09-25/`。
+- 2026-09-25 · 抓取 · `Tianshu-harness` · `huiliyi37/Tianshu-harness`（79c10d30ba4f），旧快照存为 `Tianshu-harness@unknown-2026-09-25/`。
+- 2026-09-25 · 抓取 · `codex` · `openai/codex`（75e0e0aad97a），旧快照存为 `codex@unknown-2026-09-25/`。
+- 2026-09-25 · 抓取 · `mem0` · `mem0ai/mem0`（989c7da0fc8e），旧快照存为 `mem0@a39a802bbc93/`。
+- 2026-09-25 · 抓取 · `memU` · `NevaMind-AI/memU`（2c050bc9681a），旧快照存为 `memU@08e1ed4cdf4c/`。
+- 2026-09-25 · 抓取 · `minimax-cli` · `MiniMax-AI/cli`（33453cf12392），旧快照存为 `minimax-cli@unknown-2026-09-25/`。
+- 2026-09-25 · 抓取 · `qwen-code` · `QwenLM/qwen-code`（d124dd56cd0a），旧快照存为 `qwen-code@ffea2d024e52/`。
+- 2026-09-25 · 抓取 · `deepseek-harness` · `deepseek-ai/deepseek-harness`（477b4f420553），旧快照存为 `deepseek-harness@unknown-2026-09-25/`。
+- 2026-09-25 · 全量更新 · 17 个当前快照 · 11 个仓库上游有新提交：`EverOS`（462ebf9fd59b）、`MemOS`（a7367d07e55d）、`MemoryBear`（85004dacaf2f）、`OpenHands`（c17fc6538d57）、`Raven`（e17694113b13）、`Tianshu-harness`（79c10d30ba4f）、`codex`（75e0e0aad97a）、`mem0`（989c7da0fc8e）、`memU`（2c050bc9681a）、`minimax-cli`（33453cf12392）、`qwen-code`（d124dd56cd0a）；`ReFind`、`ZCode`、`cline`、`gemini-cli`、`goose` 未动（sha 未变，脚本直接跳过，没白下）。旧快照全部按规则改名保留为 `<id>@…/`，账本因此新增 11 行历史行——**代价要说清**：11 个仓库的源码引用行号随之位移（如 Tianshu-harness 的 `READ_FILE_TOOL` 从 `:723` 移到 `:711`），`domain/repo-context/04how-agent-read-file/` 里的锚点已逐条重新对齐。
+- 2026-09-25 · 修复 · `fetch.py` · 分支名写死 `main`，而 `deepseek-ai/deepseek-harness` 的默认分支不是它——第一次全量更新时 404（旧快照已自动回位，没有留下半新半旧的树）。改为先向 API 问 `default_branch`、取不到才回落 `main`，重抓成功（`477b4f420553`）。
+- 2026-09-25 · 修复 · `build_index.py` + `repos.py` · `<id>@unknown-<日期>` 这种「落盘时没记指纹」的历史快照行，`split_id` 因后缀非十六进制而把整串当成 id，于是这些行既进不了历史分支、也拿不到 `snapshot-unknown` 标记，交付门一直报「有本地目录却没有 snapshot」。新增 `repos.base_of()` 只按 `@` 切分，两个问题一起消解。

@@ -28,6 +28,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import repos  # noqa: E402
 
 API = "https://api.github.com/repos/{slug}/commits?per_page=1"
+REPO_API = "https://api.github.com/repos/{slug}"
 CODELOAD = "https://codeload.github.com/{slug}/tar.gz/refs/heads/{branch}"
 UA = {"User-Agent": "rivet-sources-repos-fetch"}
 
@@ -36,6 +37,18 @@ def _get(url, timeout=60):
     request = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return response.read()
+
+
+def default_branch(slug):
+    """仓库真正的默认分支名；问不到返回 `""`（调用方回落到 main）。
+
+    写死 `main` 会 404——deepseek-ai/deepseek-harness 的默认分支就不是它，实测过。
+    """
+    try:
+        data = json.loads(_get(REPO_API.format(slug=slug)).decode("utf-8"))
+    except Exception:
+        return ""
+    return (data or {}).get("default_branch") or ""
 
 
 def default_branch_sha(slug, branch=None):
@@ -113,7 +126,7 @@ def changelog(line):
         f.write(line if line.endswith("\n") else line + "\n")
 
 
-def fetch(token, branch="main", drop_old=False, write_changelog=True):
+def fetch(token, branch=None, drop_old=False, write_changelog=True):
     commits = repos.read_commits()
     today = datetime.date.today().isoformat()
 
@@ -126,6 +139,9 @@ def fetch(token, branch="main", drop_old=False, write_changelog=True):
         if not slug:
             print(f"✗ {token}: 账本里没有它的上游标识，请用 owner/name 形式")
             return False
+
+    # 没显式指定分支时问 API 要默认分支——写死 main 会 404。
+    branch = branch or default_branch(slug) or "main"
 
     dest = os.path.join(repos.BASE, ident)
     existed = os.path.isdir(dest)
@@ -184,7 +200,7 @@ def fetch(token, branch="main", drop_old=False, write_changelog=True):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("target", nargs="?", help="owner/name 或账本里的目录名")
-    ap.add_argument("--branch", default="main")
+    ap.add_argument("--branch", default=None, help="默认问 API 取默认分支，取不到回落 main")
     ap.add_argument("--drop-old", action="store_true", help="不保留旧快照（默认保留为 <id>@<sha12>/）")
     ap.add_argument("--all", action="store_true", help="按账本更新全部有本地目录的行")
     ap.add_argument("--no-changelog", action="store_true")
