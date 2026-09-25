@@ -21,7 +21,7 @@
 靠模型的按需读取。**「一份大 AGENTS.md」是默认状态，不是稳态。**
 
 **反例。** 这条不普适。若某个 harness 既不做多文件拼接、read 工具又只有整文件读
-（本阶段的 9 个对象里没有这样的，但完全可能存在），那么拆分会让外置内容**无法被取回**，
+（见解 2 界定过的那批已取证对象里没有这样的，但完全可能存在），那么拆分会让外置内容**无法被取回**，
 此时「一份大文件」反而是更优解。判据是 harness 的两件事，不是文件长度本身。
 
 **待验证。** 6000 / 1200 / 800 这些数字是**项目自设的 guardrail**，不是实测的悬崖。
@@ -32,8 +32,9 @@
 
 ## 见解 2：账本能有多宽，由「read 工具能不能做列投影」决定，与人的阅读习惯无关
 
-**观察。** 本阶段取证的 **9 个对象**（codex、Tianshu-harness、deepseek-harness、Raven、
-gemini-cli、qwen-code、cline、ZCode、claude-code）里，**没有一个** read 工具的入参含列选择。
+**观察。** 本阶段取证的 **10 个对象**——口径是「`sources/repos/index.csv` 中读工具列有实值、`status=verified` 的那批」，即
+codex、Tianshu-harness、deepseek-harness、Raven、gemini-cli、qwen-code、cline、ZCode、goose、claude-code
+（不含只有 `absent`/`unverified` 的记忆库与闭源客户端）——里，**没有一个** read 工具的入参含列选择。
 最接近的三个也都不算：Tianshu-harness 的 `focus` 由启发式决定选什么；`read_section` 的粒度是
 **节**不是列；gemini-cli `read_many_files` 的 `include`/`exclude` 是**文件级 glob**
 （`sources/repos/gemini-cli/packages/core/src/tools/read-many-files.ts:58-70`）。

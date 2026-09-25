@@ -37,7 +37,9 @@ flowchart TD
 
 **由此产生的硬纪律**：`web_search` 的"搜不到"**不是**证据。所有外部对象要么下到本地读源码（gemini-cli、qwen-code、cline、OpenHands、Claude Code npm 包），要么留 `unverified`。
 
-本轮下载日期均为 **2026-09-24**，落盘位置 `sources/repos/<name>/`，提交指纹记在 `sources/repos/_commits.json`（新增项尚未写入该文件）。
+**锚点与版本**：本文所有 `file:line` 锚点，核对于 `sources/repos/index.csv` 该行记录的**那个 `snapshot`**。第三方 checkout 会随时间更新——2026-09-25 的一次全量更新里有 11 个仓库换了版本（旧快照保留为 `<id>@…/`），Tianshu-harness 的 `READ_FILE_TOOL` 从 `:723` 移到 `:711`、Raven 的 `_MAX_CHARS` 从 `:159` 移到 `:165`；本文已按更新后的树逐条重新对齐并复验。**要稳定引用就用符号名**（`READ_FILE_TOOL`、`_MAX_CHARS`、`SkillRegistry`），行号会漂——`grep -n <符号>` 一次就能重新定位；本阶段抽查过的锚点里，`skill-loader.ts` 的四处（`:5`/`:8`/`:126`/`:186`）与 SKILL.md 计数在本次更新中**一处未动**，漂的集中在被重构过的 `read-file.ts` 与 Raven 的 filesystem.py。
+
+下载日期：**2026-09-24**（首批外部对象：gemini-cli、qwen-code、cline、OpenHands）与 **2026-09-25**（全量更新 17 个当前快照）。落盘位置 `sources/repos/<name>/`，当前快照的提交指纹记在 `sources/repos/_commits.json`，账本视图见 `sources/repos/index.csv`。
 
 ## 2. read 工具逐对象
 
@@ -59,22 +61,22 @@ flowchart TD
 
 `sources/repos/Tianshu-harness/src/tools/default-registry.ts:17/34-35` 同时注册了 `SKILL_TOOL`、`READ_FILE_TOOL`、`READ_SECTION_TOOL`。
 
-工具定义在 `sources/repos/Tianshu-harness/src/tools/read-file.ts:723`：
+工具定义在 `sources/repos/Tianshu-harness/src/tools/read-file.ts:711`：
 
-- `name: 'read_file'`，描述原文："约 50,000 行以内的文件完整返回——不要自己切成小片分多次读"（`:726-729`）。
+- `name: 'read_file'`，描述原文："约 50,000 行以内的文件完整返回——不要自己切成小片分多次读"（`:716`）。
 - 参数除了 `file_path` / `offset` / `limit`，还有两个不常见的：
-  - `paths`（数组）："一次调用读取多个文件。用于替代重复的 read_file 调用。每个文件单独成节。最多 5 个文件。"（`:742-743`）
+  - `paths`（数组）："一次调用读取多个文件。用于替代重复的 read_file 调用。每个文件单独成节。最多 5 个文件。"（`:731`）
   - `focus` / `focus_max_matches`："任务关键词或问题；只返回结构摘要和相关片段"（`:748-749`）
 
 行为常量（同文件）：
 
 | 常量 | 值 | 作用 |
 |---|---|---|
-| `READ_REF_THRESHOLD` | `2048` | 文件超过 2KiB 且本轮已读过 → 复读时返回**引用**而非全文（`:151`、判定在 `:878-881`） |
-| `MAX_TOOL_INPUT_BYTES` | `100 * 1024` | 超过 100KiB 且没给显式范围/focus 时拒绝整读（`:399`、`:602`） |
-| `MAX_FOCUS_SCAN_BYTES` | `2 * 1024 * 1024` | focus 模式扫描上限，超限报错："Focused read refuses files over 2MB. Use grep or an explicit offset/limit range first."（`:401`、`:596-598`） |
-| `MAX_IMAGE_BYTES` | `10 * 1024 * 1024` | 图片读上限（`:443`） |
-| `READ_HISTORY_MAX` / `FILE_READ_HISTORY_MAX` / `LAST_KNOWN_MAX` | `500` / `200` / `500` | 三类历史表容量（`:62`、`:94`、`:112`） |
+| `READ_REF_THRESHOLD` | `2048` | 文件超过 2KiB 且本轮已读过 → 复读时返回**引用**而非全文（`:150`、判定在 `:866/869`） |
+| `MAX_TOOL_INPUT_BYTES` | `100 * 1024` | 超过 100KiB 且没给显式范围/focus 时拒绝整读（`:401`） |
+| `MAX_FOCUS_SCAN_BYTES` | `2 * 1024 * 1024` | focus 模式扫描上限，超限报错："Focused read refuses files over 2MB. Use grep or an explicit offset/limit range first."（`:403`、`:584`） |
+| `MAX_IMAGE_BYTES` | `10 * 1024 * 1024` | 图片读上限（`:434`） |
+| `READ_HISTORY_MAX` / `FILE_READ_HISTORY_MAX` / `LAST_KNOWN_MAX` | `500` / `200` / `500` | 三类历史表容量（`:61`、`:93`、`:111`） |
 
 另有一套按 **offset/limit 键**与**整文件键**分开的去重表：`readHistoryKey` 把 `sessionId::cwd::path::offset::limit` 拼成键（`:193-194`），`isUnchangedRepeatRead` 只在 **mtime 与 size 都一致**时才判定"未变"（`:219-236`）。还有 `registerGrepFileAccess`、`getReadRefStats()`（`savedBytes`/`count`）这类把"grep 也已看过"纳入同一账本的设计（`:362`、`:370`）。
 
@@ -100,7 +102,7 @@ flowchart TD
 实现分两层——fork 的「脸」与 trunk 的「身」：
 
 - **fork 侧** `.../code_flow/tools/filesystem.py:89` `class ReadFileTool(_Aliased, trunk.ReadFileTool)`，只改三件事（文件头 `:1-14` 自述）：模型可见 schema 的参数拼写、别名映射（`cast_params`）、以及两条实测出来的行为。其中一条是 `_MAX_LINE_CHARS = 2_000`（`:98`）——**单行超长截断**，注释解释了理由：长行会让分页失效（`offset` 停在原地可以无限重复读）。
-- **trunk 侧** `sources/repos/Raven/raven/agent/tools/filesystem.py:156` `class ReadFileTool(_FsTool)`，真正的读取逻辑：描述写 "Text files return numbered lines — use offset and limit to…"（`:169`）；`_MAX_CHARS = 128_000`（`:159`）、`_DEFAULT_LIMIT = 2000`（`:160`）；offset 超界时报 `Error: offset N is beyond end of file (M lines)`（`:260-261`）；结尾附续读提示 `(Showing lines X-Y of Z. Use offset=Z+1 to continue.)`（`:279`）。
+- **trunk 侧** `sources/repos/Raven/raven/agent/tools/filesystem.py:162` `class ReadFileTool(_FsTool)`，真正的读取逻辑：描述写 "Text files return numbered lines — use offset and limit to…"（`:175`）；`_MAX_CHARS = 128_000`（`:165`）、`_DEFAULT_LIMIT = 2000`（`:166`）；offset 超界时报 `Error: offset N is beyond end of file (M lines)`（`:267`）；结尾附续读提示 `(Showing lines X-Y of Z. Use offset=Z+1 to continue.)`（`:285`）。
 
 还有一个跨工具的联动细节：`.../code_flow/tools/exec.py:121-129` 把超长命令输出**落盘**，并在截断提示里写 "grep it, or page through it with read_file offset/limit"——读工具被当成 shell 溢出的分页后端。
 
@@ -168,8 +170,8 @@ MAX_FILE_SIZE_MB            = 20
 |---|---|---|
 | deepseek-harness | "Use the read tool — not shell commands like cat — to inspect text files. Results include line numbers. Use offset and limit to continue reading large files." | `sources/repos/deepseek-harness/packages/fs/tool-fs/src/read.ts:74` |
 | deepseek-harness | "Read a UTF-8 text file and return line-numbered content." | 同上 `:79` |
-| Tianshu-harness | "约 50,000 行以内的文件完整返回——不要自己切成小片分多次读" | `sources/repos/Tianshu-harness/src/tools/read-file.ts:726-729` |
-| Tianshu-harness | "一次调用读取多个文件。用于替代重复的 read_file 调用。每个文件单独成节。最多 5 个文件。" | 同上 `:742-743` |
+| Tianshu-harness | "约 50,000 行以内的文件完整返回——不要自己切成小片分多次读" | `sources/repos/Tianshu-harness/src/tools/read-file.ts:716` |
+| Tianshu-harness | "一次调用读取多个文件。用于替代重复的 read_file 调用。每个文件单独成节。最多 5 个文件。" | 同上 `:731` |
 | Tianshu-harness | "Focused read refuses files over 2MB. Use grep or an explicit offset/limit range first." | 同上 `:596-598` |
 | Raven | "(Showing lines X-Y of Z. Use offset=Z+1 to continue.)" | `sources/repos/Raven/raven/agent/tools/filesystem.py:279` |
 | Raven | "Error: offset N is beyond end of file (M lines)" | 同上 `:260-261` |
@@ -209,7 +211,7 @@ skill 走一条**服务化**路径：`sources/repos/deepseek-harness/docs/capabi
 
 `raven/rpc/models.py:84` `SkillInfo`、`:1381` `SkillListParams`、`:1388` `SkillListResult`、`:1392` `SkillPinParams`，并在 `METHOD_MODELS` 登记 `skill.list` / `skill.pin` / `skill.unpin`（`:4464-4466`）。这些是 **wire 契约**，不是实现体。
 
-实现落在 CLI：`sources/repos/Raven/raven/cli/skill_commands.py:79` `def skill_list`；`rpc-schema/openrpc.json:892-894` 的 `skill.list` 条目直接写明 routing 方式——"routed via `cli.dispatch(argv=['skill','list'])`"。
+实现落在 CLI：`sources/repos/Raven/raven/cli/skill_commands.py:79` `def skill_list`；`rpc-schema/openrpc.json:907-909` 的 `skill.list` 条目直接写明 routing 方式——"routed via `cli.dispatch(argv=['skill','list'])`"。
 
 ### 3.5 有创作工具、没有加载工具：claude-code
 
@@ -268,7 +270,7 @@ codex（Apache-2.0）、gemini-cli（Apache-2.0）、qwen-code（Apache-2.0）�
 - **未做**：cline 的 `read_files` 限额与分页行为未逐一取证；`index.csv` 中该行已标"未取证"。
 - **已补齐**：goose 上游迁到 `aaif-goose/goose`，2026-09-25 按新地址重抓（`61830521ad31`）并取证——读工具名 `read`，描述 "Read a text file from disk."，实现在 `crates/goose/src/acp/fs.rs:107`；`index.csv` 该行已由 `unverified` 转为 `verified`。
 - **未找到确证**：Cursor、Windsurf、Devin 是否公开过读工具或 skill 实现——本环境 `web_fetch` 全域被 DNS 层拦截，无法核验，`index.csv` 中三行标 `unverified`。
-- **版本限定**：codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli 五个 checkout **没有提交指纹记录**（`sources/repos/_commits.json` 只覆盖 7 个记忆框架）。文中对它们的断言只对"该 checkout"成立，不能写成产品当前行为。gemini-cli（`bedef96e`）、qwen-code（`ffea2d02`）、cline（`dd2e190e`）有下载当日的 sha。
+- **版本限定**：codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands 六个 checkout 在 2026-09-25 之前**没有提交指纹记录**；当天全量更新后都取到了（codex `75e0e0aad97a`、Raven `e17694113b13`、Tianshu-harness `79c10d30ba4f`、deepseek-harness `477b4f420553`、minimax-cli `33453cf12392`、OpenHands `c17fc6538d57`），旧快照保留为 `<id>@…/`。凡是引用它们的断言，仍只对 `sources/repos/index.csv` 该行 `snapshot` 所指的那份成立，不能写成产品当前行为。**另有一处地址变更**：`deepseek-ai/deepseek-harness` 的默认分支不是 `main`，按 `main` 抓会 404——`fetch.py` 已改为先问 API 要默认分支。
 
 ## 6. 证据索引（可复现）
 
@@ -321,7 +323,10 @@ flowchart TD
 
 问题原话是「如果 readfile，能控制读取哪些列，我就可以把补充内容补充到后面了」。
 
-**关键事实：本阶段取证的 9 个对象，没有任何一个 read 工具的入参含「列选择」。**
+**关键事实：本阶段取到读工具契约或实现的 10 个对象，没有任何一个 read 工具的入参含「列选择」。**
+口径写死在这里，省得下次再数：`sources/repos/index.csv` 中读工具列有实值、且 `status=verified` 的行
+——codex、Tianshu-harness、deepseek-harness、Raven、gemini-cli、qwen-code、cline、ZCode、goose、claude-code。
+只有 `absent`/`unverified` 的记忆库与闭源客户端不计入。
 
 - codex 无 read 工具；其余全部只有 `offset`/`limit` 行范围（Tianshu-harness、deepseek-harness、Raven、gemini-cli、qwen-code、cline、ZCode），Claude Code 的 `FileReadInput` 只多一个 `pages`（PDF 页范围），**都不是列级**。
 - 三个近似物都不是确定的列投影：Tianshu-harness 的 `focus`/`focus_max_matches` 按关键词抓片段（选什么由启发式决定）；`read_section` 是**按节读**（粒度是节不是列）；gemini-cli `read_many_files` 的 `include`/`exclude` 是**文件级 glob**（`sources/repos/gemini-cli/packages/core/src/tools/read-many-files.ts:58-70`），不是字段级。

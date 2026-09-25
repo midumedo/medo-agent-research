@@ -41,7 +41,7 @@
 | `harness` | 本地目录名或产品名 |
 | `repo` | 上游仓库标识；闭源写 `—（闭源）` |
 | `kind` | `coding-harness` / `capability-cli` / `memory-library` / `app-only-repo` / `closed-binary` / `closed-client` |
-| `read_tool` | **面向模型**的工具名；没有专用工具写 `（无）` |
+| `read_tool` | **面向模型**的读工具名；多个工具用 `＋` 并列、别名写进括号；确无专用工具写 `（无）`；未取证写 `未找到确证`／`未取证` |
 | `read_impl` | 实现文件与主入口行号；路径相对该对象自己的仓库根 |
 | `read_limits` | 只写源码里读得到的常量与语义，不换算 token |
 | `skill_mechanism` | 加载器（哪种发现/注入策略）／仅发布 SKILL.md／无 |
@@ -59,7 +59,7 @@
 
 ## 几个容易误读的点
 
-1. **`sources/repos/` 的提交指纹不完整**。`sources/repos/_commits.json` 现有 16 条，其中 6 个目录（codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands）**没有指纹记录**——账本以 `snapshot-unknown` 标记。对它们的断言必须带「该 checkout 版本」限定，不能写成产品当前行为。
+1. **提交指纹缺口已于 2026-09-25 的全量更新补上**。`sources/repos/_commits.json` 现有 17 条；18 个当前快照行里 17 个带指纹，剩 1 个是 `claude-code`（它压根没有本地快照，以 `no-local-snapshot` 标记）。此前 codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands 六个目录没有指纹，这次一并取到。**仍有 12 行历史快照**（`<id>@…/`）的 sha 无法追溯——当年落盘时没记，它们以 `snapshot-unknown` 标记，引用时仍要带「该 checkout 版本」限定。计数会随抓取变动，**以 `sources/repos/index.csv` 为准**。
 2. **手工台账 `sources/repos-sources.md` 已于 2026-09-25 退役**：清单进 `sources/repos/index.csv`、事件进 `sources/repos/CHANGELOG.md`、规则进 `sources/repos/AGENTS.md`。它腐坏过一次（把 `minimax-cli/` 记成 `cli/`），退役的正是这类重复来源。
 3. **goose 换过地址**：上游由 `block/goose` 迁到 `aaif-goose/goose`，2026-09-25 按新地址重抓（`61830521ad31`）并入账；此前 900s 超时留下的残缺目录 `_partial-goose-dl-failed-20260924/` 已删除。引用 goose 时以 `sources/repos/index.csv` 的 `snapshot` 列为准。
 4. **记忆库不是「与本题无关」**：mem0 发布 56 个 SKILL.md、MemOS 7 个、EverOS 5 个、MemoryBear 自建 `load_skill_tools`。它们扮演的是 skill 的**生产/消费方**，不是 harness。
