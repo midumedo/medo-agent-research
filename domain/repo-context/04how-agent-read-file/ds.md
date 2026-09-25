@@ -131,16 +131,51 @@ MAX_FILE_SIZE_MB            = 20
 
 ### 2.7 read 工具横向对照
 
-| 对象 | 工具名 | 是否专用工具 | 行号 | 分页 | 单次多文件 | 明示上限 |
-|---|---|---|---|---|---|---|
-| codex | （无） | 否（走 shell） | 无 | 无 | 无 | 无 |
-| Tianshu-harness | `read_file` | 是 | 是 | offset/limit | **是（`paths` ≤5）** | 100KiB 整读 / 2MiB focus / 2KiB 复读转引用 |
-| deepseek-harness | `read` | 是 | 是 | offset/limit | 否 | 2000 行 / 10MiB 起流式 |
-| Raven | `read_file` | 是 | 是 | offset/limit | 否 | 128000 字符 / 2000 行 / 单行 2000 字符 |
-| gemini-cli | `read_file` + `read_many_files` | 是（两个） | 是 | 有 | **是（独立工具）** | 2000 行 / 单行 2000 字符 / 20MB |
-| qwen-code | `read_file` | 是 | 是 | offset/limit | 否 | 同 gemini-cli + PDF 页数上限 |
-| cline | `read_files` | 是 | 未取证 | 未取证 | 名字即复数 | 未取证 |
-| claude-code | `FileReadInput` | 契约可见、实现不可见 | — | offset/limit/pages | — | — |
+七个维度一起看，「读文件」这件事的实现空间比想象中宽：
+
+| 对象 | 工具名 | 行号 | 分页 | 单次多文件 | 上限 | 复读去重 | 系统提示里的读法要求 |
+|---|---|---|---|---|---|---|---|
+| codex | （无） | 无 | 无 | 无 | 无 | 无 | 无（读由 shell 承担） |
+| Tianshu-harness | `read_file` | 有 | `offset`/`limit` | **有，`paths` ≤5** | 100KiB 整读 / 2MiB focus / >2KiB 复读转引用 | 有（mtime+size 双判） | 工具描述内自带行数指引 |
+| deepseek-harness | `read` | 有 | `offset`/`limit` | 无 | 2000 行 / 10MiB 起流式 | 无 | "Use the read tool — **not** shell commands like cat" |
+| Raven | `read_file` | 有 | `offset`/`limit` | 无 | 128000 字符 / 2000 行 / 单行 2000 字符 | 无（靠单行截断防死循环） | 描述自述分页用法 |
+| gemini-cli | `read_file` + `read_many_files` | 有 | 有 | **有，且是独立工具** | 2000 行 / 单行 2000 字符 / 20MB | 无 | `read_many_files` 的入参是 `include`/`exclude` **文件级 glob** |
+| qwen-code | `read_file` | 有 | `offset`/`limit` | 无 | 同 gemini-cli + PDF 页数上限 | 无 | 另有 `priorReadEnforcement`（读前强制） |
+| cline | `read_files` | 有 | 每个文件项自带 `start_line`/`end_line` | **有（工具名即复数）** | `MAX_READ_LINES=2000` / `MAX_READ_OUTPUT_CHARS=48000` | 无 | 输出预算与 shell 共用同一套 limits |
+| ZCode | `Read` | 有（`cat -n` 格式） | `offset`/`limit` | 无 | `READ_DEFAULT_MAX_LINES=2000` / `READ_MAX_FILE_SIZE_BYTES=256KiB` | **有**（见下） | "Do NOT re-read a file you just edited to verify" |
+| claude-code | `FileReadInput` | 契约未声明 | `offset`/`limit`/`pages` | 契约未声明 | 契约未声明 | 契约未声明 | 不可见（实现未发布） |
+
+两个细节值得单独记：
+
+- **ZCode 把复读判定写成了一句给模型看的话**：`apps/zcode-cli/packages/core/src/tool/handlers/read.ts:55-56` 定义 `FILE_UNCHANGED_STUB`，原文 "Wasted call — file unchanged since your last Read. Refer to that earlier tool_result instead."。这不是静默跳过，而是**明确告诉模型这次调用被浪费了**——与 Tianshu-harness 静默转引用的做法相反，两种都能省 token，但对模型后续行为的暗示完全不同。
+- **ZCode 对被截断的文件要求模型别说**：`apps/zcode-cli/packages/core/src/system-reminder/prompt-attachment.ts:95` 的注入文案是 "The file … was too large and has been truncated to the first N lines. **Don't tell the user about this truncation.** Use <tool> to read more of the file if you need."。截断对模型可见、对用户不可见——这是产品取舍，不是技术限制，值得单列。
+
+### 2.8 新入账对象：ZCode
+
+2026-09-25 抓取 `zai-org/ZCode`（Apache-2.0，快照 `29628c9acdb8`，6713★）。它是账本里**唯一明确记录了「藏了东西」**的对象，值得单列。
+
+- 读工具名 **`Read`**，实现在 `sources/repos/ZCode/apps/zcode-cli/packages/core/src/tool/handlers/read.ts:468`；限额常量在 `sources/repos/ZCode/apps/zcode-cli/packages/contracts/src/tools/read.ts:15`（`READ_MAX_FILE_SIZE_BYTES = 256 * 1024`）与 `:17`（`READ_DEFAULT_MAX_LINES = 2_000`）。
+- 工具描述里有一条**非技术约定**（`read.ts:67`）："Do NOT re-read a file you just edited to verify — Edit/Write would have errored if the change failed, and the harness tracks file state for you."——把「harness 已跟踪文件状态」当成对模型的承诺写进了工具描述。
+- 它读的不止文本：`read.ts:64-65` 声明能读图片（PNG/JPG）与视频（MP4/MOV/WEBM），并有独立的视频输入上限。
+- **`completeness = source-partial` 的依据**：README 写「包含客户端、后端服务、共享 UI，以及 Agent CLI 与运行时源码」，但 `sources/repos/ZCode/.gitignore:8-13` 排除了 `prebuilds/`、`bundled-resources/`、`packages/desktop/bundled-resources/`、`packages/desktop/bundled-agents/`、`packages/desktop/bundled-tools/`——**发行版装载的 agent 与工具不进版本库**。`harness/` 下只有一个 `remote/`（Docker + SSH 沙箱；`harness/remote/README.md` 全文是三条 ssh 命令），不是 agent 实现。能读到的是客户端与骨架，装配后的成品读不到。
+- skill 侧有真实实现：`sources/repos/ZCode/packages/services/src/skills/skillsService.ts:1027` 的 `createSkillsService`（该文件 1238 行）、`skillDiscoveryWalk.ts`（107 行）、`sources/repos/ZCode/packages/shared/src/skill-scan-policy.ts`（61 行）。
+
+### 2.9 schema 字面与注入文案（证据摘录）
+
+**文案是设计的一部分**，转述会丢掉它。这一节只堆原文，供以后逐字核对：
+
+| 对象 | 原文 | 定位 |
+|---|---|---|
+| deepseek-harness | "Use the read tool — not shell commands like cat — to inspect text files. Results include line numbers. Use offset and limit to continue reading large files." | `sources/repos/deepseek-harness/packages/fs/tool-fs/src/read.ts:74` |
+| deepseek-harness | "Read a UTF-8 text file and return line-numbered content." | 同上 `:79` |
+| Tianshu-harness | "约 50,000 行以内的文件完整返回——不要自己切成小片分多次读" | `sources/repos/Tianshu-harness/src/tools/read-file.ts:726-729` |
+| Tianshu-harness | "一次调用读取多个文件。用于替代重复的 read_file 调用。每个文件单独成节。最多 5 个文件。" | 同上 `:742-743` |
+| Tianshu-harness | "Focused read refuses files over 2MB. Use grep or an explicit offset/limit range first." | 同上 `:596-598` |
+| Raven | "(Showing lines X-Y of Z. Use offset=Z+1 to continue.)" | `sources/repos/Raven/raven/agent/tools/filesystem.py:279` |
+| Raven | "Error: offset N is beyond end of file (M lines)" | 同上 `:260-261` |
+| cline | read_files 描述含 "…or return only an inclusive one-based line range when start_line/end_line are provided on the same file entry as its path." | `sources/repos/cline/sdk/packages/core/src/extensions/tools/definitions.ts:274` |
+| ZCode | "Wasted call — file unchanged since your last Read. Refer to that earlier tool_result instead." | `sources/repos/ZCode/apps/zcode-cli/packages/core/src/tool/handlers/read.ts:55-56` |
+| ZCode | "… was too large and has been truncated to the first N lines. Don't tell the user about this truncation." | `sources/repos/ZCode/apps/zcode-cli/packages/core/src/system-reminder/prompt-attachment.ts:95` |
 
 ## 3. skill 加载逐对象
 
@@ -250,3 +285,51 @@ codex（Apache-2.0）、gemini-cli（Apache-2.0）、qwen-code（Apache-2.0）�
 | 外部 checkout 获取 | `curl -sL https://codeload.github.com/<owner>/<repo>/tar.gz/refs/heads/main \| tar -xz -C sources/repos/<name> --strip-components=1` |
 
 > 取证时注意：`read_file`/`glob` 对 `sources/repos/**` 拒读，`web_fetch`/`web_search` 在本环境被 DNS 层拦（域名解析到保留段 198.18.0.0/15）。**能用的是 `bash`**——它走另一条网络与文件通道。这正是本阶段能拿到外部一手证据的原因。
+
+---
+
+## 7. read 能力如何反过来决定文档形态
+
+前六节都是「harness 怎么读」。这一节是翻过来的问题：**这些事实决定了我自己的文档该怎么写**。
+
+### 7.1 默认加载的指令文件：该拆还是该合
+
+```mermaid
+flowchart TD
+    Q(默认加载的指令文件该拆还是该合) --> C1{harness 自动拼接多文件?}
+    C1 -->|是| S1[拆·按目录层级组织<br/>codex instruction_sources]
+    C1 -->|否·单文件整块注入| C2{整块超阈值?}
+    C2 -->|≤ 6000 字符| S2[保持单文件]
+    C2 -->|> 6000 字符| S3[核心常驻 + 任务路由外置]
+    S3 --> C3{外置部分能按需取回?}
+    C3 -->|read 有 offset/limit 或按节读| S4[外置成立]
+    C3 -->|只有整文件读| S5[外置会被迫整读·收益打折]
+```
+
+**判据是两条可查的事实，不是偏好**：
+
+1. **harness 会不会自动拼接多文件**。codex 把指令做成多来源列表（`instruction_sources`，见 `sources/repos/codex/codex-rs/app-server-protocol/src/protocol/common.rs:3229-3233` 与 `:3290-3292`），按根到子目录拼接——这种情况下「拆」是零成本的，拆了反而让每份更贴上下文。反过来，如果 harness 只读一个固定文件，「拆」就意味着要么写注入规则，要么有一半内容不会被自动读到。
+2. **单块有没有超 harness 自己的阈值**。Tianshu-harness 把这件事量化了：`sources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:27` 定义 `LARGE_VOLATILE_PAYLOAD_CHARS = 12_000`，同文件 `sources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:49-54` 对 `project-instructions` 段设 **6000 字符**阈值，超了就直接给出建议原文 "split project instructions into always-on core plus task-routed details"。同文件还给了同族阈值：active-claims 条数 > 8（`:58-66`）、git-status > 1200 字符（`:70-76`）、historical-lessons > 800 字符（`:79-`）。模板侧也有一致的要求——`sources/repos/Tianshu-harness/src/bootstrap/__tests__/project-templates.test.ts:57` 断言项目模板「30–120 行，是通用版而不是完整的天枢 AGENTS.md」。
+
+**结论**：`AGENTS.md` 该拆还是该合，答案取决于「喂给谁」。给 codex 类的 harness，拆成层级化多文件是自然形态；给单文件注入的 harness，先用它的阈值判一次，超了就按「薄常驻 + 厚按需」切，且外置的那部分必须**能按需取回**——否则切了也读不到，只是把内容藏起来了。
+
+### 7.2 账本 CSV 能不能加宽
+
+问题原话是「如果 readfile，能控制读取哪些列，我就可以把补充内容补充到后面了」。
+
+**关键事实：本阶段取证的 9 个对象，没有任何一个 read 工具的入参含「列选择」。**
+
+- codex 无 read 工具；其余全部只有 `offset`/`limit` 行范围（Tianshu-harness、deepseek-harness、Raven、gemini-cli、qwen-code、cline、ZCode），Claude Code 的 `FileReadInput` 只多一个 `pages`（PDF 页范围），**都不是列级**。
+- 三个近似物都不是确定的列投影：Tianshu-harness 的 `focus`/`focus_max_matches` 按关键词抓片段（选什么由启发式决定）；`read_section` 是**按节读**（粒度是节不是列）；gemini-cli `read_many_files` 的 `include`/`exclude` 是**文件级 glob**（`sources/repos/gemini-cli/packages/core/src/tools/read-many-files.ts:58-70`），不是字段级。
+
+**结论**：在现有工具面下，**加宽账本 = 每次读都付全部列的成本**。`sources/papers/AGENTS.md` 里「`index.csv` 不加摘要列」的规则**继续成立**——不是保守，而是工具做不到列投影。
+
+但这不等于只能维持现状，可拆成三条互不冲突的路径：
+
+1. **短枚举列可以加**。`sources/repos/index.csv` 新增的 `completeness` 就是这类：值 ≤ 12 字符，把每行撑长十几字节，成本可忽略。用户想加的「类型 / 完整程度」正属此类。
+2. **长文本不进账本，放伴随文件**，用 `grep` 按行定位——**行过滤是现有工具真能做到的**（`grep` 返回整行，配合 `-n` 定位），列过滤不是。`sources/papers/` 把 `abstract` 放在单篇 md、`sources/repos/` 把逐仓说明放在 `AGENTS.md` 末尾，都是同一条。
+3. **若确实要列投影，需要新增一个工具**（如 `read_table` / `query_csv`）。这是 harness 侧的设计决定，**文档格式层面解决不了**——记成给 harness 的改进建议，而不是在 repo-context 层硬撑。
+
+### 7.3 一条边界：阈值是「该注意了」，不是「过线即坏」
+
+上面那些 6000 / 1200 / 800 是 harness 给出的**诊断建议**，不是实测出来的性能悬崖。`payload-diagnostic.ts` 的输出形态是「候选 + 理由 + 建议」，落在诊断面板里等人看——它没有强制裁剪。所以引用这些数字时要说清：**它们是项目自设的 guardrail，不是跨 harness 通用的定律**。真要下「多长会掉」的结论，得做受控实验，那属于本阶段明确不做的部分。
