@@ -37,7 +37,7 @@ flowchart TD
 
 **由此产生的硬纪律**：`web_search` 的"搜不到"**不是**证据。所有外部对象要么下到本地读源码（gemini-cli、qwen-code、cline、OpenHands、Claude Code npm 包），要么留 `unverified`。
 
-**锚点与版本**：本文所有 `file:line` 锚点，核对于 `sources/repos/index.csv` 该行记录的**那个 `snapshot`**。第三方 checkout 会随时间更新——2026-09-25 的一次全量更新里有 11 个仓库换了版本（旧快照保留为 `<id>@…/`），Tianshu-harness 的 `READ_FILE_TOOL` 从 `:723` 移到 `:711`、Raven 的 `_MAX_CHARS` 从 `:159` 移到 `:165`；本文已按更新后的树逐条重新对齐并复验。**要稳定引用就用符号名**（`READ_FILE_TOOL`、`_MAX_CHARS`、`SkillRegistry`），行号会漂——`grep -n <符号>` 一次就能重新定位；本阶段抽查过的锚点里，`skill-loader.ts` 的四处（`:5`/`:8`/`:126`/`:186`）与 SKILL.md 计数在本次更新中**一处未动**，漂的集中在被重构过的 `read-file.ts` 与 Raven 的 filesystem.py。
+**锚点与版本**：本文所有 `file:line` 锚点，核对于 `sources/repos/index.csv` 该行记录的**那个 `snapshot`**。第三方 checkout 会随时间更新——2026-09-25 的一次全量更新里有 11 个仓库换了版本，Tianshu-harness 的 `READ_FILE_TOOL` 从 `:723` 移到 `:711`、Raven 的 `_MAX_CHARS` 从 `:159` 移到 `:165`；本文已按更新后的树逐条重新对齐并复验。更新**只保留一个目录**、不留旧版本副本，版本记录由 `snapshot` 那个 sha 承担——要比某个历史版本时按该 sha 重现即可。**要稳定引用就用符号名**（`READ_FILE_TOOL`、`_MAX_CHARS`、`SkillRegistry`），行号会漂——`grep -n <符号>` 一次就能重新定位；本阶段抽查过的锚点里，`skill-loader.ts` 的四处（`:5`/`:8`/`:126`/`:186`）与 SKILL.md 计数在本次更新中**一处未动**，漂的集中在被重构过的 `read-file.ts` 与 Raven 的 filesystem.py。
 
 下载日期：**2026-09-24**（首批外部对象：gemini-cli、qwen-code、cline、OpenHands）与 **2026-09-25**（全量更新 17 个当前快照）。落盘位置 `sources/repos/<name>/`，当前快照的提交指纹记在 `sources/repos/_commits.json`，账本视图见 `sources/repos/index.csv`。
 
@@ -270,7 +270,7 @@ codex（Apache-2.0）、gemini-cli（Apache-2.0）、qwen-code（Apache-2.0）�
 - **未做**：cline 的 `read_files` 限额与分页行为未逐一取证；`index.csv` 中该行已标"未取证"。
 - **已补齐**：goose 上游迁到 `aaif-goose/goose`，2026-09-25 按新地址重抓（`61830521ad31`）并取证——读工具名 `read`，描述 "Read a text file from disk."，实现在 `crates/goose/src/acp/fs.rs:107`；`index.csv` 该行已由 `unverified` 转为 `verified`。
 - **未找到确证**：Cursor、Windsurf、Devin 是否公开过读工具或 skill 实现——本环境 `web_fetch` 全域被 DNS 层拦截，无法核验，`index.csv` 中三行标 `unverified`。
-- **版本限定**：codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands 六个 checkout 在 2026-09-25 之前**没有提交指纹记录**；当天全量更新后都取到了（codex `75e0e0aad97a`、Raven `e17694113b13`、Tianshu-harness `79c10d30ba4f`、deepseek-harness `477b4f420553`、minimax-cli `33453cf12392`、OpenHands `c17fc6538d57`），旧快照保留为 `<id>@…/`。凡是引用它们的断言，仍只对 `sources/repos/index.csv` 该行 `snapshot` 所指的那份成立，不能写成产品当前行为。**另有一处地址变更**：`deepseek-ai/deepseek-harness` 的默认分支不是 `main`，按 `main` 抓会 404——`fetch.py` 已改为先问 API 要默认分支。
+- **版本限定**：codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands 六个 checkout 在 2026-09-25 之前**没有提交指纹记录**；当天全量更新后都取到了（codex `75e0e0aad97a`、Raven `e17694113b13`、Tianshu-harness `79c10d30ba4f`、deepseek-harness `477b4f420553`、minimax-cli `33453cf12392`、OpenHands `c17fc6538d57`）。凡是引用它们的断言，只对 `sources/repos/index.csv` 该行 `snapshot` 所指的那份成立，不能写成产品当前行为。**另有一处地址变更**：`deepseek-ai/deepseek-harness` 的默认分支不是 `main`，按 `main` 抓会 404——`fetch.py` 已改为先问 API 要默认分支。
 
 ## 6. 证据索引（可复现）
 
