@@ -17,5 +17,5 @@
 
 ## 相关
 
-- 第三方代码仓库的索引：repos-sources.md
+- 第三方代码仓库的账本：repos/index.csv（2026-09-25 起取代已退役的 repos-sources.md）
 - 已收录论文的清单：papers/index.csv

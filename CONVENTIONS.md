@@ -54,7 +54,7 @@ Dialogue 保存当时怎么想、为何改变和否掉了什么。重要决定�
 
 本项目使用 Git 管理版本。完成一组有意义的改动并检查后提交，提交说明交代实际变化；修改前检查工作区，保留用户已有的未提交工作，不为建立基线擅自覆盖或回退。后续迁移、删除和重写通过提交追溯，不再复制整批快照。既有 archive 材料继续保留其历史用途和现有引用。
 
-忽略规则在 `.gitignore`。第三方 `sources/repos/`、本地凭据、运行缓存与明确的私人文件不进入版本库；研究文稿、论文库的索引（`sources/papers/index.csv`）与工具脚本及既有历史材料正常跟踪。论文 PDF 原件、机器转换正文与派生图片（`sources/papers/pdf/`、`sources/papers/md/`、`sources/papers/assets/`）都是可重建的重件，不进入版本库，缺哪份用 `sources/papers/_scripts/pipeline.py` 现取；来源与版本由 `index.csv` 承载，md 表头的登记块由元数据重建。研究引用需记录仓库来源与 commit，不能靠本地 checkout 随版本库分发；原始资料及旧快照的换行保留由 `.gitattributes` 指定，以免破坏已有指纹。
+忽略规则在 `.gitignore`。第三方 `sources/repos/` 的 **checkout 内容**、本地凭据、运行缓存与明确的私人文件不进入版本库；该目录的**元数据层**（`index.csv`、`_commits.json`、`CHANGELOG.md`、`AGENTS.md`、`_scripts/`）正常跟踪——账本与抓取事实必须随版本库走，否则本地快照的版本无从复核。研究文稿、论文库的索引（`sources/papers/index.csv`）与工具脚本及既有历史材料正常跟踪。论文 PDF 原件、机器转换正文与派生图片（`sources/papers/pdf/`、`sources/papers/md/`、`sources/papers/assets/`）都是可重建的重件，不进入版本库，缺哪份用 `sources/papers/_scripts/pipeline.py` 现取；来源与版本由 `index.csv` 承载，md 表头的登记块由元数据重建。研究引用需记录仓库来源与 commit，不能靠本地 checkout 随版本库分发；原始资料及旧快照的换行保留由 `.gitattributes` 指定，以免破坏已有指纹。
 
 历史文件因迁移可修复链接并追加状态，但不把当时的话改写成今天的决定。Git 提交记录文件变化，重要决定记录选择理由，两者各有用途。
 
