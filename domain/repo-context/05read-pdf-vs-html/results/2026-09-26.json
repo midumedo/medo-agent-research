@@ -1,0 +1,159 @@
+{
+ "generated": "2026-09-27T07:14:56+08:00",
+ "git_head": "0d25bf49aa895948bc23ef3593d8a99ddb913180",
+ "python": "3.13.11",
+ "inputs": {
+  "sha256": {
+   "pdf": "4428a9dfe363e43eedd4aff06c93f8d77fb49432d5ea93a409d66eef0312bdbb",
+   "html": "e8065fa97fccc9fb99632ac0e99f301b7c5dc39ce98e8d7b5ecd9be0bb91d448"
+  },
+  "pdf": {
+   "path": ".\\sources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.pdf",
+   "bytes": 5416526
+  },
+  "html": {
+   "path": ".\\sources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.html",
+   "bytes": 233087
+  }
+ },
+ "html": {
+  "path": ".\\sources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.html",
+  "raw": {
+   "chars": 142568,
+   "bytes_utf8": 233087,
+   "cjk": 44382,
+   "ascii": 97257,
+   "other": 929,
+   "tokens_low": 69161,
+   "tokens_high": 91816
+  },
+  "no_style_script": {
+   "chars": 136366,
+   "bytes_utf8": 226818,
+   "cjk": 44351,
+   "ascii": 91089,
+   "other": 926,
+   "tokens_low": 67586,
+   "tokens_high": 90225
+  },
+  "visible_text": {
+   "chars": 85905,
+   "bytes_utf8": 176357,
+   "cjk": 44351,
+   "ascii": 40628,
+   "other": 926,
+   "tokens_low": 54971,
+   "tokens_high": 77610
+  },
+  "markdown": {
+   "chars": 91726,
+   "bytes_utf8": 182178,
+   "cjk": 44351,
+   "ascii": 46449,
+   "other": 926,
+   "tokens_low": 56426,
+   "tokens_high": 79065,
+   "coverage_ok": 1.0
+  },
+  "structure": {
+   "headings": 140,
+   "tables": 34,
+   "rows": 233,
+   "cells": 804,
+   "code_elements": 271,
+   "pre_elements": 4,
+   "list_items": 339,
+   "links": 206,
+   "images": 0,
+   "total_tags": 2845
+  },
+  "code_text_chars": 8430,
+  "markup_overhead_chars": 56663,
+  "markup_overhead_ratio": 0.3974
+ },
+ "pdf": {
+  "path": ".\\sources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.pdf",
+  "pages": 44,
+  "producer": "Skia/PDF m153",
+  "file": {
+   "bytes": 5416526
+  },
+  "text_extract": {
+   "chars": 92530,
+   "bytes_utf8": 184404,
+   "cjk": 44942,
+   "ascii": 46510,
+   "other": 1078,
+   "tokens_low": 57108,
+   "tokens_high": 80118,
+   "lines": 2628,
+   "short_lines_le3": 263,
+   "short_line_ratio": 0.1001
+  },
+  "noise": {
+   "header_footer_lines": 88,
+   "noise_chars": 2631,
+   "source_url_lines": 44
+  },
+  "signals": {
+   "spans": 64650,
+   "span_chars": 89902,
+   "distinct_fonts": 615,
+   "type3_fonts": 610,
+   "bold_spans": 2,
+   "mono_spans": 0,
+   "mono_chars": 0,
+   "top_sizes": [
+    [
+     8.2,
+     41274
+    ],
+    [
+     7.2,
+     25668
+    ],
+    [
+     6.7,
+     8661
+    ],
+    [
+     6.9,
+     5535
+    ],
+    [
+     8.0,
+     5184
+    ],
+    [
+     9.8,
+     1674
+    ]
+   ]
+  },
+  "visual_estimate": {
+   "zoom1x": {
+    "page_px": [
+     595,
+     842
+    ],
+    "tokens_per_page": 668,
+    "tokens_total": 29392
+   },
+   "zoom2x": {
+    "page_px": [
+     1190,
+     1684
+    ],
+    "tokens_per_page": 2672,
+    "tokens_total": 117568
+   }
+  },
+  "note": "tokens ≈ w*h/750 为像素计费粗估，随供应商与分辨率变化；仅用于量级比较"
+ },
+ "assumptions": [
+  "token 为按字符构成的估算区间，非实测分词；只做同一估算器下的相对比较",
+  "HTML「结构化文本」由本脚本 DOM 转换得到，已用 98% 覆盖率断言保证不丢可见文本",
+  "PDF「文本抽取」用 PyMuPDF get_text，等价于 harness 最常见的 pdf→text 路径",
+  "PDF「视觉」按每页位图像素计费粗估，未含文本层叠加与多次采样"
+ ]
+}
