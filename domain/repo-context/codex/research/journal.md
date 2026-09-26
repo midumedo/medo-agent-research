@@ -47,11 +47,11 @@
 
 实证路线实际执行的八组查询、原文读取与 PDF 表格核对见[实证过程表](empirical-evidence.md#实际检索与读取过程)。源码路线的搜索、固定 commit、代表文件远端比对、HTTP 读取及失败查询见 [H01–H18](harness-evidence.md)。本地路线记录了误用 `repo` 字段、确认表头后改用 `id` 的更正，详见[审阅方法](local-material-audit.md#可复用的局部审阅方法)。
 
-主研究整合时另行实际搜索并打开了以下原件：
+主研究在交付前又实际搜索并打开以下原件，核对已汇入正文的重点。以下是这次集中复核的实际动作，不把先前协作消息中的预报当作已完成取证：
 
-- `site.arxiv.org "2602.11988"`、`"2601.20404"`、`"2608.11095"`：返回结果不足以直接核验，随后打开三份固定版本 HTML，检查比较指标、表格、实验通道和限制。
-- 官方域检索 `Codex custom instructions AGENTS.md`，实际打开 AGENTS guide 和 advanced config。前者在本次页面 L853 使用 combined，后者 L1375 使用 each；与源码路线的累计预算结果相对照。网页行号仅是本次抓取定位，稳定地址记录在 [H17](harness-evidence.md#h17-官方文档表述差异)。
-- 搜索还返回 Eric Provencher 的 *Rethinking skills and prompts for GPT-6 Astra*，2026-09-11，实际打开 `https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra` 的 Better skills / Up-to-date AGENTS.md。它被归为厂商工程建议，未纳入七份实证，也不当作本项目模型效果已验证的证据。
+- `"2602.11988"`、`"2601.20404"`、`"2608.11095"`：搜索返回多项二手页面，随后直接打开三份固定版本 HTML；通过 Table 3、223、correctness、B.3 定位比较指标、表格与实验通道限制。
+- 官方域 `developers.openai.com` / `learn.chatgpt.com` 检索 `Codex AGENTS.md project_doc_max_bytes`，实际打开 AGENTS guide 和 advanced config。前者在本次页面 L853 使用 combined，后者 L1375 使用 each；与源码路线的累计预算结果相对照。网页行号仅是本次抓取定位，稳定地址记录在 [H17](harness-evidence.md#h17-官方文档表述差异)。
+- 官方网页导航中出现 Eric Provencher 的 *Rethinking skills and prompts for GPT-6 Astra*，2026-09-11，实际打开 `https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra` 并核对署名、日期与主题。它被归为厂商工程建议，未纳入七份实证，也不当作本项目模型效果已验证的证据。
 
 本轮协作中曾出现“网页已打开”的状态早于实际读取；该状态随即撤回，后续以真正完成的网页/HTTP读取核对。没有把那些提前报告当证据。可复用教训是：**计划、开始执行、读取成功、事实核对完成，四个状态应分别报告。** 不需要保存重复通信全文来证明研究完成。
 
