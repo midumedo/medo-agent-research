@@ -1,0 +1,1438 @@
+{
+  "schema": "repo-context-local-probe-v1",
+  "observed_at_utc": "2026-09-26T07:27:25.940121+00:00",
+  "git_head_at_measurement": "2d99421b71a88ae2a9dff0b9492078a81c788e21",
+  "python": "3.13.11",
+  "scope": "Local ledger rows and bytes, not representative repositories or model behavior.",
+  "inputs": [
+    {
+      "path": "domain/repo-context/00docslist/index.csv",
+      "sha256": "d0611de1e2d77a8c835239bada219f3961a3783391beafaf4bd9d208dffef98b"
+    },
+    {
+      "path": "sources/repos/index.csv",
+      "sha256": "5e384f791995eae492adfdbceca44f90727506bcf7869976d9dae6d0ffe9b9ef"
+    },
+    {
+      "path": "sources/repos/_commits.json",
+      "sha256": "b73dbb816335db727e4b1eaf36468e7cf288e92d3af8ab5ae0c112985ed31bda"
+    }
+  ],
+  "ledger": {
+    "rows": 134,
+    "repository_ids": 18,
+    "status_counts": {
+      "verified": 133,
+      "absent": 1
+    },
+    "kind_counts": {
+      "agent-entry": 22,
+      "record": 11,
+      "collab-rule": 31,
+      "facade": 28,
+      "legal": 11,
+      "topic-manual": 17,
+      "machine": 7,
+      "semantic": 6,
+      "": 1
+    }
+  },
+  "projection": {
+    "predicate": "kind == agent-entry and status == verified",
+    "selected_records": [
+      {
+        "id": "cline",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "codex",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "deepseek-harness",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "deepseek-harness",
+        "path": "CLAUDE.md"
+      },
+      {
+        "id": "EverOS",
+        "path": "CLAUDE.md"
+      },
+      {
+        "id": "gemini-cli",
+        "path": "GEMINI.md"
+      },
+      {
+        "id": "goose",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "goose",
+        "path": "CLAUDE.md"
+      },
+      {
+        "id": "mem0",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "mem0",
+        "path": "CLAUDE.md"
+      },
+      {
+        "id": "MemOS",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "MemOS",
+        "path": "CLAUDE.md"
+      },
+      {
+        "id": "memU",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "minimax-cli",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "OpenHands",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "qwen-code",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "qwen-code",
+        "path": "CLAUDE.md"
+      },
+      {
+        "id": "Raven",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "Raven",
+        "path": "CLAUDE.md"
+      },
+      {
+        "id": "Tianshu-harness",
+        "path": "AGENTS.md"
+      },
+      {
+        "id": "Tianshu-harness",
+        "path": "CLAUDE.md"
+      },
+      {
+        "id": "ZCode",
+        "path": "AGENTS.md"
+      }
+    ],
+    "selected_rows": 22,
+    "full_csv": {
+      "utf8_bytes": 10579,
+      "unicode_codepoints": 10579,
+      "physical_lines": 135
+    },
+    "filtered_csv": {
+      "utf8_bytes": 1750,
+      "unicode_codepoints": 1750,
+      "physical_lines": 23
+    },
+    "projected_csv": {
+      "utf8_bytes": 423,
+      "unicode_codepoints": 423,
+      "physical_lines": 23
+    }
+  },
+  "same_content_formats": {
+    "csv": {
+      "utf8_bytes": 423,
+      "unicode_codepoints": 423,
+      "physical_lines": 23
+    },
+    "markdown_table": {
+      "utf8_bytes": 575,
+      "unicode_codepoints": 575,
+      "physical_lines": 24
+    },
+    "compact_json_array": {
+      "utf8_bytes": 813,
+      "unicode_codepoints": 813,
+      "physical_lines": 1
+    },
+    "jsonl": {
+      "utf8_bytes": 811,
+      "unicode_codepoints": 811,
+      "physical_lines": 22
+    }
+  },
+  "version_metadata_mismatches": [
+    {
+      "id": "EverOS",
+      "index_snapshot": "5076683ab88d",
+      "capture_sha": "462ebf9fd59b55c03fefb8eec855c62500f2a3cf"
+    },
+    {
+      "id": "MemOS",
+      "index_snapshot": "12acdad694d0",
+      "capture_sha": "a7367d07e55db61099f7b4e2c1108bc5831a24f3"
+    },
+    {
+      "id": "MemoryBear",
+      "index_snapshot": "c32b937f1ed0",
+      "capture_sha": "85004dacaf2f05d2f596b58713116d65c7f6ccd3"
+    },
+    {
+      "id": "mem0",
+      "index_snapshot": "a39a802bbc93",
+      "capture_sha": "989c7da0fc8e4df6342dbb8c448af9816d60d24c"
+    },
+    {
+      "id": "memU",
+      "index_snapshot": "08e1ed4cdf4c",
+      "capture_sha": "2c050bc9681a4c0aff1af211a000e73d14f33356"
+    },
+    {
+      "id": "qwen-code",
+      "index_snapshot": "ffea2d024e52",
+      "capture_sha": "d124dd56cd0ab89a15c2e6edc552e5d86f32a7c3"
+    }
+  ],
+  "file_checks": [
+    {
+      "id": "cline",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 5279,
+      "actual_bytes": 5279,
+      "bytes_match": true,
+      "sha256": "62c0a0022cb0541ab520399edc8e01b49386009e9250039c7170dcba019a9a87"
+    },
+    {
+      "id": "cline",
+      "path": "CHANGELOG.md",
+      "exists": true,
+      "recorded_bytes": 137910,
+      "actual_bytes": 137910,
+      "bytes_match": true,
+      "sha256": "0723360483abe974055730a32297b27c04c51d3647d53786e0c391de84cee202"
+    },
+    {
+      "id": "cline",
+      "path": "CODE_OF_CONDUCT.md",
+      "exists": true,
+      "recorded_bytes": 3373,
+      "actual_bytes": 3373,
+      "bytes_match": true,
+      "sha256": "092568bf00c309bd323435ee4335c4a8ad4f4ebdaeabd57052f2ae362bdd3435"
+    },
+    {
+      "id": "cline",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 8764,
+      "actual_bytes": 8764,
+      "bytes_match": true,
+      "sha256": "6b98c5ea564b4a717bfc013ff0b73278461e9bcf0b47def6dfed8709a0caa9de"
+    },
+    {
+      "id": "cline",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 9237,
+      "actual_bytes": 9237,
+      "bytes_match": true,
+      "sha256": "e68470af087a1f3a7abe00a725e42e5d4a9da56c204047df2211986ddd844d24"
+    },
+    {
+      "id": "cline",
+      "path": "SECURITY.md",
+      "exists": true,
+      "recorded_bytes": 952,
+      "actual_bytes": 952,
+      "bytes_match": true,
+      "sha256": "66a5f4da8565526b5bf35cb535164322f00b1fd0a266957732a3961d320962ee"
+    },
+    {
+      "id": "codex",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 22397,
+      "actual_bytes": 22397,
+      "bytes_match": true,
+      "sha256": "b3dc6716209116a311dce67ddd490d7d0b998031734720524ad407fe67c7cf48"
+    },
+    {
+      "id": "codex",
+      "path": "CHANGELOG.md",
+      "exists": true,
+      "recorded_bytes": 330,
+      "actual_bytes": 330,
+      "bytes_match": true,
+      "sha256": "c8458f99de91a4b4b9682ecb72c396f0d08c03c51a657759e1239c3a14c697d5"
+    },
+    {
+      "id": "codex",
+      "path": "NOTICE",
+      "exists": true,
+      "recorded_bytes": 242,
+      "actual_bytes": 242,
+      "bytes_match": true,
+      "sha256": "9d71575ecfd9a843fc1677b0efb08053c6ba9fd686a0de1a6f5382fd3c220915"
+    },
+    {
+      "id": "codex",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 3334,
+      "actual_bytes": 3334,
+      "bytes_match": true,
+      "sha256": "ba4e1f69ff48386e72a9c5e1edaf76aad64a475c2d51af79ccba6d1128261ba7"
+    },
+    {
+      "id": "codex",
+      "path": "SECURITY.md",
+      "exists": true,
+      "recorded_bytes": 923,
+      "actual_bytes": 923,
+      "bytes_match": true,
+      "sha256": "a71f3645c5438400bf803a210cae829a07b5319ac1babe289badad7d1091af3a"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 17805,
+      "actual_bytes": 17805,
+      "bytes_match": true,
+      "sha256": "e8fbc2b46a80fd8f0abde7ef6686197fa9b93a128bf0e85fce93f18d29cee7ef"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "BENCHMARK.md",
+      "exists": true,
+      "recorded_bytes": 231,
+      "actual_bytes": 231,
+      "bytes_match": true,
+      "sha256": "3e38b63e4507b4db923d2cacdff0828e12e2774a35cd1695b592cfaa3d9e7bc2"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "BRAND_GUIDELINES.i18n.yaml",
+      "exists": true,
+      "recorded_bytes": 423,
+      "actual_bytes": 423,
+      "bytes_match": true,
+      "sha256": "260ae1b2c931ba17fe0431b42615c3fc7802a79e6f8de92aa78138e0aac6b5b4"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "BRAND_GUIDELINES.md",
+      "exists": true,
+      "recorded_bytes": 1986,
+      "actual_bytes": 1986,
+      "bytes_match": true,
+      "sha256": "0f3e1150bfa3d4887c50ff8dc9a01895184e7a80336546617b07f7d86a542f40"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "BRAND_GUIDELINES.zh.md",
+      "exists": true,
+      "recorded_bytes": 1609,
+      "actual_bytes": 1609,
+      "bytes_match": true,
+      "sha256": "da32025bf0f7e36cf8ef0ff6c875f043c4acd94150b348af9689441a17950bce"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "CLAUDE.md",
+      "exists": true,
+      "recorded_bytes": 17805,
+      "actual_bytes": 17805,
+      "bytes_match": true,
+      "sha256": "e8fbc2b46a80fd8f0abde7ef6686197fa9b93a128bf0e85fce93f18d29cee7ef"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "CONTRIBUTING.i18n.yaml",
+      "exists": true,
+      "recorded_bytes": 382,
+      "actual_bytes": 382,
+      "bytes_match": true,
+      "sha256": "73cf3d934195b0177d93685d5cedc3f2d04caefae614b0621285cbdec2232387"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 1574,
+      "actual_bytes": 1574,
+      "bytes_match": true,
+      "sha256": "9cd02c5b784b4a616cff9421defd688e420b35b7bf466f8908cecd0282a2aab6"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "CONTRIBUTING.zh.md",
+      "exists": true,
+      "recorded_bytes": 1416,
+      "actual_bytes": 1416,
+      "bytes_match": true,
+      "sha256": "260a72b70330f68e47e933436d60819a8198bab056877853d2628accd7216796"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "README.i18n.yaml",
+      "exists": true,
+      "recorded_bytes": 1082,
+      "actual_bytes": 1082,
+      "bytes_match": true,
+      "sha256": "20466082f32c8f248bad0719dddc31ad3bfbc747e300b2aec0edb55f262a18e9"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 2672,
+      "actual_bytes": 2672,
+      "bytes_match": true,
+      "sha256": "ff518cb6ede2d5d5e43a296f3e18f6dcfc7edc0da0ba0247e50f5579af133c4d"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "README.zh.md",
+      "exists": true,
+      "recorded_bytes": 3611,
+      "actual_bytes": 3611,
+      "bytes_match": true,
+      "sha256": "33caa5fe73940c89554827e4430d4aa9081556d0fb4486345b6b9ed08d05c74b"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "SAFETY.i18n.yaml",
+      "exists": true,
+      "recorded_bytes": 665,
+      "actual_bytes": 665,
+      "bytes_match": true,
+      "sha256": "afee08ea459b7bd024f8a3bff8be484f8c22d8e4bf81ed78451fec186b6e5885"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "SAFETY.md",
+      "exists": true,
+      "recorded_bytes": 1673,
+      "actual_bytes": 1673,
+      "bytes_match": true,
+      "sha256": "62075bb51e0f7790441e7722ff12063107b4866019332e71ef01b63b6f880fee"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "SAFETY.zh.md",
+      "exists": true,
+      "recorded_bytes": 1530,
+      "actual_bytes": 1530,
+      "bytes_match": true,
+      "sha256": "d021947c09c83eb352961cf12c95f4b5781d3987663e78c4a8b621d2e3be07a3"
+    },
+    {
+      "id": "deepseek-harness",
+      "path": "THIRD_PARTY_NOTICES.md",
+      "exists": true,
+      "recorded_bytes": 23694,
+      "actual_bytes": 23694,
+      "bytes_match": true,
+      "sha256": "d5f1a9aa9e7b4a39f2407c8bdb3db8b13c79bbedb2651f38b616205824427581"
+    },
+    {
+      "id": "EverOS",
+      "path": "ACKNOWLEDGMENTS.md",
+      "exists": true,
+      "recorded_bytes": 3850,
+      "actual_bytes": 3850,
+      "bytes_match": true,
+      "sha256": "c036b8ab28cfb05b278ac234b156e717386adba4222cec066277a2eba33b2ebc"
+    },
+    {
+      "id": "EverOS",
+      "path": "CHANGELOG.md",
+      "exists": true,
+      "recorded_bytes": 71214,
+      "actual_bytes": 71214,
+      "bytes_match": true,
+      "sha256": "3da8b19b10cf433f01161358b7eaf2bdbefa58ab3efd095aed1f6ade02dcc530"
+    },
+    {
+      "id": "EverOS",
+      "path": "CITATION.md",
+      "exists": true,
+      "recorded_bytes": 1188,
+      "actual_bytes": 1188,
+      "bytes_match": true,
+      "sha256": "54c47ae5e087c0112c0ce7a43022c7e21a1a05d14db2e4f054115eec164ab413"
+    },
+    {
+      "id": "EverOS",
+      "path": "CLAUDE.md",
+      "exists": true,
+      "recorded_bytes": 4297,
+      "actual_bytes": 4297,
+      "bytes_match": true,
+      "sha256": "a8518e7fedc1aca11444bff265c0b72ab7bca518e7ecf7603ae975e3058b0c51"
+    },
+    {
+      "id": "EverOS",
+      "path": "CODE_OF_CONDUCT.md",
+      "exists": true,
+      "recorded_bytes": 5478,
+      "actual_bytes": 5478,
+      "bytes_match": true,
+      "sha256": "45ae1173744f70bd3531c2dc5db3eb5ac80861797765cc1d73c07ac79fc9014f"
+    },
+    {
+      "id": "EverOS",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 5733,
+      "actual_bytes": 5733,
+      "bytes_match": true,
+      "sha256": "b075149d9fc088090abd0aaddc9996b62cab5c24077169c259886bf24afa64d6"
+    },
+    {
+      "id": "EverOS",
+      "path": "NOTICE",
+      "exists": true,
+      "recorded_bytes": 2634,
+      "actual_bytes": 2634,
+      "bytes_match": true,
+      "sha256": "88d2fd77e354cd3d6a0f724a197e44e3c3b65832cac12a79657273c574fea263"
+    },
+    {
+      "id": "EverOS",
+      "path": "QUICKSTART.md",
+      "exists": true,
+      "recorded_bytes": 8009,
+      "actual_bytes": 8009,
+      "bytes_match": true,
+      "sha256": "553ba41f489f1fa5a99af680686961a8211a5347f6988c87d1b89789a37b5811"
+    },
+    {
+      "id": "EverOS",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 28159,
+      "actual_bytes": 28159,
+      "bytes_match": true,
+      "sha256": "ce1077f9f65140aec8db2469e5e0c41932908f306641d185045b72b45d92b9ad"
+    },
+    {
+      "id": "EverOS",
+      "path": "README.zh-CN.md",
+      "exists": true,
+      "recorded_bytes": 28220,
+      "actual_bytes": 28220,
+      "bytes_match": true,
+      "sha256": "50f011e1d8dd0f5b68ddb6e050c239ca46575e56d31f09c7e7e788e06a6da4f3"
+    },
+    {
+      "id": "EverOS",
+      "path": "SECURITY.md",
+      "exists": true,
+      "recorded_bytes": 2539,
+      "actual_bytes": 2539,
+      "bytes_match": true,
+      "sha256": "a8d94282a1d89f9fcbf25098c9de0ba3d835819eb1db88fed66f967456822453"
+    },
+    {
+      "id": "gemini-cli",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 20400,
+      "actual_bytes": 20400,
+      "bytes_match": true,
+      "sha256": "b9cd98e07df3d36ba7267e5a5edeae1166d85e78b41ff1d960648f5d3bed60c0"
+    },
+    {
+      "id": "gemini-cli",
+      "path": "GEMINI.md",
+      "exists": true,
+      "recorded_bytes": 4610,
+      "actual_bytes": 4610,
+      "bytes_match": true,
+      "sha256": "74dab8e16a1ac9ea84d061a61944eab80b2991412daf02ab98e319ea61f49688"
+    },
+    {
+      "id": "gemini-cli",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 13489,
+      "actual_bytes": 13489,
+      "bytes_match": true,
+      "sha256": "bacf354f3f674d57679ebf7b42dd69311bb9ef14200e18ca703d82aba48bf833"
+    },
+    {
+      "id": "gemini-cli",
+      "path": "ROADMAP.md",
+      "exists": true,
+      "recorded_bytes": 5748,
+      "actual_bytes": 5748,
+      "bytes_match": true,
+      "sha256": "197dd4820090bdaf995da1a522226fa4216318db1ff5b12944d022b88a0c4f3d"
+    },
+    {
+      "id": "gemini-cli",
+      "path": "SECURITY.md",
+      "exists": true,
+      "recorded_bytes": 423,
+      "actual_bytes": 423,
+      "bytes_match": true,
+      "sha256": "d6ba9f6d1cf81794f35b600c309f40655287168e3ecc8093169c0c16578c2cf0"
+    },
+    {
+      "id": "goose",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 6581,
+      "actual_bytes": 6581,
+      "bytes_match": true,
+      "sha256": "3c852fbffd756e76723f94c52299aed8d055b706f4cb01af9c35a0e0a2ee6e9a"
+    },
+    {
+      "id": "goose",
+      "path": "BUILDING_DOCKER.md",
+      "exists": true,
+      "recorded_bytes": 7273,
+      "actual_bytes": 7273,
+      "bytes_match": true,
+      "sha256": "7d97ce6e9012d07437486a3a85a8940bc4733ff2eb2a5b53697cc433c33b1568"
+    },
+    {
+      "id": "goose",
+      "path": "BUILDING_LINUX.md",
+      "exists": true,
+      "recorded_bytes": 5678,
+      "actual_bytes": 5678,
+      "bytes_match": true,
+      "sha256": "ce33b534e76d158aa2ffd0305c0ad7dca5f728abc2aaa7afa83783104f2e372a"
+    },
+    {
+      "id": "goose",
+      "path": "CLAUDE.md",
+      "exists": true,
+      "recorded_bytes": 11,
+      "actual_bytes": 11,
+      "bytes_match": true,
+      "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49"
+    },
+    {
+      "id": "goose",
+      "path": "CODE_OF_CONDUCT.md",
+      "exists": true,
+      "recorded_bytes": 8513,
+      "actual_bytes": 8513,
+      "bytes_match": true,
+      "sha256": "4c76c3a3845be18d2ed789fa87bde2e08d257abb682faf6f29fc5fea513402e8"
+    },
+    {
+      "id": "goose",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 16647,
+      "actual_bytes": 16647,
+      "bytes_match": true,
+      "sha256": "74da994d33d0d07679851f9001659ce903cf7313ccbd2b62442c0a341ccba0c5"
+    },
+    {
+      "id": "goose",
+      "path": "CUSTOM_DISTROS.md",
+      "exists": true,
+      "recorded_bytes": 28327,
+      "actual_bytes": 28327,
+      "bytes_match": true,
+      "sha256": "d0192ad958ad1bd86a1aebcee1112afdc1d57bdb8e4f291c6fcd4a133167cfe3"
+    },
+    {
+      "id": "goose",
+      "path": "GOVERNANCE.md",
+      "exists": true,
+      "recorded_bytes": 10503,
+      "actual_bytes": 10503,
+      "bytes_match": true,
+      "sha256": "abc55bd3bd1c7aa822ad3b89a6c8a2ada4b226a3b37311f0260ac46153fd68d0"
+    },
+    {
+      "id": "goose",
+      "path": "I18N.md",
+      "exists": true,
+      "recorded_bytes": 6158,
+      "actual_bytes": 6158,
+      "bytes_match": true,
+      "sha256": "bd31ae74c5423cd3580162cbcf527c54eeeb92fe4c6f7dc5365d20e3d157c489"
+    },
+    {
+      "id": "goose",
+      "path": "MAINTAINERS.md",
+      "exists": true,
+      "recorded_bytes": 772,
+      "actual_bytes": 772,
+      "bytes_match": true,
+      "sha256": "5ba61d51fdc1e6edac455a0c59781bb53d5662e1e4f626246c878bc06959cf9e"
+    },
+    {
+      "id": "goose",
+      "path": "MERGE_FIXES.md",
+      "exists": true,
+      "recorded_bytes": 10620,
+      "actual_bytes": 10620,
+      "bytes_match": true,
+      "sha256": "11c92acd1e58f0f554cb48d460893823643b650450ac0649027f007b0264b497"
+    },
+    {
+      "id": "goose",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 3449,
+      "actual_bytes": 3449,
+      "bytes_match": true,
+      "sha256": "0f1df85a0c457caf1f3c4e1c0370f2da3887fffa588d207862cfc298c1d39755"
+    },
+    {
+      "id": "goose",
+      "path": "RELEASE.md",
+      "exists": true,
+      "recorded_bytes": 2378,
+      "actual_bytes": 2378,
+      "bytes_match": true,
+      "sha256": "b69a41d45d868a6ee245cf80440e1345de7448962a3cac91370c1ed0c072b3e2"
+    },
+    {
+      "id": "goose",
+      "path": "RELEASE_CHECKLIST.md",
+      "exists": true,
+      "recorded_bytes": 1046,
+      "actual_bytes": 1046,
+      "bytes_match": true,
+      "sha256": "f5e9ab395d92e3ad6284f8a5595d2f1f835b138b1e83d7028111d59e31c71fd6"
+    },
+    {
+      "id": "goose",
+      "path": "RISCV_SETUP.md",
+      "exists": true,
+      "recorded_bytes": 8342,
+      "actual_bytes": 8342,
+      "bytes_match": true,
+      "sha256": "caf54a55fb6ef05c28d432940afaf0a3f35b1e94756cbee8165f01f8e152593e"
+    },
+    {
+      "id": "goose",
+      "path": "SECURITY.md",
+      "exists": true,
+      "recorded_bytes": 2551,
+      "actual_bytes": 2551,
+      "bytes_match": true,
+      "sha256": "e9b24f0a2ab5e6e1655cd178266d1afcb8f7b4e213f460cd643a1b986922e120"
+    },
+    {
+      "id": "mem0",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 11997,
+      "actual_bytes": 11997,
+      "bytes_match": true,
+      "sha256": "b2a7dada23c7cd7299c1ff729e67691879a911e51d87d6b0f84010e444637e23"
+    },
+    {
+      "id": "mem0",
+      "path": "CLAUDE.md",
+      "exists": true,
+      "recorded_bytes": 11997,
+      "actual_bytes": 11997,
+      "bytes_match": true,
+      "sha256": "b2a7dada23c7cd7299c1ff729e67691879a911e51d87d6b0f84010e444637e23"
+    },
+    {
+      "id": "mem0",
+      "path": "CODE_OF_CONDUCT.md",
+      "exists": true,
+      "recorded_bytes": 8437,
+      "actual_bytes": 8437,
+      "bytes_match": true,
+      "sha256": "735a4373a15e9015572f97c6b9fbbdd205d898f3ac42e69d9b1fe17871bf35a8"
+    },
+    {
+      "id": "mem0",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 11543,
+      "actual_bytes": 11543,
+      "bytes_match": true,
+      "sha256": "9bfc6a51005a590a12e41bf28ca93503131c7f83430b5bef48a6876b060bc8f9"
+    },
+    {
+      "id": "mem0",
+      "path": "LLM.md",
+      "exists": true,
+      "recorded_bytes": 37334,
+      "actual_bytes": 37334,
+      "bytes_match": true,
+      "sha256": "31f9d8569d2f90fe2904e4f899956039f4524ba3a90767f78ed29042f8fa9311"
+    },
+    {
+      "id": "mem0",
+      "path": "marketplace.json",
+      "exists": true,
+      "recorded_bytes": 436,
+      "actual_bytes": 436,
+      "bytes_match": true,
+      "sha256": "a5582a2454505f1fb9a5eb74ea15124496d7262023781f1d72c74c14c13921db"
+    },
+    {
+      "id": "mem0",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 11914,
+      "actual_bytes": 11914,
+      "bytes_match": true,
+      "sha256": "7509347d34a767a2ef37ceb6cf6c714de9e8d84fe66ad5eea92bbae824a8fbeb"
+    },
+    {
+      "id": "mem0",
+      "path": "SECURITY.md",
+      "exists": true,
+      "recorded_bytes": 2280,
+      "actual_bytes": 2280,
+      "bytes_match": true,
+      "sha256": "01e16cbd08c65cd6302f00ef1a150281dcde045ab4331ed3bfac04bf0e6ee304"
+    },
+    {
+      "id": "MemoryBear",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 1738,
+      "actual_bytes": 1738,
+      "bytes_match": true,
+      "sha256": "a11ae9e069570fd085b14f0cd7fe8ebd935ab1ffe5aee462cbbe2785858bf817"
+    },
+    {
+      "id": "MemoryBear",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 21718,
+      "actual_bytes": 21718,
+      "bytes_match": true,
+      "sha256": "20e7057a2bfd59b0a7dbc0dc203d38efa244709e112a64a0fc0ccde35f551fe7"
+    },
+    {
+      "id": "MemoryBear",
+      "path": "README_CN.md",
+      "exists": true,
+      "recorded_bytes": 20049,
+      "actual_bytes": 20049,
+      "bytes_match": true,
+      "sha256": "e09e66e893900c4e918714eaf6b4ca348962ca977d3956731c4d4d6d686a747b"
+    },
+    {
+      "id": "MemOS",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 10155,
+      "actual_bytes": 10155,
+      "bytes_match": true,
+      "sha256": "2eac7cfe6bb937b6e147c9e06960ebe0c6f7b6a0be954e6ea597640e5320fe4c"
+    },
+    {
+      "id": "MemOS",
+      "path": "CLAUDE.md",
+      "exists": true,
+      "recorded_bytes": 1200,
+      "actual_bytes": 1200,
+      "bytes_match": true,
+      "sha256": "b0f641e6388ada69339539ae17e378ec4f6effdd1378a1a80618ed29f34e63e2"
+    },
+    {
+      "id": "MemOS",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 16551,
+      "actual_bytes": 16551,
+      "bytes_match": true,
+      "sha256": "c0426d0081782e4ac7dc487596296ad1b5f322daebedda315f1490941829658a"
+    },
+    {
+      "id": "MemOS",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 17535,
+      "actual_bytes": 17535,
+      "bytes_match": true,
+      "sha256": "9c2ec97ba97e5371088e041d04085f70195b4626a9dcb517194f90b9495b30dc"
+    },
+    {
+      "id": "MemOS",
+      "path": "README_ZH.md",
+      "exists": true,
+      "recorded_bytes": 17161,
+      "actual_bytes": 17161,
+      "bytes_match": true,
+      "sha256": "227b4fa4dfc287f71c0b957dfc8b462bbb365a5fa58da82f5677c15ffdcbfa67"
+    },
+    {
+      "id": "memU",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 3506,
+      "actual_bytes": 3506,
+      "bytes_match": true,
+      "sha256": "2ff32dff64699f6959abc179a29eaa6c085c11e2a28edb5b4910f14b0b1f519e"
+    },
+    {
+      "id": "memU",
+      "path": "CHANGELOG.md",
+      "exists": true,
+      "recorded_bytes": 38514,
+      "actual_bytes": 38514,
+      "bytes_match": true,
+      "sha256": "c1f3c05d8829cb935ae585e77d2301d4434c18b58798364072b7264670738d64"
+    },
+    {
+      "id": "memU",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 7220,
+      "actual_bytes": 7220,
+      "bytes_match": true,
+      "sha256": "5e39b66e72425fa2d0c91957d9099a0d04509921099f2bf55b43b8ce74e67a2a"
+    },
+    {
+      "id": "memU",
+      "path": "INSTALL-LATEST.md",
+      "exists": true,
+      "recorded_bytes": 5482,
+      "actual_bytes": 5482,
+      "bytes_match": true,
+      "sha256": "038d8a96c466ce975d45ede4b102087ce2055a210462fd400d6eede7f47d794b"
+    },
+    {
+      "id": "memU",
+      "path": "LICENSE.txt",
+      "exists": true,
+      "recorded_bytes": 10897,
+      "actual_bytes": 10897,
+      "bytes_match": true,
+      "sha256": "0e2bcb97222f1ba09e333c70ecef4845470e16fdea953a1d0882d5ef2213d25a"
+    },
+    {
+      "id": "memU",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 11846,
+      "actual_bytes": 11846,
+      "bytes_match": true,
+      "sha256": "214ae0762a962f4540c1a3ff72e458ef612fd235ff9ede15f8d5cd27a17a6cea"
+    },
+    {
+      "id": "memU",
+      "path": "SKILL.md",
+      "exists": true,
+      "recorded_bytes": 7549,
+      "actual_bytes": 7549,
+      "bytes_match": true,
+      "sha256": "9d576f9d50b82ec0086a8e8988376e72709fd4d359eba7eb95aec899e03f7762"
+    },
+    {
+      "id": "minimax-cli",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 5952,
+      "actual_bytes": 5952,
+      "bytes_match": true,
+      "sha256": "ea4f72cddfd9193284abd6eb9da9cda4161ebaf2e7325d7743492561f31f3e65"
+    },
+    {
+      "id": "minimax-cli",
+      "path": "ERRORS.md",
+      "exists": true,
+      "recorded_bytes": 10631,
+      "actual_bytes": 10631,
+      "bytes_match": true,
+      "sha256": "f70ab5bef19336e16d7daed0755622b02a347c4e95d8aae55dc5c94348d2b95d"
+    },
+    {
+      "id": "minimax-cli",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 9793,
+      "actual_bytes": 9793,
+      "bytes_match": true,
+      "sha256": "21652ee58eaab01bacf013327f2522d7a145fb1b2dde2bbc3b5c7e4e8b7ea7c9"
+    },
+    {
+      "id": "minimax-cli",
+      "path": "README_CN.md",
+      "exists": true,
+      "recorded_bytes": 8632,
+      "actual_bytes": 8632,
+      "bytes_match": true,
+      "sha256": "0aa223d8d37a1a410b038bfc50f78f0ce0e97e1ece994018ae6e9e2c911b11b1"
+    },
+    {
+      "id": "minimax-cli",
+      "path": "SDK.md",
+      "exists": true,
+      "recorded_bytes": 4457,
+      "actual_bytes": 4457,
+      "bytes_match": true,
+      "sha256": "1a2519efcddbfa66b8c941dea81856139db416e06db03dee3b59be4074ea2829"
+    },
+    {
+      "id": "OpenHands",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 6277,
+      "actual_bytes": 6277,
+      "bytes_match": true,
+      "sha256": "43c188cdf4e72b21a1b7883582ec84813e8a9e8c9eb65372c5dada78bc31171e"
+    },
+    {
+      "id": "OpenHands",
+      "path": "CHANGELOG.md",
+      "exists": true,
+      "recorded_bytes": 1093,
+      "actual_bytes": 1093,
+      "bytes_match": true,
+      "sha256": "40ab95676b52312bfdb40a20bdb0d6b4df708f65948f571469f4b24bde486e1c"
+    },
+    {
+      "id": "OpenHands",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 10162,
+      "actual_bytes": 10162,
+      "bytes_match": true,
+      "sha256": "43c14f14e5d6128e1fe237ad1cb3ddd75a8aa86fdac6d9eba1e43758724348bf"
+    },
+    {
+      "id": "OpenHands",
+      "path": "README.windows.md",
+      "exists": true,
+      "recorded_bytes": 1134,
+      "actual_bytes": 1134,
+      "bytes_match": true,
+      "sha256": "b2bc1883a69c980716fdd1c6817012aceb40f11dfbfa0cf5a09456f7f9453a36"
+    },
+    {
+      "id": "qwen-code",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 17255,
+      "actual_bytes": 17255,
+      "bytes_match": true,
+      "sha256": "77c655dcc198b5aef391ccbf0dad13b99a3a5d753cf3e96f169b865ef7348f85"
+    },
+    {
+      "id": "qwen-code",
+      "path": "CHANGELOG.md",
+      "exists": true,
+      "recorded_bytes": 908017,
+      "actual_bytes": 908017,
+      "bytes_match": true,
+      "sha256": "3451e683ded8a88810e8f2b334c54838147b395a4b87bb0d4ad4e52583019faf"
+    },
+    {
+      "id": "qwen-code",
+      "path": "CLAUDE.md",
+      "exists": true,
+      "recorded_bytes": 350,
+      "actual_bytes": 350,
+      "bytes_match": true,
+      "sha256": "59c5fa907dab9acac5963e06caa272ab245b165f1c1769d6dce77782f41441f7"
+    },
+    {
+      "id": "qwen-code",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 12173,
+      "actual_bytes": 12173,
+      "bytes_match": true,
+      "sha256": "914b58487795f1df2b7414a9a3a399a33e0b1ce4bb06679821a1f75d96ed53e7"
+    },
+    {
+      "id": "qwen-code",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 13274,
+      "actual_bytes": 13274,
+      "bytes_match": true,
+      "sha256": "0370888b25018bef847a5edb740947bd02e06cf785e1923797a8f901b7c835f7"
+    },
+    {
+      "id": "qwen-code",
+      "path": "SECURITY.md",
+      "exists": true,
+      "recorded_bytes": 535,
+      "actual_bytes": 535,
+      "bytes_match": true,
+      "sha256": "4356cb09ca20287d2c33a5075872657c6d8ac93c4d15081bdc99ccde3792ecb5"
+    },
+    {
+      "id": "Raven",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 22349,
+      "actual_bytes": 22349,
+      "bytes_match": true,
+      "sha256": "8fbda536c7f5281023bb72e68ab4d232cd858b6d1605408025f4f6e5dcbebac5"
+    },
+    {
+      "id": "Raven",
+      "path": "CHANGELOG.md",
+      "exists": true,
+      "recorded_bytes": 85170,
+      "actual_bytes": 85170,
+      "bytes_match": true,
+      "sha256": "37c8e42056ed5f2074cd715158ba7b72b1b78eb2c7fb42044ca01ecc66de5a3e"
+    },
+    {
+      "id": "Raven",
+      "path": "CLAUDE.md",
+      "exists": true,
+      "recorded_bytes": 22349,
+      "actual_bytes": 22349,
+      "bytes_match": true,
+      "sha256": "8fbda536c7f5281023bb72e68ab4d232cd858b6d1605408025f4f6e5dcbebac5"
+    },
+    {
+      "id": "Raven",
+      "path": "CODE_OF_CONDUCT.md",
+      "exists": true,
+      "recorded_bytes": 648,
+      "actual_bytes": 648,
+      "bytes_match": true,
+      "sha256": "432b333457b65ad923988b27668f0dffe3123279f72a748358ddadca27c0c9e0"
+    },
+    {
+      "id": "Raven",
+      "path": "CONTEXT-MAP.md",
+      "exists": true,
+      "recorded_bytes": 1565,
+      "actual_bytes": 1565,
+      "bytes_match": true,
+      "sha256": "3c355665fa39fd541d46fb326276d26c233f12c5ac9f31b63e751bf0de15e934"
+    },
+    {
+      "id": "Raven",
+      "path": "CONTEXT.md",
+      "exists": true,
+      "recorded_bytes": 194587,
+      "actual_bytes": 194587,
+      "bytes_match": true,
+      "sha256": "0f9615f979a495fbca34feaea56d9006c4090573463cdec4146d8f09aae8f17a"
+    },
+    {
+      "id": "Raven",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 1519,
+      "actual_bytes": 1519,
+      "bytes_match": true,
+      "sha256": "cc96357adf2417c194ed7178f7a7ccb804b6d589ff7656095898284ceb9173df"
+    },
+    {
+      "id": "Raven",
+      "path": "NOTICES.md",
+      "exists": true,
+      "recorded_bytes": 4706,
+      "actual_bytes": 4706,
+      "bytes_match": true,
+      "sha256": "0f737a15c3bb752380fbea7ffe0f04aff167ce1c0e556a5e2ea14864f2708bd3"
+    },
+    {
+      "id": "Raven",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 28307,
+      "actual_bytes": 28307,
+      "bytes_match": true,
+      "sha256": "571af734cf9294971ff5294f6ddf1bb8a61fa053a7b47159a05c8a8f27a26b9f"
+    },
+    {
+      "id": "Raven",
+      "path": "README.zh-CN.md",
+      "exists": true,
+      "recorded_bytes": 27936,
+      "actual_bytes": 27936,
+      "bytes_match": true,
+      "sha256": "9a634e6f286674d0f4451c79aefc43d58cf19bc18ead8d96357d174023c603a8"
+    },
+    {
+      "id": "Raven",
+      "path": "RELEASING.md",
+      "exists": true,
+      "recorded_bytes": 4123,
+      "actual_bytes": 4123,
+      "bytes_match": true,
+      "sha256": "116071cff147dc6fa2692ead4b811ec6b01421ff28de8aa6ccbd6845eb0decc3"
+    },
+    {
+      "id": "Raven",
+      "path": "SECURITY.md",
+      "exists": true,
+      "recorded_bytes": 662,
+      "actual_bytes": 662,
+      "bytes_match": true,
+      "sha256": "b00995ef61b765900c5ce895f38543075c5ee5bc5ba26f73fbbf6a6944745740"
+    },
+    {
+      "id": "ReFind",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 7225,
+      "actual_bytes": 7225,
+      "bytes_match": true,
+      "sha256": "bde4fd3b8a3a702f6777de376446d2d37a4f60411b9d4ff494fab686bef33225"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": ".rivet.md",
+      "exists": true,
+      "recorded_bytes": 4359,
+      "actual_bytes": 4359,
+      "bytes_match": true,
+      "sha256": "2fc984184637562a3002ba6a6f73b57fd11d6a54805ac5add0f755642b461b18"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 14896,
+      "actual_bytes": 14896,
+      "bytes_match": true,
+      "sha256": "d5a532096619a71d9014d9f56b21262cef2e71f8e2e572b9317ec66fcf75eb57"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "CHANGELOG.md",
+      "exists": true,
+      "recorded_bytes": 60769,
+      "actual_bytes": 60769,
+      "bytes_match": true,
+      "sha256": "427fffa7232982eea123c7e4259bab49fd54cc6999a288fcbf672cc90f36f07e"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "CLAUDE.md",
+      "exists": true,
+      "recorded_bytes": 17418,
+      "actual_bytes": 17418,
+      "bytes_match": true,
+      "sha256": "a255f6f17f0f5b63d1c161e3d57b728d4d50799eca5617992b10761cab9ccb5c"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "CODE_OF_CONDUCT.md",
+      "exists": true,
+      "recorded_bytes": 1408,
+      "actual_bytes": 1408,
+      "bytes_match": true,
+      "sha256": "cb14355783e74ead0049618d2aa8600c844830c6d8d5f8db72c7c1b1f1e73afb"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "recorded_bytes": 7738,
+      "actual_bytes": 7738,
+      "bytes_match": true,
+      "sha256": "e304069188e081a7dc2352da8364f11f407a206b115feeff94a7d5e2ab30b6dd"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "CONTRIBUTORS.md",
+      "exists": true,
+      "recorded_bytes": 16096,
+      "actual_bytes": 16096,
+      "bytes_match": true,
+      "sha256": "cb5ff0fd12d94fee9d07ada0ab625c9acf63687328bd0047ac282ca4006b6ac5"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "CREDITS.md",
+      "exists": true,
+      "recorded_bytes": 18178,
+      "actual_bytes": 18178,
+      "bytes_match": true,
+      "sha256": "efd295743fd0e3ca62e141a6c852e983aabee0b0132c851e6101c8b8bdddfa3e"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "EXTERNAL-PRS.md",
+      "exists": true,
+      "recorded_bytes": 3278,
+      "actual_bytes": 3278,
+      "bytes_match": true,
+      "sha256": "9895394ab53c06aa39b81994fd2f14eb700c32614755c158a4ed046869d545cd"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "README.en.md",
+      "exists": true,
+      "recorded_bytes": 81089,
+      "actual_bytes": 81089,
+      "bytes_match": true,
+      "sha256": "0760e7ef4a3921fdd2894fed774b3baf2390d88902e8dc79ec4217f160e140e0"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "README.ja.md",
+      "exists": true,
+      "recorded_bytes": 115798,
+      "actual_bytes": 115798,
+      "bytes_match": true,
+      "sha256": "908fdedf3d8258eb807b5680133ba482448ec5b953aba92227bd1772ba2117e5"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "README.ko.md",
+      "exists": true,
+      "recorded_bytes": 104222,
+      "actual_bytes": 104222,
+      "bytes_match": true,
+      "sha256": "96c0a0bcbd24b426c5ef004def65451fa7261c46f9f0d301e4e83418fd73076b"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 26771,
+      "actual_bytes": 26771,
+      "bytes_match": true,
+      "sha256": "e5d17bf3d9f2bd058f4ec6fe0fe8dc633843d9698857aaf7befb860279305b20"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "SECURITY.md",
+      "exists": true,
+      "recorded_bytes": 3048,
+      "actual_bytes": 3048,
+      "bytes_match": true,
+      "sha256": "ac4dc9faea5526d859dbc7e77b798563c1e5ef792580cebcaa3a0700020f73a0"
+    },
+    {
+      "id": "Tianshu-harness",
+      "path": "star.md",
+      "exists": true,
+      "recorded_bytes": 85689,
+      "actual_bytes": 85689,
+      "bytes_match": true,
+      "sha256": "2e7b512cc14092131ac869565668ec25800e6b27f88ed3a52b8e76b1d7f6b9de"
+    },
+    {
+      "id": "ZCode",
+      "path": "AGENTS.md",
+      "exists": true,
+      "recorded_bytes": 6387,
+      "actual_bytes": 6387,
+      "bytes_match": true,
+      "sha256": "f55b54dbc34681b85ad041958d516fd38594f80ac486c9a1e00ec9cf07f39603"
+    },
+    {
+      "id": "ZCode",
+      "path": "architecture-policy.yaml",
+      "exists": true,
+      "recorded_bytes": 1681,
+      "actual_bytes": 1681,
+      "bytes_match": true,
+      "sha256": "08cede6dd7c77677b8ca61ef6ad5baa6df35a2d72d2953494f4f1c49715b5216"
+    },
+    {
+      "id": "ZCode",
+      "path": "CONTEXT.md",
+      "exists": true,
+      "recorded_bytes": 4316,
+      "actual_bytes": 4316,
+      "bytes_match": true,
+      "sha256": "85c474f6a735bb16f82791bbd9f1b4700b7791fba3c3adac048cae046d8f9064"
+    },
+    {
+      "id": "ZCode",
+      "path": "DESIGN.md",
+      "exists": true,
+      "recorded_bytes": 29663,
+      "actual_bytes": 29663,
+      "bytes_match": true,
+      "sha256": "3d67b96892c790edd29cc5f02e3418099e8c4b3a1c446529cce35898284fc47a"
+    },
+    {
+      "id": "ZCode",
+      "path": "NOTICE.md",
+      "exists": true,
+      "recorded_bytes": 27721,
+      "actual_bytes": 27721,
+      "bytes_match": true,
+      "sha256": "cca8e323ad7f3b12167b58fba7d14faf18a2cdc4fa890818058872f6215912bf"
+    },
+    {
+      "id": "ZCode",
+      "path": "README.en.md",
+      "exists": true,
+      "recorded_bytes": 12149,
+      "actual_bytes": 12149,
+      "bytes_match": true,
+      "sha256": "4445328b52c99824d36fc8fdcd4bbeb6690feb356d15713a750cc490d2fe68a0"
+    },
+    {
+      "id": "ZCode",
+      "path": "README.md",
+      "exists": true,
+      "recorded_bytes": 10808,
+      "actual_bytes": 10808,
+      "bytes_match": true,
+      "sha256": "1f28af42a078a1accd16ee432784e54652e83cb808cdb572a1c3d3052bc434ae"
+    },
+    {
+      "id": "ZCode",
+      "path": "THIRD-PARTY-NOTICES.md",
+      "exists": true,
+      "recorded_bytes": 1978939,
+      "actual_bytes": 1978939,
+      "bytes_match": true,
+      "sha256": "874bf7c10bdcadd0df0b50fc782f39f077669c6e41bbdbccd868409cd714dec3"
+    }
+  ],
+  "quoted_csv_fixture": {
+    "input_csv": "id,note,scope\nx,\"comma, quote \"\" and\nsecond line\",local\n",
+    "expected_records": [
+      {
+        "id": "x",
+        "note": "comma, quote \" and\nsecond line",
+        "scope": "local"
+      }
+    ],
+    "csv_round_trip": true,
+    "naive_first_physical_line_fields": [
+      "x",
+      "\"comma",
+      " quote \"\" and"
+    ],
+    "interpretation": "Physical lines and comma splitting are not general CSV records/fields."
+  },
+  "unit_fixture": {
+    "ascii_1000": {
+      "utf8_bytes": 1000,
+      "unicode_codepoints": 1000,
+      "physical_lines": 1
+    },
+    "chinese_1000": {
+      "utf8_bytes": 3000,
+      "unicode_codepoints": 1000,
+      "physical_lines": 1
+    }
+  },
+  "not_measured": [
+    "token_count",
+    "API_cost",
+    "latency",
+    "model_correctness",
+    "upstream_HEAD"
+  ]
+}
