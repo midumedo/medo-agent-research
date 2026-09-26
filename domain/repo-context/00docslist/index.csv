@@ -132,4 +132,4 @@ ZCode,NOTICE.md,legal,27721,D06,find;L1=91cc8222,verified,2026-09-25
 ZCode,README.en.md,facade,12149,D01,find;L1=e574c1b6,verified,2026-09-25
 ZCode,README.md,facade,10808,D01,find;L1=e574c1b6,verified,2026-09-25
 ZCode,THIRD-PARTY-NOTICES.md,legal,1978939,D06,find;L1=a7d320fa,verified,2026-09-25
-claude-code,,,,,"no-local-checkout (sources/repos/index.csv: completeness=binary, snapshot 空)",absent,2026-09-25
+claude-code,,,,,no-local-checkout (index.csv completeness=binary; snapshot empty),absent,2026-09-25

@@ -117,7 +117,7 @@ def main() -> None:
             "kind": "",
             "bytes": "",
             "role": "",
-            "evidence": "no-local-checkout (sources/repos/index.csv: completeness=binary, snapshot 空)",
+            "evidence": "no-local-checkout (index.csv completeness=binary; snapshot empty)",
             "status": "absent",
             "checked_at": CHECKED_AT,
         }

@@ -107,6 +107,8 @@
 | `ReFind` | 检索型记忆项目，根目录只有 `README.md` | **无** | [ds\ReFind.md](ds/ReFind.md) |
 | `claude-code` | Anthropic 官方客户端，**无本地 checkout**（`completeness=binary`） | — | [ds\claude-code.md](ds/claude-code.md) |
 
+> 明细一律为**单文件**：18 份合计 1721 行，最长 125 行（`deepseek-harness`），单次读取足够。没有再分层的判据成立，故 `ds\` 保持扁平。
+
 ---
 
 ## 与相邻阶段的关系
