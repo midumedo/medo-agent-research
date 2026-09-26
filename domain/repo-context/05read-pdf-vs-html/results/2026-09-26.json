@@ -1,6 +1,6 @@
 {
- "generated": "2026-09-27T07:17:03+08:00",
- "git_head": "f340b1f4e19216ae47ebf6dbfa1c8027e5d338a6",
+ "generated": "2026-09-27T07:20:27+08:00",
+ "git_head": "2732c8b537dccf771e0fd53b865833259cc902d2",
  "python": "3.13.11",
  "parser": {
   "html": "stdlib html.parser",
@@ -102,6 +102,12 @@
    "noise_chars": 2631,
    "source_url_lines": 44
   },
+  "ink": {
+   "span_bbox_area_sum": 4413517,
+   "page_area_sum": 22039982,
+   "coverage": 0.2003,
+   "note": "文字 bbox 面积和 ÷ 页面面积和；重叠会略高估，作为视觉路径「按页付费」的无效面积下界"
+  },
   "signals": {
    "spans": 64650,
    "span_chars": 89902,
@@ -138,22 +144,47 @@
    ]
   },
   "visual_estimate": {
-   "zoom1x": {
-    "page_px": [
-     595,
-     842
-    ],
-    "tokens_per_page": 668,
-    "tokens_total": 29392
-   },
-   "zoom2x": {
-    "page_px": [
-     1190,
-     1684
-    ],
-    "tokens_per_page": 2672,
-    "tokens_total": 117568
+   "formula": "tokens_per_page ≈ round(w*h/750)；只算像素项，未含可能叠加的文本层",
+   "main_font_pt": 8.2,
+   "zooms": {
+    "1x": {
+     "page_px": [
+      595,
+      842
+     ],
+     "tokens_per_page": 668,
+     "tokens_total": 29392,
+     "main_glyph_px": 8.2
+    },
+    "2x": {
+     "page_px": [
+      1190,
+      1684
+     ],
+     "tokens_per_page": 2672,
+     "tokens_total": 117568,
+     "main_glyph_px": 16.4
+    },
+    "3x": {
+     "page_px": [
+      1785,
+      2526
+     ],
+     "tokens_per_page": 6012,
+     "tokens_total": 264528,
+     "main_glyph_px": 24.6
+    }
    }
+  },
+  "render": {
+   "sampled_pages": [
+    1,
+    23,
+    44
+   ],
+   "mean_png_bytes_at_2x": 158574,
+   "estimated_total_png_bytes_at_2x": 6977256,
+   "text_extract_bytes": 184404
   },
   "note": "tokens ≈ w*h/750 为像素计费粗估，随供应商与分辨率变化；仅用于量级比较"
  },

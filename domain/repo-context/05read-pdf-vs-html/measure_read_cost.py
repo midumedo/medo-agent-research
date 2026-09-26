@@ -332,7 +332,9 @@ def load_pdf(path: str) -> dict:
     fonts: collections.Counter = collections.Counter()
     sizes: collections.Counter = collections.Counter()
     spans = span_chars = bold_spans = mono_spans = mono_chars = 0
+    ink_area = page_area = 0.0
     for p in doc:
+        page_area += abs(p.rect.width * p.rect.height)
         for b in p.get_text("dict")["blocks"]:
             for line in b.get("lines", []):
                 for s in line.get("spans", []):
@@ -342,6 +344,8 @@ def load_pdf(path: str) -> dict:
                     f = s["font"]
                     fonts[f] += len(t)
                     sizes[round(s["size"], 1)] += len(t)
+                    x0, y0, x1, y1 = s["bbox"]
+                    ink_area += max(0.0, x1 - x0) * max(0.0, y1 - y0)
                     if s["flags"] & 2 ** 4:
                         bold_spans += 1
                     if "mono" in f.lower() or "consol" in f.lower() or "courier" in f.lower():
@@ -352,16 +356,36 @@ def load_pdf(path: str) -> dict:
     lines = [l for l in full.split("\n") if l.strip()]
     frag = sum(1 for l in lines if len(l.strip()) <= 3)
 
-    # 视觉路径估算：渲染为位图后按像素计费。公式 tokens ≈ w*h/750（Anthropic 图像粗估）
+    # 视觉路径：PDF 逐页渲染为位图后按像素计费。
+    # tokens ≈ w*h/750 取自 Anthropic 图像文档的公开口径——本轮未能联网核实，可能随版本变化。
     r = doc[0].rect
-    visual = {}
-    for zoom in (1.0, 2.0):
+    main_size = sizes.most_common(1)[0][0] if sizes else 0.0
+    visual = {
+        "formula": "tokens_per_page ≈ round(w*h/750)；只算像素项，未含可能叠加的文本层",
+        "main_font_pt": main_size,
+        "zooms": {},
+    }
+    for zoom in (1.0, 2.0, 3.0):
         w, h = round(r.width * zoom), round(r.height * zoom)
         per_page = round(w * h / 750)
-        visual[f"zoom{zoom:g}x"] = {
+        visual["zooms"][f"{zoom:g}x"] = {
             "page_px": [w, h], "tokens_per_page": per_page,
             "tokens_total": per_page * doc.page_count,
+            "main_glyph_px": round(main_size * zoom, 1),
         }
+
+    # 图像路径还要付传输/存储体积（与 token 计费口径不同，仅作量级比较）
+    idxs = sorted({0, doc.page_count // 2, doc.page_count - 1})
+    png_sizes = [
+        len(doc[i].get_pixmap(matrix=_fitz.Matrix(2, 2)).tobytes("png")) for i in idxs
+    ]
+    render = {
+        "sampled_pages": [i + 1 for i in idxs],
+        "mean_png_bytes_at_2x": round(sum(png_sizes) / len(png_sizes)),
+        "estimated_total_png_bytes_at_2x": round(
+            sum(png_sizes) / len(png_sizes) * doc.page_count),
+        "text_extract_bytes": len(full.encode("utf-8")),
+    }
 
     return {
         "path": path, "available": True,
@@ -372,6 +396,11 @@ def load_pdf(path: str) -> dict:
                                 short_line_ratio=round(frag / max(1, len(lines)), 4)),
         "noise": {"header_footer_lines": noise_lines, "noise_chars": noise_chars,
                   "source_url_lines": url_lines},
+        "ink": {
+            "span_bbox_area_sum": round(ink_area), "page_area_sum": round(page_area),
+            "coverage": round(ink_area / page_area, 4) if page_area else None,
+            "note": "文字 bbox 面积和 ÷ 页面面积和；重叠会略高估，作为视觉路径「按页付费」的无效面积下界",
+        },
         "signals": {
             "spans": spans, "span_chars": span_chars,
             "distinct_fonts": len(fonts),
@@ -380,6 +409,7 @@ def load_pdf(path: str) -> dict:
             "top_sizes": sizes.most_common(6),
         },
         "visual_estimate": visual,
+        "render": render,
         "note": "tokens ≈ w*h/750 为像素计费粗估，随供应商与分辨率变化；仅用于量级比较",
     }
 
@@ -463,12 +493,18 @@ def main() -> int:
     print(f"{'pipeline':24}{'chars':>9}{'bytes':>10}{'tok_low':>9}{'tok_high':>9}")
     for name, m in rows:
         print(f"{name:24}{m['chars']:>9}{m['bytes_utf8']:>10}{m['tokens_low']:>9}{m['tokens_high']:>9}")
-    for z, v in p.get("visual_estimate", {}).items():
-        print(f"{'pdf.visual ' + z:24}{'-':>9}{'-':>10}{v['tokens_total']:>9}{'-':>9}")
+    for z, v in p.get("visual_estimate", {}).get("zooms", {}).items():
+        print(f"{'pdf.visual ' + z:24}{'-':>9}{'-':>10}{v['tokens_total']:>9}"
+              f"{('  glyph≈%.1fpx' % v['main_glyph_px']):>16}")
     if p.get("available", True):
         print(f"\nPDF pages={p['pages']}  header/footer noise lines={p['noise']['header_footer_lines']} "
               f"chars={p['noise']['noise_chars']}  short(<=3) lines={p['text_extract']['short_lines_le3']}"
               f" ({p['text_extract']['short_line_ratio']:.1%})")
+        print(f"PDF ink coverage={p['ink']['coverage']:.1%} (文字 bbox 面积 ÷ 页面面积)"
+              f"  main font={p['visual_estimate']['main_font_pt']}pt")
+        print(f"PDF render@2x mean PNG={p['render']['mean_png_bytes_at_2x']:,} B/page"
+              f" → est total={p['render']['estimated_total_png_bytes_at_2x']:,} B"
+              f"  vs text_extract={p['render']['text_extract_bytes']:,} B")
     print(f"HTML structure={h['structure']}  markup overhead={h['markup_overhead_ratio']:.1%}")
     print(f"HTML markdown coverage check = {h['markdown']['coverage_ok']}")
     return 0
