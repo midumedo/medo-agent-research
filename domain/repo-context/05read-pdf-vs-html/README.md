@@ -35,7 +35,7 @@ python domain/repo-context/05read-pdf-vs-html/measure_read_cost.py \
   --out domain/repo-context/05read-pdf-vs-html/results/replication-01
 ```
 
-依赖 `PyMuPDF`、`lxml`；缺失时脚本以明确消息退出，不静默降级。
+依赖策略与项目一致（`pyproject.toml` 声明零第三方运行时依赖）：HTML 侧只用标准库 `html.parser`；PDF 侧的标准库无法完成（需解压内容流并处理字体映射），PyMuPDF 是**可选**依赖——缺失时脚本仍产出全部 HTML 侧结果，PDF 侧标 `unavailable` 并给出安装命令，不静默降级。
 
 ## 待执行：模型在环的行为比较
 

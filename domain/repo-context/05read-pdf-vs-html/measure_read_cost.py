@@ -5,12 +5,15 @@
 只测可确定量：文件字节、字符、结构元素计数、按透明假设的 token 估算。
 不调用任何模型，不测「理解质量」——模型在环的行为比较见 README「待执行」一节。
 
+依赖策略与本项目一致（pyproject 声明零第三方运行时依赖）：
+  HTML 侧只用标准库 html.parser；PDF 侧的标准库无法完成（需解压内容流并处理
+  字体 ToUnicode 映射），因此 PyMuPDF 是**可选**依赖——缺失时脚本仍产出全部
+  HTML 侧结果，PDF 侧标记为 unavailable 并以明确消息提示，不静默降级。
+
 三条测量线：
   1. 体积      raw / 去样式 / 可见文本 / 结构化文本，各自 chars·bytes·est_tokens
   2. 结构      标题、表格、代码块在读取后是否可恢复（HTML 用标签计数，PDF 用字体/字号信号）
   3. 噪声      朴素读取引入的非内容开销（HTML 标签与 CSS；PDF 页眉页脚与断行碎片）
-
-依赖：PyMuPDF(fitz)、lxml。缺任何一个都会以明确消息退出，不静默降级。
 
 用法（从仓库根运行）：
     python domain/repo-context/05read-pdf-vs-html/measure_read_cost.py \
@@ -28,15 +31,15 @@ import os
 import re
 import subprocess
 import sys
+from html.parser import HTMLParser
 
-try:
-    import fitz  # PyMuPDF
-except Exception as exc:  # pragma: no cover
-    sys.exit(f"需要 PyMuPDF：python -m pip install pymupdf  （{exc}）")
-try:
-    import lxml.html
-except Exception as exc:  # pragma: no cover
-    sys.exit(f"需要 lxml：python -m pip install lxml  （{exc}）")
+try:  # PDF 侧唯一可选项；不需要它也能跑完 HTML 侧全部测量
+    import pymupdf as _fitz
+except Exception:  # pragma: no cover
+    try:
+        import fitz as _fitz
+    except Exception:
+        _fitz = None
 
 HEAD_TAGS = {"h1", "h2", "h3", "h4", "h5", "h6"}
 BLOCK_TAGS = {
@@ -44,6 +47,12 @@ BLOCK_TAGS = {
     "br", "hr", "body", "html", "dl", "dt", "dd", "figure", "figcaption",
 }
 SKIP_TAGS = {"script", "style", "head", "title", "meta", "link", "noscript"}
+VOID_TAGS = {
+    "area", "base", "br", "col", "embed", "hr", "img", "input", "link",
+    "meta", "param", "source", "track", "wbr",
+    # SVG 自闭合元素，避免污染标签栈
+    "path", "rect", "circle", "line", "ellipse", "polygon", "polyline", "stop", "use",
+}
 
 
 # ────────────────────────────────────────────────────────────── token 估算
@@ -71,25 +80,102 @@ def est_tokens(text: str) -> dict:
 
 
 def measure(text: str, **extra) -> dict:
-    d = {
-        "chars": len(text),
-        "bytes_utf8": len(text.encode("utf-8")),
-    }
+    d = {"chars": len(text), "bytes_utf8": len(text.encode("utf-8"))}
     d.update(est_tokens(text))
     d.update(extra)
     return d
 
 
-# ────────────────────────────────────────────────────────────── HTML 读取管线
-def html_markdown(root) -> str:
+# ────────────────────────────────────────────────────────────── 标准库 DOM
+class Node:
+    __slots__ = ("tag", "attrs", "children", "parent")
+
+    def __init__(self, tag=None, attrs=None, parent=None):
+        self.tag = tag
+        self.attrs = attrs or {}
+        self.children = []           # 元素为 Node，文本为 str
+        self.parent = parent
+
+    def text_content(self) -> str:
+        out = []
+        for c in self.children:
+            out.append(c if isinstance(c, str) else c.text_content())
+        return "".join(out)
+
+
+class TreeBuilder(HTMLParser):
+    """只建够用的树：标签计数、可见文本、结构化渲染。程序生成的 HTML 上足够稳。"""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.root = Node("#document")
+        self.stack = [self.root]
+
+    def handle_starttag(self, tag, attrs):
+        n = Node(tag, dict(attrs), self.stack[-1])
+        self.stack[-1].children.append(n)
+        if tag not in VOID_TAGS:
+            self.stack.append(n)
+
+    def handle_startendtag(self, tag, attrs):
+        self.stack[-1].children.append(Node(tag, dict(attrs), self.stack[-1]))
+
+    def handle_endtag(self, tag):
+        for i in range(len(self.stack) - 1, 0, -1):
+            if self.stack[i].tag == tag:
+                del self.stack[i:]
+                return
+
+    def handle_data(self, data):
+        self.stack[-1].children.append(data)
+
+
+def build_tree(html: str) -> Node:
+    tb = TreeBuilder()
+    tb.feed(html)
+    tb.close()
+    return tb.root
+
+
+def iter_nodes(root: Node):
+    for c in root.children:
+        if isinstance(c, Node):
+            yield c
+            yield from iter_nodes(c)
+
+
+def visible_text(root: Node) -> str:
+    parts = []
+
+    def rec(n):
+        if isinstance(n, str):
+            parts.append(n)
+            return
+        if n.tag in SKIP_TAGS:
+            return
+        for c in n.children:
+            rec(c)
+
+    rec(root)
+    return "".join(parts)
+
+
+def html_markdown(root: Node) -> str:
     """DOM → 结构化文本。保留全部可见文本，块级元素成行，表格成行，代码加标记。
 
     转换后由 coverage 断言检查是否漏文本——不允许用丢内容的转换充当「更省」。
     """
     out: list[str] = []
 
-    def rec(n):
-        tag = n.tag if isinstance(n.tag, str) else None
+    def rec_children(n: Node):
+        for c in n.children:
+            if isinstance(c, str):
+                out.append(c)
+            else:
+                rec(c)
+
+    def rec(n: Node):
+        tag = n.tag
         if tag in SKIP_TAGS:
             return
         if tag in HEAD_TAGS:
@@ -115,8 +201,8 @@ def html_markdown(root) -> str:
         if tag == "tr":
             cells = [
                 (c.text_content() or "").strip().replace("\n", " ")
-                for c in n
-                if isinstance(c.tag, str) and c.tag in ("td", "th")
+                for c in n.children
+                if isinstance(c, Node) and c.tag in ("td", "th")
             ]
             if any(cells):
                 out.append("\n| " + " | ".join(cells) + " |")
@@ -128,15 +214,11 @@ def html_markdown(root) -> str:
             return
         rec_children(n)
 
-    def rec_children(n):
-        if n.text:
-            out.append(n.text)
-        for c in n:
+    for c in root.children:
+        if isinstance(c, str):
+            out.append(c)
+        else:
             rec(c)
-            if c.tail:
-                out.append(c.tail)
-
-    rec(root)
     s = "".join(out)
     s = re.sub(r"[ \t\u00a0]+", " ", s)
     s = re.sub(r"\n\s*\n\s*\n+", "\n\n", s)
@@ -147,15 +229,42 @@ def core_counter(s: str) -> collections.Counter:
     return collections.Counter(ch for ch in s if not ch.isspace())
 
 
+def serialize(root: Node, skip: set) -> str:
+    """从树上重新序列化标记文本，用于度量「剥离样式后的 HTML」还剩多少字符。"""
+    from html import escape
+
+    buf: list[str] = []
+
+    def rec(n: Node):
+        if n.tag in skip:
+            return
+        buf.append("<" + n.tag)
+        for k, v in n.attrs.items():
+            buf.append(f' {k}="{escape(v, quote=True)}"' if v is not None else f" {k}")
+        buf.append(">")
+        for c in n.children:
+            if isinstance(c, str):
+                buf.append(escape(c, quote=False))
+            else:
+                rec(c)
+        if n.tag not in VOID_TAGS:
+            buf.append(f"</{n.tag}>")
+
+    for c in root.children:
+        if isinstance(c, str):
+            buf.append(escape(c, quote=False))
+        else:
+            rec(c)
+    return "".join(buf)
+
+
+# ────────────────────────────────────────────────────────────── HTML 读取管线
 def load_html(path: str) -> dict:
     raw = open(path, encoding="utf-8").read()
-    tree = lxml.html.fromstring(raw)
-    for el in tree.xpath("//style|//script|//head"):
-        el.getparent().remove(el)
+    root = build_tree(raw)
 
-    stripped = lxml.html.tostring(tree, encoding="unicode")
-    visible = re.sub(r"\s+", " ", tree.text_content()).strip()
-    md = html_markdown(tree)
+    visible = re.sub(r"\s+", " ", visible_text(root)).strip()
+    md = html_markdown(root)
 
     # 覆盖率自检：结构化文本必须承载可见文本的绝大部分字符
     ct, cm = core_counter(visible), core_counter(md)
@@ -163,9 +272,7 @@ def load_html(path: str) -> dict:
     coverage = 1.0 - missing / max(1, sum(ct.values()))
     assert coverage >= 0.98, f"markdown 转换漏掉 {1-coverage:.1%} 的可见文本"
 
-    tags = collections.Counter(
-        t.lower() for t in re.findall(r"<\s*([a-zA-Z][a-zA-Z0-9]*)", raw)
-    )
+    tags = collections.Counter(n.tag for n in iter_nodes(root))
     struct = {
         "headings": sum(tags[t] for t in HEAD_TAGS),
         "tables": tags["table"], "rows": tags["tr"],
@@ -174,16 +281,21 @@ def load_html(path: str) -> dict:
         "list_items": tags["li"], "links": tags["a"], "images": tags["img"],
         "total_tags": sum(tags.values()),
     }
-    code_chars = sum(len(e.text_content()) for e in tree.xpath("//code|//pre"))
+    code_chars = sum(
+        len(n.text_content()) for n in iter_nodes(root) if n.tag in ("code", "pre")
+    )
+    # 去样式后的 HTML：从树上重新序列化，移除 head/style/script 子树
+    stripped = serialize(root, skip={"head", "style", "script"})
 
     return {
         "path": path,
         "raw": measure(raw),
-        "no_style_script": measure(stripped),
+        "no_style_script": measure(stripped, note="标准库重新序列化，与原件字节不等"),
         "visible_text": measure(visible),
         "markdown": measure(md, coverage_ok=round(coverage, 4)),
         "structure": struct,
         "code_text_chars": code_chars,
+        "style_script_chars": len(raw) - len(stripped),
         "markup_overhead_chars": len(raw) - len(visible),
         "markup_overhead_ratio": round((len(raw) - len(visible)) / len(raw), 4),
     }
@@ -191,14 +303,20 @@ def load_html(path: str) -> dict:
 
 # ────────────────────────────────────────────────────────────── PDF 读取管线
 def load_pdf(path: str) -> dict:
-    doc = fitz.open(path)
+    if _fitz is None:
+        return {
+            "path": path, "available": False,
+            "file": {"bytes": os.path.getsize(path)},
+            "reason": "未安装 PyMuPDF：PDF 侧需解压内容流并处理字体映射，标准库无法完成。"
+                      " 安装后用同一命令复跑：python -m pip install pymupdf",
+        }
+
+    doc = _fitz.open(path)
     pages = [p.get_text() for p in doc]
     full = "".join(pages)
 
     # 页眉页脚噪声：Chrome 打印会写入源文件路径与「页码/总页数」
-    noise_lines = 0
-    noise_chars = 0
-    url_lines = 0
+    noise_lines = noise_chars = url_lines = 0
     for t in pages:
         for line in t.split("\n"):
             ls = line.strip()
@@ -211,8 +329,8 @@ def load_pdf(path: str) -> dict:
                     url_lines += 1
 
     # 字体/字号信号：判断结构能否从 PDF 原生信息恢复
-    fonts = collections.Counter()
-    sizes = collections.Counter()
+    fonts: collections.Counter = collections.Counter()
+    sizes: collections.Counter = collections.Counter()
     spans = span_chars = bold_spans = mono_spans = mono_chars = 0
     for p in doc:
         for b in p.get_text("dict")["blocks"]:
@@ -229,8 +347,6 @@ def load_pdf(path: str) -> dict:
                     if "mono" in f.lower() or "consol" in f.lower() or "courier" in f.lower():
                         mono_spans += 1
                         mono_chars += len(t)
-    distinct_fonts = len(fonts)
-    type3_fonts = sum(1 for f in fonts if f.lower().startswith("type3"))
 
     # 断行碎片：表格单元格与版式断行会把内容切成极短行
     lines = [l for l in full.split("\n") if l.strip()]
@@ -248,7 +364,7 @@ def load_pdf(path: str) -> dict:
         }
 
     return {
-        "path": path,
+        "path": path, "available": True,
         "pages": doc.page_count,
         "producer": doc.metadata.get("producer"),
         "file": {"bytes": os.path.getsize(path)},
@@ -258,7 +374,8 @@ def load_pdf(path: str) -> dict:
                   "source_url_lines": url_lines},
         "signals": {
             "spans": spans, "span_chars": span_chars,
-            "distinct_fonts": distinct_fonts, "type3_fonts": type3_fonts,
+            "distinct_fonts": len(fonts),
+            "type3_fonts": sum(1 for f in fonts if f.lower().startswith("type3")),
             "bold_spans": bold_spans, "mono_spans": mono_spans, "mono_chars": mono_chars,
             "top_sizes": sizes.most_common(6),
         },
@@ -302,15 +419,20 @@ def main() -> int:
     pdf_path, html_path = locate(args.root)
     h = load_html(html_path)
     p = load_pdf(pdf_path)
+    if not p.get("available", True):
+        print("⚠ " + p["reason"], file=sys.stderr)
 
     # 内容等价性自检：两种格式承载的 CJK 字符量应同量级，否则不是同一文档
-    hc, pc = h["visible_text"]["cjk"], p["text_extract"]["cjk"]
-    assert 0.85 <= hc / max(1, pc) <= 1.15, f"CJK 字符量差异过大（html={hc} pdf={pc}），非同源文档？"
+    if p.get("available", True):
+        hc, pc = h["visible_text"]["cjk"], p["text_extract"]["cjk"]
+        assert 0.85 <= hc / max(1, pc) <= 1.15, \
+            f"CJK 字符量差异过大（html={hc} pdf={pc}），非同源文档？"
 
     result = {
         "generated": _dt.datetime.now().astimezone().isoformat(timespec="seconds"),
         "git_head": git_head(),
         "python": sys.version.split()[0],
+        "parser": {"html": "stdlib html.parser", "pdf": "pymupdf" if _fitz else None},
         "inputs": {
             "sha256": {"pdf": sha256(pdf_path), "html": sha256(html_path)},
             "pdf": {"path": pdf_path, "bytes": os.path.getsize(pdf_path)},
@@ -320,7 +442,7 @@ def main() -> int:
         "pdf": p,
         "assumptions": [
             "token 为按字符构成的估算区间，非实测分词；只做同一估算器下的相对比较",
-            "HTML「结构化文本」由本脚本 DOM 转换得到，已用 98% 覆盖率断言保证不丢可见文本",
+            "HTML 由标准库 html.parser 建树，「结构化文本」已用 98% 覆盖率断言保证不丢可见文本",
             "PDF「文本抽取」用 PyMuPDF get_text，等价于 harness 最常见的 pdf→text 路径",
             "PDF「视觉」按每页位图像素计费粗估，未含文本层叠加与多次采样",
         ],
@@ -335,16 +457,18 @@ def main() -> int:
     rows = [
         ("html.raw", h["raw"]), ("html.no_style_script", h["no_style_script"]),
         ("html.visible_text", h["visible_text"]), ("html.markdown", h["markdown"]),
-        ("pdf.text_extract", p["text_extract"]),
     ]
+    if p.get("available", True):
+        rows.append(("pdf.text_extract", p["text_extract"]))
     print(f"{'pipeline':24}{'chars':>9}{'bytes':>10}{'tok_low':>9}{'tok_high':>9}")
     for name, m in rows:
         print(f"{name:24}{m['chars']:>9}{m['bytes_utf8']:>10}{m['tokens_low']:>9}{m['tokens_high']:>9}")
-    for z, v in p["visual_estimate"].items():
+    for z, v in p.get("visual_estimate", {}).items():
         print(f"{'pdf.visual ' + z:24}{'-':>9}{'-':>10}{v['tokens_total']:>9}{'-':>9}")
-    print(f"\nPDF pages={p['pages']}  header/footer noise lines={p['noise']['header_footer_lines']} "
-          f"chars={p['noise']['noise_chars']}  short(<=3) lines={p['text_extract']['short_lines_le3']}"
-          f" ({p['text_extract']['short_line_ratio']:.1%})")
+    if p.get("available", True):
+        print(f"\nPDF pages={p['pages']}  header/footer noise lines={p['noise']['header_footer_lines']} "
+              f"chars={p['noise']['noise_chars']}  short(<=3) lines={p['text_extract']['short_lines_le3']}"
+              f" ({p['text_extract']['short_line_ratio']:.1%})")
     print(f"HTML structure={h['structure']}  markup overhead={h['markup_overhead_ratio']:.1%}")
     print(f"HTML markdown coverage check = {h['markdown']['coverage_ok']}")
     return 0
