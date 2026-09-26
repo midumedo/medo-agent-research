@@ -113,6 +113,8 @@
 
 ## 与相邻阶段的关系
 
+本阶段的**综合层**在三层产物之外单列一份：[研究报告.md](研究报告.md)——它不复述账本事实，只做跨仓关系的归纳（7 条规律 / 5 个分歧点 / 一个分层模型 / 10 条反例）。
+
 - **给 `01docsclassify`**：`index.csv` 的 `kind` 列是一份**未经理论加工的原始分类**，可直接当分类法的输入样本，也可被推翻。
 - **给 `02docsdefine`**：`role` 列填了 D 编号的行，能机械列出「因样本从 11 仓扩到 18 仓而需要重判」的条目（例：`ROADMAP.md` 在 `sources/repos/gemini-cli/ROADMAP.md` 真实存在，而 D26 状态仍是 `○`）。
 - **给 `03docscompare`**：同角色多命名的候选对（如 `CONTEXT.md` ↔ `GLOSSARY.md`、`DECISIONS.md` ↔ `decisions\`）在 `ds\*.md` 的「逐文件分析」里已各自带出处，可直接取用。
