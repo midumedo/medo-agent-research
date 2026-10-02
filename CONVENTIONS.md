@@ -12,7 +12,7 @@
 | `domain/` | 一个领域主题 | 把相关对象与问题综合成连贯解释，建立概念、机制、方案与条件之间的关系 |
 | `output/` | 一种读者用途 | 教材设计、教材、手册及其他成品；直接使用主题综合及其研究依据 |
 
-配套材料：`evidence/` 存被引用的片段、原始观测和运行记录；`dialogue/` 存讨论及决定的历史；`archive/` 存已有历史材料；后续文件版本由 Git 管理；`.workbuddy/memory/` 只存日期、动作和指针。来源可以直接引用，不要求先抄进 Evidence。
+配套材料：`evidence/` 存被引用的片段、原始观测和运行记录；`dialogue/` 存讨论及决定的历史；`archive/` 存已有历史材料；后续文件版本由 Git 管理。来源可以直接引用，不要求先抄进 Evidence。
 
 不设独立的条目层，不保留根级笔记目录。尚未成熟的想法留在对应研究稿；尚未形成研究的交流留在 Dialogue。
 
@@ -36,7 +36,7 @@ Domain 从 `domain/<主题>/index.md` 的连贯正文开始。它需要把一组
 
 ## Dialogue 与当前规则
 
-Dialogue 保存当时怎么想、为何改变和否掉了什么。重要决定直接放在 `dialogue/`，按日期和主题命名；完整讨论与流水日志放 `dialogue/logs/`，需要追溯时再查。普通调整无需专门立项或写决定。历史文件注明用途，重要决定被替代时追加状态与新记录指针，原理由保留。
+Dialogue 保存当时怎么想、为何改变和否掉了什么。写一份决定的判据（三条同时成立才写）：难逆转、无上下文会惊讶、是真实权衡的结果；普通变更留给提交说明与对应域的 CHANGELOG。重要决定直接放在 `dialogue/`，按日期和主题命名；完整讨论与流水日志放 `dialogue/logs/`，需要追溯时再查。历史文件注明用途，重要决定被替代时追加状态与新记录指针，原理由保留。
 
 正在执行的选择只在相应文件维护：目标在 README，协作入口在 AGENTS，归属与维护在本文件，证据表达在 STYLE，未来成品内容取舍在 TRADEOFFS。决定记录解释来由，不要求每次行动遍读历史，也不能证明某个外部机制成立。
 
@@ -54,7 +54,7 @@ Dialogue 保存当时怎么想、为何改变和否掉了什么。重要决定�
 
 本项目使用 Git 管理版本。完成一组有意义的改动并检查后提交，提交说明交代实际变化；修改前检查工作区，保留用户已有的未提交工作，不为建立基线擅自覆盖或回退。后续迁移、删除和重写通过提交追溯，不再复制整批快照。既有 archive 材料继续保留其历史用途和现有引用。
 
-忽略规则在 `.gitignore`。第三方 `sources/repos/` 的 **checkout 内容**、本地凭据、运行缓存与明确的私人文件不进入版本库；该目录的**元数据层**（`index.csv`、`_commits.json`、`CHANGELOG.md`、`AGENTS.md`、`_scripts/`）正常跟踪——账本与抓取事实必须随版本库走，否则本地快照的版本无从复核。研究文稿、论文库的索引（`sources/papers/index.csv`）与工具脚本及既有历史材料正常跟踪。论文 PDF 原件、机器转换正文与派生图片（`sources/papers/pdf/`、`sources/papers/md/`、`sources/papers/assets/`）都是可重建的重件，不进入版本库，缺哪份用 `sources/papers/_scripts/pipeline.py` 现取；来源与版本由 `index.csv` 承载，md 表头的登记块由元数据重建。研究引用需记录仓库来源与 commit，不能靠本地 checkout 随版本库分发；原始资料及旧快照的换行保留由 `.gitattributes` 指定，以免破坏已有指纹。
+忽略规则在 `.gitignore`。第三方 `sources/repos/` 的 **checkout 内容**、本地凭据、运行缓存与明确的私人文件不进入版本库；该目录的**元数据层**（`index.csv`、`_commits.json`、`CHANGELOG.md`、`AGENTS.md`、`_scripts/`）正常跟踪——账本与抓取事实必须随版本库走，否则本地快照的版本无从复核。研究文稿、论文库的索引（`sources/papers/index.csv`）与工具脚本及既有历史材料正常跟踪。论文 PDF 原件、机器转换正文与派生图片（`sources/papers/pdf/`、`sources/papers/md/`、`sources/papers/assets/`）都是可重建的重件，不进入版本库，缺哪份用 `sources/papers/_scripts/pipeline.py` 现取；来源与版本由 `index.csv` 承载，md 表头的登记块由元数据重建。研究引用需记录仓库来源与 commit，不能靠本地 checkout 随版本库分发；原始资料及旧快照的换行保留由 `.gitattributes` 指定，以免破坏已有指纹。运行时本地状态（`.rivet/`：计划草稿、技能草稿、缓存与本地数据库）不进版本库；项目级技能正文在 `.agents/skills/`（运行时自动扫描的标准目录），随版本库跟踪。
 
 历史文件因迁移可修复链接并追加状态，但不把当时的话改写成今天的决定。Git 提交记录文件变化，重要决定记录选择理由，两者各有用途。
 

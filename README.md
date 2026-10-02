@@ -32,9 +32,11 @@ Deepdive 与 Analysis 在根级并列，分别按对象和问题组织。Domain 
 - [记忆横评对照](analysis/memory-benchmark-crossreview-2026-09.md)：20 个基准的编号与日期经官方接口核验，五份一手横评的具体数字，以及厂商自报分数为何不能互比。
 - [记忆分类法](domain/memory-taxonomy/index.md)：第二个主题综合，解释六家分类轴的分歧与三处归属冲突；含[经典分类详解](domain/memory-taxonomy/cognitive-classes.md)（感觉/工作/情景/语义/程序及其映射到 Agent 后的失效处）。
 - [论文简介卡片](analysis/paper-digests-2026-09.md)：27 篇入库论文与四个纯源码对象的一句话定位、可引用点、限制，以及过程中未进正文的判断。
-- 已完成的[五个记忆系统深拆](deepdive/README.md)：Mem0、memU、EverMemOS、MemoryBear、AML 开源榜前二，均为静态读码，结论区分"代码存在/文档声称/默认启用/未验证"。
+- 已完成的[记忆系统深拆与开源榜对照](deepdive/README.md)：四个系统（Mem0、memU、EverMemOS、MemoryBear）加 AML 榜单对照（InvMem、ReFind），均为静态读码，结论区分"代码存在/文档声称/默认启用/未验证"。
 
-目前有初版主题综合与章节提案，尚无完成的对象深拆或成对模型行为实验。主题综合依据已有研究和官方资料形成可修正解释，不能因目录名称被提升成实证定律。候选对象与范围在 [Deepdive 入口](deepdive/README.md#research-map)。
+- [仓库上下文研究](domain/repo-context/AGENTS.md)：一批真实仓库的根文档治理与 skill 布局实测、read 工具与 skill 加载的源码事实、PDF/HTML 阅读成本的确定性测量。
+
+目前有初版主题综合、章节提案与五份静态读码深拆；尚无运行验证与成对模型行为实验。主题综合依据已有研究和官方资料形成可修正解释，不能因目录名称被提升成实证定律。候选对象与范围在 [Deepdive 入口](deepdive/README.md#research-map)。
 
 ## 项目设计与协作
 
@@ -42,4 +44,4 @@ ARCHITECTURE.md 解释整体设计；[本轮架构研究](analysis/knowledge-arc
 
 修改文档、表达与成品取舍的规则见 CONVENTIONS.md。
 
-项目已建立 Git 版本历史，后续改动通过提交追溯。[.gitignore](.gitignore) 排除第三方仓库、本地凭据与缓存等；研究正文、论文原件与来源记录正常跟踪。既有 [历史快照](archive/2026-09-20-before-focused-research/SNAPSHOT.md) 保留原用途。
+项目已建立 Git 版本历史，后续改动通过提交追溯。[.gitignore](.gitignore) 排除第三方仓库内容、本地凭据、运行时状态与可重建的重件；研究正文与来源记录正常跟踪。既有 [历史快照](archive/2026-09-20-before-focused-research/SNAPSHOT.md) 保留原用途。
