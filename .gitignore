@@ -1,7 +1,7 @@
 # Third-party checkouts are acquired separately; keep versions in research references.
 # 排除「内容」而不是「目录」：写成 /sources/repos/ 会连目录本身一起排除，git 便不会下降
 # 进去，内层 .gitignore 的否定规则（!index.csv）就全部失效。实测见 sources/repos/.gitignore。
-/sources/repos/*
+
 
 # Local credentials. Keep safe examples versioned.
 .env
@@ -32,6 +32,8 @@ node_modules/
 /sources/papers/md/
 /sources/papers/assets/
 /sources/papers/logs/
+/sources/repos/*
+/sources/courses/*
 /analysis/archive/**/main_agent_context*
 /analysis/archive/**/id_to_doc*
 
