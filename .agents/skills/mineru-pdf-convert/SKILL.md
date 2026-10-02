@@ -1,6 +1,6 @@
 ---
 name: mineru-pdf-convert
-description: 把 sources/papers 里的论文 PDF 转成高保真 Markdown 与图片。需要保留表格、公式、多栏排版的论文正文，或要核对具体数字时使用。走 MinerU 云端 API（读环境变量 MINERU_APIKEY，每天有免费页数额度）。项目级安装。触发词：MinerU 转换、高保真 PDF 解析、重转论文、表格公式核对、转换图片。
+description: 把 sources/papers 里的论文 PDF 转成高保真 Markdown 与图片。需要保留表格、公式、多栏排版的论文正文，或要核对具体数字时使用。走 MinerU 云端 API（读环境变量 MINERU_APIKEY，每天有免费页数额度）。项目级安装。触发词：MinerU 转换、高保真 PDF 解析、重转论文、新论文入库、表格公式核对、转换图片。
 agent_created: true
 ---
 
