@@ -34,7 +34,7 @@ Call the Skill tool with "grilling"，然后 Call the Skill tool with "domain-mo
 
 ## 注意
 
-本 skill 装在 `.workbuddy/skills/`，只对本项目可见。它描述的是**方法**（怎么发现约定、怎么追问），不存本项目的规则正本——规则正本在 CONVENTIONS.md。两者冲突时改本文件，不改 CONVENTIONS。
+本 skill 是项目级安装，只对本项目可见。它描述的是**方法**（怎么发现约定、怎么追问），不存本项目的规则正本——规则正本在 CONVENTIONS.md。两者冲突时改本文件，不改 CONVENTIONS。
 
 ---
 

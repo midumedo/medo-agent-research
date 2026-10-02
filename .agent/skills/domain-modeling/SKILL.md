@@ -10,7 +10,7 @@ agent_created: true
 
 ## Step 0：先读本项目的约定（必做，不要跳过）
 
-落笔前先读：**[AGENTS.md](../../AGENTS.md)**（行动边界与来源区分）、**[CONVENTIONS.md](../../CONVENTIONS.md)**（内容归属与维护，尤其"Dialogue 与当前规则"一节）、**[STYLE.md](../../STYLE.md)**（论证与术语）。然后按下面四问定位落点。
+落笔前先读：**[AGENTS.md](../../../AGENTS.md)**（行动边界与来源区分）、**[CONVENTIONS.md](../../../CONVENTIONS.md)**（内容归属与维护，尤其"Dialogue 与当前规则"一节）、**[STYLE.md](../../../STYLE.md)**（论证与术语）。然后按下面四问定位落点。
 
 **本文件若与上述三个文件冲突，以上述文件为准，并提醒用户修正本文件。** 本文件记录的是当前已知落点，不是规则的另一份正本。
 
@@ -18,7 +18,7 @@ agent_created: true
 
 | 问题 | 落点 |
 |---|---|
-| 术语写在哪 | 正本在 [analysis/concepts-and-boundaries.md](../../analysis/concepts-and-boundaries.md)（工作定义 + 论证）。用词规则在 STYLE.md。CONVENTIONS 禁止独立的条目层与根级笔记目录 |
+| 术语写在哪 | 正本在 [analysis/concepts-and-boundaries.md](../../../analysis/concepts-and-boundaries.md)（工作定义 + 论证）。用词规则在 STYLE.md。CONVENTIONS 禁止独立的条目层与根级笔记目录 |
 | 决定写在哪 | `dialogue/`，按日期+主题命名；完整讨论与流水在 `dialogue/logs/` |
 | 一份多大 | **一期工作**：一次会话里的多个决定，加未完成、待核实、顺手修的东西。不是一个决定一份文件 |
 | 状态怎么标 | 散文式追加（"以下保留当时的取舍""部分安排已被 X 替代"）。目前没有 Status 字段 |
@@ -52,7 +52,7 @@ agent_created: true
 
 ## 写术语（inline，不批处理）
 
-术语定下来的**那一刻**就写进去，不要攒到最后。写入 [analysis/concepts-and-boundaries.md](../../analysis/concepts-and-boundaries.md) 的对应小节，并按 STYLE.md 标明它是**约定**还是**来源所述**。
+术语定下来的**那一刻**就写进去，不要攒到最后。写入 [analysis/concepts-and-boundaries.md](../../../analysis/concepts-and-boundaries.md) 的对应小节，并按 STYLE.md 标明它是**约定**还是**来源所述**。
 
 ```md
 **Order**：
