@@ -1,0 +1,443 @@
+{
+  "record_description": "Static local measurements recorded on 2026-10-05; copied without rerunning during synthesis on 2026-10-12. Original result objects are preserved below.",
+  "measurement_limits": [
+    "The startup set and navigation routes are predefined scenarios, not observed Agent traces.",
+    "Naming statistics scan Markdown, cap each directory at 4000 files, split filename words, and persist only leading word counts.",
+    "The directory list includes _scripts; it is not a validated 18-repository sample.",
+    "Empty link totals indicate no valid link-rate observation, not a measured zero broken-link rate.",
+    "Some values in contemporaneous prose differ from these saved results; use the explicit scope and metric definition rather than treating all numbers as interchangeable."
+  ],
+  "cost_measurement": {
+    "always_on": {
+      "repo_total": 778,
+      "external_total": 958,
+      "combined": 1736,
+      "rows": [
+        {
+          "label": "根 AGENTS.md（协作入口）",
+          "rel": "AGENTS.md",
+          "bytes": 1867,
+          "tokens": 666,
+          "cjk": 0.571,
+          "exists": true
+        },
+        {
+          "label": "domain/AGENTS.md（子树约定）",
+          "rel": "domain/AGENTS.md",
+          "bytes": 280,
+          "tokens": 112,
+          "cjk": 0.432,
+          "exists": true
+        }
+      ]
+    },
+    "navigation": {
+      "always_tokens": 778,
+      "conventions_tokens": 2977,
+      "style_tokens": 1228,
+      "route_a_渐进式披露": 4983,
+      "route_b_全量常驻": 2006,
+      "delta_tokens": 2977,
+      "delta_rounds": 1
+    },
+    "on_demand": {
+      "rows": [
+        {
+          "label": "CONVENTIONS.md（内容归属）",
+          "rel": "CONVENTIONS.md",
+          "bytes": 8351,
+          "tokens": 2977,
+          "cjk": 0.603,
+          "exists": true
+        },
+        {
+          "label": "STYLE.md（论证与术语）",
+          "rel": "STYLE.md",
+          "bytes": 3454,
+          "tokens": 1228,
+          "cjk": 0.72,
+          "exists": true
+        },
+        {
+          "label": "ARCHITECTURE.md（结构理由）",
+          "rel": "ARCHITECTURE.md",
+          "bytes": 8336,
+          "tokens": 2952,
+          "cjk": 0.655,
+          "exists": true
+        },
+        {
+          "label": "TRADEOFFS.md（成品取舍）",
+          "rel": "TRADEOFFS.md",
+          "bytes": 2322,
+          "tokens": 835,
+          "cjk": 0.713,
+          "exists": true
+        },
+        {
+          "label": "README.md（项目入口）",
+          "rel": "README.md",
+          "bytes": 5266,
+          "tokens": 1864,
+          "cjk": 0.379,
+          "exists": true
+        }
+      ],
+      "total": 9856,
+      "combined_if_all_resident": 10634,
+      "resident_ratio": 0.07316155726913673
+    },
+    "tokenizer": "cl100k_base",
+    "measured_at": "2026-10-05"
+  },
+  "repository_measurement": {
+    "repos": [
+      "_scripts",
+      "cline",
+      "codex",
+      "deepseek-harness",
+      "EverOS",
+      "gemini-cli",
+      "goose",
+      "mem0",
+      "MemoryBear",
+      "MemOS",
+      "memU",
+      "minimax-cli",
+      "OpenHands",
+      "qwen-code",
+      "Raven",
+      "ReFind",
+      "Tianshu-harness",
+      "ZCode"
+    ],
+    "entry_files": [
+      {
+        "repo": "Raven",
+        "file": "AGENTS.md",
+        "bytes": 22349,
+        "lines": 414,
+        "over_200": true
+      },
+      {
+        "repo": "Raven",
+        "file": "CLAUDE.md",
+        "bytes": 22349,
+        "lines": 414,
+        "over_200": true
+      },
+      {
+        "repo": "qwen-code",
+        "file": "AGENTS.md",
+        "bytes": 17255,
+        "lines": 351,
+        "over_200": true
+      },
+      {
+        "repo": "codex",
+        "file": "AGENTS.md",
+        "bytes": 22397,
+        "lines": 321,
+        "over_200": true
+      },
+      {
+        "repo": "minimax-cli",
+        "file": "AGENTS.md",
+        "bytes": 5952,
+        "lines": 212,
+        "over_200": true
+      },
+      {
+        "repo": "Tianshu-harness",
+        "file": "AGENTS.md",
+        "bytes": 14896,
+        "lines": 187,
+        "over_200": false
+      },
+      {
+        "repo": "deepseek-harness",
+        "file": "AGENTS.md",
+        "bytes": 17805,
+        "lines": 183,
+        "over_200": false
+      },
+      {
+        "repo": "deepseek-harness",
+        "file": "CLAUDE.md",
+        "bytes": 17805,
+        "lines": 183,
+        "over_200": false
+      },
+      {
+        "repo": "mem0",
+        "file": "AGENTS.md",
+        "bytes": 11997,
+        "lines": 176,
+        "over_200": false
+      },
+      {
+        "repo": "mem0",
+        "file": "CLAUDE.md",
+        "bytes": 11997,
+        "lines": 176,
+        "over_200": false
+      },
+      {
+        "repo": "MemOS",
+        "file": "AGENTS.md",
+        "bytes": 10155,
+        "lines": 156,
+        "over_200": false
+      },
+      {
+        "repo": "goose",
+        "file": "AGENTS.md",
+        "bytes": 6581,
+        "lines": 138,
+        "over_200": false
+      },
+      {
+        "repo": "gemini-cli",
+        "file": "GEMINI.md",
+        "bytes": 4610,
+        "lines": 97,
+        "over_200": false
+      },
+      {
+        "repo": "EverOS",
+        "file": "CLAUDE.md",
+        "bytes": 4297,
+        "lines": 93,
+        "over_200": false
+      },
+      {
+        "repo": "Tianshu-harness",
+        "file": "CLAUDE.md",
+        "bytes": 17418,
+        "lines": 92,
+        "over_200": false
+      },
+      {
+        "repo": "ZCode",
+        "file": "AGENTS.md",
+        "bytes": 6387,
+        "lines": 83,
+        "over_200": false
+      },
+      {
+        "repo": "memU",
+        "file": "AGENTS.md",
+        "bytes": 3506,
+        "lines": 78,
+        "over_200": false
+      },
+      {
+        "repo": "OpenHands",
+        "file": "AGENTS.md",
+        "bytes": 6277,
+        "lines": 72,
+        "over_200": false
+      },
+      {
+        "repo": "cline",
+        "file": "AGENTS.md",
+        "bytes": 5279,
+        "lines": 33,
+        "over_200": false
+      },
+      {
+        "repo": "MemOS",
+        "file": "CLAUDE.md",
+        "bytes": 1200,
+        "lines": 24,
+        "over_200": false
+      },
+      {
+        "repo": "qwen-code",
+        "file": "CLAUDE.md",
+        "bytes": 350,
+        "lines": 6,
+        "over_200": false
+      },
+      {
+        "repo": "goose",
+        "file": "CLAUDE.md",
+        "bytes": 11,
+        "lines": 2,
+        "over_200": false
+      }
+    ],
+    "naming_prior": {
+      "2026": {
+        "files": 2944,
+        "repos": 5
+      },
+      "ZH": {
+        "files": 1982,
+        "repos": 6
+      },
+      "README": {
+        "files": 1215,
+        "repos": 17
+      },
+      "08": {
+        "files": 1036,
+        "repos": 3
+      },
+      "07": {
+        "files": 1014,
+        "repos": 4
+      },
+      "09": {
+        "files": 983,
+        "repos": 4
+      },
+      "WEB": {
+        "files": 421,
+        "repos": 8
+      },
+      "EXPECTED": {
+        "files": 346,
+        "repos": 1
+      },
+      "SESSION": {
+        "files": 343,
+        "repos": 7
+      },
+      "06": {
+        "files": 315,
+        "repos": 4
+      },
+      "SKILL": {
+        "files": 299,
+        "repos": 15
+      },
+      "AND": {
+        "files": 253,
+        "repos": 11
+      },
+      "SHELL": {
+        "files": 207,
+        "repos": 4
+      },
+      "TOOL": {
+        "files": 179,
+        "repos": 8
+      },
+      "CN": {
+        "files": 165,
+        "repos": 6
+      },
+      "PROMPT": {
+        "files": 158,
+        "repos": 11
+      },
+      "INDEX": {
+        "files": 152,
+        "repos": 9
+      },
+      "20": {
+        "files": 150,
+        "repos": 3
+      },
+      "10": {
+        "files": 141,
+        "repos": 4
+      },
+      "11": {
+        "files": 134,
+        "repos": 3
+      },
+      "19": {
+        "files": 134,
+        "repos": 3
+      },
+      "30": {
+        "files": 130,
+        "repos": 3
+      },
+      "21": {
+        "files": 123,
+        "repos": 4
+      },
+      "MCP": {
+        "files": 120,
+        "repos": 8
+      },
+      "AGENT": {
+        "files": 116,
+        "repos": 6
+      },
+      "DESIGN": {
+        "files": 111,
+        "repos": 10
+      },
+      "WORKSPACE": {
+        "files": 111,
+        "repos": 6
+      },
+      "SUBAGENT": {
+        "files": 111,
+        "repos": 6
+      }
+    },
+    "index_files": [
+      {
+        "repo": "goose",
+        "files": [
+          "documentation\\static\\llms.txt"
+        ]
+      },
+      {
+        "repo": "mem0",
+        "files": [
+          "docs\\llms.txt",
+          "scripts\\llms-txt-ignore.txt"
+        ]
+      },
+      {
+        "repo": "Raven",
+        "files": [
+          "plugins-dist\\design-engine\\raven_design\\skills\\create-marketing-graphics\\references\\poster-examples\\INDEX.md",
+          "plugins-dist\\design-engine\\raven_design\\skills\\design-brand-identities\\references\\brand-examples\\INDEX.md"
+        ]
+      },
+      {
+        "repo": "Tianshu-harness",
+        "files": [
+          "docs\\INDEX.md",
+          "docs\\MINDMAP.md"
+        ]
+      }
+    ],
+    "completeness_gate": {
+      "goose": {
+        "claimed": null,
+        "actual": 351
+      },
+      "mem0": {
+        "claimed": null,
+        "actual": 138
+      },
+      "Raven": {
+        "claimed": null,
+        "actual": 376
+      },
+      "Tianshu-harness": {
+        "claimed": 1034,
+        "actual": 191
+      }
+    },
+    "links": {
+      "total": 0,
+      "broken": 0,
+      "note": "仅统计通过完整性闸门的仓；被跳过者记 absent"
+    },
+    "measured_at": "2026-10-05",
+    "caveats": [
+      "命名先验用仓数作代理，不等于训练语料频率；不支持关于模型理解的结论。",
+      "sources/repos 的 checkout 无自身 .git，git 命令会向上冒到本项目主仓，因此不能用 git log 判断子仓版本；版本以 index.csv 的 snapshot 字段为准。",
+      "Tianshu-harness 的 docs/docs.json 自称 1034 篇，磁盘仅 150 篇，快照残缺，其链接检查已判无效。"
+    ]
+  }
+}
