@@ -1,0 +1,28 @@
+{
+  "source_text_path": "D:\\workspace\\memory\\domain\\repo-context\\06agents-md-practice\\qwen\\20261004-072241-da482b58\\source_text.md",
+  "items": 1,
+  "total_chars": 8064,
+  "ref_marks": 103,
+  "valid_refs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    18,
+    19,
+    20,
+    21
+  ],
+  "cited_url_count": 21
+}
