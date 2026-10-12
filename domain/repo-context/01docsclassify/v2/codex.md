@@ -1,2 +1,0 @@
-@domain\repo-context\codex\\*
-
