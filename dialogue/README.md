@@ -6,6 +6,7 @@
 
 ## 重要决定
 
+- [以初始 docslist 建立轻量定义参考稿](2026-10-14-docslist-reference-definition-scope.md)：新稿以 `00docslist/docslist.md` 的候选名称和分组为全量对象，独立于实测台账与旧定义稿。
 - [V9 整理与提前删除旧稿的复盘](2026-10-12-v9-premature-deletion.md)：替代范围被误当成立即删除授权；新稿未获认可，原稿恢复尚未完成。
 - [Git 版本管理与第一个运行主题](2026-09-20-runtime-theme-and-git.md)：决定前置、日志下沉，建立主题综合和章节提案。
 - [聚焦研究、取消重复层次](2026-09-20-focused-research-structure.md)：本次修改的范围与理由。
