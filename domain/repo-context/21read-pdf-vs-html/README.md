@@ -1,4 +1,4 @@
-# 05 · 读 PDF 与读 HTML，对 AI 哪个更省
+# 21 · 读 PDF 与读 HTML，对 AI 哪个更省
 
 同一份文档的两种格式表示，各读取路径在**上下文成本**上的确定性对比。与 [04how-agent-read-file](../04how-agent-read-file/README.md) 相邻：04 查的是 harness 有哪些读工具、怎么实现，这里问的是「同一内容、不同格式、不同模态，哪条读取路径更划算」。
 
@@ -31,8 +31,8 @@ C1 体积、C2 结构、C3 噪声由 measure_read_cost.py 一次跑完；C4 理�
 复跑（换一个未使用的输出前缀以保留原观察）：
 
 ```bash
-python domain/repo-context/05read-pdf-vs-html/measure_read_cost.py \
-  --out domain/repo-context/05read-pdf-vs-html/results/replication-01
+python domain/repo-context/21read-pdf-vs-html/measure_read_cost.py \
+  --out domain/repo-context/21read-pdf-vs-html/results/replication-01
 ```
 
 依赖策略与项目一致（`pyproject.toml` 声明零第三方运行时依赖）：HTML 侧只用标准库 `html.parser`；PDF 侧的标准库无法完成（需解压内容流并处理字体映射），PyMuPDF 是**可选**依赖——缺失时脚本仍产出全部 HTML 侧结果，PDF 侧标 `unavailable` 并给出安装命令，不静默降级。

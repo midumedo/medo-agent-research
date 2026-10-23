@@ -1,7 +1,7 @@
-# 06 · AGENTS.md 的写法：最佳实践及其证据强度
+# 31 · AGENTS.md 的写法：最佳实践及其证据强度
 
-> 属于 `domain\repo-context\` 研究，阶段 **06agents-md-practice**
-> 相关材料：[初步研究计划](../初步研究计划.md)（早期研究纲领）、[research/kimi round-01](../research/kimi/research/round-01-agents-md.md)（标准史与生态兼容矩阵）、[文档参考资料](../01docsclassify/v9/README.md)（文档职责、读取和维护的解释）
+> 属于 `domain\repo-context\` 研究，阶段 **31agents-md-practice**（原名 06，编号重排时迁移）
+> 相关材料：[初步研究计划](../drafts/初步研究计划.md)（早期研究纲领）、[research/kimi round-01](../research/kimi/research/round-01-agents-md.md)（标准史与生态兼容矩阵）、[文档参考资料](../01docsclassify/v9/README.md)（文档职责、读取和维护的解释）
 > 产出者：qwen（AI 生成，见 [本主题 AGENTS.md](../AGENTS.md) 的命名约定）
 
 ## 这一阶段回答什么
@@ -50,7 +50,7 @@
 
 根 [AGENTS.md](../../../AGENTS.md) 实测 **23 行 / 844 字符 / 1890 UTF-8 字节**（2026-10-04，PowerShell 计数），远低于资料建议的 100-200 行，也远低于 Codex 的 32 KiB 上限。
 
-结构上它是**导航型**（按任务指向 CONVENTIONS / STYLE / ARCHITECTURE / TRADEOFFS 及各子树 AGENTS.md），不是**指令型**（不含构建、测试、Lint 命令）。按本轮的「非可推断细节」判据，导航型是高价值内容——「哪个文件在什么条件下读」无法从代码推断，且本项目的职责文件分工本身是非标准的。缺构建/测试命令段落对纯文档仓库可能无碍，但仓库内确有可执行脚本（`sources/papers/_scripts/pipeline.py`、`domain/repo-context/05read-pdf-vs-html/measure_read_cost.py`），代理要复跑时无处可查。这条已记入 `insights.md` 第 6 条。
+结构上它是**导航型**（按任务指向 CONVENTIONS / STYLE / ARCHITECTURE / TRADEOFFS 及各子树 AGENTS.md），不是**指令型**（不含构建、测试、Lint 命令）。按本轮的「非可推断细节」判据，导航型是高价值内容——「哪个文件在什么条件下读」无法从代码推断，且本项目的职责文件分工本身是非标准的。缺构建/测试命令段落对纯文档仓库可能无碍，但仓库内确有可执行脚本（`sources/papers/_scripts/pipeline.py`、`domain/repo-context/21read-pdf-vs-html/measure_read_cost.py`），代理要复跑时无处可查。这条已记入 `insights.md` 第 6 条。
 
 ## 下一步
 

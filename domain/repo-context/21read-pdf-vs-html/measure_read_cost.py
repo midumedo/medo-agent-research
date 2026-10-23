@@ -16,8 +16,8 @@
   3. 噪声      朴素读取引入的非内容开销（HTML 标签与 CSS；PDF 页眉页脚与断行碎片）
 
 用法（从仓库根运行）：
-    python domain/repo-context/05read-pdf-vs-html/measure_read_cost.py \
-        --out domain/repo-context/05read-pdf-vs-html/results/2026-09-26
+    python domain/repo-context/21read-pdf-vs-html/measure_read_cost.py \
+        --out domain/repo-context/21read-pdf-vs-html/results/2026-09-26
 """
 from __future__ import annotations
 
