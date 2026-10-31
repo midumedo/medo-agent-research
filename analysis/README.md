@@ -28,4 +28,4 @@
 
 分析可以更新，保留必要推理、依据和限制。问题的结果可以改变选择、支持简单方案，或说明现有条件无法区分。较完整的一组问题需要统一解释时，在 [Domain](../domain/index.md) 新写主题综合并引用研究，不把分析原稿逐级搬走。
 
-当前项目规则看 [CONVENTIONS](../CONVENTIONS.md) 与 [STYLE](../STYLE.md)；重要选择的历史在 [Dialogue](../dialogue/README.md)。
+当前项目规则看根 [AGENTS.md](../AGENTS.md)（早期的 [CONVENTIONS](../以前的/CONVENTIONS.md) 与 [STYLE](../以前的/STYLE.md) 已退役）；重要选择的历史在 [Dialogue](../dialogue/README.md)。

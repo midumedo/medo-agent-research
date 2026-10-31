@@ -2,7 +2,7 @@
 
 这里以重要决定为直接入口：日期化的决定文件放在本目录，完整讨论和流水记录放在 `logs/` 子目录供查询。决定保留采用什么与为什么，日志保留当时怎么推演；都不作为每轮需要执行的指令。
 
-当前选择在相应项目文件中维护。目标看 [README](../README.md)，结构看 [ARCHITECTURE](../ARCHITECTURE.md)，维护看 [CONVENTIONS](../CONVENTIONS.md)，成品取舍看 [TRADEOFFS](../TRADEOFFS.md)。研究结论继续留在研究或主题正文。
+现行协作约定在根 [AGENTS.md](../AGENTS.md)。早期的 README、ARCHITECTURE、CONVENTIONS、TRADEOFFS 已退役，移至 [以前的/](../以前的/README.md)，仅供追溯。研究结论继续留在研究或主题正文。
 
 ## 重要决定
 

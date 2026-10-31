@@ -16,7 +16,7 @@ Deepdive 围绕 Memory、Context 与相关 Harness 行为，先有整体地图�
 
 ## 理由与替代范围
 
-详细诊断、外部参考和边界案例见 [本轮架构研究](../analysis/knowledge-architecture-2026-09-20.md)。当前结构见 [ARCHITECTURE](../ARCHITECTURE.md)，执行约定见 [CONVENTIONS](../CONVENTIONS.md)，本记录不重复维护这些规则。
+详细诊断、外部参考和边界案例见 [本轮架构研究](../analysis/knowledge-architecture-2026-09-20.md)。当前结构见 [ARCHITECTURE](../以前的/ARCHITECTURE.md)，执行约定见 [CONVENTIONS](../以前的/CONVENTIONS.md)，本记录不重复维护这些规则。
 
 替代[上一版对象深拆决定](2026-09-20-deepdive-and-research-roles.md)中 Notes 根目录、Entries、Domain 尺度和较宽的深拆范围；替代[早期架构决定](2026-09-20-research-architecture.md)中相应层次安排。来源与推断分开、可纠错、历史可追溯、探索无需先命中假设等原则继续适用。
 

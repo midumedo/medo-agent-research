@@ -31,4 +31,4 @@
 
 ## 研究依据与后续修订
 
-[概念草稿](../analysis/concepts-and-boundaries.md)、[留存分析](../analysis/context-retention.md)、[研究议程](../analysis/research-agenda.md)和[对象探索](../deepdive/README.md)继续维护各自问题与材料。新的实现或反例可以改写本主题；不为保住流程图而把所有系统归入固定阶段。具体归属见 [CONVENTIONS](../CONVENTIONS.md)。
+[概念草稿](../analysis/concepts-and-boundaries.md)、[留存分析](../analysis/context-retention.md)、[研究议程](../analysis/research-agenda.md)和[对象探索](../deepdive/README.md)继续维护各自问题与材料。新的实现或反例可以改写本主题；不为保住流程图而把所有系统归入固定阶段。早期的归属约定见 [CONVENTIONS](../以前的/CONVENTIONS.md)（已退役，仅供追溯）。
