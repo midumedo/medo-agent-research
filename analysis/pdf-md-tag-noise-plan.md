@@ -1,6 +1,6 @@
 # PDF→MD 标签噪声：诊断与处置计划
 
-> 范围：`resources/papers` 中 MinerU v4 转换件。初稿只做分析与计划；2026-11-02 增补两次重转验证、一次替代抽取实验；同日收窄定案：**MinerU 为唯一底稿，PyMuPDF 只作字符真值**。2026-11-03 范围修正：目标从「修这一篇」改为「把修复能力做进 `pdf-manager` skill」，最终形态见 §10（实验产物只落在 `.rivet_scratch/`，未入库存档）。
+> 范围：`resources/papers` 中 MinerU v4 转换件。初稿只做分析与计划；2026-11-02 增补两次重转验证、一次替代抽取实验；同日收窄定案：**MinerU 为唯一底稿，PyMuPDF 只作字符真值**。2026-11-03 范围修正：目标从「修这一篇」改为「把修复能力做进 `pdf-manager` skill」，最终形态见 §10（实验产物落在 `.rivet_scratch/`；2026-11-03 起随仓入库留档）。
 > 样本：`arxiv-2504.19413v1.Project.Mem0.md`（重症），另抽查 LongMemEval、Memory Mechanism、Memory OS、Memory Workloads、Scientific Memory、MemoryArena，并做全库 27 篇盘点。
 
 ## 0. 结论
@@ -111,7 +111,7 @@
 
 ### 1.4 中间产物与可追溯性
 
-- `resources/papers/.rivet_scratch/` **存在但为空**（0 个条目）。
+- `resources/papers/.rivet_scratch/` **2026-11-02 早间实测为空**（0 个条目）。此后探测脚本、补丁清单与写回备份都落在这里；截至 2026-11-03 共 66 个文件，随仓入库。
 - `resources/papers` 下没有任何 `.zip` / `.json` 中间产物；转换完成后 ZIP 即被丢弃。
 - [`parse_archive`](file:///d:/workspace/memory/.agents/skills/pdf-manager/scripts/mineru_backend.py#L360-L453) 只把 `full.md` 读成 `body`；`content_list.json` / `content_list_v2.json` 仅用于图片分类，`layout.json` 仅用于读 `_version_name`，三者都不保留。
 - 因此**事后无法用中间产物对照「解析器结构」与「后续转换」**。但代码路径本身已经排除后者：`body` 从 `full.md` 原样读出（[L377](file:///d:/workspace/memory/.agents/skills/pdf-manager/scripts/mineru_backend.py#L377)），随后只做两件事——图片链接改写与去掉控制字符（[L439](file:///d:/workspace/memory/.agents/skills/pdf-manager/scripts/mineru_backend.py#L439)）；[`write_conversion`](file:///d:/workspace/memory/.agents/skills/pdf-manager/scripts/pdf_library.py#L359-L383) 只前置 front matter。**本仓库不可能生成 `<sub>`。**
@@ -867,7 +867,7 @@ skill 不调外部 API、不要 key，所以把「需要判断」的部分外化
 
 两点需要更正之前的表述：
 
-- **`.rivet_scratch/` 不是「天然为空」，而是「链路从不写它」。** 对整个 skill 目录 grep `rivet_scratch` 为零命中——`pdf_library` / `mineru_backend` / `pdf_manager` 都没有写它的代码。2026-11-02 早间实测 0 条目（§1.4），现在里面只有本次实验的 7 个文件（约 233 KB），属人工产物，不是链路副产物。
+- **`.rivet_scratch/` 不是「天然为空」，而是「链路从不写它」。** 对整个 skill 目录 grep `rivet_scratch` 为零命中——`pdf_library` / `mineru_backend` / `pdf_manager` 都没有写它的代码。2026-11-02 早间实测 0 条目（§1.4）；写这一节时里面只有本次实验的 7 个文件（约 233 KB），到 2026-11-03 增至 66 个（约 2.7 MB），全部是人工产物，不是链路副产物。
 - **服务端有缓存，但与本地无关。** [minerU.api.md#L157-L158](file:///d:/workspace/memory/.agents/skills/pdf-manager/references/minerU.api.md#L157-L158) 记录 `no_cache` 与 `cache_tolerance`（默认 900 秒），那是按 **URL 内容** 的服务端缓存；`full_zip_url` 是短期签名链接，既不能当本地缓存，也不能用来重放。
 
 ### 11.2 缓存键与失效
@@ -936,7 +936,7 @@ key = sha256(pdf_bytes)[:12]
 
 与现有约定的共处：
 
-- **`.gitignore`**：需要新增一行 `/resources/papers/.mineru-cache/`。现状的 `.gitignore` 只排除了 `pdf/`、`md/`、`assets/`、`logs/`（[.gitignore](file:///d:/workspace/memory/.gitignore)），`.rivet_scratch/` 也没被忽略（`git status` 里是 `??`）。所以「放进 `.rivet_scratch/`」会让每次转换都冒出一堆未跟踪文件，不合适。
+- **`.gitignore`**：需要新增一行 `/resources/papers/.mineru-cache/`。现状的 `.gitignore` 只排除了 `pdf/`、`md/`、`assets/`、`logs/`（[.gitignore](file:///d:/workspace/memory/.gitignore)），`.rivet_scratch/` 也没被忽略——2026-11-03 起它被显式入库，用来存人工实验产物。正因如此更不能把运行时缓存写进去：那会让每次转换都弄脏工作区，与「缓存不入库」的定位直接冲突。
 - **`CHANGELOG.md`**：缓存是运行时派生物，不逐条记。只在「引入缓存能力」「键格式升级」「目录迁移」时记一条；这与该文件「记多了什么、改了什么，不重复索引数据」的定位一致。
 - **`check` 不读缓存**：缓存不是资料，`check_document` 的完成度判断仍只看 `pdf` / `md` / `assets`。
 
