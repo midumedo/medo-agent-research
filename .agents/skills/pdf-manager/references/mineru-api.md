@@ -1,6 +1,12 @@
-# MinerU 接口与结果约定
+# MinerU 常用接口与结果处理
 
-用于维护 `scripts/mineru_backend.py` 或排查转换。核对日期：2026-11-02。接口依据为 [MinerU 官方 API 文档](https://mineru.net/apiManage/docs)；下述 ZIP 字段同时依据真实云端摘样和对应 MinerU 3.4.4 源码。在线文档、历史回包和请求的模型档位各自说明不同事实，不互相替代。
+本文是本 skill 的操作与实现摘要，用于调整转换参数、排查结果或维护 [mineru_backend.py](../scripts/mineru_backend.py)。接口关键字段核对日期：2026-11-02。
+
+- **完整接口资料**：[官方文档本地副本](minerU.api.md)，查完整参数、错误码、语言列表和其他接口。本副本包含导语与汇总，不保证与源站实时同步。
+- **网络故障**：[连接诊断与批次续取](mineru-network.md)，区分失败阶段、自动回退和实测结论。
+- **结果结构**：本文后半段与 [真实字段样本](samples/content_list.sample.json)，说明本 skill 怎样消费 ZIP；API 参数表不能代替结果结构证据。
+
+接口有疑点时，核对 [官方源站](https://mineru.net/apiManage/docs) 的对应具体接口，而非套用总表或其他接口的参数。以下明确区分官方约定与本 skill 的选择；修改实现时同步维护摘要，不把实现选择写成服务端限制。
 
 ## 精准解析上传路径
 
@@ -11,41 +17,32 @@
 3. `GET /api/v4/extract-results/batch/{batch_id}` 查询结果。
 4. 仅对 `state=done` 的条目下载 `full_zip_url`；逐篇报告失败或超时。
 
-一次申请最多 50 个上传链接，超过时分批。官方摘录的总表曾写 200 个，但具体上传接口写 50 个，本实现按具体接口限制。签名地址有效期 24 小时。单文件大小上限 200 MB、页数上限 200；超限按服务端错误明确报告，不静默截断 PDF。
+官方“本地文件批量上传解析”说明单次最多 50 个链接、上传链接有效期 24 小时，单文件不超过 200 MB、200 页。本 skill 按 50 个分批，超限交由服务端明确报错，不截断 PDF。24 小时指上传链接，不能据此推断结果 ZIP 链接的寿命。
+
+本地副本的模式总表写批量 200 个，具体接口写 50 个；保留原文差异，当前实现采用具体接口值。轻量接口的概述与错误示例也有页数差异，本 skill 不调用该接口，不用这些数值定义当前行为。
 
 ### 请求中实际使用的字段
 
-| 位置 | 字段 | 处理 |
+| 位置 | 字段 | 官方约定与本 skill 选择 |
 |---|---|---|
-| 全局 | `model_version` | 显式发送 `vlm`；可按任务选择 `pipeline` |
-| 全局 | `language` | 命令行 `--lang` 的值须真正传入请求 |
-| 全局 | `enable_formula`、`enable_table` | 默认开启，按所用模型的有效范围处理 |
+| 全局 | `model_version` | 官方副本默认 `pipeline`；本 skill 显式默认 `vlm`，CLI 可选 `pipeline` |
+| 全局 | `language` | 发送 `--lang` 的值；脚本默认 `ch`，英文可用 `en` |
+| 全局 | `enable_formula`、`enable_table` | 两种模型均可传入，脚本默认开启；`vlm` 的公式开关只影响行内公式，行间公式仍识别 |
 | 每个 `files` 条目 | `name` | 带 `.pdf` 后缀，服务端返回文件名用于匹配 |
 | 每个 `files` 条目 | `data_id` | 自定义任务标识；只在响应确实回传时用于匹配 |
-| 每个 `files` 条目 | `is_ocr` | pipeline 的 OCR 设置；不能误当作本地 OCR 能力 |
+| 每个 `files` 条目 | `is_ocr` | 官方说明 `pipeline`、`vlm` 有效；本 skill 由 `--ocr` 控制，默认 false |
 
-在线 API 文档把批量上传的 `is_ocr`、`page_ranges` 放在每个文件条目中；历史文档摘录曾简化成全局字段。若继续扩展页范围，应以该接口的当前字段位置为准。`vlm` 下 `enable_formula` 的开关只影响行内公式识别，行间公式仍识别。
+官方副本将这两个文件级参数写成 `file.is_ocr`、`file.page_ranges`，对应请求 JSON 的 `files[]` 条目。本 skill 尚未暴露页范围、回调或额外格式等选项；不要因官方 API 支持就假定 CLI 也支持。这里的 OCR 由云端执行。
 
 ### 完成判断
 
 查询响应的业务成功由 `code=0` 表示。逐篇状态位于 `data.extract_result`；只有本次预期文件全部返回且分别进入 `done / failed` 才结束正常轮询。不能把“已经返回的条目全结束”误当作“整批文件全返回”。
 
-`file_name` 是文档明确列出的结果匹配字段；`data_id` 回传可用于优先匹配，但不能成为唯一依赖。`done` 读取 `full_zip_url`，`failed` 报告 `err_msg`；等待超时报告仍未完成的文件与 `batch_id`，允许继续查询而不重新提交。
+`file_name` 是文档明确列出的结果匹配字段；`data_id` 回传可用于优先匹配，但不能成为唯一依赖。`done` 读取 `full_zip_url`，`failed` 报告 `err_msg`。查询中断、等待超时或结果下载失败时保留 `batch_id`，用原文件及原文件名运行 `convert --batch-id <批次>`；这是重新查询并整包下载，不是字节级断点续传。`--timeout` 控制轮询等待，不能作为整个命令的总时限。
 
 凭据错误、权限错误、参数错误和每日任务上限不循环重试。网络或服务临时故障须报告阶段与错误；不能把失败当成已有转换件。上传签名 URL 的失败响应也应呈现简短错误信息，避免无条件重传整批。
 
-### CDN 连接故障的局部回退
-
-2026-11-02 的本机实测中，系统代理及 TUN 接管 DNS 后将 CDN 域名解析到 `198.18.0.x`。常规域名下载出现 TLS EOF；保持 VPN 开启、使用实时 DNS 返回的实际 CDN 地址并保留原域名 SNI/Host 时，多个节点都能正常完成 HTTPS 下载。
-
-因此结果下载优先使用原有系统路径；仅 `https://cdn-mineru.openxlab.org.cn` 的连接、TLS 或传输异常触发回退：
-
-1. 依次向 AliDNS、Cloudflare 的 HTTPS JSON DNS 接口查询该域名的 A 记录，只发送域名，不发送结果 URL、签名或 Token。
-2. 每个解析器最多尝试两个不同的公网 IPv4 地址，过滤本地、保留与 fake-IP 地址；不持久化或硬编码这些地址。
-3. 建立到实际地址的连接，TLS SNI 与 HTTP Host 仍是原 CDN 域名，使用系统默认可信证书和主机名校验。
-4. 仍检查下载内容是 ZIP。HTTP 403 等服务器拒绝不走 DNS 回退；所有地址均失败时报告原批次供继续获取，不重新上传解析。
-
-这不修改 VPN、系统代理、hosts 或证书配置，其他站点和 MinerU API 请求继续使用原有网络路径。实现依据为 Python 的 [默认 TLS 上下文与主机名校验](https://docs.python.org/3/library/ssl.html#ssl.create_default_context) 和 [Cloudflare JSON DNS 响应格式](https://developers.cloudflare.com/1.1.1.1/encryption/dns-over-https/make-api-requests/dns-json/)。它解决的是已观察到的访问路径故障，不保证所有网络或 CDN 故障都能恢复。
+结果 CDN 的连接回退范围、重试上限和失败后的操作见 [连接诊断与批次续取](mineru-network.md)。API 拒绝、文件上传失败和结果下载失败应分别处理，不能统称为 VPN 问题。
 
 ## ZIP 的消费方式
 
@@ -53,10 +50,10 @@
 
 | 内容 | 消费方式 |
 |---|---|
-| `full.md` | 正文唯一输入；不从 Content List 重组整篇正文，也不重复追加图注 |
+| `full.md` | 优先使用；缺失时接受 ZIP 中唯一的 Markdown，多份则报错。不从 Content List 重组正文或重复追加图注 |
 | V1 `*_content_list.json` | 扁平条目；使用 `type / img_path / 各类 caption` 建立主要关系 |
 | V2 `*_content_list_v2.json` | 按页组织的 `type + content`；仅补足 V1 尚未关联的图片 |
-| `layout.json` / Middle JSON | 已有云端格式中的版本与 backend 字段；缺失时保留请求档位，不编造版本 |
+| `layout.json` / Middle JSON | 当前读取 `_version_name` 标记解析器版本；缺失时用请求档位，不把 `vlm` 等档位当服务端版本 |
 | `images/` | 完整保留内容图片，即使正文以 HTML 表格或 LaTeX 表达而没有引用裁图 |
 
 ### 分类与命名

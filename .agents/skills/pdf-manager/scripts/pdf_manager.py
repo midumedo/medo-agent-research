@@ -302,11 +302,11 @@ def add_conversion_options(parser):
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--model-version", choices=("vlm", "pipeline"), default="vlm")
     parser.add_argument("--lang", default="ch", help="MinerU language；英文论文可用 en")
-    parser.add_argument("--timeout", type=int, default=1800)
+    parser.add_argument("--timeout", type=int, default=1800, help="批次轮询等待秒数，不是整个命令的总时限")
     parser.add_argument("--batch-id", help="继续已有批次，只查询、不重新提交；仍提供原输入文件")
-    parser.add_argument("--ocr", action="store_true", help="pipeline OCR")
-    parser.add_argument("--no-formula", action="store_true", help="pipeline：关闭公式识别")
-    parser.add_argument("--no-table", action="store_true", help="pipeline：关闭表格识别")
+    parser.add_argument("--ocr", action="store_true", help="启用云端 OCR（pipeline / vlm）")
+    parser.add_argument("--no-formula", action="store_true", help="关闭公式识别；vlm 仅关闭行内公式识别")
+    parser.add_argument("--no-table", action="store_true", help="关闭表格识别（pipeline / vlm）")
 
 
 def make_parser():

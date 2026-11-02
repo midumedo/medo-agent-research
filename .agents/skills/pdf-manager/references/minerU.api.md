@@ -1,8 +1,12 @@
-# minerU api docs
+# MinerU 官方 API 资料（本地副本）
 
-api文档官网：https://mineru.net/apiManage/docs
-github：https://github.com/opendatalab/MinerU
-github与api存在gap，本项目以api docs为准
+> **本地阅读说明**：这是用户提供的官方 API 资料副本，包含原有导语与汇总；原始采集时间未记录，不保证与官网实时同步。以下资料主体保留原样，2026-11-02 的关键接口核对与本 skill 的实现选择见 [常用接口与结果处理](mineru-api.md)。
+>
+> 官方来源：[API 文档](https://mineru.net/apiManage/docs)；ZIP 输出结构另可核对 [MinerU 源码](https://github.com/opendatalab/MinerU)。云端 API 与开源实现承担不同证据作用，不能只凭其中一份推断另一份的行为。
+>
+> 按问题定位：上传字段查“本地文件批量上传解析”，轮询状态查“批量获取任务结果”，服务拒绝查“常见错误码”，语言选项查“language 取值参考”。本 skill 使用精准解析上传接口；轻量 API 等其余内容供查证。连接故障见 [网络参考](mineru-network.md)。
+
+---
 
 MinerU 提供两种文档解析 API，满足不同场景需求：
 
