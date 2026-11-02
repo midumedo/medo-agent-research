@@ -1,91 +1,74 @@
 ---
 name: domain-modeling
-description: 在讨论中主动建立和打磨本项目的领域模型。当话题涉及项目术语、需要写或更新术语表、或要记录一个已定决定时使用。常与 grilling 一起由 grill-with-docs 调用。
-agent_created: true
+description: Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR.
 ---
 
-# Domain Modeling · 把术语和决定落到本项目已有的地方
+# Domain Modeling
 
-这是**主动**的一面：挑战含糊术语、造边界场景、在术语和决定定下来的那一刻就写进文档。（只是读术语表取词不算这个 skill，那是任何 skill 都能做的一行习惯。这个 skill 用于**改变**模型，不只是消费它。）
+Actively build and sharpen the project's domain model as you design. This is the *active* discipline: challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely *reading* `GLOSSARY.md` for vocabulary is not this skill: that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
 
-## Step 0：先读本项目的约定（必做，不要跳过）
+## File structure
 
-落笔前先读根 **[AGENTS.md](../../../AGENTS.md)**（现行协作约定）。下表引用的早期规则已退役，原文在 [CONVENTIONS.md](../../../以前的/CONVENTIONS.md) 与 [STYLE.md](../../../以前的/STYLE.md)，仅供追溯。然后按下面四问定位落点。
+Most repos have a single context:
 
-**本文件若与根 AGENTS.md 冲突，以 AGENTS.md 为准，并提醒用户修正本文件。** 本文件记录的是当前已知落点，不是规则的另一份正本。
-
-### 已知落点（2026-09-22）
-
-| 问题 | 落点 |
-|---|---|
-| 术语写在哪 | 正本在 [analysis/concepts-and-boundaries.md](../../../analysis/concepts-and-boundaries.md)（工作定义 + 论证）。用词规则在 STYLE.md。CONVENTIONS 禁止独立的条目层与根级笔记目录 |
-| 决定写在哪 | `dialogue/`，按日期+主题命名；完整讨论与流水在 `dialogue/logs/` |
-| 一份多大 | **一期工作**：一次会话里的多个决定，加未完成、待核实、顺手修的东西。不是一个决定一份文件 |
-| 状态怎么标 | 散文式追加（"以下保留当时的取舍""部分安排已被 X 替代"）。目前没有 Status 字段 |
-
-### 待定（未经用户确认，不得当作既定）
-
-- 根级 `CONTEXT.md`（指针式，正本仍在 analysis）
-- 决定文件加 `Status` 字段
-- `dialogue/` 是否改名 `decisions/` 或迁 `docs/adr/`
-- 一份工作记录里给每个决定加 `## 决定：<一句话>` 锚点小节
-
-这些没有落地之前，按上表"已知落点"写，不要预先建成既定结构。
-
-## 会话中要做的事
-
-### 挑战术语
-
-用户用词与既有工作定义冲突时，立刻指出："concepts-and-boundaries 里 X 定义为 A，但你这里像是 B，到底是哪个？"
-
-### 磨利含糊的词
-
-用户用了含糊或重载的词，提出一个精确的规范词："你说的是'上下文'，指本次模型调用可见的输入，还是跨步骤保留的状态？这是两个东西。"
-
-### 用具体场景压边界
-
-讨论领域关系时，造能探到边界的具体场景，逼用户对概念之间的分界线给出精确说法。
-
-### 交叉验证
-
-用户断言某件事如何工作时，去查它是否真的如此——查 `resources/` 里的论文与源码 checkout，查 `evidence/` 里的摘录与运行记录。发现矛盾就摊开说。
-
-## 写术语（inline，不批处理）
-
-术语定下来的**那一刻**就写进去，不要攒到最后。写入 [analysis/concepts-and-boundaries.md](../../../analysis/concepts-and-boundaries.md) 的对应小节，并按 STYLE.md 标明它是**约定**还是**来源所述**。
-
-```md
-**Order**：
-客户提交的、尚未履约的购买请求。
-_Avoid_：Purchase、transaction
+```
+/
+├── GLOSSARY.md
+├── docs/
+│   └── adr/
+│       ├── 0001-event-sourced-orders.md
+│       └── 0002-postgres-for-write-model.md
+└── src/
 ```
 
-规则：
+If a `GLOSSARY-MAP.md` exists at the root, the repo has multiple contexts. The map points to where each one lives:
 
-- **要有立场。** 同一概念有多个词时，选一个最佳的，其余列在 `_Avoid_` 下。
-- **定义要紧。** 一到两句，定义它**是什么**，不是它做什么。
-- **收录范围跟着本项目的用词问题走。** 本项目研究的对象正是 Memory、Context、Harness 这些通用词在本语境下的特指，因此收"通用词在本项目的特指 + 它与来源用法的差异"，并标出这是约定还是来源所述。不会被用混的词不收。
-- **术语定义不装实现细节。** 它不是 spec、不是草稿纸、不是实现决定的存放地。
-- **在建 CONTEXT.md 之前先停一下。** 它需要用户确认，且只能是词 + 一句定义 + `_Avoid_` + 来源用法差异 + 指向 concepts-and-boundaries 的链接；论证全文留在 analysis，不搬进根级。
+```
+/
+├── GLOSSARY-MAP.md
+├── docs/
+│   └── adr/                          ← system-wide decisions
+├── src/
+│   ├── ordering/
+│   │   ├── GLOSSARY.md
+│   │   └── docs/adr/                 ← context-specific decisions
+│   └── billing/
+│       ├── GLOSSARY.md
+│       └── docs/adr/
+```
 
-## 记录决定（吝啬一点）
+Create files lazily: only when you have something to write. If no `GLOSSARY.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
 
-只在三条同时成立时才提议记一份：
+## During the session
 
-1. **难逆转**：以后改主意的代价是实在的
-2. **无上下文会惊讶**：未来读者会问"为什么当初这么做"
-3. **真实权衡的结果**：确实有别的选项，并且你出于具体理由选了这个
+### Challenge against the glossary
 
-缺任何一条就跳过。**CONVENTIONS 另有更严的门槛：普通调整无需专门立项或写决定。** 以项目门槛为准。
+When the user uses a term that conflicts with the existing language in `GLOSSARY.md`, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"
 
-写入时标明性质：**这是约定（本项目选择的定义或做法），不是来源事实。** 来源所述、观测、推断、约定要能区分开。
+### Sharpen fuzzy language
 
-最短形态就是一段话：什么背景、定了什么、为什么。可选小节只在真有增量时加。**命名按日期+主题，不引入 ADR 编号**（编号隐含线性累积与不可逆，与"不维护不可推翻的主线"冲突）。
+When the user uses vague or overloaded terms, propose a precise canonical term. "You're saying 'account': do you mean the Customer or the User? Those are different things."
 
-## 与 grilling 的配合
+### Discuss concrete scenarios
 
-追问负责把设计树走完，本 skill 负责把走完后定下来的东西落到磁盘。两者同时跑：一个问题定下来就写，不等会话结束。
+When domain relationships are being discussed, stress-test them with specific scenarios. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts.
 
----
+### Cross-reference with code
 
-基于 Matt Pocock 的 `domain-modeling`（mattpocock/skills, MIT），改动：Step 0 改为读本项目三个职责文件、落点表与待定项取代通用嗅探、术语写入 concepts-and-boundaries、收录范围适配本项目研究对象、命名用日期+主题不用 ADR 编号、区分来源与约定。
+When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible. Which is right?"
+
+### Update GLOSSARY.md inline
+
+When a term is resolved, update `GLOSSARY.md` right there. Don't batch these up: capture them as they happen. Use the format in [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md).
+
+`GLOSSARY.md` should be totally devoid of implementation details. Do not treat `GLOSSARY.md` as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
+
+### Offer ADRs sparingly
+
+Only offer to create an ADR when all three are true:
+
+1. **Hard to reverse**: the cost of changing your mind later is meaningful
+2. **Surprising without context**: a future reader will wonder "why did they do it this way?"
+3. **The result of a real trade-off**: there were genuine alternatives and you picked one for specific reasons
+
+If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
