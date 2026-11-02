@@ -16,6 +16,7 @@ from pdf_library import (Document, Library, LibraryError, atomic_bytes, atomic_t
                          split_keywords, stem_of, write_conversion, identity_from_name)
 import pdf_sources
 import mineru_backend
+import pdf_repair
 
 
 def emit(value):
@@ -285,6 +286,14 @@ def convert_documents(documents, args, known_metadata=None) -> int:
                     for warning in parsed.get("warnings", []):
                         print(f"[{doc.stem}] {warning}", file=sys.stderr)
                     print(f"[{doc.stem}] -> {doc.md}；{len(parsed['assets'])} 张分类资产；{parsed['parser']}")
+                    if getattr(args, "audit", True):
+                        # A read-only diagnosis must never turn a good conversion
+                        # into a failed one, nor change the command's exit code.
+                        try:
+                            quality = pdf_repair.audit_body(parsed["body"])
+                        except Exception as error:  # noqa: BLE001 - deliberately total
+                            quality = {"error": str(error)}
+                        print(f"[{doc.stem}] {pdf_repair.summarize(quality)}")
                 except (LibraryError, mineru_backend.MinerUError, OSError, ValueError) as error:
                     errors += 1
                     print(f"[{doc.stem}] 结果处理失败：{error}", file=sys.stderr)
@@ -307,6 +316,8 @@ def add_conversion_options(parser):
     parser.add_argument("--ocr", action="store_true", help="启用云端 OCR（pipeline / vlm）")
     parser.add_argument("--no-formula", action="store_true", help="关闭公式识别；vlm 仅关闭行内公式识别")
     parser.add_argument("--no-table", action="store_true", help="关闭表格识别（pipeline / vlm）")
+    parser.add_argument("--audit", action=argparse.BooleanOptionalAction, default=True,
+                        help="转换后输出一行只读体检摘要（--no-audit 关闭）")
 
 
 def make_parser():
@@ -326,6 +337,17 @@ def make_parser():
     convert.add_argument("--root")
     convert.add_argument("--all", action="store_true")
     add_conversion_options(convert)
+    audit = sub.add_parser("audit", help="只读体检：标签密度、真上标与可自动修估算")
+    audit.add_argument("inputs", nargs="*")
+    audit.add_argument("--root")
+    audit.add_argument("--all", action="store_true")
+    audit.add_argument("--json", action="store_true", help="输出完整字段的 JSON")
+    repair = sub.add_parser("repair", help="阶段一：生成标签修复补丁清单，不改 MD")
+    repair.add_argument("input")
+    repair.add_argument("--out", required=True, help="补丁输出目录；拒绝 md/、assets/、pdf/")
+    repair.add_argument("--root")
+    repair.add_argument("--whitelist", help="额外保留的真上标基底，逗号分隔")
+    repair.add_argument("--max-pack-items", type=int, default=20, help="每个 AI 裁决包的条目上限")
     rename = sub.add_parser("rename", help="联动改名；保持来源编号与版本")
     rename.add_argument("input")
     rename.add_argument("new_name", help="完整文件 stem，含已有来源编号前缀")
@@ -342,7 +364,42 @@ def make_parser():
     check.add_argument("inputs", nargs="*")
     check.add_argument("--root")
     check.add_argument("--all", action="store_true")
+    check.add_argument("--audit", action="store_true", help="同时附加只读体检结果")
     return parser
+
+
+def audit_document(doc) -> dict:
+    """Read-only quality report; an audit problem is data, never an exception."""
+    if not doc.md.is_file():
+        return {"error": "缺少 MD"}
+    try:
+        _, body = read_markdown(doc.md)
+        return pdf_repair.audit_body(body)
+    except Exception as error:  # noqa: BLE001 - audit must stay non-fatal
+        return {"error": str(error)}
+
+
+def audit_command(args):
+    documents, failures = select_documents(args.inputs, args.root,
+                                           args.all or (not args.inputs and bool(args.root)))
+    results = [{"root": str(doc.root), "stem": doc.stem, "md": str(doc.md),
+                "quality": audit_document(doc)} for doc in documents]
+    if args.json:
+        emit(results + failures)
+    else:
+        for row in results:
+            quality = row["quality"]
+            if quality.get("error"):
+                print(f"[{row['stem']}] 体检失败：{quality['error']}")
+                continue
+            verdict = "建议 repair" if quality["suggest_repair"] else "无需 repair"
+            print(f"[{row['stem']}] sub {quality['tags']['sub']} · sup {quality['tags']['sup']}"
+                  f" · 表格外 {quality['density']}/千字 · 词内 {quality['word_internal_tags']}"
+                  f" · 跨词 {quality['cross_word_tags']} · 真上标 {quality['true_sup_count']}"
+                  f" · 可自动修 {quality['auto_fixable']} 词 · {verdict}")
+        for failure in failures:
+            print(f"[{failure['input']}] {failure['error']}", file=sys.stderr)
+    return 0 if not failures else 1
 
 
 def index_command(args):
@@ -381,6 +438,42 @@ def index_command(args):
             atomic_text(doc.md, render_markdown(front, body))
     lib.write_index(rows)
     print(f"index.csv：{len(rows)} 条")
+    return 0
+
+
+def repair_command(args):
+    """Stage one: write a patch ledger next to (never inside) the paper library."""
+    doc, _ = resolve_document(args.input, args.root)
+    if not doc.pdf.is_file():
+        raise LibraryError("缺少同名 PDF，无法用文本层锚定。")
+    if not doc.md.is_file():
+        raise LibraryError("缺少 MD，无法生成补丁。")
+    out = pdf_repair.guard_output(args.out, doc.root)
+    text = doc.md.read_text(encoding="utf-8")
+    whitelist = tuple(part.strip() for part in (args.whitelist or "").split(",") if part.strip())
+    plan = pdf_repair.build_plan(text, doc.pdf, whitelist=whitelist,
+                                 max_pack_items=args.max_pack_items)
+    out.mkdir(parents=True, exist_ok=True)
+    payload = {"document": doc.stem, "md": str(doc.md), "pdf": str(doc.pdf),
+               "whitelist": list(whitelist), "checks": plan["checks"],
+               "stats": plan["stats"], "patches": plan["patches"]}
+    atomic_text(out / "patches.json", json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+    atomic_text(out / "diff.txt", plan["diff"])
+    atomic_text(out / "stats.json", json.dumps(
+        {**payload["stats"], "kept": plan["kept"], "checks": plan["checks"]},
+        ensure_ascii=False, indent=2) + "\n")
+    packs = out / "ai-packs"
+    packs.mkdir(exist_ok=True)
+    keep = {f"p{number:02d}.md" for number in range(1, len(plan["ai_packs"]) + 1)}
+    for stale in packs.glob("p[0-9][0-9].md"):
+        if stale.name not in keep:
+            stale.unlink()
+    for number, pack in enumerate(plan["ai_packs"], 1):
+        atomic_text(packs / f"p{number:02d}.md", pack)
+    rules = plan["stats"]["rules"]
+    print(f"[{doc.stem}] R1 {rules['R1']} · R2 {rules['R2']} · R4 {rules['R4']}"
+          f" · R5 {rules['R5']} · 保留 {plan['stats']['kept_whitelist']}"
+          f" · AI {plan['stats']['ai_items']} 条/{plan['stats']['ai_packs']} 包 -> {out}")
     return 0
 
 
@@ -427,14 +520,23 @@ def main(argv=None):
             renamed = rename_document(doc, args.new_name)
             emit({"old": doc.stem, "new": renamed.stem, "root": str(doc.root)})
             return 0
+        if args.command == "audit":
+            return audit_command(args)
+        if args.command == "repair":
+            return repair_command(args)
         if args.command == "index":
             return index_command(args)
         if args.command == "check":
             documents, failures = select_documents(args.inputs, args.root, args.all or (not args.inputs and bool(args.root)))
-            results = [check_document(doc) for doc in documents] + failures
+            results = [check_document(doc, audit=audit_document(doc) if args.audit else None)
+                       for doc in documents] + failures
             emit(results)
             return 0 if all(row["complete"] for row in results) else 1
-    except (LibraryError, pdf_sources.SourceError, mineru_backend.MinerUError, OSError, ValueError) as error:
+    except pdf_repair.DependencyError as error:
+        print(f"错误：{error}\n安装：python -m pip install pymupdf", file=sys.stderr)
+        return 2
+    except (LibraryError, pdf_sources.SourceError, mineru_backend.MinerUError, OSError, ValueError,
+            pdf_repair.RepairError) as error:
         print(f"错误：{error}", file=sys.stderr)
         return 1
     return 0

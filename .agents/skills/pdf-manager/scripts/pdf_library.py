@@ -340,7 +340,7 @@ def resolve_document(token: str, root=None) -> tuple[Document, Path | None]:
     return doc, source
 
 
-def check_document(doc: Document) -> dict:
+def check_document(doc: Document, *, audit=None) -> dict:
     _, body = read_markdown(doc.md)
     missing = []
     if doc.md.is_file():
@@ -353,6 +353,7 @@ def check_document(doc: Document) -> dict:
                 missing.append(reference)
     return {"root": str(doc.root), "stem": doc.stem, "pdf": doc.pdf.is_file(),
             "md": doc.md.is_file(), "md_body": bool(body.strip()), "missing_images": missing,
+            "quality": audit,
             "complete": doc.pdf.is_file() and doc.pdf.stat().st_size > 0 and bool(body.strip()) and not missing}
 
 

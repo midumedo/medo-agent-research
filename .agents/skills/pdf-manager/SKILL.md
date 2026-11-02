@@ -17,6 +17,8 @@ description: 将明确来源的论文或 PDF 整理成供研究读取的 Markdow
 | 用户要求整理名称 | 读取摘要确定名称后 `rename`；名称已确定则直接执行 |
 | 要管理一批材料或现有索引 | `index`；单篇操作不必创建索引 |
 | 怀疑文件或图表缺失 | `check` 指定资料；根据报告补取或转换相应文件 |
+| 怀疑正文被 `<sub>/<sup>` 标签污染 | `audit` 只读体检；确认要修再按 [标签噪声](references/tag-noise.md) 处理 |
+| 已确认要修标签噪声 | `repair` 只生成补丁清单，不改 MD；产物写到库外或 `.rivet_scratch/` |
 
 先定位本 `SKILL.md`，再找到同目录下的 `scripts/pdf_manager.py`。将下面的 `<脚本>` 替换为其实际路径，并给路径加引号。`a` 只是资料目录示例，使用任务指定的目录。
 
@@ -25,6 +27,8 @@ python "<脚本>" metadata 2501.13956v1
 python "<脚本>" download 2501.13956v1 --root "a" --name "Project.Zep" --convert
 python "<脚本>" metadata "Downloads/paper.md"
 python "<脚本>" convert "a/pdf/xx.pdf"
+python "<脚本>" audit "a/md/xx.md"
+python "<脚本>" repair "a/md/xx.md" --out "a/.rivet_scratch/repair-xx"
 python "<脚本>" check "a/pdf/xx.pdf"
 python "<脚本>" index --root "a"
 ```
@@ -84,6 +88,8 @@ python "<脚本>" rename "a/md/旧名.md" "Report.新名称"
 - 批量部分失败时，成功项仍保留，命令返回非零；只处理失败项。不要把“整条命令报错”当成“所有文件都没处理”。
 - 已提交任务超时或结果下载失败，保留原 PDF、文件名和 `batch_id`，用 `convert --batch-id <批次>` 重新查询并下载；不重新提交解析。脚本会对指定 CDN 尝试局部连接回退，仍失败时按 [网络参考](references/mineru-network.md) 定位阶段。
 - 名称或资产归属冲突时先处理报告中的对象，不靠 `--force` 覆盖其他资料。
+
+转换结束默认追加一行只读体检（`--no-audit` 关闭），报告标签密度、跨词标签、真上标与可自动修估算，不写文件；判定规则与字段见 [标签噪声](references/tag-noise.md)。
 
 索引只在需要时建立，已有索引自动维护；四列为 `id / name / keywords / revised`，保留暂未下载的记录。关键词由 Agent 判断后写入：
 
