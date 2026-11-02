@@ -1,0 +1,235 @@
+{
+  "_what": "MinerU 内容列表（Content List V1）的字段字典与代表样例",
+  "_why": "留一份就够——正文已进 md/，图注在 md 里紧贴图片引用，这里只回答「字段叫什么」。原始 206 条全量 dump 有 198 KB，其中 header/page_number/ref_text 等噪声占了多半，故只留每类一条。",
+  "_source": {
+    "paper": "arxiv-2504.19413v1.Project.Mem0",
+    "batch_id": "70168b43-1ec1-401a-a60e-d29b0f4b57e9",
+    "model_version": "vlm",
+    "lang": "en",
+    "items_in_full_dump": 206
+  },
+  "_read": [
+    "1. 解包 MinerU 返回的 zip，找 `*_content_list.json`（V1；同包另有 `*_content_list_v2.json` 按页分组，本项目不用）。",
+    "2. 它是扁平的 list[dict]，每条有 `type` 与 `page_idx`、`bbox`。",
+    "3. 图注字段按类型分开：image 用 `image_caption`、chart 用 `chart_caption`、table 用 `table_caption`——拿错字段图注就是空的。",
+    "4. 图号从图注文本里抽（`Fig. 3` → 3），抽不到就用同类型的顺序号。"
+  ],
+  "_consumed_by": "convert.py 的 parse_visual() / name_map()：只用 type、img_path、caption（为了拿图号）。正文不从这里取。",
+  "field_map": {
+    "aside_text": [
+      "bbox",
+      "page_idx",
+      "text",
+      "type"
+    ],
+    "chart": [
+      "bbox",
+      "chart_caption",
+      "chart_footnote",
+      "content",
+      "img_path",
+      "page_idx",
+      "type"
+    ],
+    "code": [
+      "bbox",
+      "code_body",
+      "code_caption",
+      "page_idx",
+      "sub_type",
+      "type"
+    ],
+    "header": [
+      "bbox",
+      "page_idx",
+      "text",
+      "type"
+    ],
+    "image": [
+      "bbox",
+      "content",
+      "image_caption",
+      "image_footnote",
+      "img_path",
+      "page_idx",
+      "type"
+    ],
+    "page_footnote": [
+      "bbox",
+      "page_idx",
+      "text",
+      "type"
+    ],
+    "page_number": [
+      "bbox",
+      "page_idx",
+      "text",
+      "type"
+    ],
+    "ref_text": [
+      "bbox",
+      "page_idx",
+      "text",
+      "type"
+    ],
+    "table": [
+      "bbox",
+      "img_path",
+      "page_idx",
+      "table_body",
+      "table_caption",
+      "table_footnote",
+      "type"
+    ],
+    "text": [
+      "bbox",
+      "page_idx",
+      "text",
+      "text_level",
+      "type"
+    ]
+  },
+  "type_counts": {
+    "text": 94,
+    "header": 43,
+    "ref_text": 30,
+    "page_number": 23,
+    "code": 5,
+    "image": 3,
+    "page_footnote": 3,
+    "table": 2,
+    "chart": 2,
+    "aside_text": 1
+  },
+  "examples": {
+    "aside_text": {
+      "type": "aside_text",
+      "text": "arXiv:2504.19413v1 [cs.CL] 28 Apr 2025",
+      "bbox": [
+        22,
+        263,
+        58,
+        705
+      ],
+      "page_idx": 0
+    },
+    "chart": {
+      "type": "chart",
+      "img_path": "images/ce93dfbe57b8e52831c6c4a3d947cce0a9e23ad112c04643dbda9450865cae8c.jpg",
+      "content": "",
+      "chart_caption": [
+        "Total Latency vs LLM-as-a-Judge score",
+        "Search Latency vs LLM-as-a-Judge score"
+      ],
+      "chart_footnote": [],
+      "bbox": [
+        99,
+        109,
+        893,
+        359
+      ],
+      "page_idx": 11
+    },
+    "code": {
+      "type": "code",
+      "sub_type": "code",
+      "code_caption": [],
+      "code_body": "```txt PROMPT TEMPLATE FOR LLM AS A JUDGE Your task is to label an answer to a question as \"CORRECT\" or \"WRONG\". You will be given the following data: (1) a question (posed by one  …",
+      "bbox": [
+        89,
+        284,
+        908,
+        750
+      ],
+      "page_idx": 17
+    },
+    "header": {
+      "type": "header",
+      "text": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory",
+      "bbox": [
+        253,
+        66,
+        743,
+        80
+      ],
+      "page_idx": 1
+    },
+    "image": {
+      "type": "image",
+      "img_path": "images/91ef95b83bd5139bc40126a10fe57a7680d37f163c42303e83542dbdbf24167c.jpg",
+      "image_caption": [
+        "Figure 1: Illustration of memory importance in AI agents. Left: Wit<sup>h</sup>out pe<sup>r</sup>s<sup>i</sup>s<sup>t</sup>e<sup>nt</sup> <sup>m</sup>e<sup>m</sup>o<sup>r</sup>y, < …"
+      ],
+      "image_footnote": [],
+      "content": "",
+      "bbox": [
+        89,
+        104,
+        622,
+        306
+      ],
+      "page_idx": 1
+    },
+    "page_footnote": {
+      "type": "page_footnote",
+      "text": "<sup>1</sup>https://neo4j.com/",
+      "bbox": [
+        102,
+        892,
+        269,
+        909
+      ],
+      "page_idx": 5
+    },
+    "page_number": {
+      "type": "page_number",
+      "text": "2",
+      "bbox": [
+        491,
+        936,
+        504,
+        949
+      ],
+      "page_idx": 1
+    },
+    "ref_text": {
+      "type": "ref_text",
+      "text": "A<sub>n</sub>th<sub>rop</sub>i<sub>c.</sub> M<sub>o</sub>d<sub>e</sub>l <sub>car</sub>d <sub>an</sub>d <sub>eva</sub>l<sub>ua</sub>ti<sub>ons</sub> f<sub>or</sub> <sub>c</sub>l<sub …",
+      "bbox": [
+        84,
+        400,
+        913,
+        435
+      ],
+      "page_idx": 14
+    },
+    "table": {
+      "type": "table",
+      "img_path": "images/3ca846bf2d07eb8560f44ea87f8a36cdf0231db73e4104db7adf454ea7a08ccb.jpg",
+      "table_caption": [
+        "Table 1: Per<sup>f</sup>ormance comparison o<sup>f</sup> memory-enabled systems across di<sup>f</sup>erent question types in the LOCOMO dataset. E<sub>va</sub>l<sub>ua</sub>ti<sub> …"
+      ],
+      "table_footnote": [],
+      "table_body": "<table><tr><td rowspan=\"2\">Method</td><td colspan=\"3\">Single Hop</td><td colspan=\"3\">Multi-Hop</td><td colspan=\"3\">Open Domain</td><td colspan=\"3\">Temporal</td></tr><tr><td> $F_1 \\ …",
+      "bbox": [
+        84,
+        193,
+        911,
+        368
+      ],
+      "page_idx": 8
+    },
+    "text": {
+      "type": "text",
+      "text": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory",
+      "text_level": 1,
+      "bbox": [
+        112,
+        109,
+        844,
+        167
+      ],
+      "page_idx": 0
+    }
+  }
+}

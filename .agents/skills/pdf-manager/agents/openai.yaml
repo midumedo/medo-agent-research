@@ -1,0 +1,4 @@
+interface:
+  display_name: "PDF 管理"
+  short_description: "下载和整理 PDF，按摘要命名，转换 Markdown 并管理分类图表资产"
+  default_prompt: "使用 $pdf-manager 下载、命名或转换 PDF，维护同名 Markdown 和相对路径图表资产。"
