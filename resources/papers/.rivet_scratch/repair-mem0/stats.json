@@ -1,0 +1,45 @@
+{
+  "rules": {
+    "R1": 3897,
+    "R2": 2982,
+    "R4": 84,
+    "R5": 42
+  },
+  "patches": 7005,
+  "lines_touched": 85,
+  "kept_whitelist": 6,
+  "ai_items": 55,
+  "ai_packs": 11,
+  "kept": [
+    {
+      "line": 56,
+      "text": "<sup>g</sup>"
+    },
+    {
+      "line": 70,
+      "text": "<sup>g</sup>"
+    },
+    {
+      "line": 74,
+      "text": "<sup>1</sup>"
+    },
+    {
+      "line": 74,
+      "text": "<sup>g</sup>"
+    },
+    {
+      "line": 122,
+      "text": "<sup>g</sup>"
+    },
+    {
+      "line": 149,
+      "text": "<sup>g</sup>"
+    }
+  ],
+  "checks": {
+    "line_count": true,
+    "protected_sha": true,
+    "whitelist_preserved": true,
+    "idempotent": true
+  }
+}
