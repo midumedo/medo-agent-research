@@ -197,10 +197,12 @@ def download_one(value: str, root, name=None) -> tuple[Document, dict]:
     if not url:
         raise LibraryError(f"没有明确的 PDF 下载地址：{value}")
     ident = info.get("id")
-    repair = existing is not None and (existing.md.is_file() or bool(row))
-    if repair:
-        confirm_download_source(existing, info)
-        filename = existing.stem
+    # Keep the resolved document, not a derived boolean: a local variable named
+    # `repair` does not narrow `existing` for either the type checker or a reader.
+    reuse = existing if existing is not None and (existing.md.is_file() or bool(row)) else None
+    if reuse is not None:
+        confirm_download_source(reuse, info)
+        filename = reuse.stem
     elif name:
         filename = clean_name(name_stem(name))
         if ident and filename != ident and not filename.startswith(ident + "."):
@@ -211,13 +213,13 @@ def download_one(value: str, root, name=None) -> tuple[Document, dict]:
     else:
         filename = clean_name(name_stem(info.get("filename") or "document.pdf"))
     doc = Document(lib.root, filename)
-    if doc.pdf.exists() or (doc.md.exists() and not repair):
+    if doc.pdf.exists() or (doc.md.exists() and reuse is None):
         raise LibraryError(f"同名资料已存在，未覆盖：{filename}；请使用明确名称或现有资料标识。")
     payload = pdf_sources.download_pdf(url)
     atomic_bytes(doc.pdf, payload)
     # Metadata is returned to the Agent; a combined download/convert retains it
     # in memory until it can be written into the MD. No permanent sidecar.
-    if not repair:
+    if reuse is None:
         lib.update_existing_index(doc)
     return doc, {**info, "stem": doc.stem, "pdf": str(doc.pdf), "state": "downloaded"}
 
