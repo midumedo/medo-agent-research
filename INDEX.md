@@ -1,4 +1,10 @@
-# index
+# index.md
+
+# 研究核心
+
+聚焦agent engineering，  包括但不限于**Memory、Context 与 Harness**
+
+# 现在
 现在在研究 domain\memory
 
 之前在研究domain\repo-context
