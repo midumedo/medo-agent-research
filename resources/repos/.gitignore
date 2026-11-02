@@ -3,10 +3,10 @@
 # 只跟踪元数据层；第三方 checkout 一律不入库。
 #
 # 注意：下面这些否定规则只有在「父目录本身未被排除」时才生效。根 .gitignore 必须写
-# `/sources/repos/*`（排除内容）而不是 `/sources/repos/`（连目录一起排除）——写成后者时
+# `/resources/repos/*`（排除内容）而不是 `/resources/repos/`（连目录一起排除）——写成后者时
 # git 不会下降进这个目录，本文件的全部规则都会被跳过。
-# 实测复现：未改根文件时 `git check-ignore -v sources/repos/index.csv` 报告的是
-# `.gitignore:2:/sources/repos/`，即根规则在拦，本文件没被读到。
+# 实测复现：未改根文件时 `git check-ignore -v resources/repos/index.csv` 报告的是
+# `.gitignore:2:/resources/repos/`，即根规则在拦，本文件没被读到。
 !index.csv
 !CHANGELOG.md
 !AGENTS.md

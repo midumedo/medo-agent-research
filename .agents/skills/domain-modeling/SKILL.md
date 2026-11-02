@@ -48,7 +48,7 @@ agent_created: true
 
 ### 交叉验证
 
-用户断言某件事如何工作时，去查它是否真的如此——查 `sources/` 里的论文与源码 checkout，查 `evidence/` 里的摘录与运行记录。发现矛盾就摊开说。
+用户断言某件事如何工作时，去查它是否真的如此——查 `resources/` 里的论文与源码 checkout，查 `evidence/` 里的摘录与运行记录。发现矛盾就摊开说。
 
 ## 写术语（inline，不批处理）
 

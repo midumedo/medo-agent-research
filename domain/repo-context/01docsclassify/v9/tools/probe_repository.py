@@ -54,8 +54,8 @@ def quoted_csv_case() -> dict:
 
 def probe(root: Path) -> dict:
     ledger_path = root / "domain/repo-context/00docslist/index.csv"
-    index_path = root / "sources/repos/index.csv"
-    commits_path = root / "sources/repos/_commits.json"
+    index_path = root / "resources/repos/index.csv"
+    commits_path = root / "resources/repos/_commits.json"
     ledger = read_csv(ledger_path)
     repos = read_csv(index_path)
     commits = json.loads(commits_path.read_text(encoding="utf-8-sig"))
@@ -87,7 +87,7 @@ def probe(root: Path) -> dict:
     for row in ledger:
         if row["status"] != "verified":
             continue
-        path = root / "sources/repos" / row["id"] / row["path"]
+        path = root / "resources/repos" / row["id"] / row["path"]
         exists = path.is_file()
         actual = path.stat().st_size if exists else None
         expected = int(row["bytes"])

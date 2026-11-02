@@ -76,59 +76,59 @@
     "sha256": "00C4BEE08DAE1BF4115A7301DF7050DDA8BD798C332339BA9774CD5FE5C88520"
   },
   {
-    "path": "sources/papers/_scripts/download_arxiv.py",
+    "path": "resources/papers/_scripts/download_arxiv.py",
     "sha256": "AD7C4BBBFD109849A84FD6DE3FBE61C0BB0C0CE18653D8575048AB4563B5937D"
   },
   {
-    "path": "sources/papers/_scripts/pdf2md.py",
+    "path": "resources/papers/_scripts/pdf2md.py",
     "sha256": "47E38205D8DBCE9AA7FA3D49B1B60CAF3BD5118FAD44B85BB9017859631237CA"
   },
   {
-    "path": "sources/papers/meta.json",
+    "path": "resources/papers/meta.json",
     "sha256": "399FC35F773442395B278788C16084BCDCE53D6ED3EA39797C2BE62F90A6762A"
   },
   {
-    "path": "sources/papers/nav.json",
+    "path": "resources/papers/nav.json",
     "sha256": "C4EFADF3E1536FAA4249E7EE5203C5E8C3175F98EACB1FDAE6738BB988F47282"
   },
   {
-    "path": "sources/papers/README.md",
+    "path": "resources/papers/README.md",
     "sha256": "78FF0820F452B166602EFEC7A87363C7634C09005C500C676066DD6E272DB2BF"
   },
   {
-    "path": "sources/papers/surveys/2404.13501.md",
+    "path": "resources/papers/surveys/2404.13501.md",
     "sha256": "85169D1F3F5A7D381BC0C46E34EAD17C12E68E15EF49169A084DBAB3B39210BA"
   },
   {
-    "path": "sources/papers/surveys/2505.00675.md",
+    "path": "resources/papers/surveys/2505.00675.md",
     "sha256": "A5337C06D9BA6A034BA60E783F657BC2FDBF1B5AB94B1E4B397DEDC83DF6CE70"
   },
   {
-    "path": "sources/papers/surveys/2512.13564.md",
+    "path": "resources/papers/surveys/2512.13564.md",
     "sha256": "B2759A97E2F2AA639EE4DCF6DE206643324A95CEC5E1039C47E558074A261FFE"
   },
   {
-    "path": "sources/papers/surveys/2602.06052.md",
+    "path": "resources/papers/surveys/2602.06052.md",
     "sha256": "D388FDD071FA03CAB02977351735CC30AD7CEEDE645161DFE62E80E04E1A2FF4"
   },
   {
-    "path": "sources/papers/surveys/2603.07670.md",
+    "path": "resources/papers/surveys/2603.07670.md",
     "sha256": "773CF193FD1C5F03839244F706CCE60CA763D8DCD2BE4EF50A8754B978C70B8D"
   },
   {
-    "path": "sources/papers/surveys/2606.06448.md",
+    "path": "resources/papers/surveys/2606.06448.md",
     "sha256": "1F67AEB47477AFFE357DC0D2970EAA952249B5F6EACD6395E910304F9B972C3B"
   },
   {
-    "path": "sources/papers/surveys/2607.16848.md",
+    "path": "resources/papers/surveys/2607.16848.md",
     "sha256": "B6A1153D3DE7B8E0F72271CF4BC97CEDDC47394CBCA258C65AFD6077E559F263"
   },
   {
-    "path": "sources/papers/surveys/README.md",
+    "path": "resources/papers/surveys/README.md",
     "sha256": "316E004AFD353DE9FCA469327786E320CBC86EB17303B52E4D4E5723C7B638EF"
   },
   {
-    "path": "sources/reports/memory-landscape-2026-09.md",
+    "path": "resources/reports/memory-landscape-2026-09.md",
     "sha256": "F15E1C924E9463219094F9F308B273702196971E6C7ED0560622C568D14BB4F9"
   },
   {

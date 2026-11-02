@@ -1,6 +1,6 @@
 # memU · 根目录文档实测
 
-> 快照 `08e1ed4cdf4c` · 取证 2026-09-25 · 来源 `sources/repos/memU/`
+> 快照 `08e1ed4cdf4c` · 取证 2026-09-25 · 来源 `resources/repos/memU/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + 根级 SKILL.md
 
 ## 1. 根目录清单一览
@@ -79,10 +79,10 @@ INSTALL-LATEST.md     (5482B, frontmatter name: install-memu-latest)
 
 | 既有结论 | 本轮实测 | 判定 |
 |---|---|---|
-| D05 边界：`INSTALL-LATEST` 属「流程与上手」，是 README 的最短路径切片 | `sources/repos/memU/INSTALL-LATEST.md` 首行 `---`，frontmatter `name: install-memu-latest` + `description: …Use when the user wants…` | **需重判**：在本仓它是 **skill 描述符**，不是上手文档。D05 的边界不足以覆盖 |
+| D05 边界：`INSTALL-LATEST` 属「流程与上手」，是 README 的最短路径切片 | `resources/repos/memU/INSTALL-LATEST.md` 首行 `---`，frontmatter `name: install-memu-latest` + `description: …Use when the user wants…` | **需重判**：在本仓它是 **skill 描述符**，不是上手文档。D05 的边界不足以覆盖 |
 | D12 位置：「`skills\<name>\SKILL.md`（也可在包内）；memU 直接放根级」 | 根级确有 `SKILL.md`；**另有**根级 `INSTALL-LATEST.md` 也是 skill 描述符 | **需补**：「文件名不必然是 `SKILL.md`；判据是 frontmatter」 |
 | D02 `CHANGELOG` 形态「单文件（+目录变体）」 | 本仓是**生成式**（Release Please 风格） | 形态清单需补「生成式」 |
-| `sources/repos/index.csv` 关键词 `memory-cli;root-skill-md` | 一致 | 一致 |
+| `resources/repos/index.csv` 关键词 `memory-cli;root-skill-md` | 一致 | 一致 |
 
 ## 5. 空白与未取证
 

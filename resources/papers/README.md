@@ -13,7 +13,7 @@
 | `md/<名>.md` | 机器转换的正文。顶部 front matter 是本项目的**登记块**：摘要、关键词、来源、解析器版本；正文紧随其后，中间没有第二个头块〔派生·未追踪〕 |
 | `assets/<id>-*` | 从 PDF 抽出的图，平铺一层，名字自带归属：`<id>-fig3`／`-table2`／`-chart1`／`-eq1`／`-img1`〔派生·未追踪〕 |
 
-三者缺哪份都能重出：跑 `sources/papers/_scripts/pipeline.py`（PDF 重下、md 重转、图随之重出）。
+三者缺哪份都能重出：跑 `resources/papers/_scripts/pipeline.py`（PDF 重下、md 重转、图随之重出）。
 
 ## 找一篇、读一篇
 

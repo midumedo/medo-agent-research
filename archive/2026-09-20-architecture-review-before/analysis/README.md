@@ -2,7 +2,7 @@
 
 这里装的是**完整推演**——一次拆解从头到尾的论证过程。
 
-结论在 `understanding/`，支撑某条论断的摘录在 `evidence/`，原始材料在 `sources/`。**三层不互相复制。**
+结论在 `understanding/`，支撑某条论断的摘录在 `evidence/`，原始材料在 `resources/`。**三层不互相复制。**
 
 ---
 

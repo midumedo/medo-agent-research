@@ -1,6 +1,6 @@
 # MemoryBear · 根目录文档实测
 
-> 快照 `c32b937f1ed0` · 取证 2026-09-25 · 来源 `sources/repos/MemoryBear/`
+> 快照 `c32b937f1ed0` · 取证 2026-09-25 · 来源 `resources/repos/MemoryBear/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件
 > **本仓是本样本里唯一「没有 agent 入口文件」的仓。**
 
@@ -18,7 +18,7 @@
 
 ### 2.1 唯一一家「无 agent 入口」
 
-`sources/repos/index.csv` 对本仓的 `keywords` 记 `load-skill-tools;no-root-manifest;monorepo`；跨会话记忆里另有一条独立复核结论：**MemoryBear 有 0 个 `SKILL.md`，却有 `load_skill_tools`**。
+`resources/repos/index.csv` 对本仓的 `keywords` 记 `load-skill-tools;no-root-manifest;monorepo`；跨会话记忆里另有一条独立复核结论：**MemoryBear 有 0 个 `SKILL.md`，却有 `load_skill_tools`**。
 
 本轮 `find` 独立复核：
 

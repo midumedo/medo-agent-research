@@ -1,6 +1,6 @@
 # deepseek-harness · 根目录文档实测
 
-> 快照 `477b4f420553` · 取证 2026-09-25 · 来源 `sources/repos/deepseek-harness/`
+> 快照 `477b4f420553` · 取证 2026-09-25 · 来源 `resources/repos/deepseek-harness/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + agent 面（`.agents/`、分级指令、skills）
 
 ## 1. 根目录清单一览

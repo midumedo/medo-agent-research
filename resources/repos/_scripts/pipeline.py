@@ -17,7 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 def run(script, *args):
     cmd = [sys.executable, os.path.join(HERE, script), *args]
-    print(f"\n$ {' '.join(['python', os.path.join('sources/repos/_scripts', script), *args])}")
+    print(f"\n$ {' '.join(['python', os.path.join('resources/repos/_scripts', script), *args])}")
     return subprocess.run(cmd).returncode
 
 

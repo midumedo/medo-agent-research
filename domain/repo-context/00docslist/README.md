@@ -1,4 +1,4 @@
-# 00 · docslist —— `sources/repos/` 根目录文档实测账本
+# 00 · docslist —— `resources/repos/` 根目录文档实测账本
 
 > 属于 `domain\repo-context\` 研究，阶段 **00docslist**
 > 产出者：ds（AI 生成，见 `domain\AGENTS.md` 的命名约定）
@@ -9,7 +9,7 @@
 
 两个问题，分开回答，不互相顶替：
 
-- **Q1 纵向**：`sources/repos/` 里**某一个仓库**的根目录文档治理究竟长什么样？→ 读 `ds\{id}.md`（一仓一份）。
+- **Q1 纵向**：`resources/repos/` 里**某一个仓库**的根目录文档治理究竟长什么样？→ 读 `ds\{id}.md`（一仓一份）。
 - **Q2 横向**：18 个仓库之间，**哪些命名是活的、哪些是纸面的**？→ 过滤 `index.csv`。
 
 本目录同时保留两种用途不同的材料：`docslist.md` 记录曾考虑过的名称和问题；实测台账记录特定样本范围内观察到的文件及有限测量。两者都不锁定文档分类或定义。
@@ -20,15 +20,15 @@
 
 ## 方法边界（本轮实测，不是推测）
 
-`sources/repos/` 被 `.gitignore` 的 `/sources/repos/` 排除，这决定了每个工具能用还是不能用。下表全部来自本轮实测：
+`resources/repos/` 被 `.gitignore` 的 `/resources/repos/` 排除，这决定了每个工具能用还是不能用。下表全部来自本轮实测：
 
 | 通道 | 状态 | 证据 |
 |---|---|---|
-| `bash`（find / wc / cmp / grep -r） | **可用** | `find sources/repos -maxdepth 1 -type f` 正常返回 |
-| `repo_map` | 可用（plan 阶段唯一能递归枚举的通道） | `repo_map({path:"sources/repos/Raven", depth:0})` 完整列出 26 个根文件 |
-| `read_file` | **不可用** | `Error: File is gitignored`（`sources/repos/AGENTS.md`、`sources/repos/deepseek-harness/AGENTS.md` 两次独立命中） |
-| `glob` | **静默返回空** | `glob("sources/repos/*")` → 未找到匹配；`glob("sources/**/*.md")` 结果不含 `repos/` 下任何文件 |
-| `grep`（显式文件路径） | 可用 | `grep(path:"sources/repos/Raven/AGENTS.md")` 正常返回行与行哈希 |
+| `bash`（find / wc / cmp / grep -r） | **可用** | `find resources/repos -maxdepth 1 -type f` 正常返回 |
+| `repo_map` | 可用（plan 阶段唯一能递归枚举的通道） | `repo_map({path:"resources/repos/Raven", depth:0})` 完整列出 26 个根文件 |
+| `read_file` | **不可用** | `Error: File is gitignored`（`resources/repos/AGENTS.md`、`resources/repos/deepseek-harness/AGENTS.md` 两次独立命中） |
+| `glob` | **静默返回空** | `glob("resources/repos/*")` → 未找到匹配；`glob("resources/**/*.md")` 结果不含 `repos/` 下任何文件 |
+| `grep`（显式文件路径） | 可用 | `grep(path:"resources/repos/Raven/AGENTS.md")` 正常返回行与行哈希 |
 | `grep`（目录） | **只覆盖该目录的直接子文件，不递归** | 见下方「假阴性陷阱」 |
 | `web_fetch` / `web_search` | 本环境外域被 DNS 层拦截 | 见 `domain\repo-context\04how-agent-read-file\README.md` 的取证边界表 |
 
@@ -36,23 +36,23 @@
 
 本环境 `grep` 的**目录**检索不递归，只命中该目录的直接子文件。三处交叉实测：
 
-1. `grep(path="sources/repos", glob="*.md", pattern="^# ")` 只返回 `sources/repos/AGENTS.md`、`sources/repos/CHANGELOG.md`，未返回任何子目录文件。
-2. `grep(path="sources/repos/deepseek-harness", pattern="Alternatives considered")` → 未找到匹配；而该串确实存在于 `sources/repos/deepseek-harness/.agents/notes/README.md`。
-3. `grep(path="sources/repos/Tianshu-harness/docs", pattern="rivet/plans")` → 未找到匹配；而该串确实存在于 `sources/repos/Tianshu-harness/docs/README.md:53`。
+1. `grep(path="resources/repos", glob="*.md", pattern="^# ")` 只返回 `resources/repos/AGENTS.md`、`resources/repos/CHANGELOG.md`，未返回任何子目录文件。
+2. `grep(path="resources/repos/deepseek-harness", pattern="Alternatives considered")` → 未找到匹配；而该串确实存在于 `resources/repos/deepseek-harness/.agents/notes/README.md`。
+3. `grep(path="resources/repos/Tianshu-harness/docs", pattern="rivet/plans")` → 未找到匹配；而该串确实存在于 `resources/repos/Tianshu-harness/docs/README.md:53`。
 
 **纪律一**：枚举只能用 `bash find` 或 `repo_map`，不得用 `grep` 做目录检索。
 **纪律二**：负向结论一律标 `absent`（在什么检索范围内未命中），不写「不存在」。
-（本项目历史上已因此吃过一次假阴性：用上述方式搜 `llms.txt` / `.copilot-instructions` 得到「未找到匹配」，实测 `sources/repos/goose/.github/copilot-instructions.md` 与 `sources/repos/goose/documentation/static/llms.txt` 都存在。）
+（本项目历史上已因此吃过一次假阴性：用上述方式搜 `llms.txt` / `.copilot-instructions` 得到「未找到匹配」，实测 `resources/repos/goose/.github/copilot-instructions.md` 与 `resources/repos/goose/documentation/static/llms.txt` 都存在。）
 
 ---
 
 ## `index.csv` 字段口径
 
-一行一个文件。**不重复** `sources/repos/index.csv` 已有的字段（`repo` / `kind` / `completeness` / `snapshot`）——那是同一事实的第二个出处。本表用 `id` 做外键，其余 join 得到。
+一行一个文件。**不重复** `resources/repos/index.csv` 已有的字段（`repo` / `kind` / `completeness` / `snapshot`）——那是同一事实的第二个出处。本表用 `id` 做外键，其余 join 得到。
 
 | 列 | 含义 | 取值 |
 |---|---|---|
-| `id` | 仓库目录名，外键到 `sources/repos/index.csv` | `Raven` |
+| `id` | 仓库目录名，外键到 `resources/repos/index.csv` | `Raven` |
 | `path` | 该仓根相对路径 | `AGENTS.md`、`.agents/notes/README.md` |
 | `kind` | 文件类别 | 见下表封闭集 |
 | `bytes` | 实测字节数 | `22349` |
@@ -80,7 +80,7 @@
 
 **重新生成**：`python domain/repo-context/00docslist/_scripts/build_index.py`（脚本从磁盘现读字节数，`role` 由脚本内的显式映射表给出，不手改 CSV）。
 
-**快照纪律**：`bytes` 只在 `sources/repos/index.csv` 的 `snapshot` 未变时有效。快照刷新后重跑脚本即可，不要手改数字。
+**快照纪律**：`bytes` 只在 `resources/repos/index.csv` 的 `snapshot` 未变时有效。快照刷新后重跑脚本即可，不要手改数字。
 
 ---
 
@@ -119,4 +119,4 @@
 - 后续研究可以把候选清单、实测台账和正文样本作为不同材料使用；本目录的 `kind`、`role`、名称分组和整理版导航都不限定其定义结果。
 - **给 `03docscompare`**：同角色多命名的候选对（如 `CONTEXT.md` ↔ `GLOSSARY.md`、`DECISIONS.md` ↔ `decisions\`）在 `ds\*.md` 的「逐文件分析」里已各自带出处，可直接取用。
 
-本目录不改动 `sources/repos/` 的任何 checkout 内容。原始 `docslist.md` 保留；整理版仅供浏览，不作为分类正本。
+本目录不改动 `resources/repos/` 的任何 checkout 内容。原始 `docslist.md` 保留；整理版仅供浏览，不作为分类正本。

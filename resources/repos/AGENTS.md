@@ -1,6 +1,6 @@
-# AGENTS.md · `sources/repos/` 的操作约定
+# AGENTS.md · `resources/repos/` 的操作约定
 
-进入 `sources/repos/` 时读这一篇。它规定**字段怎么读**与**怎么更新**；数据在 `index.csv`，
+进入 `resources/repos/` 时读这一篇。它规定**字段怎么读**与**怎么更新**；数据在 `index.csv`，
 抓取事实在 `_commits.json`，事件在 `CHANGELOG.md`，三个文件各管一段，不互相复制。
 逐仓的一句话说明在本文末尾，**不进账本**（理由见下「长文本外置」）。
 
@@ -20,7 +20,7 @@
 | `_commits.json` | 抓取事实：`slug` 与落盘时的 `sha` | 脚本 | **机器输入·入库** |
 | `CHANGELOG.md` | 事件：什么时候抓了什么、改了什么 | 追溯时 | **只追加·入库** |
 
-**没有第四份清单。** 手工维护的 `sources/repos-sources.md` 已于 2026-09-25 退役：它的清单
+**没有第四份清单。** 手工维护的 `resources/repos-sources.md` 已于 2026-09-25 退役：它的清单
 与账本重复、日期与 `CHANGELOG.md` 重复、规则与本文重复，而两份来源不一致时以谁为准没有规定
 （它把 `minimax-cli/` 记成了 `cli/`）。
 
@@ -34,19 +34,19 @@
 
 这条规则依赖两处 `.gitignore` 配合，少一处就失效：
 
-- 根 `.gitignore` 必须写 `/sources/repos/*`（排除**内容**）。写成 `/sources/repos/`
+- 根 `.gitignore` 必须写 `/resources/repos/*`（排除**内容**）。写成 `/resources/repos/`
   （连目录一起排除）时，git 不会下降进这个目录，本目录 `.gitignore` 的全部规则被跳过。
 - 本目录 `.gitignore` 用 `*` 排除其余条目，再逐条否定上表那几个。
 
 实测复现（改根文件前）：
 
 ```
-$ git check-ignore -v sources/repos/index.csv
-.gitignore:2:/sources/repos/	sources/repos/index.csv     ← 根规则在拦，内层规则没被读到
+$ git check-ignore -v resources/repos/index.csv
+.gitignore:2:/resources/repos/	resources/repos/index.csv     ← 根规则在拦，内层规则没被读到
 ```
 
-改根文件后：`git check-ignore -q sources/repos/index.csv` 返回 1（不再被忽略），
-而 `git check-ignore -q sources/repos/codex/README.md` 返回 0（仍被忽略）。
+改根文件后：`git check-ignore -q resources/repos/index.csv` 返回 1（不再被忽略），
+而 `git check-ignore -q resources/repos/codex/README.md` 返回 0（仍被忽略）。
 
 ## 目录与命名
 
@@ -129,15 +129,15 @@ Claude Code 多一个 PDF 的 `pages`；gemini-cli 的 `read-many-files` 是**�
 零第三方依赖，只用标准库。在仓库根运行：
 
 ```text
-python sources/repos/_scripts/status.py --check      # 交付门：账本自洽 + 反追踪生效（缺一即非零退出）
-python sources/repos/_scripts/status.py             # 人读的报告
-python sources/repos/_scripts/build_index.py        # 以账本重建 index.csv（只增不删）
-python sources/repos/_scripts/build_index.py --check # 与重建结果逐字节比对
-python sources/repos/_scripts/scan.py --all         # 逐仓开放度证据（kind/completeness 的判据）
-python sources/repos/_scripts/scan.py --set <id> --completeness source --kind harness --keywords a;b
-python sources/repos/_scripts/fetch.py <owner/name> # 抓取；已有目录则就地覆盖（不留旧版本）
-python sources/repos/_scripts/fetch.py --all        # 按账本更新全部（不改判断列）
-python sources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + 终检
+python resources/repos/_scripts/status.py --check      # 交付门：账本自洽 + 反追踪生效（缺一即非零退出）
+python resources/repos/_scripts/status.py             # 人读的报告
+python resources/repos/_scripts/build_index.py        # 以账本重建 index.csv（只增不删）
+python resources/repos/_scripts/build_index.py --check # 与重建结果逐字节比对
+python resources/repos/_scripts/scan.py --all         # 逐仓开放度证据（kind/completeness 的判据）
+python resources/repos/_scripts/scan.py --set <id> --completeness source --kind harness --keywords a;b
+python resources/repos/_scripts/fetch.py <owner/name> # 抓取；已有目录则就地覆盖（不留旧版本）
+python resources/repos/_scripts/fetch.py --all        # 按账本更新全部（不改判断列）
+python resources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + 终检
 ```
 
 账本语义：行以 `id` 为键，**只增不删**。一个 checkout 被移走，那一行仍留着——它记的是
@@ -152,7 +152,7 @@ python sources/repos/_scripts/pipeline.py --check   # 编排：全量更新 + �
 
 ## 取证纪律
 
-- `sources/repos/**` 的第三方内容对 `read_file`/`glob` **不可读**（gitignore 检查），
+- `resources/repos/**` 的第三方内容对 `read_file`/`glob` **不可读**（gitignore 检查），
   只能用 `grep`（显式路径）、`ast_grep` 或 `bash`。
 - 引用代码行为写 **目录名 + `snapshot` + 文件路径 + 函数/类**。`snapshot` 为空的，
   必须写成「该 checkout 版本如此」，**不能**写成产品当前行为。

@@ -11,7 +11,7 @@
 
 ## 来源阅读
 
-论文原件与解析正文在 [sources/papers/](../sources/papers/README.md)。我方材料分别从这里进入：
+论文原件与解析正文在 [resources/papers/](../resources/papers/README.md)。我方材料分别从这里进入：
 
 - [综述阅读与比较](surveys/README.md)：阅读定位、局部核对结果与待调查问题。
 - [早期领域调研](landscape/memory-landscape-2026-09.md)：保留历史原稿；尚未完成逐项事实复核，不能自动当作当前事实底座。

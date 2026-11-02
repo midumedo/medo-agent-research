@@ -1,6 +1,6 @@
 # memU：把判断留在 Agent 侧的极简记忆服务
 
-> 对象深拆，2026-09-21。源码 `sources/repos/memU`（NevaMind-AI/memU，commit `08e1ed4cdf4c`，2026-09-10，打包下载不含 `.git`）。memU 无论文，因此本文以代码为准，并专门记录 README/CHANGELOG 与代码不同步的地方。
+> 对象深拆，2026-09-21。源码 `resources/repos/memU`（NevaMind-AI/memU，commit `08e1ed4cdf4c`，2026-09-10，打包下载不含 `.git`）。memU 无论文，因此本文以代码为准，并专门记录 README/CHANGELOG 与代码不同步的地方。
 > 状态区分：**代码确实存在** / **文档或 README 声称** / **默认启用** / **本项目未验证**。静态读码，未运行。
 
 ## 版本与范围

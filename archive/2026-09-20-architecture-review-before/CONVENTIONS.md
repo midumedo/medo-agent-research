@@ -6,7 +6,7 @@
 
 | 对象 | 规则 | 例子 |
 |---|---|---|
-| 目录 | 全小写英文，连字符分词 | `sources/papers/surveys/` |
+| 目录 | 全小写英文，连字符分词 | `resources/papers/surveys/` |
 | 根级常驻文档 | 全大写 | `THESIS.md` `TRADEOFFS.md` |
 | 内容文档 | 小写 kebab-case | `context-economics.md` |
 | 临时/工具产物 | 下划线前缀 | `_scripts/` `logs/` |
@@ -14,14 +14,14 @@
 ### 为什么坚持英文（三条，不只是偏好）
 
 1. **工具链正确性。** Windows 下非 ASCII 路径经过 `.ps1` / `.bat` / 部分 Python 调用时会出编码问题，文件名被写坏。`pdf2md.py --out 综述` 一直带着这个隐患——已随本次改名消除。
-2. **AI 检索友好。** `sources/` `repos/` `surveys/` 这类词在模型语料里的语义密度远高于自造词，目录名本身就是给模型的一级锚点。
+2. **AI 检索友好。** `resources/` `repos/` `surveys/` 这类词在模型语料里的语义密度远高于自造词，目录名本身就是给模型的一级锚点。
 3. **可移植。** 哪天要上 GitHub、要做静态站、要换机器，中文路径的成本会集中爆发。
 
 ---
 
 ## 二、切分依据：半衰期，不是主题
 
-根级目录表达的是**性质差异**（读取频率、半衰期不同），`sources/` 内部才是**类型差异**（性质相同、形态不同）。
+根级目录表达的是**性质差异**（读取频率、半衰期不同），`resources/` 内部才是**类型差异**（性质相同、形态不同）。
 
 主线未锁定，任何按主题分的目录都是过早的结构化——主题会变，半衰期不会。
 
@@ -33,9 +33,9 @@
 
 | 目录 | 判定句 | 半衰期 |
 |---|---|---|
-| `sources/papers/` | 这是一篇别人写的论文 | 冷，只追加 |
-| `sources/repos/` | 这是别人写的代码，我们 clone 来的 | 冷，会漂移 |
-| `sources/reports/` | 这是汇编性质的调研材料 | 冷 |
+| `resources/papers/` | 这是一篇别人写的论文 | 冷，只追加 |
+| `resources/repos/` | 这是别人写的代码，我们 clone 来的 | 冷，会漂移 |
+| `resources/reports/` | 这是汇编性质的调研材料 | 冷 |
 | `analysis/<系统>/` | 这是**我们**对某个外部系统的完整拆解 | 温 |
 | `analysis/_cross/` | 这是跨系统的共性汇聚 | 热 |
 | `evidence/<文档名>/` | 这是支撑某条具体论断的**原始摘录** | 冷，按需 |
@@ -59,7 +59,7 @@ THESIS.md                 → evidence/THESIS/
 
 | 层 | 装什么 | 颗粒度 |
 |---|---|---|
-| `sources/` | 外部材料的**全集**（可能还没读） | 整篇论文 / 整个仓库 |
+| `resources/` | 外部材料的**全集**（可能还没读） | 整篇论文 / 整个仓库 |
 | `analysis/` | 一次完整的拆解推演 | 一篇论证 |
 | `evidence/` | **已被引用**的那一小段 | 一段摘录 / 一个数字 / 一条命令输出 |
 
@@ -73,7 +73,7 @@ THESIS.md                 → evidence/THESIS/
 `dialogue/` 保留「我们为什么否掉了 X」，`notes/` 只留活下来的那条。**死路是有价值的，
 但它不该占着结论文件的位置。**
 
-### 关于 `sources/repos/` 的四条约束
+### 关于 `resources/repos/` 的四条约束
 
 1. clone 完立刻在 `analysis/<系统>/` 记下 commit sha 与日期，否则引用无从对证。
 2. 只读、不改。
@@ -84,13 +84,13 @@ THESIS.md                 → evidence/THESIS/
 
 `ref` 有三个常见读音：reference（参考资料）、git refs（引用指针）、少数人当 refactor。更麻烦的是语义污染——**分析不是参考**。把我们的产出和外部原料塞进同一个 `ref/`，这条目录就废了。
 
-所以拆成两个世界：`sources/`（别人的）和 `analysis/` + `notes/`（我们的）。这条分界线是本架构里最重要的一条。
+所以拆成两个世界：`resources/`（别人的）和 `analysis/` + `notes/`（我们的）。这条分界线是本架构里最重要的一条。
 
 ---
 
 ## 四、不建空目录
 
-`sources/docs/`、`sources/specs/`、`book/`、`manual/` 暂时都不建。需要时再建——空目录会骗人，让结构看起来比实际完整。
+`resources/docs/`、`resources/specs/`、`book/`、`manual/` 暂时都不建。需要时再建——空目录会骗人，让结构看起来比实际完整。
 
 ---
 
@@ -135,7 +135,7 @@ THESIS.md                 → evidence/THESIS/
 
 **不编号。** 教材用 `ch-01` 是因为顺序即知识；手册打散才好查，编号反而误导。
 
-**按问题索引组织**，不按知识结构组织。可参照 `sources/papers/surveys/README.md` 的第 4 层「按问题索引」——那套模式已经在项目里验证过。
+**按问题索引组织**，不按知识结构组织。可参照 `resources/papers/surveys/README.md` 的第 4 层「按问题索引」——那套模式已经在项目里验证过。
 
 ### 认知层的结构
 
@@ -157,7 +157,7 @@ domain/
 
 ### 已完成
 
-目录英文化 · `papers/` 移入 `sources/` · `拆解/` → `analysis/` · 会话目录 → `archive/` ·
+目录英文化 · `papers/` 移入 `resources/` · `拆解/` → `analysis/` · 会话目录 → `archive/` ·
 `综述/` → `surveys/`（含脚本默认 out_dir）· `目标.md` → 并入 `README.md` ·
 `写作准则-内容取舍.md` → `TRADEOFFS.md` · `STYLE.md` → 并入 skill ·
 analysis 两篇文件名英文化 · `nav.json` 的 `book` 字段 → `answers`（不再反指章节）·
@@ -167,7 +167,7 @@ analysis 两篇文件名英文化 · `nav.json` 的 `book` 字段 → `answers`�
 
 | 事项 | 说明 |
 |---|---|
-| `sources/以前的/pass.md` | 中文目录名，且疑似私人文件。建议移出项目或改名 |
+| `resources/以前的/pass.md` | 中文目录名，且疑似私人文件。建议移出项目或改名 |
 | `archive/20260919-.../outline.md` | 提一份到 `notes/candidate-outline.md`，原处保留会话副本 |
 | `domain/mechanisms/` | 机制库，等第一张卡落地时建 |
 | 重跑 `pdf2md.py --force` | 让 `answers` 字段写进七篇 md 的头部导航卡 |
@@ -177,9 +177,9 @@ analysis 两篇文件名英文化 · `nav.json` 的 `book` 字段 → `answers`�
 ## 八、管线命令（路径已更新）
 
 ```
-# 加 arXiv 编号到 sources/papers/watchlist.txt，然后下载
+# 加 arXiv 编号到 resources/papers/watchlist.txt，然后下载
 <python> sources\papers\_scripts\download_arxiv.py --all
 
-# 解析为 Markdown（默认输出到 sources/papers/surveys/）
+# 解析为 Markdown（默认输出到 resources/papers/surveys/）
 C:\Users\37071\.workbuddy\binaries\python\envs\default\Scripts\python.exe sources\papers\_scripts\pdf2md.py
 ```

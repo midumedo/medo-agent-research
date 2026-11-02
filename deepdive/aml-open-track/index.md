@@ -1,6 +1,6 @@
 # AML 开源榜前列：两个"不建结构"的系统
 
-> 对象深拆，2026-09-21。源码 `sources/repos/vanilla-rag-memory`（wenxiaof345-ctrl/vanilla-rag-memory，commit `31ab7bf9cfa3`，2026-08-11）与 `sources/repos/ReFind`（imlrz/ReFind，commit `a80175ca0eeb`，2026-08-14）。
+> 对象深拆，2026-09-21。源码 `resources/repos/vanilla-rag-memory`（wenxiaof345-ctrl/vanilla-rag-memory，commit `31ab7bf9cfa3`，2026-08-11）与 `resources/repos/ReFind`（imlrz/ReFind，commit `a80175ca0eeb`，2026-08-14）。
 > 两者分别是 Agent Memory Leaderboard（AML，2026-08-12 首次发榜）学术/开源榜的**第一名 InvMem 与第二名 Refind**。本轮从 AML 挑它，而不是挑更知名的系统，理由见最后一节。
 > 状态区分：**代码确实存在** / **文档声称** / **默认启用** / **本项目未验证**。静态读码。
 

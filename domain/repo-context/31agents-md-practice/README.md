@@ -50,11 +50,11 @@
 
 根 [AGENTS.md](../../../以前的/AGENTS.md) 实测 **23 行 / 844 字符 / 1890 UTF-8 字节**（2026-10-04，PowerShell 计数），远低于资料建议的 100-200 行，也远低于 Codex 的 32 KiB 上限。
 
-结构上它是**导航型**（按任务指向 CONVENTIONS / STYLE / ARCHITECTURE / TRADEOFFS 及各子树 AGENTS.md），不是**指令型**（不含构建、测试、Lint 命令）。按本轮的「非可推断细节」判据，导航型是高价值内容——「哪个文件在什么条件下读」无法从代码推断，且本项目的职责文件分工本身是非标准的。缺构建/测试命令段落对纯文档仓库可能无碍，但仓库内确有可执行脚本（`sources/papers/_scripts/pipeline.py`、`domain/repo-context/21read-pdf-vs-html/measure_read_cost.py`），代理要复跑时无处可查。这条已记入 `insights.md` 第 6 条。
+结构上它是**导航型**（按任务指向 CONVENTIONS / STYLE / ARCHITECTURE / TRADEOFFS 及各子树 AGENTS.md），不是**指令型**（不含构建、测试、Lint 命令）。按本轮的「非可推断细节」判据，导航型是高价值内容——「哪个文件在什么条件下读」无法从代码推断，且本项目的职责文件分工本身是非标准的。缺构建/测试命令段落对纯文档仓库可能无碍，但仓库内确有可执行脚本（`resources/papers/_scripts/pipeline.py`、`domain/repo-context/21read-pdf-vs-html/measure_read_cost.py`），代理要复跑时无处可查。这条已记入 `insights.md` 第 6 条。
 
 ## 下一步
 
-1. **取两篇 arXiv 原文入库**（`sources/papers/`，按该目录 AGENTS 的命名与入库流程）：2601.20404、2602.11988。核对编号真实性、样本构成、中位数口径，以及 Lulla 的「人工抽检质量相当」是与哪一组相比。
+1. **取两篇 arXiv 原文入库**（`resources/papers/`，按该目录 AGENTS 的命名与入库流程）：2601.20404、2602.11988。核对编号真实性、样本构成、中位数口径，以及 Lulla 的「人工抽检质量相当」是与哪一组相比。
 2. **向官方文档核实硬限制**：Codex 的 32 KiB 与 `project_doc_max_bytes`、截断方向；Antigravity 的 12,000 字符；Claude Code 的 4 MiB 与 v2.1.277。当前来源全是二手。
 3. **实测本项目自己的加载行为**：这是 2026-10-04 的建议，当时列出的目录状态现已变化，`01docsclassify/AGENTS.md` 也已删除。若继续该实验，应先按届时实际存在的指令文件重新取样，再判断是否需要隔离设计。
 4. **与 round-01 的 Claude Code 分歧对账**：确认 v2.1.277 的发布日期，判断两条记录是版本演进而非矛盾。

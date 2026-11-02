@@ -1,13 +1,13 @@
 # 2026-09-22：论文库扁平化、词干命名与两层 AGENTS
 
-本轮由用户对 `sources/` 结构的四点意见发起：MinerU 可直接用云端 API（`MINERU_APIKEY` 已在用户环境变量）、论文命名的取舍、取消 `papers/` 下的类型分级目录、以及给 `sources/` 与 `sources/papers/` 各写一份 AGENTS.md。记录选择理由，不重复规则正文。
+本轮由用户对 `resources/` 结构的四点意见发起：MinerU 可直接用云端 API（`MINERU_APIKEY` 已在用户环境变量）、论文命名的取舍、取消 `papers/` 下的类型分级目录、以及给 `resources/` 与 `resources/papers/` 各写一份 AGENTS.md。记录选择理由，不重复规则正文。
 
 ## 做了什么
 
-1. **取消类型分级目录**。`surveys/`、`benchmarks/`、`frameworks/` 三个目录合并进 `md/`；`pdf/` 保留，新增 `json/` 与按需的 `assets/`。类型不再是目录，改记在 [INDEX.md](../sources/papers/INDEX.md) 的「类型」列与 md 的 front matter，可多值、可在复核后改写。
+1. **取消类型分级目录**。`surveys/`、`benchmarks/`、`frameworks/` 三个目录合并进 `md/`；`pdf/` 保留，新增 `json/` 与按需的 `assets/`。类型不再是目录，改记在 [INDEX.md](../resources/papers/INDEX.md) 的「类型」列与 md 的 front matter，可多值、可在复核后改写。
 2. **文件名改为词干 `<registry>-<native-id>`**。27 份材料由裸编号 `2504.19413` 改为 `arxiv-2504.19413`；版本不进文件名。
-3. **新增 [sources/papers/INDEX.md](../sources/papers/INDEX.md)**：上半是当前清单（标识、标题、类型、版本、各表示形式是否齐备、入库日期），下半是只追加的入库与修订日志。
-4. **新增 [sources/AGENTS.md](../sources/AGENTS.md) 与 [sources/papers/AGENTS.md](../sources/papers/AGENTS.md)**，并把 `papers/README.md` 压缩成人看的入口说明。
+3. **新增 [resources/papers/INDEX.md](../resources/papers/INDEX.md)**：上半是当前清单（标识、标题、类型、版本、各表示形式是否齐备、入库日期），下半是只追加的入库与修订日志。
+4. **新增 [resources/AGENTS.md](../resources/AGENTS.md) 与 [resources/papers/AGENTS.md](../resources/papers/AGENTS.md)**，并把 `papers/README.md` 压缩成人看的入口说明。
 5. **脚本改为词干驱动**：新增 `_scripts/stem.py` 作为唯一标识与路径来源；`download_arxiv.py`、`pdf2md.py`、`mineru_client.py` 全部接受词干并写入新目录；新增 `_scripts/mineru_cloud.py` 走 MinerU 云端 API。
 6. 全项目 10 个文件里的旧路径链接已改；`_scripts/test_pipeline.py` 同步更新，9 项回归检查通过。
 
@@ -32,9 +32,9 @@
 
 MinerU 云端返回的是 zip（`full.md` + `*_content_list.json` + `images/`），所以拆包规则也写进了 AGENTS.md：`full.md` → `md/`，content_list → `json/`，图片只在当次任务真的需要时才落进 `assets/`（默认不落，避免几百张图进版本库）。
 
-## INDEX.md 放在 `papers/` 而不是 `sources/`
+## INDEX.md 放在 `papers/` 而不是 `resources/`
 
-`repos/` 不进版本库，所以它的索引只能放在 `sources/` 这一层；`papers/` 是受版本控制的，索引放在它自己里面更符合「索引紧邻被索引的数据」。嵌套 AGENTS.md 也按子目录加载，`papers/AGENTS.md` 与 `papers/INDEX.md` 同级，进入子树即可见。
+`repos/` 不进版本库，所以它的索引只能放在 `resources/` 这一层；`papers/` 是受版本控制的，索引放在它自己里面更符合「索引紧邻被索引的数据」。嵌套 AGENTS.md 也按子目录加载，`papers/AGENTS.md` 与 `papers/INDEX.md` 同级，进入子树即可见。
 
 ## MinerU：云端为主，本地为备
 
@@ -42,7 +42,7 @@ MinerU 云端返回的是 zip（`full.md` + `*_content_list.json` + `images/`）
 
 ## 顺带处理的三件事
 
-- 首批七份 md 原以 CRLF 入库，`.gitattributes` 里有一条 `sources/papers/surveys/*.md -text` 专门保留。迁移后路径失效，且这七份与其余二十份换行不一致会妨碍后续处理，于是归一为 LF 并移除该规则；逐字节比对确认内容未变（差异只在 `\r`）。provenance 里的正文指纹在写入前计算，与文件换行无关。
+- 首批七份 md 原以 CRLF 入库，`.gitattributes` 里有一条 `resources/papers/surveys/*.md -text` 专门保留。迁移后路径失效，且这七份与其余二十份换行不一致会妨碍后续处理，于是归一为 LF 并移除该规则；逐字节比对确认内容未变（差异只在 `\r`）。provenance 里的正文指纹在写入前计算，与文件换行无关。
 - `pdf2md.py` 的 `--out surveys|benchmarks|frameworks` 是「把类型写进命令」的残留，已删除，输出固定在 `md/`；类型改由 `--kind` 写进 front matter。
 - 托管 Python 环境缺 `pymupdf4llm`，已装；不装则 `pdf2md.py` 与一项回归检查无法运行。
 

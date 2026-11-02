@@ -433,8 +433,8 @@ def git_head() -> str:
 
 
 def locate(root: str) -> tuple[str, str]:
-    pdfs = glob.glob(os.path.join(root, "sources/books/*/*.pdf"))
-    htmls = glob.glob(os.path.join(root, "sources/books/*/*.html"))
+    pdfs = glob.glob(os.path.join(root, "resources/books/*/*.pdf"))
+    htmls = glob.glob(os.path.join(root, "resources/books/*/*.html"))
     if len(pdfs) != 1 or len(htmls) != 1:
         sys.exit(f"期望恰好一对同名 PDF/HTML，实际 PDF={pdfs} HTML={htmls}")
     return pdfs[0], htmls[0]

@@ -1,6 +1,6 @@
 # qwen-code · 根目录文档实测
 
-> 快照 `ffea2d024e52` · 取证 2026-09-25 · 来源 `sources/repos/qwen-code/`
+> 快照 `ffea2d024e52` · 取证 2026-09-25 · 来源 `resources/repos/qwen-code/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `.qwen/` agent 面 + skills
 
 ## 1. 根目录清单一览

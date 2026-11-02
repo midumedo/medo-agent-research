@@ -1,6 +1,6 @@
 # cline · 根目录文档实测
 
-> 快照 `dd2e190e5c55` · 取证 2026-09-25 · 来源 `sources/repos/cline/`
+> 快照 `dd2e190e5c55` · 取证 2026-09-25 · 来源 `resources/repos/cline/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + 12 个 dotdir + `.clinerules/` + 三份 skill 副本
 
 ## 1. 根目录清单一览
@@ -88,7 +88,7 @@ sdk/packages/llms/AGENTS.md
 |---|---|---|
 | D09 实测写 `AGENTS.md`「根；可分级到 `docs\AGENTS.md`、`packages\AGENTS.md`」 | 本仓分级路径是 `sdk/AGENTS.md`、`sdk/packages/llms/AGENTS.md`；且根级 `AGENTS.md` **无 H1** | 分级机制一致；**格式边界需补**「首行不必然是 H1」 |
 | D12 `SKILL.md` 位置「`skills\<name>\SKILL.md`（也可在包内）；memU 直接放根级」 | 本仓三处落点：`.agents/skills/`、`.claude/skills/`、`.cline/skills/`，**内容逐字节相同** | **需补第三种落点：工具名前缀目录**，并补一条「同一 skill 在多工具目录重复」的形态 |
-| `sources/repos/index.csv` 关键词含 `skill-dirs` | 实测确认 | 一致 |
+| `resources/repos/index.csv` 关键词含 `skill-dirs` | 实测确认 | 一致 |
 
 ## 5. 空白与未取证
 

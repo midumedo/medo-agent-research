@@ -12,16 +12,16 @@
    "html": "e8065fa97fccc9fb99632ac0e99f301b7c5dc39ce98e8d7b5ecd9be0bb91d448"
   },
   "pdf": {
-   "path": ".\\sources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.pdf",
+   "path": ".\\resources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.pdf",
    "bytes": 5416526
   },
   "html": {
-   "path": ".\\sources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.html",
+   "path": ".\\resources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.html",
    "bytes": 233087
   }
  },
  "html": {
-  "path": ".\\sources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.html",
+  "path": ".\\resources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.html",
   "raw": {
    "chars": 142568,
    "bytes_utf8": 233087,
@@ -78,7 +78,7 @@
   "markup_overhead_ratio": 0.3974
  },
  "pdf": {
-  "path": ".\\sources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.pdf",
+  "path": ".\\resources/books\\Agent-Memory-绿皮书.老刘说nlp\\Agent-Memory-绿皮书.老刘说nlp.pdf",
   "available": true,
   "pages": 44,
   "producer": "Skia/PDF m153",

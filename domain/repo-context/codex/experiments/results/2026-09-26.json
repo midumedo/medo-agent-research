@@ -10,11 +10,11 @@
       "sha256": "d0611de1e2d77a8c835239bada219f3961a3783391beafaf4bd9d208dffef98b"
     },
     {
-      "path": "sources/repos/index.csv",
+      "path": "resources/repos/index.csv",
       "sha256": "5e384f791995eae492adfdbceca44f90727506bcf7869976d9dae6d0ffe9b9ef"
     },
     {
-      "path": "sources/repos/_commits.json",
+      "path": "resources/repos/_commits.json",
       "sha256": "b73dbb816335db727e4b1eaf36468e7cf288e92d3af8ab5ae0c112985ed31bda"
     }
   ],

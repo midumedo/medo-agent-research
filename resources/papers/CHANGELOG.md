@@ -23,7 +23,7 @@
 - 2026-09-24 · 整理 · 顶层文档 · `watchlist.txt` 重写：原先 27 条全是旧词干、**一条也解析不出来**，改为 `id` 一行一个（按类型分组），复验 27/27 可解析。`AGENTS.md` 清掉所有「词干」旧术语（改为「文件名」「名称」），`README.md` 去掉不存在的 `logs/` 与会腐的硬编码份数。
 - 2026-09-24 · 整理 · 顶层 · 删 `watchlist.txt`：实测其内容与 `index.csv` 的 `id` 列**完全相等**，无独有信息；`download_arxiv.py --all` 改为按 `index.csv` 取 id。`AGENTS.md` 新增「三个数据文件，各管一段」一节，写明每个文件的独有信息与定位；`README.md` 重写为「一篇由什么组成／怎么找／怎么读／收录不等于核实」。
 - 2026-09-24 · 清理 · `_scripts/` · 删 `mineru_client.py`（本地 MinerU 服务客户端）：从未被使用，且需要本地装模型，与「工具链零第三方依赖」冲突；`mineru-pdf-convert` skill 里的「本地服务」一节改为说明其已移除。
-- 2026-09-24 · 新增 · `sources/paper-sources.md` · 登记四个公开的论文清单／调研入口（MemoryPapers.org、Agent-Memory-Paper-List、Awesome Efficient Agents、Toward Efficient Agents），只记地址与核实状态，不下载内容。
+- 2026-09-24 · 新增 · `resources/paper-sources.md` · 登记四个公开的论文清单／调研入口（MemoryPapers.org、Agent-Memory-Paper-List、Awesome Efficient Agents、Toward Efficient Agents），只记地址与核实状态，不下载内容。
 - 2026-09-25 · 清理 · 全库 · md 顶部只保留 YAML front matter 一个登记块，删掉其后的第二个头块（`解析器`/`转换时间`/`本地 PDF SHA256`/`图片`——与 front matter 登记同一件事且版本号已不一致）；同时删 `state`（可从磁盘推导，且 4 篇与 23 篇早已不一致）、把「词干」旧术语改回「文件名」。`_scripts/index_query.py` 的删除一并补记（2026-09-22 只记了它的新增）。
 - 2026-09-25 · 修复 · `_scripts/mineru_cloud.py` · `write_document()`：旧写法 `with open(path, "w") as f: f.write(front_matter(...))` 在句柄已截断之后才去读旧文件，导致 `--force` 重转把 `abstract`/`revised`/`source` 洗成空值——在一次真实重转中复现。改为文本先构建、后开文件，并加回归测试 `DocumentWriteTests`。
 - 2026-09-26 · 结构 · `_scripts/` · 工具链拆成六步单一职责脚本：① `meta.py`（元数据）② `pdf.py`（原件）③ `convert.py`（转换，原 `mineru_cloud.py`）④ `build_index.py`（索引对账）⑤ `keywords.py`（打词）⑥ `status.py`（反追踪状态）；编排统一走 `pipeline.py`（原 `fetch_material.py`），`download_arxiv.py` 拆为 ①②。

@@ -1,10 +1,10 @@
 # Memory 工程比较：两篇本地论文的片段与限制
 
-核对日期：2026-09-21。读取的是本地机器转换文本，未对照 PDF 图表、未复现实验，也未核实原始 arXiv 版本。短引文用于定位作者所述，后面的判断是我方分析。来源记录见 index.csv（`sources/papers/index.csv`，版本以 `id` 里的 `vN` 为准）。
+核对日期：2026-09-21。读取的是本地机器转换文本，未对照 PDF 图表、未复现实验，也未核实原始 arXiv 版本。短引文用于定位作者所述，后面的判断是我方分析。来源记录见 index.csv（`resources/papers/index.csv`，版本以 `id` 里的 `vN` 为准）。
 
 ## 2606.06448：构建、使用和维护要在同一使用期里考察
 
-来源：[Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads](../../sources/papers/md/agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads.md)。
+来源：[Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads](../../resources/papers/md/agent-memory-characterization-and-system-implications-of-stateful-long-horizon-workloads.md)。
 
 ### 原文支持哪些研究问题
 
@@ -35,7 +35,7 @@
 
 ## 2607.16848：返回更多材料与采用更好结构不是同一件事
 
-来源：[Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration](../../sources/papers/md/beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration.md)。这篇研究包含作者自己的 Theoria 系统，不能作为独立第三方复现使用。
+来源：[Beyond Memory Leaderboards: Evaluating Scientific Memory as Budgeted Context Restoration](../../resources/papers/md/beyond-memory-leaderboards-evaluating-scientific-memory-as-budgeted-context-restoration.md)。这篇研究包含作者自己的 Theoria 系统，不能作为独立第三方复现使用。
 
 ### 原文支持哪些研究问题
 

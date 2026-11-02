@@ -4,7 +4,7 @@
 
 ## 判断
 
-采用 `sources/` → `deepdive/` 与 `analysis/` → `domain/` → `output/` 的主要关系，取消独立条目层，把项目决定并入交流历史。Domain 按完整主题组织，当前研究草稿回到 Analysis；Deepdive 以 Memory、Context 与相关 Harness 机制为重心，按需链接背景。
+采用 `resources/` → `deepdive/` 与 `analysis/` → `domain/` → `output/` 的主要关系，取消独立条目层，把项目决定并入交流历史。Domain 按完整主题组织，当前研究草稿回到 Analysis；Deepdive 以 Memory、Context 与相关 Harness 机制为重心，按需链接背景。
 
 这里保留一个层次的理由，是它提供了不同的理解或使用任务。目录数、文档数与摘要长度都不能代替这个判断。当前可执行设计见 [ARCHITECTURE](../以前的/ARCHITECTURE.md)，本篇解释诊断和取舍。
 

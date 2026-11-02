@@ -4,7 +4,7 @@
 
 ## 为什么用这本书做对照
 
-`sources/books/Agent-Memory-绿皮书.老刘说nlp/` 下有同名的 `.pdf` 与 `.html`，且**两者同源可证**：PDF 的 producer 是 `Skia/PDF m153`（Chrome 打印管线），每页页脚留着 `file:///…/Agent_Memory_绿皮书.html`，两版汉字量比值 0.987。内容相同、表示不同，这是格式对照里最干净的一种——排除了「两本书本来就不一样」这个混淆项。
+`resources/books/Agent-Memory-绿皮书.老刘说nlp/` 下有同名的 `.pdf` 与 `.html`，且**两者同源可证**：PDF 的 producer 是 `Skia/PDF m153`（Chrome 打印管线），每页页脚留着 `file:///…/Agent_Memory_绿皮书.html`，两版汉字量比值 0.987。内容相同、表示不同，这是格式对照里最干净的一种——排除了「两本书本来就不一样」这个混淆项。
 
 ## 「省」按什么算
 

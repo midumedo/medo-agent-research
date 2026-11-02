@@ -436,7 +436,7 @@
     "measured_at": "2026-10-05",
     "caveats": [
       "命名先验用仓数作代理，不等于训练语料频率；不支持关于模型理解的结论。",
-      "sources/repos 的 checkout 无自身 .git，git 命令会向上冒到本项目主仓，因此不能用 git log 判断子仓版本；版本以 index.csv 的 snapshot 字段为准。",
+      "resources/repos 的 checkout 无自身 .git，git 命令会向上冒到本项目主仓，因此不能用 git log 判断子仓版本；版本以 index.csv 的 snapshot 字段为准。",
       "Tianshu-harness 的 docs/docs.json 自称 1034 篇，磁盘仅 150 篇，快照残缺，其链接检查已判无效。"
     ]
   }

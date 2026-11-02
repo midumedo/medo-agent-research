@@ -1,6 +1,6 @@
 # AGENTS.md · 论文库的操作约定
 
-进入 `sources/papers/` 时读这一篇。它规定**怎么做**与**字段怎么读**；数据在 index.csv，历史记在 CHANGELOG.md，给人的入口是 README.md。分工固定，不互相复制。
+进入 `resources/papers/` 时读这一篇。它规定**怎么做**与**字段怎么读**；数据在 index.csv，历史记在 CHANGELOG.md，给人的入口是 README.md。分工固定，不互相复制。
 
 ## 这一层是什么
 
@@ -82,7 +82,7 @@ papers/
 
 分级落在**文件边界**上，所以 `index.csv` **不加摘要列**：加了就是把 md 的 abstract 抄第二遍，与「只留两份，其余现取」和「不重复 index.csv 已有的信息」直接冲突。轻量筛选读四列；需要简介时打开该篇的 md（不在本地就先跑 `pipeline.py` 现取）。
 
-重件（`pdf/`、`md/`、`assets/`）都不进入版本库；缺哪份用 `sources/papers/_scripts/pipeline.py` 按 `id` 现取（PDF 重下、md 重转、图随之重出）。**跟踪的只有 `index.csv`、`_scripts/` 与文档**——`index.csv` 是账本（身份、名称、关键词、修订日都在这里），md 是它的派生视图。
+重件（`pdf/`、`md/`、`assets/`）都不进入版本库；缺哪份用 `resources/papers/_scripts/pipeline.py` 按 `id` 现取（PDF 重下、md 重转、图随之重出）。**跟踪的只有 `index.csv`、`_scripts/` 与文档**——`index.csv` 是账本（身份、名称、关键词、修订日都在这里），md 是它的派生视图。
 
 ## 只留两份，其余现取
 
@@ -108,7 +108,7 @@ papers/
 
 ## 入库流程
 
-1. **取原件** → `pdf/<id>.<名称>.pdf`。arXiv 用 `sources/papers/_scripts/pdf.py`（给编号、已入库标识或标题都行）；编号带不带版本都可以——`id` 里带版本最稳，不带时脚本从 abs 页取版本，取不到就报 `version unresolved`，不猜。非 arXiv 手工放入，按上面的规则定名称。
+1. **取原件** → `pdf/<id>.<名称>.pdf`。arXiv 用 `resources/papers/_scripts/pdf.py`（给编号、已入库标识或标题都行）；编号带不带版本都可以——`id` 里带版本最稳，不带时脚本从 abs 页取版本，取不到就报 `version unresolved`，不猜。非 arXiv 手工放入，按上面的规则定名称。
 2. **登记** → 转换时 ① `meta.py` 会把 `abstract`、`revised`、`source` 自动写进 md 顶部的登记块（摘要取不到才留空，**不推测**）；`keywords` 由 `keywords.py` 从 abstract 判词后回写 `index.csv`。
 3. **转换** → `md/<id>.<名称>.md`（见下）；结构化输出不落盘，只在转换时读一次用来抽图注。
 4. **入索引** → 跑 `build_index.py` 对账（**只增不删**，删行需 `--prune`），再在 CHANGELOG 追加一行。
@@ -117,23 +117,23 @@ papers/
 
 在仓库根运行（环境由根目录的 `pyproject.toml` + `.python-version` 管理，Python 3.13，**零第三方依赖**，不需要 `pip install`）：
 
-    uv run python sources/papers/_scripts/<脚本>.py ...
+    uv run python resources/papers/_scripts/<脚本>.py ...
 
 下面的 `<python>` 指 `uv run python`；直接用它本机 Python 也行（工具链只用标准库）：
 
 ```text
-uv run python sources/papers/_scripts/pipeline.py --all      # 按 index.csv 补齐全库（缺 PDF 下、缺 md 转）
-<python> sources/papers/_scripts/pdf.py 2504.19413          # 只取原件；也可用编号或标题
-<python> sources/papers/_scripts/meta.py 2504.19413         # 只取元数据（标题／版本／摘要）
-<python> sources/papers/_scripts/convert.py <id 或 名称>     # 只转换，一次批量提交
-<python> sources/papers/_scripts/check_arxiv.py 2504.19413  # 核对编号与修订日期
-<python> sources/papers/_scripts/keywords.py --missing       # 导出缺关键词的篇目（id/name/abstract）
-<python> sources/papers/_scripts/status.py --check           # 反追踪与完整性对账（缺料非零退出）
+uv run python resources/papers/_scripts/pipeline.py --all      # 按 index.csv 补齐全库（缺 PDF 下、缺 md 转）
+<python> resources/papers/_scripts/pdf.py 2504.19413          # 只取原件；也可用编号或标题
+<python> resources/papers/_scripts/meta.py 2504.19413         # 只取元数据（标题／版本／摘要）
+<python> resources/papers/_scripts/convert.py <id 或 名称>     # 只转换，一次批量提交
+<python> resources/papers/_scripts/check_arxiv.py 2504.19413  # 核对编号与修订日期
+<python> resources/papers/_scripts/keywords.py --missing       # 导出缺关键词的篇目（id/name/abstract）
+<python> resources/papers/_scripts/status.py --check           # 反追踪与完整性对账（缺料非零退出）
 ```
 
 ## 转换走哪条路
 
-**只有 MinerU 一条路**：`sources/papers/_scripts/convert.py`（云端 API，`mineru-pdf-convert` skill）。它输出表格、公式、多栏的保真度高，且**整个 papers 工具链零第三方依赖**——只用标准库。
+**只有 MinerU 一条路**：`resources/papers/_scripts/convert.py`（云端 API，`mineru-pdf-convert` skill）。它输出表格、公式、多栏的保真度高，且**整个 papers 工具链零第三方依赖**——只用标准库。
 
 早期那条 `pymupdf4llm` 本地路径（`pdf2md.py`）已删除：它虽快，但对表格公式多栏损失大，而且会把 `pymupdf`/`pymupdf-layout`/`onnxruntime` 一串重依赖拖进环境，与"主路径零依赖"冲突。需要更快的本地预览时，宁可接受云端几十秒的等待，也别把重依赖装回来。
 

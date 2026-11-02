@@ -1,6 +1,6 @@
 # MemoryBear：图优先、带遗忘曲线的商用记忆引擎
 
-> 对象深拆，2026-09-21。源码 `sources/repos/MemoryBear`（SuanmoSuanyangTechnology/MemoryBear，即"红熊 AI / RedBear AI"，commit `c32b937f1ed0`，2026-09-16，打包下载不含 `.git`，3101 个文件）。
+> 对象深拆，2026-09-21。源码 `resources/repos/MemoryBear`（SuanmoSuanyangTechnology/MemoryBear，即"红熊 AI / RedBear AI"，commit `c32b937f1ed0`，2026-09-16，打包下载不含 `.git`，3101 个文件）。
 > 状态区分：**代码确实存在** / **文档或 README 声称** / **默认启用** / **本项目未验证**。仓库是全栈（后端 + 前端 + 沙箱 + 多个兄弟服务），本文只读了后端 `api/app`，静态读码未运行。
 
 ## 版本与范围

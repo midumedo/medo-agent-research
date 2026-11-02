@@ -1,8 +1,8 @@
 # OpenHands · 根目录文档实测
 
-> 快照 `c17fc6538d57` · 取证 2026-09-25 · 来源 `sources/repos/OpenHands/`
+> 快照 `c17fc6538d57` · 取证 2026-09-25 · 来源 `resources/repos/OpenHands/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `.agents/skills/`
-> **注意**：`sources/repos/index.csv` 对本仓的 `completeness` 是 `app-only`（只有前端应用，无 agent core），`keywords` 含 `no-agent-core;no-root-pyproject`。
+> **注意**：`resources/repos/index.csv` 对本仓的 `completeness` 是 `app-only`（只有前端应用，无 agent core），`keywords` 含 `no-agent-core;no-root-pyproject`。
 
 ## 1. 根目录清单一览（4 份，本样本最少之一）
 

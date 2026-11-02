@@ -25,9 +25,9 @@
 
 **我否决了 `ref/`**：三重歧义（reference / git refs / 有人当 refactor），更致命的是语义污染——
 **「分析」不是「参考」**，把我们的产出与外部原料塞进同一个目录，这个目录就废了。
-→ 拆成两个世界：`sources/`（别人的）与 `analysis/` + `notes/`（我们的）。
+→ 拆成两个世界：`resources/`（别人的）与 `analysis/` + `notes/`（我们的）。
 
-**papers 不根级**：根级应表达性质差异，sources/ 内部才表达类型差异。
+**papers 不根级**：根级应表达性质差异，resources/ 内部才表达类型差异。
 
 **英文命名的硬理由**（非偏好）：Windows 下非 ASCII 路径经 .ps1/.bat 会写坏文件名；
 `pdf2md.py --out 综述` 一直带着这个雷。

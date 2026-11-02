@@ -20,7 +20,7 @@ flowchart TD
     Q(要断言的一行事实) --> C1{本地已有 checkout?}
     C1 -->|是| G[[grep 显式路径 / ast_grep / bash]]
     C1 -->|否| C2{能被 bash 下载到?}
-    C2 -->|是| DL[[codeload tar.gz 到 sources/repos/]] --> G
+    C2 -->|是| DL[[codeload tar.gz 到 resources/repos/]] --> G
     C2 -->|否| U([status=unverified 不写路径])
     G --> EV[(file:line 证据)]
     EV --> IDX([index.csv])
@@ -31,37 +31,37 @@ flowchart TD
 
 | 通道 | 状态 | 复现证据 |
 |---|---|---|
-| `read_file` / `glob` 对 `sources/repos/**` | **不可用** | `read_file ...\sources\repos\codex\README.md` → `Error: File is gitignored (node_modules, build artifacts, etc.)`；`glob sources/repos/*` → 未找到匹配 |
+| `read_file` / `glob` 对 `resources/repos/**` | **不可用** | `read_file ...\sources\repos\codex\README.md` → `Error: File is gitignored (node_modules, build artifacts, etc.)`；`glob resources/repos/*` → 未找到匹配 |
 | `web_fetch` / `web_search` | **不可用** | `web_fetch https://github.com/openai/codex` → `Access denied: github.com resolves to a private/reserved IP (198.18.0.36)`；`web_search` 对 codex 技术问题返回知乎/CSDN 安装教程 |
 | `bash`（curl / npm / find / grep -r） | **可用** | `curl -sI https://github.com` → `HTTP/1.1 200 OK`；`npm view @anthropic-ai/claude-code version` → `2.1.282` |
 
 **由此产生的硬纪律**：`web_search` 的"搜不到"**不是**证据。所有外部对象要么下到本地读源码（gemini-cli、qwen-code、cline、OpenHands、Claude Code npm 包），要么留 `unverified`。
 
-**锚点与版本**：本文所有 `file:line` 锚点，核对于 `sources/repos/index.csv` 该行记录的**那个 `snapshot`**。第三方 checkout 会随时间更新——2026-09-25 的一次全量更新里有 11 个仓库换了版本，Tianshu-harness 的 `READ_FILE_TOOL` 从 `:723` 移到 `:711`、Raven 的 `_MAX_CHARS` 从 `:159` 移到 `:165`；本文已按更新后的树逐条重新对齐并复验。更新**只保留一个目录**、不留旧版本副本，版本记录由 `snapshot` 那个 sha 承担——要比某个历史版本时按该 sha 重现即可。**要稳定引用就用符号名**（`READ_FILE_TOOL`、`_MAX_CHARS`、`SkillRegistry`），行号会漂——`grep -n <符号>` 一次就能重新定位；本阶段抽查过的锚点里，`skill-loader.ts` 的四处（`:5`/`:8`/`:126`/`:186`）与 SKILL.md 计数在本次更新中**一处未动**，漂的集中在被重构过的 `read-file.ts` 与 Raven 的 filesystem.py。
+**锚点与版本**：本文所有 `file:line` 锚点，核对于 `resources/repos/index.csv` 该行记录的**那个 `snapshot`**。第三方 checkout 会随时间更新——2026-09-25 的一次全量更新里有 11 个仓库换了版本，Tianshu-harness 的 `READ_FILE_TOOL` 从 `:723` 移到 `:711`、Raven 的 `_MAX_CHARS` 从 `:159` 移到 `:165`；本文已按更新后的树逐条重新对齐并复验。更新**只保留一个目录**、不留旧版本副本，版本记录由 `snapshot` 那个 sha 承担——要比某个历史版本时按该 sha 重现即可。**要稳定引用就用符号名**（`READ_FILE_TOOL`、`_MAX_CHARS`、`SkillRegistry`），行号会漂——`grep -n <符号>` 一次就能重新定位；本阶段抽查过的锚点里，`skill-loader.ts` 的四处（`:5`/`:8`/`:126`/`:186`）与 SKILL.md 计数在本次更新中**一处未动**，漂的集中在被重构过的 `read-file.ts` 与 Raven 的 filesystem.py。
 
-下载日期：**2026-09-24**（首批外部对象：gemini-cli、qwen-code、cline、OpenHands）与 **2026-09-25**（全量更新 17 个当前快照）。落盘位置 `sources/repos/<name>/`，当前快照的提交指纹记在 `sources/repos/_commits.json`，账本视图见 `sources/repos/index.csv`。
+下载日期：**2026-09-24**（首批外部对象：gemini-cli、qwen-code、cline、OpenHands）与 **2026-09-25**（全量更新 17 个当前快照）。落盘位置 `resources/repos/<name>/`，当前快照的提交指纹记在 `resources/repos/_commits.json`，账本视图见 `resources/repos/index.csv`。
 
 ## 2. read 工具逐对象
 
 ### 2.1 不设专用读工具：codex
 
-工具处理器模块清单里没有 `read_file`、也没有 `list_dir`——`sources/repos/codex/codex-rs/core/src/tools/handlers/mod.rs:1-37` 列出的是一组 `apply_patch`、`current_time`、`dynamic`、`extension_tools`、`get_context_remaining`、`list_available_plugins_to_install`、`mcp`、`mcp_resource`、`multi_agents`、`new_context_window`、`plan`、`request_permissions`、`request_plugin_install`、`request_user_input`、`send_message_to_user`、`shell_spec`、`sleep`、`test_sync`、`tool_search`、`unified_exec`、`view_image`、`wait_for_environment`。
+工具处理器模块清单里没有 `read_file`、也没有 `list_dir`——`resources/repos/codex/codex-rs/core/src/tools/handlers/mod.rs:1-37` 列出的是一组 `apply_patch`、`current_time`、`dynamic`、`extension_tools`、`get_context_remaining`、`list_available_plugins_to_install`、`mcp`、`mcp_resource`、`multi_agents`、`new_context_window`、`plan`、`request_permissions`、`request_plugin_install`、`request_user_input`、`send_message_to_user`、`shell_spec`、`sleep`、`test_sync`、`tool_search`、`unified_exec`、`view_image`、`wait_for_environment`。
 
 反向枚举 `ToolName::plain("…")` 得到实际注册名：`exec_command`、`write_stdin`、`apply_patch`、`view_image`、`update_plan`、`web_search`、`tool_search`、`read_mcp_resource`、`list_mcp_resources`、`spawn_agent`、`network_access`——**没有 `read_file`**。
 
 `read_file` 这个名字在 codex 里只出现在三种非模型工具的场合：
 
-- **文件系统抽象层**：`sources/repos/codex/codex-rs/file-system/src/lib.rs:635-660` 的 `ExecutorFileSystem` trait——`read_file` 返回 `Vec<u8>`、`read_file_stream` 分块返回（`FILE_READ_CHUNK_SIZE = 1024*1024`，见同文件 `:41`）、`read_file_text` 是带默认实现的 UTF-8 版本。`ReadFileOptions` 只有一个字段 `follow_symlinks`（`:53-64`）。**这一层没有行号生成，也没有读取截断策略**——行号不属于读实现，属于上层的渲染。
-- **MCP filesystem 工具**：`sources/repos/codex/codex-rs/core/src/tools/handlers/mcp.rs:727-743` 注册的是 `tool_info('filesystem','filesystem','read_file')`，即外部 MCP server 提供的工具，不是内置能力。
-- **`view_image` 内部调用**：`sources/repos/codex/codex-rs/core/src/tools/handlers/view_image.rs:177` 读图片字节；`git-utils/src/trust.rs:179`、`core-plugins/src/script_attribution.rs:408` 同理——都是内部读写，不对模型暴露。
+- **文件系统抽象层**：`resources/repos/codex/codex-rs/file-system/src/lib.rs:635-660` 的 `ExecutorFileSystem` trait——`read_file` 返回 `Vec<u8>`、`read_file_stream` 分块返回（`FILE_READ_CHUNK_SIZE = 1024*1024`，见同文件 `:41`）、`read_file_text` 是带默认实现的 UTF-8 版本。`ReadFileOptions` 只有一个字段 `follow_symlinks`（`:53-64`）。**这一层没有行号生成，也没有读取截断策略**——行号不属于读实现，属于上层的渲染。
+- **MCP filesystem 工具**：`resources/repos/codex/codex-rs/core/src/tools/handlers/mcp.rs:727-743` 注册的是 `tool_info('filesystem','filesystem','read_file')`，即外部 MCP server 提供的工具，不是内置能力。
+- **`view_image` 内部调用**：`resources/repos/codex/codex-rs/core/src/tools/handlers/view_image.rs:177` 读图片字节；`git-utils/src/trust.rs:179`、`core-plugins/src/script_attribution.rs:408` 同理——都是内部读写，不对模型暴露。
 
 **因此 codex 的模型读文件靠 `exec_command`（shell）**。这不是"实现缺失"，而是一种设计取舍：把读、找、跑统一进 shell，代价是每次读都要模型自己拼命令、也不会有内建的行号与截断预算。
 
 ### 2.2 专用读工具 + 多文件 + 片段提取：Tianshu-harness
 
-`sources/repos/Tianshu-harness/src/tools/default-registry.ts:17/34-35` 同时注册了 `SKILL_TOOL`、`READ_FILE_TOOL`、`READ_SECTION_TOOL`。
+`resources/repos/Tianshu-harness/src/tools/default-registry.ts:17/34-35` 同时注册了 `SKILL_TOOL`、`READ_FILE_TOOL`、`READ_SECTION_TOOL`。
 
-工具定义在 `sources/repos/Tianshu-harness/src/tools/read-file.ts:711`：
+工具定义在 `resources/repos/Tianshu-harness/src/tools/read-file.ts:711`：
 
 - `name: 'read_file'`，描述原文："约 50,000 行以内的文件完整返回——不要自己切成小片分多次读"（`:716`）。
 - 参数除了 `file_path` / `offset` / `limit`，还有两个不常见的：
@@ -82,7 +82,7 @@ flowchart TD
 
 ### 2.3 行号 + 流式 + 三个 cap：deepseek-harness
 
-`sources/repos/deepseek-harness/packages/fs/tool-fs/src/read.ts:78` 注册的工具名是 **`read`**（不是 `read_file`）：
+`resources/repos/deepseek-harness/packages/fs/tool-fs/src/read.ts:78` 注册的工具名是 **`read`**（不是 `read_file`）：
 
 - 描述："Read a UTF-8 text file and return line-numbered content."（`:79`）
 - 参数：`file_path` / `offset`（1-based，默认 1）/ `limit`（默认 `caps.limit`）（`:80-83`）
@@ -97,23 +97,23 @@ flowchart TD
 
 ### 2.4 字符预算 + 分页续读提示：Raven
 
-工具名 `read_file`，以**插件贡献**方式声明：`sources/repos/Raven/agents/raven-code/plugins/code-flow/raven-plugin.toml:50-51` 写 `name = "read_file"`、`factory = "code_flow.tools.plugin:make_read_file"`；工厂在 `.../code_flow/tools/plugin.py:51`。
+工具名 `read_file`，以**插件贡献**方式声明：`resources/repos/Raven/agents/raven-code/plugins/code-flow/raven-plugin.toml:50-51` 写 `name = "read_file"`、`factory = "code_flow.tools.plugin:make_read_file"`；工厂在 `.../code_flow/tools/plugin.py:51`。
 
 实现分两层——fork 的「脸」与 trunk 的「身」：
 
 - **fork 侧** `.../code_flow/tools/filesystem.py:89` `class ReadFileTool(_Aliased, trunk.ReadFileTool)`，只改三件事（文件头 `:1-14` 自述）：模型可见 schema 的参数拼写、别名映射（`cast_params`）、以及两条实测出来的行为。其中一条是 `_MAX_LINE_CHARS = 2_000`（`:98`）——**单行超长截断**，注释解释了理由：长行会让分页失效（`offset` 停在原地可以无限重复读）。
-- **trunk 侧** `sources/repos/Raven/raven/agent/tools/filesystem.py:162` `class ReadFileTool(_FsTool)`，真正的读取逻辑：描述写 "Text files return numbered lines — use offset and limit to…"（`:175`）；`_MAX_CHARS = 128_000`（`:165`）、`_DEFAULT_LIMIT = 2000`（`:166`）；offset 超界时报 `Error: offset N is beyond end of file (M lines)`（`:267`）；结尾附续读提示 `(Showing lines X-Y of Z. Use offset=Z+1 to continue.)`（`:285`）。
+- **trunk 侧** `resources/repos/Raven/raven/agent/tools/filesystem.py:162` `class ReadFileTool(_FsTool)`，真正的读取逻辑：描述写 "Text files return numbered lines — use offset and limit to…"（`:175`）；`_MAX_CHARS = 128_000`（`:165`）、`_DEFAULT_LIMIT = 2000`（`:166`）；offset 超界时报 `Error: offset N is beyond end of file (M lines)`（`:267`）；结尾附续读提示 `(Showing lines X-Y of Z. Use offset=Z+1 to continue.)`（`:285`）。
 
 还有一个跨工具的联动细节：`.../code_flow/tools/exec.py:121-129` 把超长命令输出**落盘**，并在截断提示里写 "grep it, or page through it with read_file offset/limit"——读工具被当成 shell 溢出的分页后端。
 
 ### 2.5 三个常量定全局面：gemini-cli
 
-`sources/repos/gemini-cli/packages/core/src/tools/` 下有两个**并列**的读工具：
+`resources/repos/gemini-cli/packages/core/src/tools/` 下有两个**并列**的读工具：
 
 - `read-file.ts`（325 行）
 - `read-many-files.ts`（553 行）——**独立的多文件读工具**
 
-限额集中在 `sources/repos/gemini-cli/packages/core/src/utils/constants.ts:10-12`：
+限额集中在 `resources/repos/gemini-cli/packages/core/src/utils/constants.ts:10-12`：
 
 ```
 DEFAULT_MAX_LINES_TEXT_FILE = 2000
@@ -125,7 +125,7 @@ MAX_FILE_SIZE_MB            = 20
 
 ### 2.6 fork 之后加了 PDF 与 notebook：qwen-code
 
-`sources/repos/qwen-code/packages/core/src/tools/read-file.ts` 在 gemini-cli 的基础上扩了三类输入，描述原文（`:543`）：
+`resources/repos/qwen-code/packages/core/src/tools/read-file.ts` 在 gemini-cli 的基础上扩了三类输入，描述原文（`:543`）：
 
 > "For text files, it can read specific line ranges. For PDF files, use the 'pages' parameter to extract specific page ranges as text (e.g. '1-5'). Max N pages per request… This tool can read Jupyter notebooks (.ipynb) and returns structured cell content with outputs."
 
@@ -156,11 +156,11 @@ MAX_FILE_SIZE_MB            = 20
 
 2026-09-25 抓取 `zai-org/ZCode`（Apache-2.0，快照 `29628c9acdb8`，6713★）。它是账本里**唯一明确记录了「藏了东西」**的对象，值得单列。
 
-- 读工具名 **`Read`**，实现在 `sources/repos/ZCode/apps/zcode-cli/packages/core/src/tool/handlers/read.ts:468`；限额常量在 `sources/repos/ZCode/apps/zcode-cli/packages/contracts/src/tools/read.ts:15`（`READ_MAX_FILE_SIZE_BYTES = 256 * 1024`）与 `:17`（`READ_DEFAULT_MAX_LINES = 2_000`）。
+- 读工具名 **`Read`**，实现在 `resources/repos/ZCode/apps/zcode-cli/packages/core/src/tool/handlers/read.ts:468`；限额常量在 `resources/repos/ZCode/apps/zcode-cli/packages/contracts/src/tools/read.ts:15`（`READ_MAX_FILE_SIZE_BYTES = 256 * 1024`）与 `:17`（`READ_DEFAULT_MAX_LINES = 2_000`）。
 - 工具描述里有一条**非技术约定**（`read.ts:67`）："Do NOT re-read a file you just edited to verify — Edit/Write would have errored if the change failed, and the harness tracks file state for you."——把「harness 已跟踪文件状态」当成对模型的承诺写进了工具描述。
 - 它读的不止文本：`read.ts:64-65` 声明能读图片（PNG/JPG）与视频（MP4/MOV/WEBM），并有独立的视频输入上限。
-- **`completeness = source-partial` 的依据**：README 写「包含客户端、后端服务、共享 UI，以及 Agent CLI 与运行时源码」，但 `sources/repos/ZCode/.gitignore:8-13` 排除了 `prebuilds/`、`bundled-resources/`、`packages/desktop/bundled-resources/`、`packages/desktop/bundled-agents/`、`packages/desktop/bundled-tools/`——**发行版装载的 agent 与工具不进版本库**。`harness/` 下只有一个 `remote/`（Docker + SSH 沙箱；`harness/remote/README.md` 全文是三条 ssh 命令），不是 agent 实现。能读到的是客户端与骨架，装配后的成品读不到。
-- skill 侧有真实实现：`sources/repos/ZCode/packages/services/src/skills/skillsService.ts:1027` 的 `createSkillsService`（该文件 1238 行）、`skillDiscoveryWalk.ts`（107 行）、`sources/repos/ZCode/packages/shared/src/skill-scan-policy.ts`（61 行）。
+- **`completeness = source-partial` 的依据**：README 写「包含客户端、后端服务、共享 UI，以及 Agent CLI 与运行时源码」，但 `resources/repos/ZCode/.gitignore:8-13` 排除了 `prebuilds/`、`bundled-resources/`、`packages/desktop/bundled-resources/`、`packages/desktop/bundled-agents/`、`packages/desktop/bundled-tools/`——**发行版装载的 agent 与工具不进版本库**。`harness/` 下只有一个 `remote/`（Docker + SSH 沙箱；`harness/remote/README.md` 全文是三条 ssh 命令），不是 agent 实现。能读到的是客户端与骨架，装配后的成品读不到。
+- skill 侧有真实实现：`resources/repos/ZCode/packages/services/src/skills/skillsService.ts:1027` 的 `createSkillsService`（该文件 1238 行）、`skillDiscoveryWalk.ts`（107 行）、`resources/repos/ZCode/packages/shared/src/skill-scan-policy.ts`（61 行）。
 
 ### 2.9 schema 字面与注入文案（证据摘录）
 
@@ -168,22 +168,22 @@ MAX_FILE_SIZE_MB            = 20
 
 | 对象 | 原文 | 定位 |
 |---|---|---|
-| deepseek-harness | "Use the read tool — not shell commands like cat — to inspect text files. Results include line numbers. Use offset and limit to continue reading large files." | `sources/repos/deepseek-harness/packages/fs/tool-fs/src/read.ts:74` |
+| deepseek-harness | "Use the read tool — not shell commands like cat — to inspect text files. Results include line numbers. Use offset and limit to continue reading large files." | `resources/repos/deepseek-harness/packages/fs/tool-fs/src/read.ts:74` |
 | deepseek-harness | "Read a UTF-8 text file and return line-numbered content." | 同上 `:79` |
-| Tianshu-harness | "约 50,000 行以内的文件完整返回——不要自己切成小片分多次读" | `sources/repos/Tianshu-harness/src/tools/read-file.ts:716` |
+| Tianshu-harness | "约 50,000 行以内的文件完整返回——不要自己切成小片分多次读" | `resources/repos/Tianshu-harness/src/tools/read-file.ts:716` |
 | Tianshu-harness | "一次调用读取多个文件。用于替代重复的 read_file 调用。每个文件单独成节。最多 5 个文件。" | 同上 `:731` |
 | Tianshu-harness | "Focused read refuses files over 2MB. Use grep or an explicit offset/limit range first." | 同上 `:596-598` |
-| Raven | "(Showing lines X-Y of Z. Use offset=Z+1 to continue.)" | `sources/repos/Raven/raven/agent/tools/filesystem.py:279` |
+| Raven | "(Showing lines X-Y of Z. Use offset=Z+1 to continue.)" | `resources/repos/Raven/raven/agent/tools/filesystem.py:279` |
 | Raven | "Error: offset N is beyond end of file (M lines)" | 同上 `:260-261` |
-| cline | read_files 描述含 "…or return only an inclusive one-based line range when start_line/end_line are provided on the same file entry as its path." | `sources/repos/cline/sdk/packages/core/src/extensions/tools/definitions.ts:274` |
-| ZCode | "Wasted call — file unchanged since your last Read. Refer to that earlier tool_result instead." | `sources/repos/ZCode/apps/zcode-cli/packages/core/src/tool/handlers/read.ts:55-56` |
-| ZCode | "… was too large and has been truncated to the first N lines. Don't tell the user about this truncation." | `sources/repos/ZCode/apps/zcode-cli/packages/core/src/system-reminder/prompt-attachment.ts:95` |
+| cline | read_files 描述含 "…or return only an inclusive one-based line range when start_line/end_line are provided on the same file entry as its path." | `resources/repos/cline/sdk/packages/core/src/extensions/tools/definitions.ts:274` |
+| ZCode | "Wasted call — file unchanged since your last Read. Refer to that earlier tool_result instead." | `resources/repos/ZCode/apps/zcode-cli/packages/core/src/tool/handlers/read.ts:55-56` |
+| ZCode | "… was too large and has been truncated to the first N lines. Don't tell the user about this truncation." | `resources/repos/ZCode/apps/zcode-cli/packages/core/src/system-reminder/prompt-attachment.ts:95` |
 
 ## 3. skill 加载逐对象
 
 ### 3.1 提示注入 + 两套调用检测：codex
 
-`skill` **不是一个工具**。codex 的 skills crate（`sources/repos/codex/codex-rs/skills/src/`）把技能拆成"策略 + 选择 + 调用"三段：
+`skill` **不是一个工具**。codex 的 skills crate（`resources/repos/codex/codex-rs/skills/src/`）把技能拆成"策略 + 选择 + 调用"三段：
 
 - `model.rs:63` `SkillPolicy`、`:8` `SkillMetadata`、`:71` `SkillInterface`
 - `selection.rs:42` `collect_explicit_skill_mentions`——**显式点名**
@@ -196,7 +196,7 @@ MAX_FILE_SIZE_MB            = 20
 
 ### 3.2 工具 + 两级渐进披露：Tianshu-harness
 
-`SKILL_TOOL`（`default-registry.ts:17`）对应 `sources/repos/Tianshu-harness/src/skills/skill-loader.ts`。文件头两行就是机制说明（`:5`、`:8`）：
+`SKILL_TOOL`（`default-registry.ts:17`）对应 `resources/repos/Tianshu-harness/src/skills/skill-loader.ts`。文件头两行就是机制说明（`:5`、`:8`）：
 
 > Tier 1 (discovery): only name + description of every skill is injected
 > Tier 2 (activation): the full SKILL.md body is loaded ON DEMAND — by the …
@@ -205,13 +205,13 @@ MAX_FILE_SIZE_MB            = 20
 
 ### 3.3 会话级 Remote + 客户端 UI：deepseek-harness
 
-skill 走一条**服务化**路径：`sources/repos/deepseek-harness/docs/capability-seams.zh.md:559` 显示 `svc_sessionSkillCatalog` 由 `packages/api/session-controller` 提供（"Session-addressed skill Remote adapter"）；客户端侧 `packages/client/ui-skill/src/client/index.ts:105` 在失败时抛 `skills/list failed`（`:105`）。也就是说 skill 目录由会话控制器管，UI 只是消费者。
+skill 走一条**服务化**路径：`resources/repos/deepseek-harness/docs/capability-seams.zh.md:559` 显示 `svc_sessionSkillCatalog` 由 `packages/api/session-controller` 提供（"Session-addressed skill Remote adapter"）；客户端侧 `packages/client/ui-skill/src/client/index.ts:105` 在失败时抛 `skills/list failed`（`:105`）。也就是说 skill 目录由会话控制器管，UI 只是消费者。
 
 ### 3.4 RPC 契约 + CLI 子命令：Raven
 
 `raven/rpc/models.py:84` `SkillInfo`、`:1381` `SkillListParams`、`:1388` `SkillListResult`、`:1392` `SkillPinParams`，并在 `METHOD_MODELS` 登记 `skill.list` / `skill.pin` / `skill.unpin`（`:4464-4466`）。这些是 **wire 契约**，不是实现体。
 
-实现落在 CLI：`sources/repos/Raven/raven/cli/skill_commands.py:79` `def skill_list`；`rpc-schema/openrpc.json:907-909` 的 `skill.list` 条目直接写明 routing 方式——"routed via `cli.dispatch(argv=['skill','list'])`"。
+实现落在 CLI：`resources/repos/Raven/raven/cli/skill_commands.py:79` `def skill_list`；`rpc-schema/openrpc.json:907-909` 的 `skill.list` 条目直接写明 routing 方式——"routed via `cli.dispatch(argv=['skill','list'])`"。
 
 ### 3.5 有创作工具、没有加载工具：claude-code
 
@@ -270,23 +270,23 @@ codex（Apache-2.0）、gemini-cli（Apache-2.0）、qwen-code（Apache-2.0）�
 - **未做**：cline 的 `read_files` 限额与分页行为未逐一取证；`index.csv` 中该行已标"未取证"。
 - **已补齐**：goose 上游迁到 `aaif-goose/goose`，2026-09-25 按新地址重抓（`61830521ad31`）并取证——读工具名 `read`，描述 "Read a text file from disk."，实现在 `crates/goose/src/acp/fs.rs:107`；`index.csv` 该行已由 `unverified` 转为 `verified`。
 - **未找到确证**：Cursor、Windsurf、Devin 是否公开过读工具或 skill 实现——本环境 `web_fetch` 全域被 DNS 层拦截，无法核验，`index.csv` 中三行标 `unverified`。
-- **版本限定**：codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands 六个 checkout 在 2026-09-25 之前**没有提交指纹记录**；当天全量更新后都取到了（codex `75e0e0aad97a`、Raven `e17694113b13`、Tianshu-harness `79c10d30ba4f`、deepseek-harness `477b4f420553`、minimax-cli `33453cf12392`、OpenHands `c17fc6538d57`）。凡是引用它们的断言，只对 `sources/repos/index.csv` 该行 `snapshot` 所指的那份成立，不能写成产品当前行为。**另有一处地址变更**：`deepseek-ai/deepseek-harness` 的默认分支不是 `main`，按 `main` 抓会 404——`fetch.py` 已改为先问 API 要默认分支。
+- **版本限定**：codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands 六个 checkout 在 2026-09-25 之前**没有提交指纹记录**；当天全量更新后都取到了（codex `75e0e0aad97a`、Raven `e17694113b13`、Tianshu-harness `79c10d30ba4f`、deepseek-harness `477b4f420553`、minimax-cli `33453cf12392`、OpenHands `c17fc6538d57`）。凡是引用它们的断言，只对 `resources/repos/index.csv` 该行 `snapshot` 所指的那份成立，不能写成产品当前行为。**另有一处地址变更**：`deepseek-ai/deepseek-harness` 的默认分支不是 `main`，按 `main` 抓会 404——`fetch.py` 已改为先问 API 要默认分支。
 
 ## 6. 证据索引（可复现）
 
 | 断言 | 复现方式 |
 |---|---|
-| codex 无专用读工具 | `grep -rn 'ToolName::plain(' sources/repos/codex/codex-rs/core/src/tools` 全量枚举；`grep -rn 'read_file' sources/repos/codex/codex-rs --include=*.rs` 只看内部调用 |
-| Tianshu-harness 阈值 | `grep -nE "READ_REF_THRESHOLD\|MAX_TOOL_INPUT_BYTES\|MAX_FOCUS_SCAN_BYTES" sources/repos/Tianshu-harness/src/tools/read-file.ts` |
-| dsh `read` 上限 | `grep -nE "READ_LIMIT\|STREAM_MIN_SIZE" sources/repos/deepseek-harness/packages/fs/tool-fs/src/read.ts` |
-| Raven 双层实现 | `grep -n "_MAX_CHARS\|_DEFAULT_LIMIT" sources/repos/Raven/raven/agent/tools/filesystem.py` |
-| gemini-cli 三个常量 | `grep -n "MAX" sources/repos/gemini-cli/packages/core/src/utils/constants.ts` |
+| codex 无专用读工具 | `grep -rn 'ToolName::plain(' resources/repos/codex/codex-rs/core/src/tools` 全量枚举；`grep -rn 'read_file' resources/repos/codex/codex-rs --include=*.rs` 只看内部调用 |
+| Tianshu-harness 阈值 | `grep -nE "READ_REF_THRESHOLD\|MAX_TOOL_INPUT_BYTES\|MAX_FOCUS_SCAN_BYTES" resources/repos/Tianshu-harness/src/tools/read-file.ts` |
+| dsh `read` 上限 | `grep -nE "READ_LIMIT\|STREAM_MIN_SIZE" resources/repos/deepseek-harness/packages/fs/tool-fs/src/read.ts` |
+| Raven 双层实现 | `grep -n "_MAX_CHARS\|_DEFAULT_LIMIT" resources/repos/Raven/raven/agent/tools/filesystem.py` |
+| gemini-cli 三个常量 | `grep -n "MAX" resources/repos/gemini-cli/packages/core/src/utils/constants.ts` |
 | Claude Code 发布物形态 | `npm pack @anthropic-ai/claude-code && tar -tzf anthropic-ai-claude-code-2.1.282.tgz` |
-| OpenHands 无 agent 核心 | `find sources/repos/OpenHands -maxdepth 2 -name pyproject.toml`（空） |
+| OpenHands 无 agent 核心 | `find resources/repos/OpenHands -maxdepth 2 -name pyproject.toml`（空） |
 | 记忆库 SKILL.md 分布 | `for r in mem0 memU MemoryBear MemOS EverOS ReFind; do find $r -name SKILL.md \| wc -l; done` |
-| 外部 checkout 获取 | `curl -sL https://codeload.github.com/<owner>/<repo>/tar.gz/refs/heads/main \| tar -xz -C sources/repos/<name> --strip-components=1` |
+| 外部 checkout 获取 | `curl -sL https://codeload.github.com/<owner>/<repo>/tar.gz/refs/heads/main \| tar -xz -C resources/repos/<name> --strip-components=1` |
 
-> 取证时注意：`read_file`/`glob` 对 `sources/repos/**` 拒读，`web_fetch`/`web_search` 在本环境被 DNS 层拦（域名解析到保留段 198.18.0.0/15）。**能用的是 `bash`**——它走另一条网络与文件通道。这正是本阶段能拿到外部一手证据的原因。
+> 取证时注意：`read_file`/`glob` 对 `resources/repos/**` 拒读，`web_fetch`/`web_search` 在本环境被 DNS 层拦（域名解析到保留段 198.18.0.0/15）。**能用的是 `bash`**——它走另一条网络与文件通道。这正是本阶段能拿到外部一手证据的原因。
 
 ---
 
@@ -310,10 +310,10 @@ flowchart TD
 
 **判据是两条可查的事实，不是偏好**：
 
-1. **harness 会不会自动拼接多文件**。codex 把指令做成多来源列表（`instruction_sources`，见 `sources/repos/codex/codex-rs/app-server-protocol/src/protocol/common.rs:3229-3233` 与 `:3290-3292`），按根到子目录拼接——这种情况下「拆」是零成本的，拆了反而让每份更贴上下文。反过来，如果 harness 只读一个固定文件，「拆」就意味着要么写注入规则，要么有一半内容不会被自动读到。
-2. **单块有没有超 harness 自己的阈值**。Tianshu-harness 把这件事量化了：`sources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:27` 定义 `LARGE_VOLATILE_PAYLOAD_CHARS = 12_000`，同文件 `sources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:49-54` 对 `project-instructions` 段设 **6000 字符**阈值，超了就直接给出建议原文 "split project instructions into always-on core plus task-routed details"。同文件还给了同族阈值：active-claims 条数 > 8（`:58-66`）、git-status > 1200 字符（`:70-76`）、historical-lessons > 800 字符（`:79-`）。模板侧也有一致的要求——`sources/repos/Tianshu-harness/src/bootstrap/__tests__/project-templates.test.ts:57` 断言项目模板「30–120 行，是通用版而不是完整的天枢 AGENTS.md」。
+1. **harness 会不会自动拼接多文件**。codex 把指令做成多来源列表（`instruction_sources`，见 `resources/repos/codex/codex-rs/app-server-protocol/src/protocol/common.rs:3229-3233` 与 `:3290-3292`），按根到子目录拼接——这种情况下「拆」是零成本的，拆了反而让每份更贴上下文。反过来，如果 harness 只读一个固定文件，「拆」就意味着要么写注入规则，要么有一半内容不会被自动读到。
+2. **单块有没有超 harness 自己的阈值**。Tianshu-harness 把这件事量化了：`resources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:27` 定义 `LARGE_VOLATILE_PAYLOAD_CHARS = 12_000`，同文件 `resources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:49-54` 对 `project-instructions` 段设 **6000 字符**阈值，超了就直接给出建议原文 "split project instructions into always-on core plus task-routed details"。同文件还给了同族阈值：active-claims 条数 > 8（`:58-66`）、git-status > 1200 字符（`:70-76`）、historical-lessons > 800 字符（`:79-`）。模板侧也有一致的要求——`resources/repos/Tianshu-harness/src/bootstrap/__tests__/project-templates.test.ts:57` 断言项目模板「30–120 行，是通用版而不是完整的天枢 AGENTS.md」。
 
-**第三个数据点**：gemini-cli 把上下文文件名做成**可改写的常量 + 复数集合**，而不是硬编码一个字面量。`sources/repos/gemini-cli/packages/core/src/tools/memoryTool.ts:11` 定义 `DEFAULT_CONTEXT_FILENAME = 'GEMINI.md'`；`sources/repos/gemini-cli/packages/cli/src/config/config.ts:627` 用 `resetGeminiMdFilename(DEFAULT_CONTEXT_FILENAME)` 允许改写它；扩展配置接受复数形式 `contextFileNames`（`sources/repos/gemini-cli/packages/cli/src/commands/extensions/validate.ts:51`）；`/memory` 命令的自述原文是 "Lists the paths of the **GEMINI.md files** in use"（`sources/repos/gemini-cli/packages/a2a-server/src/commands/memory.ts:65`）——**复数**说明它本就同时吃多份。仓库根也确实有一份 `sources/repos/gemini-cli/GEMINI.md`。
+**第三个数据点**：gemini-cli 把上下文文件名做成**可改写的常量 + 复数集合**，而不是硬编码一个字面量。`resources/repos/gemini-cli/packages/core/src/tools/memoryTool.ts:11` 定义 `DEFAULT_CONTEXT_FILENAME = 'GEMINI.md'`；`resources/repos/gemini-cli/packages/cli/src/config/config.ts:627` 用 `resetGeminiMdFilename(DEFAULT_CONTEXT_FILENAME)` 允许改写它；扩展配置接受复数形式 `contextFileNames`（`resources/repos/gemini-cli/packages/cli/src/commands/extensions/validate.ts:51`）；`/memory` 命令的自述原文是 "Lists the paths of the **GEMINI.md files** in use"（`resources/repos/gemini-cli/packages/a2a-server/src/commands/memory.ts:65`）——**复数**说明它本就同时吃多份。仓库根也确实有一份 `resources/repos/gemini-cli/GEMINI.md`。
 
 > 取证提示：早先对 `packages/` 搜字面量 `GEMINI.md` 零命中，一度被误读成「该版本没有这个文件名」。实际原因是代码走常量而非字面量。**搜不到字面量不等于机制不存在**——先找常量定义。
 
@@ -324,19 +324,19 @@ flowchart TD
 问题原话是「如果 readfile，能控制读取哪些列，我就可以把补充内容补充到后面了」。
 
 **关键事实：本阶段取到读工具契约或实现的 10 个对象，没有任何一个 read 工具的入参含「列选择」。**
-口径写死在这里，省得下次再数：`sources/repos/index.csv` 中读工具列有实值、且 `status=verified` 的行
+口径写死在这里，省得下次再数：`resources/repos/index.csv` 中读工具列有实值、且 `status=verified` 的行
 ——codex、Tianshu-harness、deepseek-harness、Raven、gemini-cli、qwen-code、cline、ZCode、goose、claude-code。
 只有 `absent`/`unverified` 的记忆库与闭源客户端不计入。
 
 - codex 无 read 工具；其余全部只有 `offset`/`limit` 行范围（Tianshu-harness、deepseek-harness、Raven、gemini-cli、qwen-code、cline、ZCode），Claude Code 的 `FileReadInput` 只多一个 `pages`（PDF 页范围），**都不是列级**。
-- 三个近似物都不是确定的列投影：Tianshu-harness 的 `focus`/`focus_max_matches` 按关键词抓片段（选什么由启发式决定）；`read_section` 是**按节读**（粒度是节不是列）；gemini-cli `read_many_files` 的 `include`/`exclude` 是**文件级 glob**（`sources/repos/gemini-cli/packages/core/src/tools/read-many-files.ts:58-70`），不是字段级。
+- 三个近似物都不是确定的列投影：Tianshu-harness 的 `focus`/`focus_max_matches` 按关键词抓片段（选什么由启发式决定）；`read_section` 是**按节读**（粒度是节不是列）；gemini-cli `read_many_files` 的 `include`/`exclude` 是**文件级 glob**（`resources/repos/gemini-cli/packages/core/src/tools/read-many-files.ts:58-70`），不是字段级。
 
-**结论**：在现有工具面下，**加宽账本 = 每次读都付全部列的成本**。`sources/papers/AGENTS.md` 里「`index.csv` 不加摘要列」的规则**继续成立**——不是保守，而是工具做不到列投影。
+**结论**：在现有工具面下，**加宽账本 = 每次读都付全部列的成本**。`resources/papers/AGENTS.md` 里「`index.csv` 不加摘要列」的规则**继续成立**——不是保守，而是工具做不到列投影。
 
 但这不等于只能维持现状，可拆成三条互不冲突的路径：
 
-1. **短枚举列可以加**。`sources/repos/index.csv` 新增的 `completeness` 就是这类：值 ≤ 12 字符，把每行撑长十几字节，成本可忽略。用户想加的「类型 / 完整程度」正属此类。
-2. **长文本不进账本，放伴随文件**，用 `grep` 按行定位——**行过滤是现有工具真能做到的**（`grep` 返回整行，配合 `-n` 定位），列过滤不是。`sources/papers/` 把 `abstract` 放在单篇 md、`sources/repos/` 把逐仓说明放在 `AGENTS.md` 末尾，都是同一条。
+1. **短枚举列可以加**。`resources/repos/index.csv` 新增的 `completeness` 就是这类：值 ≤ 12 字符，把每行撑长十几字节，成本可忽略。用户想加的「类型 / 完整程度」正属此类。
+2. **长文本不进账本，放伴随文件**，用 `grep` 按行定位——**行过滤是现有工具真能做到的**（`grep` 返回整行，配合 `-n` 定位），列过滤不是。`resources/papers/` 把 `abstract` 放在单篇 md、`resources/repos/` 把逐仓说明放在 `AGENTS.md` 末尾，都是同一条。
 3. **若确实要列投影，需要新增一个工具**（如 `read_table` / `query_csv`）。这是 harness 侧的设计决定，**文档格式层面解决不了**——记成给 harness 的改进建议，而不是在 repo-context 层硬撑。
 
 ### 7.3 一条边界：阈值是「该注意了」，不是「过线即坏」

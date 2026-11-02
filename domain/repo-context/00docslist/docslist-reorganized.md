@@ -38,7 +38,7 @@
 ## 历史、实验与来源材料
 
 - `CHANGELOG`、`RELEASE-NOTES`、`dialogue/`、`incidents/`、`MEETING-NOTES`、`STANDUP`、`LOGS`、会话导出
-- `POSTMORTEM`、`BENCHMARKS`、`DATASETS`、`PAPERS/`、`sources/`、`THIRD-PARTY`
+- `POSTMORTEM`、`BENCHMARKS`、`DATASETS`、`PAPERS/`、`resources/`、`THIRD-PARTY`
 
 ## 法律与归属
 

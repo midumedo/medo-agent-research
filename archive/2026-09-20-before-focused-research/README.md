@@ -15,7 +15,7 @@
 
 | 位置 | 主要回答 |
 |---|---|
-| [sources/](sources/README.md) | 外部原件和所用版本是什么？ |
+| [resources/](resources/README.md) | 外部原件和所用版本是什么？ |
 | [deepdive/](deepdive/README.md) | 这个项目或论文实际是什么，如何运作，依据到哪？ |
 | [analysis/](analysis/README.md) | 这个问题怎样解释、比较或检验？ |
 | [notes/](notes/README.md) | 本项目决定怎么做，为什么？ |

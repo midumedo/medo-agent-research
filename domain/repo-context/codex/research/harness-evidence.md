@@ -8,7 +8,7 @@
 
 ## 范围与实际推进
 
-先读取根与 `domain/`、`domain/repo-context/`、`sources/`、`sources/repos/` 的约定，随后读 `CONVENTIONS.md`、`STYLE.md`，以既有 `04how-agent-read-file/` 作为待验证线索。选择 Codex、Gemini CLI、Tianshu-harness，是为了覆盖 shell 读取、带 JIT 的专用读取、结构感知裁剪三种差异，并非代表市场份额或产品质量排名。
+先读取根与 `domain/`、`domain/repo-context/`、`resources/`、`resources/repos/` 的约定，随后读 `CONVENTIONS.md`、`STYLE.md`，以既有 `04how-agent-read-file/` 作为待验证线索。选择 Codex、Gemini CLI、Tianshu-harness，是为了覆盖 shell 读取、带 JIT 的专用读取、结构感知裁剪三种差异，并非代表市场份额或产品质量排名。
 
 实际顺序为：确认本地路径和版本 → 查项目指令发现与预算 → 查模型可见工具及其下游结果处理 → 查技能发现/正文注入 → 对照旧判断 → 运行一次不调用模型的列投影 → 写结论与本记录。所有命令在 `D:\workspace\memory` 的 PowerShell 中执行。以下记录保留足够的命令重建取证过程，不保留几十份重复全文输出。
 
@@ -16,7 +16,7 @@
 
 ### H01 版本与本地文件核对
 
-本地版本来源是 [`sources/repos/_commits.json`](../../../../sources/repos/_commits.json) 与 [`index.csv`](../../../../sources/repos/index.csv)。它们是 tar 快照登记，不是 checkout 内的 Git 历史。
+本地版本来源是 [`resources/repos/_commits.json`](../../../../resources/repos/_commits.json) 与 [`index.csv`](../../../../resources/repos/index.csv)。它们是 tar 快照登记，不是 checkout 内的 Git 历史。
 
 | 对象 | 本轮使用 commit | 登记的获取日期 | 本轮额外核对 |
 |---|---|---|---|
@@ -27,9 +27,9 @@
 实际查询：
 
 ```powershell
-$rows = Import-Csv sources/repos/index.csv
+$rows = Import-Csv resources/repos/index.csv
 $rows | Where-Object { $_.id -in @('codex','gemini-cli','Tianshu-harness') } | ConvertTo-Json
-$meta = Get-Content sources/repos/_commits.json -Raw | ConvertFrom-Json
+$meta = Get-Content resources/repos/_commits.json -Raw | ConvertFrom-Json
 $meta.codex
 $meta.'gemini-cli'
 $meta.'Tianshu-harness'
@@ -54,7 +54,7 @@ $remote.Replace("`r`n","`n") -eq $local.Replace("`r`n","`n")
 定位命令：
 
 ```powershell
-rg --no-ignore -n 'AGENTS.override.md|candidate_filenames|search_dirs' sources/repos/codex/codex-rs/core/src/agents_md.rs
+rg --no-ignore -n 'AGENTS.override.md|candidate_filenames|search_dirs' resources/repos/codex/codex-rs/core/src/agents_md.rs
 ```
 
 ### H03 Codex 项目指令累计预算
@@ -80,7 +80,7 @@ rg --no-ignore -n 'AGENTS.override.md|candidate_filenames|search_dirs' sources/r
 实际负向检索范围：
 
 ```powershell
-rg --no-ignore -n 'name: "read_file"|name: "read"|tool_name.*read|ToolName::plain\("read' sources/repos/codex/codex-rs/core/src/tools --glob '*.rs'
+rg --no-ignore -n 'name: "read_file"|name: "read"|tool_name.*read|ToolName::plain\("read' resources/repos/codex/codex-rs/core/src/tools --glob '*.rs'
 ```
 
 ### H06 Codex 技能分来源加载
@@ -173,12 +173,12 @@ $r = Invoke-WebRequest -Uri 'https://developers.openai.com/codex/config-advanced
 
 ### H18 本地 CSV 列投影观测
 
-目的：检验“没有专用 read 列参数就做不到列投影”是否成立。对象为项目现有 `sources/repos/index.csv` 的三条 harness 行。观测不是模型实验，也没有修改该文件。
+目的：检验“没有专用 read 列参数就做不到列投影”是否成立。对象为项目现有 `resources/repos/index.csv` 的三条 harness 行。观测不是模型实验，也没有修改该文件。
 
 实际命令：
 
 ```powershell
-$rows = Import-Csv sources/repos/index.csv | Where-Object {$_.id -in @('codex','gemini-cli','Tianshu-harness')}
+$rows = Import-Csv resources/repos/index.csv | Where-Object {$_.id -in @('codex','gemini-cli','Tianshu-harness')}
 $full = ($rows | ConvertTo-Csv -NoTypeInformation) -join "`n"
 $projected = ($rows | Select-Object id,snapshot | ConvertTo-Csv -NoTypeInformation) -join "`n"
 [System.Text.Encoding]::UTF8.GetByteCount($full)
@@ -220,8 +220,8 @@ $projected
 常用定位模板（本轮实际使用这一模式）：
 
 ```powershell
-rg --files --no-ignore sources/repos/<repo>/<source-root>
-rg --no-ignore -n '目标符号|调用方|预算常量' sources/repos/<repo>/<source-root> --glob '*.ts'
+rg --files --no-ignore resources/repos/<repo>/<source-root>
+rg --no-ignore -n '目标符号|调用方|预算常量' resources/repos/<repo>/<source-root> --glob '*.ts'
 $p = '已发现的源文件'
 $a = Get-Content $p
 $a[($start-1)..($end-1)] | ForEach-Object -Begin {$n=$start} -Process {'{0}: {1}' -f $n++,$_}

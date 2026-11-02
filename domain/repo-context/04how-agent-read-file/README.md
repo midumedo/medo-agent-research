@@ -28,7 +28,7 @@
 
 | 通道 | 状态 | 说明 |
 |---|---|---|
-| `grep`（显式路径）/ `ast_grep` | 可用 | `sources/repos/**` 被 `.gitignore` 的 `/sources/repos/` 排除，`read_file` 硬拒、`glob` 静默返回空；这两个工具对**显式路径/子树**仍可读 |
+| `grep`（显式路径）/ `ast_grep` | 可用 | `resources/repos/**` 被 `.gitignore` 的 `/resources/repos/` 排除，`read_file` 硬拒、`glob` 静默返回空；这两个工具对**显式路径/子树**仍可读 |
 | `bash`（curl / npm / find / grep -r） | 可用 | 与 `web_fetch` 走不同通道，本环境**未被拦**——第三方 checkout 的下载与全树检索都靠它 |
 | `web_fetch` / `web_search` | **不可用** | `web_fetch` 对任何外域返回 `Access denied: ... resolves to a private/reserved IP (198.18.x.x)`；`web_search` 返回与查询无关的页面 |
 
@@ -59,7 +59,7 @@
 
 ## 几个容易误读的点
 
-1. **提交指纹已补齐，且不再保留版本副本**。`sources/repos/_commits.json` 现有 17 条；18 个账本行里 17 个带指纹，剩 1 个是 `claude-code`（它压根没有本地快照，以 `no-local-snapshot` 标记）。此前 codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands 六个目录没有指纹，2026-09-25 全量更新时一并取到。**更新只就地覆盖，不留旧版本副本**——那天曾按 `@<sha>` 留下 12 个历史目录（约 2G），随后按「研究不需要版本对比、要比就按 sha 重现」删除。版本记录由各行 `snapshot` 承担。计数会随抓取变动，**以 `sources/repos/index.csv` 为准**。
-2. **手工台账 `sources/repos-sources.md` 已于 2026-09-25 退役**：清单进 `sources/repos/index.csv`、事件进 `sources/repos/CHANGELOG.md`、规则进 `sources/repos/AGENTS.md`。它腐坏过一次（把 `minimax-cli/` 记成 `cli/`），退役的正是这类重复来源。
-3. **goose 换过地址**：上游由 `block/goose` 迁到 `aaif-goose/goose`，2026-09-25 按新地址重抓（`61830521ad31`）并入账；此前 900s 超时留下的残缺目录 `_partial-goose-dl-failed-20260924/` 已删除。引用 goose 时以 `sources/repos/index.csv` 的 `snapshot` 列为准。
+1. **提交指纹已补齐，且不再保留版本副本**。`resources/repos/_commits.json` 现有 17 条；18 个账本行里 17 个带指纹，剩 1 个是 `claude-code`（它压根没有本地快照，以 `no-local-snapshot` 标记）。此前 codex、Raven、Tianshu-harness、deepseek-harness、minimax-cli、OpenHands 六个目录没有指纹，2026-09-25 全量更新时一并取到。**更新只就地覆盖，不留旧版本副本**——那天曾按 `@<sha>` 留下 12 个历史目录（约 2G），随后按「研究不需要版本对比、要比就按 sha 重现」删除。版本记录由各行 `snapshot` 承担。计数会随抓取变动，**以 `resources/repos/index.csv` 为准**。
+2. **手工台账 `resources/repos-sources.md` 已于 2026-09-25 退役**：清单进 `resources/repos/index.csv`、事件进 `resources/repos/CHANGELOG.md`、规则进 `resources/repos/AGENTS.md`。它腐坏过一次（把 `minimax-cli/` 记成 `cli/`），退役的正是这类重复来源。
+3. **goose 换过地址**：上游由 `block/goose` 迁到 `aaif-goose/goose`，2026-09-25 按新地址重抓（`61830521ad31`）并入账；此前 900s 超时留下的残缺目录 `_partial-goose-dl-failed-20260924/` 已删除。引用 goose 时以 `resources/repos/index.csv` 的 `snapshot` 列为准。
 4. **记忆库不是「与本题无关」**：mem0 发布 56 个 SKILL.md、MemOS 7 个、EverOS 5 个、MemoryBear 自建 `load_skill_tools`。它们扮演的是 skill 的**生产/消费方**，不是 harness。

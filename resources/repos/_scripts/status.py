@@ -3,7 +3,7 @@
 账本自洽（`repos.validate`）：每行 `id` 唯一；`kind`/`completeness` 落在封闭集内；有本地目录的
 行必须有 `snapshot` 或 `snapshot-unknown` 标记；没有本地目录的行必须有 `no-local-snapshot` 标记。
 
-反追踪生效：`git ls-files sources/repos` 只允许列出元数据层那几类；任何一个第三方
+反追踪生效：`git ls-files resources/repos` 只允许列出元数据层那几类；任何一个第三方
 checkout 的文件出现在索引里就算失败。
 
 Usage:
@@ -20,21 +20,21 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import repos  # noqa: E402
 
-ROOT = os.path.dirname(repos.BASE)          # 仓库根（sources/ 的上一级）
+ROOT = os.path.dirname(repos.BASE)          # 仓库根（resources/ 的上一级）
 REPO_ROOT = os.path.dirname(ROOT)
-TRACKED_PREFIXES = ("sources/repos/.gitignore", "sources/repos/index.csv",
-                    "sources/repos/_commits.json", "sources/repos/CHANGELOG.md",
-                    "sources/repos/AGENTS.md", "sources/repos/_scripts/")
+TRACKED_PREFIXES = ("resources/repos/.gitignore", "resources/repos/index.csv",
+                    "resources/repos/_commits.json", "resources/repos/CHANGELOG.md",
+                    "resources/repos/AGENTS.md", "resources/repos/_scripts/")
 
-ROOT_IGNORE_WANTED = "/sources/repos/*"
+ROOT_IGNORE_WANTED = "/resources/repos/*"
 INNER_IGNORE_WANTED = ["!index.csv", "!_commits.json", "!CHANGELOG.md", "!AGENTS.md",
                        "!_scripts/", "!_scripts/**", "__pycache__/"]
 
 
 def tracked_files():
-    """git 索引里的 sources/repos 路径；git 不可用时返回 None。"""
+    """git 索引里的 resources/repos 路径；git 不可用时返回 None。"""
     try:
-        result = subprocess.run(["git", "ls-files", "--", "sources/repos"],
+        result = subprocess.run(["git", "ls-files", "--", "resources/repos"],
                                 cwd=REPO_ROOT, capture_output=True, text=True, check=True)
     except Exception:
         return None

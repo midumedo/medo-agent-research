@@ -1,6 +1,6 @@
 # mem0 · 根目录文档实测
 
-> 快照 `a39a802bbc93` · 取证 2026-09-25 · 来源 `sources/repos/mem0/`
+> 快照 `a39a802bbc93` · 取证 2026-09-25 · 来源 `resources/repos/mem0/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + 11 组 `AGENTS.md`/`CLAUDE.md` 对 + 9 个 plugin 的 skill 矩阵
 
 ## 1. 根目录清单一览
@@ -95,7 +95,7 @@
 |---|---|---|
 | D10：`CLAUDE.md` 最佳实现是指针，「避免同一规范维护两份」 | 本仓 `CLAUDE.md` 与 `AGENTS.md` **逐字节相同**（11997B），且这一模式在 11 个子包**全部复制** | **D10 的规范主张在本样本里被广泛违反**（DSH、Raven、mem0 三家复制；goose、qwen-code 两家指针）。D10 应从「最佳实现是指针」改述为「**实测存在多种实现，指针是其中维护成本最低的一种**」 |
 | D12：`SKILL.md` 落点 | 本仓 56 份横跨 `integrations/<harness>-plugin/skills/`、`integrations/opencode-plugin/opencode-skills/`（**目录名又不叫 skills**）、根级 `skills/` | **落点命名未收敛**，同一仓内三种 |
-| `sources/repos/index.csv` 关键词 `56-skills-published;claude-code-plugin;antigravity-plugin` | `find -name SKILL.md` 计数 56，四个 plugin dotdir 存在 | 一致 |
+| `resources/repos/index.csv` 关键词 `56-skills-published;claude-code-plugin;antigravity-plugin` | `find -name SKILL.md` 计数 56，四个 plugin dotdir 存在 | 一致 |
 | D36 `LLM.md` 归入「主题专章」 | 实测确认，37KB 最大 | 一致 |
 
 ## 5. 空白与未取证

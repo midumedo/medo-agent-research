@@ -1,8 +1,8 @@
 # minimax-cli · 根目录文档实测
 
-> 快照 `33453cf12392` · 取证 2026-09-25 · 来源 `sources/repos/minimax-cli/`
+> 快照 `33453cf12392` · 取证 2026-09-25 · 来源 `resources/repos/minimax-cli/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `skill/` + `docs/`
-> **注意**：`sources/repos/index.csv` 对本仓的 `kind` 是 `tooling`，`keywords` 含 `capability-cli;not-a-harness` —— **它不是 agent harness，是能力型 CLI**。样本里唯一一个。
+> **注意**：`resources/repos/index.csv` 对本仓的 `kind` 是 `tooling`，`keywords` 含 `capability-cli;not-a-harness` —— **它不是 agent harness，是能力型 CLI**。样本里唯一一个。
 
 ## 1. 根目录清单一览
 

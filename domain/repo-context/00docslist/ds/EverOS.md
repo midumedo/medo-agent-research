@@ -1,6 +1,6 @@
 # EverOS · 根目录文档实测
 
-> 快照 `5076683ab88d` · 取证 2026-09-25 · 来源 `sources/repos/EverOS/`
+> 快照 `5076683ab88d` · 取证 2026-09-25 · 来源 `resources/repos/EverOS/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `.claude/skills/`
 > **本仓的特殊性：根目录有 `CLAUDE.md`，但没有 `AGENTS.md`。**
 

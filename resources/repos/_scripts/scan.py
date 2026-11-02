@@ -2,7 +2,7 @@
 
 `completeness` 是人或模型的判断，不是脚本的输出。脚本做的是把判据摆出来（构建清单在哪一层、
 有没有预编译二进制、有多少 `SKILL.md`、树有多大），再由判定者落值。这与
-`sources/papers/_scripts/keywords.py` 的分工一致：脚本不自动生成判断，只导出料。
+`resources/papers/_scripts/keywords.py` 的分工一致：脚本不自动生成判断，只导出料。
 
 判据必须落在**变的 native 维度**上：数的是「构建清单在第几层」「二进制文件数」「SKILL.md 个数」
 「文件数」，不是字节数。

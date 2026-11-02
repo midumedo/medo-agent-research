@@ -27,7 +27,7 @@ Memory、Context、Harness 是不同类型的对象，工作定义见 [领域基
 |---|---|
 | [domain/](domain/index.md) | 当前领域解释，包含推理、边界与反例 |
 | [analysis/](analysis/README.md) | 调查、比较、系统分析和检验设计 |
-| [sources/](sources/README.md) | 外部原件、转换件及来源元数据 |
+| [resources/](resources/README.md) | 外部原件、转换件及来源元数据 |
 | `evidence/` | 已引用的原文片段、代码定位与观测记录 |
 | `notes/` | 设计决定与修订理由 |
 | `dialogue/` | 历史交流与研究过程 |

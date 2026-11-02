@@ -1,6 +1,6 @@
 # ReFind · 根目录文档实测
 
-> 快照 `a80175ca0eeb` · 取证 2026-09-25 · 来源 `sources/repos/ReFind/`
+> 快照 `a80175ca0eeb` · 取证 2026-09-25 · 来源 `resources/repos/ReFind/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `docs/`
 
 ## 1. 根目录清单一览（1 份，本样本最少）
@@ -30,7 +30,7 @@
 - **协作面为零**：没有 CONTRIBUTING 就**没有外部贡献流程**；没有 SECURITY 就**没有漏洞披露渠道**；没有 LICENSE **就没有授权声明**（根目录实测无 `LICENSE` 文件——本样本 17 个有 checkout 的仓里，ReFind 与 `MemoryBear`、`MemOS` 三家根目录无 LICENSE）。
 - **agent 面为零**：无任何指令文件、无 skill。
 
-这与 `sources/repos/index.csv` 对该仓的关键词 `no-read-tool;no-skill-artifacts` 一致。
+这与 `resources/repos/index.csv` 对该仓的关键词 `no-read-tool;no-skill-artifacts` 一致。
 
 **判据**：本仓是「**代码 + 论文**」形态，不是「**产品 + 社区**」形态。研究结论里任何「仓库文档规范」的建议，对本仓都是**不适用**的——它不需要协作面文档，因为它的交付物是论文成绩。
 

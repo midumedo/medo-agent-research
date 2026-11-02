@@ -1,5 +1,5 @@
 > **历史我方调查稿，待逐项复核。** 本文是本项目在 2026-09-19 的调查与推断，不是外部来源，也不代表当前认知。下方旧稿原文完整保留，其中产品能力、数字、来源配对和概念关系尚未逐项复核；引用具体主张前须回到外部原文。
-> 2026-09-20 从 sources/reports/ 迁入分析层。项目当前定义见 [领域基础](../concepts-and-boundaries.md)，旧稿备份见 [重建前版本](../../archive/2026-09-20-architecture-review-before/sources/reports/memory-landscape-2026-09.md)。
+> 2026-09-20 从 resources/reports/ 迁入分析层。项目当前定义见 [领域基础](../concepts-and-boundaries.md)，旧稿备份见 [重建前版本](../../archive/2026-09-20-architecture-review-before/resources/reports/memory-landscape-2026-09.md)。
 
 ---
 

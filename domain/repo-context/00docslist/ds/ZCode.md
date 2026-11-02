@@ -1,8 +1,8 @@
 # ZCode · 根目录文档实测
 
-> 快照 `29628c9acdb8` · 取证 2026-09-25 · 来源 `sources/repos/ZCode/`
+> 快照 `29628c9acdb8` · 取证 2026-09-25 · 来源 `resources/repos/ZCode/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `.agents/skills/` + `architecture-policy.yaml`
-> **注意**：`sources/repos/index.csv` 对本仓的 `completeness` 是 `source-partial`（`.gitignore` 排除了 `bundled-agents/`、`bundled-tools/`、`prebuilds/`）。
+> **注意**：`resources/repos/index.csv` 对本仓的 `completeness` 是 `source-partial`（`.gitignore` 排除了 `bundled-agents/`、`bundled-tools/`、`prebuilds/`）。
 
 ## 1. 根目录清单一览
 

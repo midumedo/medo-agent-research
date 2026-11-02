@@ -15,7 +15,7 @@
 
 ## 与其他目录的关系
 
-原件和转换文本在 [sources/](../sources/README.md)，对象解释在 Deepdive；本目录可直接引用它们或确切原文，不要求每项分析先完成全对象拆解。[Evidence](../evidence/domain/reviewed-local-passages.md) 中的片段与观测帮助追溯，不能用我方推论给自己充当独立证据。
+原件和转换文本在 [resources/](../resources/README.md)，对象解释在 Deepdive；本目录可直接引用它们或确切原文，不要求每项分析先完成全对象拆解。[Evidence](../evidence/domain/reviewed-local-passages.md) 中的片段与观测帮助追溯，不能用我方推论给自己充当独立证据。
 
 当前可继续使用的定义、机制和判断在 [domain/](../domain/index.md) 组织；分析稿继续保留自己的研究来由，认知引用并吸收。项目下一步怎么做的决定在 [notes/](../notes/README.md)，讨论经过留 Dialogue。
 

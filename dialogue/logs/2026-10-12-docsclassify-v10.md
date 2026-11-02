@@ -97,10 +97,10 @@ A 与 B 均需作为 01 的实质成果展开；不能将 B 仅降为少数例�
 
 本轮用四类现有材料核对了这个问题：
 
-- [Raven 入口](../../sources/repos/Raven/AGENTS.md)侧重硬约束，[Tianshu 入口](../../sources/repos/Tianshu-harness/AGENTS.md)以架构地图和能力索引开头；支持同名文件可以承担不同信息职责。
-- [deepseek Notes](../../sources/repos/deepseek-harness/.agents/notes/README.md)同时要求活动实施事实更新、保留原决定身份、归档后冻结；现有的语义身份与演化区分可以解释这种组合。
-- [归档 Skill](../../sources/repos/deepseek-harness/.agents/skills/dsh-archive-agent-notes/SKILL.md)组合触发描述、规则引用、操作与检查；现有模型已能区分这些内容以及运行系统赋予的使用关系。
-- [MemOS 审查者定义](../../sources/repos/MemOS/.claude/agents/design-reviewer.md)同时包含工具等结构化字段和工作角色说明；现有模型能解释，正文的助手设定例子需要从偏好和人格扩大到具体工作角色。这里仅判断实际读到的本地内容，MemOS 的版本登记冲突仍未消除。
+- [Raven 入口](../../resources/repos/Raven/AGENTS.md)侧重硬约束，[Tianshu 入口](../../resources/repos/Tianshu-harness/AGENTS.md)以架构地图和能力索引开头；支持同名文件可以承担不同信息职责。
+- [deepseek Notes](../../resources/repos/deepseek-harness/.agents/notes/README.md)同时要求活动实施事实更新、保留原决定身份、归档后冻结；现有的语义身份与演化区分可以解释这种组合。
+- [归档 Skill](../../resources/repos/deepseek-harness/.agents/skills/dsh-archive-agent-notes/SKILL.md)组合触发描述、规则引用、操作与检查；现有模型已能区分这些内容以及运行系统赋予的使用关系。
+- [MemOS 审查者定义](../../resources/repos/MemOS/.claude/agents/design-reviewer.md)同时包含工具等结构化字段和工作角色说明；现有模型能解释，正文的助手设定例子需要从偏好和人格扩大到具体工作角色。这里仅判断实际读到的本地内容，MemOS 的版本登记冲突仍未消除。
 
 这些检查没有暴露必须重建主线的新职责或核心反例。它们支持进入收束，并不证明已穷尽所有文档类型。尚需完成的是模型辨别依据及其在边界实例中的一致运用；这是概念论证工作，不能只靠润色完成，但现有材料足以推进。
 

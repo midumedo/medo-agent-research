@@ -1,6 +1,6 @@
 # goose · 根目录文档实测
 
-> 快照 `61830521ad31` · 取证 2026-09-25 · 来源 `sources/repos/goose/`
+> 快照 `61830521ad31` · 取证 2026-09-25 · 来源 `resources/repos/goose/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `documentation/` 二级 + copilot/llms 入口
 
 ## 1. 根目录清单一览（16 份，本样本最多）
@@ -91,7 +91,7 @@ documentation/CLAUDE.md    → @AGENTS.md
 
 | 既有结论 | 本轮实测 | 判定 |
 |---|---|---|
-| 早期假阴性：`llms.txt` / `copilot-instructions` 在本样本「未找到匹配」 | `sources/repos/goose/.github/copilot-instructions.md`、`sources/repos/goose/documentation/static/llms.txt`、`sources/repos/mem0/docs/llms.txt`、`sources/repos/cline/.github/copilot-instructions.md` 均存在 | **旧论断作废**。这是本轮方法级反证的来源 |
+| 早期假阴性：`llms.txt` / `copilot-instructions` 在本样本「未找到匹配」 | `resources/repos/goose/.github/copilot-instructions.md`、`resources/repos/goose/documentation/static/llms.txt`、`resources/repos/mem0/docs/llms.txt`、`resources/repos/cline/.github/copilot-instructions.md` 均存在 | **旧论断作废**。这是本轮方法级反证的来源 |
 | D04 vs D35：SECURITY 是「漏洞上报政策」，SAFETY 是「Agent 行为安全边界」，二者不同 | 本仓把 agent 安全边界写在 `SECURITY.md` 内（首行 `> [!CAUTION]`） | **边界需补**「可合并」这一可能；不能断言两者必然分置 |
 | D06 `CONTRIBUTORS` / `ACKNOWLEDGMENTS` 是「致谢名单」 | 本仓用 `MAINTAINERS.md`（维护者）——**职责不同的第四个名字** | **新增命名**，未覆盖 |
 

@@ -8,7 +8,7 @@
 
 | 想做什么 | 入口 |
 |---|---|
-| 找外部材料与所用版本 | [Sources](sources/README.md) |
+| 找外部材料与所用版本 | [Sources](resources/README.md) |
 | 拆清一个项目或论文的相关机制 | [Deepdive](deepdive/README.md) |
 | 研究概念、解释现象、比较方案或设计检验 | [Analysis](analysis/README.md) |
 | 连贯理解一个综合主题 | [Domain](domain/index.md)；已有第一个暂定的整体运行主题 |

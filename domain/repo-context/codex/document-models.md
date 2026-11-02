@@ -34,7 +34,7 @@
 
 **更新触发。** 定位、安装或启动条件、支持范围、主要入口改变。定位段与安装段可以由不同变化触发，但未出现读取或维护冲突时，不必据此拆成两份文件。
 
-**失败与反例。** “README 对外、内部架构对内”只是一种安排。研究项目的 README 可以主要服务未来自己；库的 README 可以解释设计限制；子目录 README 可以是索引。不能把“长 README”与“短 BRIEF”定义成不可交叉的类型。本项目 [README](../../../以前的/README.md) 与来源里的 [Agent Notes README](../../../sources/repos/deepseek-harness/.agents/notes/README.md) 已服务明显不同的工作，后者的本次核查见 [L6](research/local-material-audit.md#本次抽核的局部实例)。
+**失败与反例。** “README 对外、内部架构对内”只是一种安排。研究项目的 README 可以主要服务未来自己；库的 README 可以解释设计限制；子目录 README 可以是索引。不能把“长 README”与“短 BRIEF”定义成不可交叉的类型。本项目 [README](../../../以前的/README.md) 与来源里的 [Agent Notes README](../../../resources/repos/deepseek-harness/.agents/notes/README.md) 已服务明显不同的工作，后者的本次核查见 [L6](research/local-material-audit.md#本次抽核的局部实例)。
 
 **最小可复用写法。** 先说对象与适用范围，随后给能行动的入口。只在另一个受众确有独立交付需要时保留单独 BRIEF，并说明简介事实从哪里维护。
 
@@ -58,7 +58,7 @@
 
 **更新触发。** 描述的系统关系发生变化，或新的证据推翻了原说明。修改负责该事实的章节；纯用户文案决定不必同步架构文件。架构若是未来设计，明确标成 proposed、target 或计划状态，不能用文件名伪装成已实现。
 
-**失败与反例。** “架构只写 what/how，绝不写 why”会拆掉理解边界所需的前提。本项目的 [ARCHITECTURE](../../../以前的/ARCHITECTURE.md) 就包含结构理由。Raven 的 [CONTEXT-MAP](../../../sources/repos/Raven/CONTEXT-MAP.md) 同时导航与解释关系，不能只当术语表。[L9](research/local-material-audit.md#本次抽核的局部实例)
+**失败与反例。** “架构只写 what/how，绝不写 why”会拆掉理解边界所需的前提。本项目的 [ARCHITECTURE](../../../以前的/ARCHITECTURE.md) 就包含结构理由。Raven 的 [CONTEXT-MAP](../../../resources/repos/Raven/CONTEXT-MAP.md) 同时导航与解释关系，不能只当术语表。[L9](research/local-material-audit.md#本次抽核的局部实例)
 
 **最小可复用写法。** 描述一条实际路径，保留关键边界、必要理由及实现定位。图、树和术语表只是辅助手段：只列目录的 TREE 不能替代组件关系解释；有叙事的地图则可能已经承担架构责任。
 
@@ -180,7 +180,7 @@ CSV 的分隔符少，不推出任意 tokenizer、任意数据、任意任务下
 
 `.xlsx` 在以文本差分为中心的代码审查中存在摩擦，但“所有合并必损坏”“必须依赖 Python”不是成立的排除理由。若实际工作要求电子表格中的公式、原生图表和业务人员交互，保留这种工作界面可能合理；若当前只是固定字段库存，文本表格通常更直接。这里不替既不存在的电子表格需求搭建额外流程。
 
-本地就有一种有用分工：本研究的 [文件清单](../00docslist/index.csv) 用 CSV；[仓库抓取事实](../../../sources/repos/_commits.json) 用 JSON；论证留在 Markdown。这证明混合格式能够表达不同责任，不证明当前三份材料已保持一致——本次还发现版本账本漂移，详见审阅记录。
+本地就有一种有用分工：本研究的 [文件清单](../00docslist/index.csv) 用 CSV；[仓库抓取事实](../../../resources/repos/_commits.json) 用 JSON；论证留在 Markdown。这证明混合格式能够表达不同责任，不证明当前三份材料已保持一致——本次还发现版本账本漂移，详见审阅记录。
 
 ## 五、把模型用于实际治理，而不再制造一层治理
 

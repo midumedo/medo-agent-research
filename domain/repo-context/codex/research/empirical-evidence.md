@@ -1,7 +1,7 @@
 # Repo-context 的实证边界：原始研究核验记录
 
 > 作者：Codex / GPT-6 · 日期：2026-09-26。用途：本轮研究的证据审查与复用方法，不是项目规则。
-> 本次做了文献检索、正文阅读和指定 PDF 页的视觉核对；没有运行付费模型、复现论文实验或修改 `sources/`。下文实验结果均为**作者报告**，不是本项目复现。访问日期均为 2026-09-26。
+> 本次做了文献检索、正文阅读和指定 PDF 页的视觉核对；没有运行付费模型、复现论文实验或修改 `resources/`。下文实验结果均为**作者报告**，不是本项目复现。访问日期均为 2026-09-26。
 
 ## 研究问题与取证边界
 
@@ -11,7 +11,7 @@
 
 ## 实际检索与读取过程
 
-先读项目的 `AGENTS.md`、`domain/AGENTS.md`、`domain/repo-context/AGENTS.md`、`sources/AGENTS.md`、`sources/papers/AGENTS.md`、`CONVENTIONS.md` 和 `STYLE.md`。已有 [Kimi 第 1 轮笔记](../../research/kimi/research/round-01-agents-md.md) 与 [第 2 轮笔记](../../research/kimi/research/round-02-memory-context-rot.md) 只用于提出候选问题，未作为效果证据。
+先读项目的 `AGENTS.md`、`domain/AGENTS.md`、`domain/repo-context/AGENTS.md`、`resources/AGENTS.md`、`resources/papers/AGENTS.md`、`CONVENTIONS.md` 和 `STYLE.md`。已有 [Kimi 第 1 轮笔记](../../research/kimi/research/round-01-agents-md.md) 与 [第 2 轮笔记](../../research/kimi/research/round-02-memory-context-rot.md) 只用于提出候选问题，未作为效果证据。
 
 以下查询确已执行；引号和站点约束按实际查询保留。搜索摘要只用于定位，证据卡依据后续打开的原文。
 

@@ -1,6 +1,6 @@
 # gemini-cli · 根目录文档实测
 
-> 快照 `bedef96ef429` · 取证 2026-09-25 · 来源 `sources/repos/gemini-cli/`
+> 快照 `bedef96ef429` · 取证 2026-09-25 · 来源 `resources/repos/gemini-cli/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `GEMINI.md` 分级 + `.gemini/skills/`
 
 ## 1. 根目录清单一览
@@ -26,7 +26,7 @@
 ### 2.2 `ROADMAP.md`（5748 字节）—— 推翻 D26 的「零命中」
 
 - **声称**：`02docsdefine\ds.md` D26 `ROADMAP.md` 状态 `○`（仅草案，样本零命中）。
-- **实测**：`sources/repos/gemini-cli/ROADMAP.md` 存在，5748 字节，首行 `# Gemini CLI Roadmap`。
+- **实测**：`resources/repos/gemini-cli/ROADMAP.md` 存在，5748 字节，首行 `# Gemini CLI Roadmap`。
 - **原因**：D26 的样本集是 11 仓，不含 gemini-cli；本阶段样本扩到 18 仓才命中。
 - **这条正是 `role` 列的价值**：`index.csv` 里 `role=D26` 的行能机械地把「因扩样而需重判」的条目列出来，不需要改 `02docsdefine` 的任何一行。
 
@@ -72,7 +72,7 @@ packages/vscode-ide-companion/GEMINI.md
 
 | 既有结论 | 本轮实测 | 判定 |
 |---|---|---|
-| D26 `ROADMAP.md` 状态 `○`（零命中） | `sources/repos/gemini-cli/ROADMAP.md` 存在，5748B | **需重判为 `●`（实证）**。样本扩到 18 仓后命中 |
+| D26 `ROADMAP.md` 状态 `○`（零命中） | `resources/repos/gemini-cli/ROADMAP.md` 存在，5748B | **需重判为 `●`（实证）**。样本扩到 18 仓后命中 |
 | D10 边界：`CLAUDE.md` 与 `AGENTS.md` 同源，分歧时 AGENTS 是正本；同族 `GEMINI.md` | 本仓 **无 `AGENTS.md`**，`GEMINI.md` 4610B 即正本 | **「AGENTS 是正本」不成立为通则**。D10 需改成「同族文件里哪个是正本，取决于本仓有没有 `AGENTS.md`」 |
 | D05 边界：`QUICKSTART` 是 README 的最短路径切片 | 本仓无 `QUICKSTART.md` | 无冲突 |
 

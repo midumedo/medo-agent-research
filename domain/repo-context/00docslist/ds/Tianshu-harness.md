@@ -1,6 +1,6 @@
 # Tianshu-harness · 根目录文档实测
 
-> 快照 `79c10d30ba4f` · 取证 2026-09-25 · 来源 `sources/repos/Tianshu-harness/`
+> 快照 `79c10d30ba4f` · 取证 2026-09-25 · 来源 `resources/repos/Tianshu-harness/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `docs/` 总纲与目录地图 + `AGENTS.md` 分级 + `.rivet/`
 
 ## 1. 根目录清单一览

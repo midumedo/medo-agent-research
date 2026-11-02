@@ -1,6 +1,6 @@
 # MemOS · 根目录文档实测
 
-> 快照 `12acdad694d0` · 取证 2026-09-25 · 来源 `sources/repos/MemOS/`
+> 快照 `12acdad694d0` · 取证 2026-09-25 · 来源 `resources/repos/MemOS/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `.claude/`、`.codex/` + 7 份 SKILL.md
 
 ## 1. 根目录清单一览（5 份，本样本最少之一）

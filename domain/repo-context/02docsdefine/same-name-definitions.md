@@ -56,23 +56,23 @@
 
 | 实例与正文依据 | 为什么适用；需保留的实例差异 |
 |---|---|
-| [cline/README.md](../../../sources/repos/cline/README.md#L5) · L5–9、L44–185 | 产品能力、安装与子项目/资料入口；详细操作主要通过导航取得 |
-| [codex/README.md](../../../sources/repos/codex/README.md#L1) · L1–81 | 先区分 CLI、IDE、桌面与云端形态，再给安装和认证入口 |
-| [deepseek-harness/README.md](../../../sources/repos/deepseek-harness/README.md#L1) · L1–77 | 介绍项目与预览/安全状态，连接运行、支持、开发和许可资料 |
-| [EverOS/README.md](../../../sources/repos/EverOS/README.md#L37) · L37–86、L90–312、L664–793 | 产品定位、Quick Start、用例和生态资料组合；能力比较是来源主张 |
-| [gemini-cli/README.md](../../../sources/repos/gemini-cli/README.md#L1) · L1–108、L146–412 | 产品、发布渠道、认证、典型任务与帮助资料 |
-| [goose/README.md](../../../sources/repos/goose/README.md#L1) · L1–63 | 产品定位、下载安装与社区/帮助入口 |
-| [mem0/README.md](../../../sources/repos/mem0/README.md#L45) · L45–120、L131–269 | 研究与产品介绍，托管/自托管、集成和技能入口 |
-| [MemoryBear/README.md](../../../sources/repos/MemoryBear/README.md#L5) · L5–58、L62–465、L485–504 | 产品与论文介绍，同时承载较完整部署配置；指标未独立复现 |
-| [MemOS/README.md](../../../sources/repos/MemOS/README.md#L41) · L41–214、L305–344 | 按 Cloud、Self-host、Plugin 等方式进入产品 |
-| [memU/README.md](../../../sources/repos/memU/README.md#L23) · L23–206 | 产品定位、支持 host、安装/卸载、配置、后端与集成 |
-| [minimax-cli/README.md](../../../sources/repos/minimax-cli/README.md#L1) · L1–215 | CLI 产品说明，安装、认证、命令与配置共同形成使用入口 |
-| [OpenHands/README.md](../../../sources/repos/OpenHands/README.md#L5) · L5–158 | 当前样本实际介绍 Agent Canvas；自托管、连接后端和架构资料入口 |
-| [qwen-code/README.md](../../../sources/repos/qwen-code/README.md#L10) · L10–214 | 安装、命令、使用示例、配置、Agent setup 与其他资料 |
-| [Raven/README.md](../../../sources/repos/Raven/README.md#L12) · L12–110、L208–327 | 产品、连接、安装、界面与系统资料；基准主张保留来源边界 |
-| [ReFind/README.md](../../../sources/repos/ReFind/README.md#L1) · L1–9、L33–167 | 研究系统的身份、方法、部署和 API 契约直接在入口展开 |
-| [Tianshu-harness/README.md](../../../sources/repos/Tianshu-harness/README.md#L38) · L38–55、L79–149、L213–267 | 中文产品论证与开始路径；篇幅和语言不改变入口职责 |
-| [ZCode/README.md](../../../sources/repos/ZCode/README.md#L16) · L16–223 | 中文开发入口；工具链、初始化、桌面/Web/CLI 及远程资源准备 |
+| [cline/README.md](../../../resources/repos/cline/README.md#L5) · L5–9、L44–185 | 产品能力、安装与子项目/资料入口；详细操作主要通过导航取得 |
+| [codex/README.md](../../../resources/repos/codex/README.md#L1) · L1–81 | 先区分 CLI、IDE、桌面与云端形态，再给安装和认证入口 |
+| [deepseek-harness/README.md](../../../resources/repos/deepseek-harness/README.md#L1) · L1–77 | 介绍项目与预览/安全状态，连接运行、支持、开发和许可资料 |
+| [EverOS/README.md](../../../resources/repos/EverOS/README.md#L37) · L37–86、L90–312、L664–793 | 产品定位、Quick Start、用例和生态资料组合；能力比较是来源主张 |
+| [gemini-cli/README.md](../../../resources/repos/gemini-cli/README.md#L1) · L1–108、L146–412 | 产品、发布渠道、认证、典型任务与帮助资料 |
+| [goose/README.md](../../../resources/repos/goose/README.md#L1) · L1–63 | 产品定位、下载安装与社区/帮助入口 |
+| [mem0/README.md](../../../resources/repos/mem0/README.md#L45) · L45–120、L131–269 | 研究与产品介绍，托管/自托管、集成和技能入口 |
+| [MemoryBear/README.md](../../../resources/repos/MemoryBear/README.md#L5) · L5–58、L62–465、L485–504 | 产品与论文介绍，同时承载较完整部署配置；指标未独立复现 |
+| [MemOS/README.md](../../../resources/repos/MemOS/README.md#L41) · L41–214、L305–344 | 按 Cloud、Self-host、Plugin 等方式进入产品 |
+| [memU/README.md](../../../resources/repos/memU/README.md#L23) · L23–206 | 产品定位、支持 host、安装/卸载、配置、后端与集成 |
+| [minimax-cli/README.md](../../../resources/repos/minimax-cli/README.md#L1) · L1–215 | CLI 产品说明，安装、认证、命令与配置共同形成使用入口 |
+| [OpenHands/README.md](../../../resources/repos/OpenHands/README.md#L5) · L5–158 | 当前样本实际介绍 Agent Canvas；自托管、连接后端和架构资料入口 |
+| [qwen-code/README.md](../../../resources/repos/qwen-code/README.md#L10) · L10–214 | 安装、命令、使用示例、配置、Agent setup 与其他资料 |
+| [Raven/README.md](../../../resources/repos/Raven/README.md#L12) · L12–110、L208–327 | 产品、连接、安装、界面与系统资料；基准主张保留来源边界 |
+| [ReFind/README.md](../../../resources/repos/ReFind/README.md#L1) · L1–9、L33–167 | 研究系统的身份、方法、部署和 API 契约直接在入口展开 |
+| [Tianshu-harness/README.md](../../../resources/repos/Tianshu-harness/README.md#L38) · L38–55、L79–149、L213–267 | 中文产品论证与开始路径；篇幅和语言不改变入口职责 |
+| [ZCode/README.md](../../../resources/repos/ZCode/README.md#L16) · L16–223 | 中文开发入口；工具链、初始化、桌面/Web/CLI 及远程资源准备 |
 
 **邻居与反例**：独立安装手册围绕一个已选定环境展开操作；系统参考围绕精确查询展开；README 把读者带入这些任务。一个名为 README 的文件若仅是某次内部状态流水，既无项目定位也无进入关系，就不符合当前共同定义。目录级 README 是否以“所在组件”为项目对象，需在后续扩样时明确，不能从本轮仓根样本直接推广。
 
@@ -93,19 +93,19 @@
 
 | 实例与正文依据 | 工作信息的实际重心 |
 |---|---|
-| [cline/AGENTS.md](../../../sources/repos/cline/AGENTS.md#L1) · L1–32 | 云端开发环境、组件操作与持久 VM 状态；环境前提须随命令一起理解 |
-| [codex/AGENTS.md](../../../sources/repos/codex/AGENTS.md#L1) · L1–83、L85–132、L260–320 | Rust 工程约束、构建/API 与验证；正文范围限定 codex-rs，根路径不代表全仓有效 |
-| [deepseek-harness/AGENTS.md](../../../sources/repos/deepseek-harness/AGENTS.md#L1) · L1–12、L112–119、L164–178 | 工作规则、架构/子树路由和检查；与同仓 CLAUDE 是普通文件全文副本关系 |
-| [goose/AGENTS.md](../../../sources/repos/goose/AGENTS.md#L1) · L1–43、L81–137 | issue 准入、仓库结构、工程工具和验证 |
-| [mem0/AGENTS.md](../../../sources/repos/mem0/AGENTS.md#L1) · L1–55、L72–175 | 多语言子包工具链、工程规则、目录与贡献要求 |
-| [MemOS/AGENTS.md](../../../sources/repos/MemOS/AGENTS.md#L1) · L1–66、L79–155 | 多运行时共用的项目事实与工程规约，另由运行时入口补充专属说明 |
-| [memU/AGENTS.md](../../../sources/repos/memU/AGENTS.md#L1) · L1–77 | 服务入口不变量、存储契约、scope/retrieval、地图与完成条件 |
-| [minimax-cli/AGENTS.md](../../../sources/repos/minimax-cli/AGENTS.md#L1) · L1–80、L89–211 | Bun/TypeScript 工具链、风格、测试、blind review 与源码布局 |
-| [OpenHands/AGENTS.md](../../../sources/repos/OpenHands/AGENTS.md#L1) · L1–71 | Agent Canvas 的所有权、依赖方向、状态、技能选择、规格与发布约束 |
-| [qwen-code/AGENTS.md](../../../sources/repos/qwen-code/AGENTS.md#L3) · L3–179、L207–350 | 简化原则、包级检查、设计/编程与交付审查 |
-| [Raven/AGENTS.md](../../../sources/repos/Raven/AGENTS.md#L1) · L1–76、L114–413 | 语言、依赖、分支/PR、测试、术语与资产硬约束 |
-| [Tianshu-harness/AGENTS.md](../../../sources/repos/Tianshu-harness/AGENTS.md#L1) · L1–39、L91–186 | 架构、运行数据、能力边界与排查地图，混合部分执行约束 |
-| [ZCode/AGENTS.md](../../../sources/repos/ZCode/AGENTS.md#L1) · L1–82 | 证据优先、spec-before-code、操作与验证、UI/平台和远程协议约束 |
+| [cline/AGENTS.md](../../../resources/repos/cline/AGENTS.md#L1) · L1–32 | 云端开发环境、组件操作与持久 VM 状态；环境前提须随命令一起理解 |
+| [codex/AGENTS.md](../../../resources/repos/codex/AGENTS.md#L1) · L1–83、L85–132、L260–320 | Rust 工程约束、构建/API 与验证；正文范围限定 codex-rs，根路径不代表全仓有效 |
+| [deepseek-harness/AGENTS.md](../../../resources/repos/deepseek-harness/AGENTS.md#L1) · L1–12、L112–119、L164–178 | 工作规则、架构/子树路由和检查；与同仓 CLAUDE 是普通文件全文副本关系 |
+| [goose/AGENTS.md](../../../resources/repos/goose/AGENTS.md#L1) · L1–43、L81–137 | issue 准入、仓库结构、工程工具和验证 |
+| [mem0/AGENTS.md](../../../resources/repos/mem0/AGENTS.md#L1) · L1–55、L72–175 | 多语言子包工具链、工程规则、目录与贡献要求 |
+| [MemOS/AGENTS.md](../../../resources/repos/MemOS/AGENTS.md#L1) · L1–66、L79–155 | 多运行时共用的项目事实与工程规约，另由运行时入口补充专属说明 |
+| [memU/AGENTS.md](../../../resources/repos/memU/AGENTS.md#L1) · L1–77 | 服务入口不变量、存储契约、scope/retrieval、地图与完成条件 |
+| [minimax-cli/AGENTS.md](../../../resources/repos/minimax-cli/AGENTS.md#L1) · L1–80、L89–211 | Bun/TypeScript 工具链、风格、测试、blind review 与源码布局 |
+| [OpenHands/AGENTS.md](../../../resources/repos/OpenHands/AGENTS.md#L1) · L1–71 | Agent Canvas 的所有权、依赖方向、状态、技能选择、规格与发布约束 |
+| [qwen-code/AGENTS.md](../../../resources/repos/qwen-code/AGENTS.md#L3) · L3–179、L207–350 | 简化原则、包级检查、设计/编程与交付审查 |
+| [Raven/AGENTS.md](../../../resources/repos/Raven/AGENTS.md#L1) · L1–76、L114–413 | 语言、依赖、分支/PR、测试、术语与资产硬约束 |
+| [Tianshu-harness/AGENTS.md](../../../resources/repos/Tianshu-harness/AGENTS.md#L1) · L1–39、L91–186 | 架构、运行数据、能力边界与排查地图，混合部分执行约束 |
+| [ZCode/AGENTS.md](../../../resources/repos/ZCode/AGENTS.md#L1) · L1–82 | 证据优先、spec-before-code、操作与验证、UI/平台和远程协议约束 |
 
 **邻居与反例**：CONTRIBUTING 说明如何参与并让贡献进入项目；AGENTS 在本版中说明 Agent 如何在具体仓库工作。内容可以重叠，不能由重叠推断它们具有相同入口机制。若 AGENTS 只列机器人产品和角色而无仓库工作关系，当前定义需要重新核对。
 
@@ -126,14 +126,14 @@
 
 | 实例与正文依据 | 工作信息如何取得；必须保留的关系 |
 |---|---|
-| [deepseek-harness/CLAUDE.md](../../../sources/repos/deepseek-harness/CLAUDE.md#L1) · L1–12 及全文比较 | 与 AGENTS 全文相同的两个普通文件；本地不是 symlink，也不是一行指针 |
-| [EverOS/CLAUDE.md](../../../sources/repos/EverOS/CLAUDE.md#L16) · L16–92 | 直接承载架构、命令、工程约束、运行时专属规则及同步边界 |
-| [goose/CLAUDE.md](../../../sources/repos/goose/CLAUDE.md#L1) · L1 | 一行 @AGENTS.md；规则正文位于引用目标，引用语法的实际展开需另核消费者 |
-| [mem0/CLAUDE.md](../../../sources/repos/mem0/CLAUDE.md#L1) · L1–175 | 与 AGENTS 相同的工程说明全文副本；不能因换文件名把规则另判一种职责 |
-| [MemOS/CLAUDE.md](../../../sources/repos/MemOS/CLAUDE.md#L1) · L1–23 | Claude 子代理读写边界及 API contract 知识入口，突出专属协作补充 |
-| [qwen-code/CLAUDE.md](../../../sources/repos/qwen-code/CLAUDE.md#L1) · L1–5 | 要求先读 AGENTS，并声明其为编码/测试/审查规则来源 |
-| [Raven/CLAUDE.md](../../../sources/repos/Raven/CLAUDE.md#L1) · 全文比较 | 在另一普通路径保存与 AGENTS 相同的仓库硬约束 |
-| [Tianshu-harness/CLAUDE.md](../../../sources/repos/Tianshu-harness/CLAUDE.md#L1) · L1–14、L16–49、L51–90 | 命令/测试、运行时架构、代码约束和失败经验；不默认等同其 AGENTS 地图 |
+| [deepseek-harness/CLAUDE.md](../../../resources/repos/deepseek-harness/CLAUDE.md#L1) · L1–12 及全文比较 | 与 AGENTS 全文相同的两个普通文件；本地不是 symlink，也不是一行指针 |
+| [EverOS/CLAUDE.md](../../../resources/repos/EverOS/CLAUDE.md#L16) · L16–92 | 直接承载架构、命令、工程约束、运行时专属规则及同步边界 |
+| [goose/CLAUDE.md](../../../resources/repos/goose/CLAUDE.md#L1) · L1 | 一行 @AGENTS.md；规则正文位于引用目标，引用语法的实际展开需另核消费者 |
+| [mem0/CLAUDE.md](../../../resources/repos/mem0/CLAUDE.md#L1) · L1–175 | 与 AGENTS 相同的工程说明全文副本；不能因换文件名把规则另判一种职责 |
+| [MemOS/CLAUDE.md](../../../resources/repos/MemOS/CLAUDE.md#L1) · L1–23 | Claude 子代理读写边界及 API contract 知识入口，突出专属协作补充 |
+| [qwen-code/CLAUDE.md](../../../resources/repos/qwen-code/CLAUDE.md#L1) · L1–5 | 要求先读 AGENTS，并声明其为编码/测试/审查规则来源 |
+| [Raven/CLAUDE.md](../../../resources/repos/Raven/CLAUDE.md#L1) · 全文比较 | 在另一普通路径保存与 AGENTS 相同的仓库硬约束 |
+| [Tianshu-harness/CLAUDE.md](../../../resources/repos/Tianshu-harness/CLAUDE.md#L1) · L1–14、L16–49、L51–90 | 命令/测试、运行时架构、代码约束和失败经验；不默认等同其 AGENTS 地图 |
 
 **邻居与反例**：AGENTS 的共同定义面向仓库 Agent 工作，CLAUDE 的共同定义额外保留命名入口和共用/专属关系；两者可以交叉承载相同规则。只有 Claude 产品介绍、提示词样例集或空文件，没有本仓工作关系时，不符合当前定义。
 
@@ -154,8 +154,8 @@
 
 | 实例与正文依据 | 领域范围与有区分力的内容 |
 |---|---|
-| [Raven/CONTEXT.md](../../../sources/repos/Raven/CONTEXT.md#L1) · L1–68、L72–86、L682–735、L934–986、L2022–2085、L2520–2555 | Runtime 及相邻子域；Session/binding、Turn/Iteration/Loop、调度与 RPC/context 等对象、状态和不变量 |
-| [ZCode/CONTEXT.md](../../../sources/repos/ZCode/CONTEXT.md#L1) · L1–81 | 插件商店子域；来源/刷新、商店结构、listing/manifest、生命周期和状态边界 |
+| [Raven/CONTEXT.md](../../../resources/repos/Raven/CONTEXT.md#L1) · L1–68、L72–86、L682–735、L934–986、L2022–2085、L2520–2555 | Runtime 及相邻子域；Session/binding、Turn/Iteration/Loop、调度与 RPC/context 等对象、状态和不变量 |
+| [ZCode/CONTEXT.md](../../../resources/repos/ZCode/CONTEXT.md#L1) · L1–81 | 插件商店子域；来源/刷新、商店结构、listing/manifest、生命周期和状态边界 |
 
 **邻居与反例**：CONTEXT-MAP 主要路由领域与资料；CONTEXT 本版共同定义主要解释领域语义。一个同名文件若只列当前任务进度或保存运行日志，就不满足此定义；“上下文”一词本身不能抹去这些差异。
 
@@ -176,18 +176,18 @@
 
 | 实例与正文依据 | 参与、接纳和实施关系的实际范围 |
 |---|---|
-| [cline/CONTRIBUTING.md](../../../sources/repos/cline/CONTRIBUTING.md#L1) · L1–65、L126–207 | issue/批准、开发、测试和 PR，另转介安全报告 |
-| [deepseek-harness/CONTRIBUTING.md](../../../sources/repos/deepseek-harness/CONTRIBUTING.md#L1) · L1–21 | 当前暂不接收外部 PR，提供讨论、插件、博客与帮助等参与方式 |
-| [EverOS/CONTRIBUTING.md](../../../sources/repos/EverOS/CONTRIBUTING.md#L6) · L6–63、L73–156 | 外部参与与核心维护者工程工作分段；后段权限不能套给所有人 |
-| [gemini-cli/CONTRIBUTING.md](../../../sources/repos/gemini-cli/CONTRIBUTING.md#L17) · L17–169、L197–357、L418–569 | CLA、issue/PR、构建测试、沙箱和文档要求 |
-| [goose/CONTRIBUTING.md](../../../sources/repos/goose/CONTRIBUTING.md#L1) · L1–108、L121–206、L298–361 | 从问题、设计、Ready 到 PR 和验证，说明人/AI 协作责任 |
-| [mem0/CONTRIBUTING.md](../../../sources/repos/mem0/CONTRIBUTING.md#L18) · L18–100 | 已接纳 issue、贡献者资格、理解与验证、AI 使用披露和 CLA |
-| [MemoryBear/CONTRIBUTING.md](../../../sources/repos/MemoryBear/CONTRIBUTING.md#L1) · L1–74 | 中文 issue、feature branch、commit 与 develop PR，附格式/测试提示 |
-| [MemOS/CONTRIBUTING.md](../../../sources/repos/MemOS/CONTRIBUTING.md#L1) · L1–82、L107–213、L217–450 | 贡献工作流、环境、后端、验证、审查及社区/许可要求 |
-| [memU/CONTRIBUTING.md](../../../sources/repos/memU/CONTRIBUTING.md#L85) · L85–130、L185–197 | 提交准备与贡献者/审查者要求；实际细项由该实例说明 |
-| [qwen-code/CONTRIBUTING.md](../../../sources/repos/qwen-code/CONTRIBUTING.md#L5) · L5–84、L85–177、L211–255、L318–332 | issue、provider 审批、环境、检查、文档预览与提交/发布；沙箱部分仍有 TBD |
-| [Raven/CONTRIBUTING.md](../../../sources/repos/Raven/CONTRIBUTING.md#L1) · L1–55 | 最低环境、工具/命令与 PR 质量/验证材料，安全问题分流 |
-| [Tianshu-harness/CONTRIBUTING.md](../../../sources/repos/Tianshu-harness/CONTRIBUTING.md#L1) · L1–29、L56–134 | 可改范围、权限、验证、主/公开双仓整合及署名，包含维护者职责 |
+| [cline/CONTRIBUTING.md](../../../resources/repos/cline/CONTRIBUTING.md#L1) · L1–65、L126–207 | issue/批准、开发、测试和 PR，另转介安全报告 |
+| [deepseek-harness/CONTRIBUTING.md](../../../resources/repos/deepseek-harness/CONTRIBUTING.md#L1) · L1–21 | 当前暂不接收外部 PR，提供讨论、插件、博客与帮助等参与方式 |
+| [EverOS/CONTRIBUTING.md](../../../resources/repos/EverOS/CONTRIBUTING.md#L6) · L6–63、L73–156 | 外部参与与核心维护者工程工作分段；后段权限不能套给所有人 |
+| [gemini-cli/CONTRIBUTING.md](../../../resources/repos/gemini-cli/CONTRIBUTING.md#L17) · L17–169、L197–357、L418–569 | CLA、issue/PR、构建测试、沙箱和文档要求 |
+| [goose/CONTRIBUTING.md](../../../resources/repos/goose/CONTRIBUTING.md#L1) · L1–108、L121–206、L298–361 | 从问题、设计、Ready 到 PR 和验证，说明人/AI 协作责任 |
+| [mem0/CONTRIBUTING.md](../../../resources/repos/mem0/CONTRIBUTING.md#L18) · L18–100 | 已接纳 issue、贡献者资格、理解与验证、AI 使用披露和 CLA |
+| [MemoryBear/CONTRIBUTING.md](../../../resources/repos/MemoryBear/CONTRIBUTING.md#L1) · L1–74 | 中文 issue、feature branch、commit 与 develop PR，附格式/测试提示 |
+| [MemOS/CONTRIBUTING.md](../../../resources/repos/MemOS/CONTRIBUTING.md#L1) · L1–82、L107–213、L217–450 | 贡献工作流、环境、后端、验证、审查及社区/许可要求 |
+| [memU/CONTRIBUTING.md](../../../resources/repos/memU/CONTRIBUTING.md#L85) · L85–130、L185–197 | 提交准备与贡献者/审查者要求；实际细项由该实例说明 |
+| [qwen-code/CONTRIBUTING.md](../../../resources/repos/qwen-code/CONTRIBUTING.md#L5) · L5–84、L85–177、L211–255、L318–332 | issue、provider 审批、环境、检查、文档预览与提交/发布；沙箱部分仍有 TBD |
+| [Raven/CONTRIBUTING.md](../../../resources/repos/Raven/CONTRIBUTING.md#L1) · L1–55 | 最低环境、工具/命令与 PR 质量/验证材料，安全问题分流 |
+| [Tianshu-harness/CONTRIBUTING.md](../../../resources/repos/Tianshu-harness/CONTRIBUTING.md#L1) · L1–29、L56–134 | 可改范围、权限、验证、主/公开双仓整合及署名，包含维护者职责 |
 
 **邻居与反例**：CODE_OF_CONDUCT 主要约束参与行为；AGENTS 主要提供本仓 Agent 工作信息。CONTRIBUTING 可引用两者，但贡献接入关系仍需成立。只有工具安装与运行步骤的文件，即使名为 CONTRIBUTING，也不能解释谁贡献什么、怎样被接纳。
 
@@ -208,15 +208,15 @@
 
 | 实例与正文依据 | 实际承载的安全职责 |
 |---|---|
-| [cline/SECURITY.md](../../../sources/repos/cline/SECURITY.md#L1) · L1–25 | 支持版本、私密报告、所需材料与协调披露；主要是漏洞处理政策 |
-| [codex/SECURITY.md](../../../sources/repos/codex/SECURITY.md#L1) · L1–17 | 漏洞报告入口；L15–17 将产品安全控制说明转介其他资料 |
-| [EverOS/SECURITY.md](../../../sources/repos/EverOS/SECURITY.md#L3) · L3–60 | 报告/响应与支持范围，同时说明可信 caller、本地数据、凭证和输入风险 |
-| [gemini-cli/SECURITY.md](../../../sources/repos/gemini-cli/SECURITY.md#L1) · L1–9 | Google 漏洞报告入口及预期响应；不是完整产品风险说明 |
-| [goose/SECURITY.md](../../../sources/repos/goose/SECURITY.md#L1) · L1–15 | 本地 Agent 执行、不可信输入与提示注入风险，隔离/人审建议，以及私密报告入口 |
-| [mem0/SECURITY.md](../../../sources/repos/mem0/SECURITY.md#L1) · L1–54 | 私密报告、实际复现/AI 证据要求、响应/协调披露与支持版本 |
-| [qwen-code/SECURITY.md](../../../sources/repos/qwen-code/SECURITY.md#L1) · L1–9 | 专用安全报告 portal 和普通 bug 分流；正文没有独立证明 portal 的隐私实现 |
-| [Raven/SECURITY.md](../../../sources/repos/Raven/SECURITY.md#L3) · L3–25 | 私密报告材料、支持分支与修复范围 |
-| [Tianshu-harness/SECURITY.md](../../../sources/repos/Tianshu-harness/SECURITY.md#L1) · L1–35 | 漏洞受理与版本支持，加上运行防线、仓库数据/指令信任边界 |
+| [cline/SECURITY.md](../../../resources/repos/cline/SECURITY.md#L1) · L1–25 | 支持版本、私密报告、所需材料与协调披露；主要是漏洞处理政策 |
+| [codex/SECURITY.md](../../../resources/repos/codex/SECURITY.md#L1) · L1–17 | 漏洞报告入口；L15–17 将产品安全控制说明转介其他资料 |
+| [EverOS/SECURITY.md](../../../resources/repos/EverOS/SECURITY.md#L3) · L3–60 | 报告/响应与支持范围，同时说明可信 caller、本地数据、凭证和输入风险 |
+| [gemini-cli/SECURITY.md](../../../resources/repos/gemini-cli/SECURITY.md#L1) · L1–9 | Google 漏洞报告入口及预期响应；不是完整产品风险说明 |
+| [goose/SECURITY.md](../../../resources/repos/goose/SECURITY.md#L1) · L1–15 | 本地 Agent 执行、不可信输入与提示注入风险，隔离/人审建议，以及私密报告入口 |
+| [mem0/SECURITY.md](../../../resources/repos/mem0/SECURITY.md#L1) · L1–54 | 私密报告、实际复现/AI 证据要求、响应/协调披露与支持版本 |
+| [qwen-code/SECURITY.md](../../../resources/repos/qwen-code/SECURITY.md#L1) · L1–9 | 专用安全报告 portal 和普通 bug 分流；正文没有独立证明 portal 的隐私实现 |
+| [Raven/SECURITY.md](../../../resources/repos/Raven/SECURITY.md#L3) · L3–25 | 私密报告材料、支持分支与修复范围 |
+| [Tianshu-harness/SECURITY.md](../../../resources/repos/Tianshu-harness/SECURITY.md#L1) · L1–35 | 漏洞受理与版本支持，加上运行防线、仓库数据/指令信任边界 |
 
 **邻居与反例**：普通 bug 流程处理一般缺陷，社区行为准则处理参与行为；安全报告有自己的范围和渠道。SAFETY 文档可能承担运行风险职责，但不因语义重叠自动并入这个精确文件名组。若 SECURITY 只存密码或安全扫描结果而无政策/处置关系，不能按当前定义解释。
 
@@ -237,12 +237,12 @@
 
 | 实例与正文依据 | 实际行为范围与执行关系 |
 |---|---|
-| [cline/CODE_OF_CONDUCT.md](../../../sources/repos/cline/CODE_OF_CONDUCT.md#L1) · L1–10、L34–76 | 社区行为、报告与维护者处置 |
-| [EverOS/CODE_OF_CONDUCT.md](../../../sources/repos/EverOS/CODE_OF_CONDUCT.md#L9) · L9–77 | 标准、适用空间、报告渠道与分级处置 |
-| [goose/CODE_OF_CONDUCT.md](../../../sources/repos/goose/CODE_OF_CONDUCT.md#L2) · L2–83 | 可接受/受限行为、报告、调查与执行程序 |
-| [mem0/CODE_OF_CONDUCT.md](../../../sources/repos/mem0/CODE_OF_CONDUCT.md#L39) · L15–37、L39–168 | 传统社区准则，加上 AI 披露、验证/证据、贡献量与互动责任，纳入执行规则 |
-| [Raven/CODE_OF_CONDUCT.md](../../../sources/repos/Raven/CODE_OF_CONDUCT.md#L1) · L1–20 | 技术讨论/贡献互动、治理措施和报告 |
-| [Tianshu-harness/CODE_OF_CONDUCT.md](../../../sources/repos/Tianshu-harness/CODE_OF_CONDUCT.md#L1) · L1–22 | 简明参与标准、报告路径及维护者处置 |
+| [cline/CODE_OF_CONDUCT.md](../../../resources/repos/cline/CODE_OF_CONDUCT.md#L1) · L1–10、L34–76 | 社区行为、报告与维护者处置 |
+| [EverOS/CODE_OF_CONDUCT.md](../../../resources/repos/EverOS/CODE_OF_CONDUCT.md#L9) · L9–77 | 标准、适用空间、报告渠道与分级处置 |
+| [goose/CODE_OF_CONDUCT.md](../../../resources/repos/goose/CODE_OF_CONDUCT.md#L2) · L2–83 | 可接受/受限行为、报告、调查与执行程序 |
+| [mem0/CODE_OF_CONDUCT.md](../../../resources/repos/mem0/CODE_OF_CONDUCT.md#L39) · L15–37、L39–168 | 传统社区准则，加上 AI 披露、验证/证据、贡献量与互动责任，纳入执行规则 |
+| [Raven/CODE_OF_CONDUCT.md](../../../resources/repos/Raven/CODE_OF_CONDUCT.md#L1) · L1–20 | 技术讨论/贡献互动、治理措施和报告 |
+| [Tianshu-harness/CODE_OF_CONDUCT.md](../../../resources/repos/Tianshu-harness/CODE_OF_CONDUCT.md#L1) · L1–22 | 简明参与标准、报告路径及维护者处置 |
 
 **邻居与反例**：工程风格规定怎样写产物，贡献指南安排接纳路径，本定义关注参与行为及其执行责任。只规定格式化和测试命令而无社区行为关系的同名文件，需要另行重判。
 
@@ -263,14 +263,14 @@
 
 | 实例与正文依据 | 历史如何组织；需保留的状态 |
 |---|---|
-| [cline/CHANGELOG.md](../../../sources/repos/cline/CHANGELOG.md#L1) · L1–22 | 逐版本发布的新功能、变化与修复 |
-| [codex/CHANGELOG.md](../../../sources/repos/codex/CHANGELOG.md#L1) · L1–5 | 本地 Unreleased 入口与 GitHub Releases 指针；正式历史在外部 |
-| [EverOS/CHANGELOG.md](../../../sources/repos/EverOS/CHANGELOG.md#L1) · L1–44、L1212–1221 | SemVer 变化与升级影响；底部比较链接一致性仍待核对 |
-| [memU/CHANGELOG.md](../../../sources/repos/memU/CHANGELOG.md#L1) · L1–30、L51–185、L240–281 | 按版本记录功能、修复、文档与 breaking changes（不兼容变化），附提交/比较线索 |
-| [OpenHands/CHANGELOG.md](../../../sources/repos/OpenHands/CHANGELOG.md#L1) · L1–29 | Agent Canvas 的 Unreleased 与 npm 发行包变化，含导出/构建与发布信息 |
-| [qwen-code/CHANGELOG.md](../../../sources/repos/qwen-code/CHANGELOG.md#L1) · L1–12 及版本条目 | 声明仅 stable 版本、自动生成；生成与收录范围须保留 |
-| [Raven/CHANGELOG.md](../../../sources/repos/Raven/CHANGELOG.md#L1) · L1–15、L35–140 | 未发布与已发布变化、原因/影响和迁移提示 |
-| [Tianshu-harness/CHANGELOG.md](../../../sources/repos/Tianshu-harness/CHANGELOG.md#L1) · L1–56 | 按日期记录产品变化、症状与处置 |
+| [cline/CHANGELOG.md](../../../resources/repos/cline/CHANGELOG.md#L1) · L1–22 | 逐版本发布的新功能、变化与修复 |
+| [codex/CHANGELOG.md](../../../resources/repos/codex/CHANGELOG.md#L1) · L1–5 | 本地 Unreleased 入口与 GitHub Releases 指针；正式历史在外部 |
+| [EverOS/CHANGELOG.md](../../../resources/repos/EverOS/CHANGELOG.md#L1) · L1–44、L1212–1221 | SemVer 变化与升级影响；底部比较链接一致性仍待核对 |
+| [memU/CHANGELOG.md](../../../resources/repos/memU/CHANGELOG.md#L1) · L1–30、L51–185、L240–281 | 按版本记录功能、修复、文档与 breaking changes（不兼容变化），附提交/比较线索 |
+| [OpenHands/CHANGELOG.md](../../../resources/repos/OpenHands/CHANGELOG.md#L1) · L1–29 | Agent Canvas 的 Unreleased 与 npm 发行包变化，含导出/构建与发布信息 |
+| [qwen-code/CHANGELOG.md](../../../resources/repos/qwen-code/CHANGELOG.md#L1) · L1–12 及版本条目 | 声明仅 stable 版本、自动生成；生成与收录范围须保留 |
+| [Raven/CHANGELOG.md](../../../resources/repos/Raven/CHANGELOG.md#L1) · L1–15、L35–140 | 未发布与已发布变化、原因/影响和迁移提示 |
+| [Tianshu-harness/CHANGELOG.md](../../../resources/repos/Tianshu-harness/CHANGELOG.md#L1) · L1–56 | 按日期记录产品变化、症状与处置 |
 
 **邻居与反例**：RELEASING 安排未来发布操作，路线图说明方向或计划，CHANGELOG 定位变化及发布状态。只有未来待办、没有变化/版本关系的同名文件不能当作历史；Unreleased 也不因此等同路线图，需看条目是否声称已有变化。
 
@@ -291,8 +291,8 @@
 
 | 实例与正文依据 | 权利、来源与许可的实际关系 |
 |---|---|
-| [codex/NOTICE](../../../sources/repos/codex/NOTICE#L1) · L1–6 | Codex 版权；Ratatui 派生代码、MIT 许可与第三方版权人 |
-| [EverOS/NOTICE](../../../sources/repos/EverOS/NOTICE#L1) · L1–56 | 项目 Apache 许可；LoCoMo fixture 的 CC BY-NC 例外；CairoSVG 可选依赖与链接条件的来源说明 |
+| [codex/NOTICE](../../../resources/repos/codex/NOTICE#L1) · L1–6 | Codex 版权；Ratatui 派生代码、MIT 许可与第三方版权人 |
+| [EverOS/NOTICE](../../../resources/repos/EverOS/NOTICE#L1) · L1–56 | 项目 Apache 许可；LoCoMo fixture 的 CC BY-NC 例外；CairoSVG 可选依赖与链接条件的来源说明 |
 
 **邻居与反例**：LICENSE 给出授权条款；CITATION 给引用格式；ACKNOWLEDGMENTS 表达感谢；本定义保留作品—来源—许可的对应。ZCode 的 NOTICE.md 是风险告知，文件名本身不同，不纳入这个精确同名组；它也提醒后续不能把近似名字直接当权利声明。
 
@@ -311,8 +311,8 @@
 
 | 实例与正文依据 | 中文入口实际承载的工作 |
 |---|---|
-| [MemoryBear/README_CN.md](../../../sources/repos/MemoryBear/README_CN.md#L5) · L5–56、L60–468、L488–507 | 中文定位、论文/架构及 Docker/手工启动配置 |
-| [minimax-cli/README_CN.md](../../../sources/repos/minimax-cli/README_CN.md#L1) · L1–202 | 中文产品、区域、安装、认证、命令与配置 |
+| [MemoryBear/README_CN.md](../../../resources/repos/MemoryBear/README_CN.md#L5) · L5–56、L60–468、L488–507 | 中文定位、论文/架构及 Docker/手工启动配置 |
+| [minimax-cli/README_CN.md](../../../resources/repos/minimax-cli/README_CN.md#L1) · L1–202 | 中文产品、区域、安装、认证、命令与配置 |
 
 **邻居与反例**：中文语言后缀不改变入口任务；只有词句配对或翻译校验元数据，不是中文入口正文。一个只翻译了标题、没有可用进入关系的实例不满足本版定义。
 
@@ -331,8 +331,8 @@
 
 | 实例与正文依据 | 英文入口实际承载的工作 |
 |---|---|
-| [Tianshu-harness/README.en.md](../../../sources/repos/Tianshu-harness/README.en.md#L34) · L34–54、L68–151 | 产品解释、比较/指标主张、功能与 Quick Start |
-| [ZCode/README.en.md](../../../sources/repos/ZCode/README.en.md#L14) · L14–135 | 组件、工具要求、初始化、桌面/Web/CLI、配置与打包 |
+| [Tianshu-harness/README.en.md](../../../resources/repos/Tianshu-harness/README.en.md#L34) · L34–54、L68–151 | 产品解释、比较/指标主张、功能与 Quick Start |
+| [ZCode/README.en.md](../../../resources/repos/ZCode/README.en.md#L14) · L14–135 | 组件、工具要求、初始化、桌面/Web/CLI、配置与打包 |
 
 **邻居与反例**：语言维度与正文职责分开；只有一个英文词汇表或历史记录，不能因后缀 en 就作为英文项目入口。
 
@@ -351,8 +351,8 @@
 
 | 实例与正文依据 | 中文入口实际承载的工作 |
 |---|---|
-| [EverOS/README.zh-CN.md](../../../sources/repos/EverOS/README.zh-CN.md#L37) · L37–86、L90–313、L663–795 | 中文产品、用例、操作与资料入口；中段细节未全部逐行核对 |
-| [Raven/README.zh-CN.md](../../../sources/repos/Raven/README.zh-CN.md#L12) · L12–110、L207–309 | 产品/系统介绍、安装与 WebUI；含中文特有操作解释 |
+| [EverOS/README.zh-CN.md](../../../resources/repos/EverOS/README.zh-CN.md#L37) · L37–86、L90–313、L663–795 | 中文产品、用例、操作与资料入口；中段细节未全部逐行核对 |
+| [Raven/README.zh-CN.md](../../../resources/repos/Raven/README.zh-CN.md#L12) · L12–110、L207–309 | 产品/系统介绍、安装与 WebUI；含中文特有操作解释 |
 
 **邻居与反例**：与 README_CN.md 在本版共享中文入口职责，保留两个实际文件名组。中文标题或 badge 本身不能成立入口；内容若转为单项操作手册，要根据正文重判。
 

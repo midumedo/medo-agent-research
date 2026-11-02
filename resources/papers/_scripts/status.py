@@ -31,11 +31,11 @@ def repo_root():
 
 
 def derived_paths():
-    return [f"sources/papers/{name}" for name in DERIVED]
+    return [f"resources/papers/{name}" for name in DERIVED]
 
 
 def ignore_lines():
-    return [f"/sources/papers/{name}/" for name in DERIVED]
+    return [f"/resources/papers/{name}/" for name in DERIVED]
 
 
 def tracked_derived():
@@ -52,7 +52,7 @@ def tracked_derived():
 
 
 def ensure_gitignore():
-    """Add any missing `/sources/papers/<derived>/` line. Returns the lines added."""
+    """Add any missing `/resources/papers/<derived>/` line. Returns the lines added."""
     path = repo_root() / ".gitignore"
     text = path.read_text(encoding="utf-8") if path.exists() else ""
     lines = text.splitlines()

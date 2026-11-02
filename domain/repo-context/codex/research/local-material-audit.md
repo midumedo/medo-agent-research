@@ -16,7 +16,7 @@
 
 `verified` 是原账本状态，不是本轮重新验证每一行，更不是“机制与效果已证明”。例如既有 [EverOS 审阅 L83](../../00docslist/ds/EverOS.md) 明确只读过 `CLAUDE.md` 前 5 行；本轮补读其前 75 行，才可具体观察到架构、工程实践与存储分工。根级文档样本也会系统性漏掉子树约定、外部 wiki、运行时个人记忆和客户端实际装配逻辑。
 
-另发现 [仓库账本](../../../../sources/repos/index.csv) 与 [抓取事实](../../../../sources/repos/_commits.json) 的六处版本不一致：
+另发现 [仓库账本](../../../../resources/repos/index.csv) 与 [抓取事实](../../../../resources/repos/_commits.json) 的六处版本不一致：
 
 | 仓库 | index.csv 的 snapshot | _commits.json 所记 SHA 前 12 位 |
 |---|---|---|
@@ -35,16 +35,16 @@
 
 | 编号 | 原文位置与范围 | 本轮观察 | 能支持什么／不能支持什么 |
 |---|---|---|---|
-| L1 | [Raven/AGENTS.md](../../../../sources/repos/Raven/AGENTS.md) L3—7；登记版本 `e17694113b13` | 自述 AI 协作规则，并把内容限定为硬约束 | 支持“这个项目这样定位入口”；不能定义所有 AGENTS，也不证明文件自称的优先级被运行时执行 |
-| L2 | [MemOS/CLAUDE.md](../../../../sources/repos/MemOS/CLAUDE.md) L3—23；版本元数据冲突 | 项目事实指向 AGENTS，正文保存 Claude Code 适配、子代理与 API 文档读取提示 | 支持“同类入口可以互补分工”；不能仅凭作者声明证明自动加载与分工正确执行 |
-| L3 | [EverOS/CLAUDE.md](../../../../sources/repos/EverOS/CLAUDE.md) L1—74；版本元数据冲突 | 包含项目概览、命令、五层架构、工程实践及存储分工 | 直接反驳“CLAUDE 只能是极短指针”；不推断产品当前版本行为 |
-| L4 | [gemini-cli/GEMINI.md](../../../../sources/repos/gemini-cli/GEMINI.md) L1—29 与 [ROADMAP.md](../../../../sources/repos/gemini-cli/ROADMAP.md) L1—28；登记版本 `bedef96ef429` | GEMINI 正文有项目事实；ROADMAP 有原则、动态 Issues 路由和非交付保证说明 | 反驳“所有入口只有硬约束”和旧稿 ROADMAP 零命中；未验证客户端如何加载 GEMINI |
-| L5 | [Tianshu-harness/AGENTS.md](../../../../sources/repos/Tianshu-harness/AGENTS.md) L1—38；登记版本 `79c10d30ba4f` | 标题是 Architecture Map，正文含定位、能力与目录路径 | 反驳“AGENTS 不解释系统是什么”；其中性能数字只是来源声明，未在本轮验证 |
-| L6 | [deepseek-harness/.agents/notes/README.md](../../../../sources/repos/deepseek-harness/.agents/notes/README.md) L9—19、L38—50；登记版本 `477b4f420553` | proposed/implemented/rejected 按路径组织；active implemented 要随事实更新；no INDEX 说的是该 Notes 树；archived 才冻结 | 反驳“记录一律只追加”和“DSH 全仓禁止 INDEX”；未运行其检查脚本 |
-| L7 | [Tianshu-harness/docs/decisions/README.md](../../../../sources/repos/Tianshu-harness/docs/decisions/README.md) L3—13；[docs/INDEX.md](../../../../sources/repos/Tianshu-harness/docs/INDEX.md) 实际文件存在 | 决策允许 superseded；项目另有索引文件 | 证明状态与索引是具体项目选择；没有证明它优于无中央索引 |
-| L8 | [deepseek 历史 Known-Limitations 记录](../../../../sources/repos/deepseek-harness/.agents/notes/archived/process/2026-07-10-readme-known-limitations-gate.md) L1—18 | 已归档，记录标题把 Known Limitations 与 Deferred Work 组合；同时区分形状检查与人工准确性审查 | 反驳“LIMITATIONS 必定是不打算做”；这是历史设计说明，不当成现行规则 |
-| L9 | [Raven/CONTEXT-MAP.md](../../../../sources/repos/Raven/CONTEXT-MAP.md) L3—25；登记版本 `e17694113b13` | 同页既指向多个 context，也描述通信边界并路由术语 | 说明导航与解释能同页共存；不能仅靠 CONTEXT 文件名确定统一内容类型 |
-| L10 | [ZCode/architecture-policy.yaml](../../../../sources/repos/ZCode/architecture-policy.yaml) L1—65；登记版本 `29628c9acdb8` | 实际使用 modules、roots、managed、requires 等嵌套字段 | 证明有机器结构化表达的实例；未追查消费者和门禁，不宣称这些字段已强制执行 |
+| L1 | [Raven/AGENTS.md](../../../../resources/repos/Raven/AGENTS.md) L3—7；登记版本 `e17694113b13` | 自述 AI 协作规则，并把内容限定为硬约束 | 支持“这个项目这样定位入口”；不能定义所有 AGENTS，也不证明文件自称的优先级被运行时执行 |
+| L2 | [MemOS/CLAUDE.md](../../../../resources/repos/MemOS/CLAUDE.md) L3—23；版本元数据冲突 | 项目事实指向 AGENTS，正文保存 Claude Code 适配、子代理与 API 文档读取提示 | 支持“同类入口可以互补分工”；不能仅凭作者声明证明自动加载与分工正确执行 |
+| L3 | [EverOS/CLAUDE.md](../../../../resources/repos/EverOS/CLAUDE.md) L1—74；版本元数据冲突 | 包含项目概览、命令、五层架构、工程实践及存储分工 | 直接反驳“CLAUDE 只能是极短指针”；不推断产品当前版本行为 |
+| L4 | [gemini-cli/GEMINI.md](../../../../resources/repos/gemini-cli/GEMINI.md) L1—29 与 [ROADMAP.md](../../../../resources/repos/gemini-cli/ROADMAP.md) L1—28；登记版本 `bedef96ef429` | GEMINI 正文有项目事实；ROADMAP 有原则、动态 Issues 路由和非交付保证说明 | 反驳“所有入口只有硬约束”和旧稿 ROADMAP 零命中；未验证客户端如何加载 GEMINI |
+| L5 | [Tianshu-harness/AGENTS.md](../../../../resources/repos/Tianshu-harness/AGENTS.md) L1—38；登记版本 `79c10d30ba4f` | 标题是 Architecture Map，正文含定位、能力与目录路径 | 反驳“AGENTS 不解释系统是什么”；其中性能数字只是来源声明，未在本轮验证 |
+| L6 | [deepseek-harness/.agents/notes/README.md](../../../../resources/repos/deepseek-harness/.agents/notes/README.md) L9—19、L38—50；登记版本 `477b4f420553` | proposed/implemented/rejected 按路径组织；active implemented 要随事实更新；no INDEX 说的是该 Notes 树；archived 才冻结 | 反驳“记录一律只追加”和“DSH 全仓禁止 INDEX”；未运行其检查脚本 |
+| L7 | [Tianshu-harness/docs/decisions/README.md](../../../../resources/repos/Tianshu-harness/docs/decisions/README.md) L3—13；[docs/INDEX.md](../../../../resources/repos/Tianshu-harness/docs/INDEX.md) 实际文件存在 | 决策允许 superseded；项目另有索引文件 | 证明状态与索引是具体项目选择；没有证明它优于无中央索引 |
+| L8 | [deepseek 历史 Known-Limitations 记录](../../../../resources/repos/deepseek-harness/.agents/notes/archived/process/2026-07-10-readme-known-limitations-gate.md) L1—18 | 已归档，记录标题把 Known Limitations 与 Deferred Work 组合；同时区分形状检查与人工准确性审查 | 反驳“LIMITATIONS 必定是不打算做”；这是历史设计说明，不当成现行规则 |
+| L9 | [Raven/CONTEXT-MAP.md](../../../../resources/repos/Raven/CONTEXT-MAP.md) L3—25；登记版本 `e17694113b13` | 同页既指向多个 context，也描述通信边界并路由术语 | 说明导航与解释能同页共存；不能仅靠 CONTEXT 文件名确定统一内容类型 |
+| L10 | [ZCode/architecture-policy.yaml](../../../../resources/repos/ZCode/architecture-policy.yaml) L1—65；登记版本 `29628c9acdb8` | 实际使用 modules、roots、managed、requires 等嵌套字段 | 证明有机器结构化表达的实例；未追查消费者和门禁，不宣称这些字段已强制执行 |
 
 抽核文件指纹如下。完整哈希而非首行哈希，用来标识这次读到的内容；它不补造缺失的上游版本关系。
 
@@ -122,8 +122,8 @@ $auditRows | Group-Object status | Select-Object Name, Count
 $auditRows | Where-Object { $_.path -match 'ROADMAP|GEMINI|CLAUDE' }
 
 # 有明确文件后再定位争议内容；行号仅对当前文件有效。
-rg -n 'INDEX|archived|implemented' sources/repos/deepseek-harness/.agents/notes/README.md
-Get-FileHash -LiteralPath 'sources/repos/MemOS/CLAUDE.md' -Algorithm SHA256
+rg -n 'INDEX|archived|implemented' resources/repos/deepseek-harness/.agents/notes/README.md
+Get-FileHash -LiteralPath 'resources/repos/MemOS/CLAUDE.md' -Algorithm SHA256
 ```
 
 初次尝试曾把此 CSV 的仓库列误写成 `repo`，分组返回空键；读表头确认实际字段为 `id` 后重跑。本记录中的 18 个 ID、134 行等数字全部取自修正后的结果。这个小错误说明 schema 应先于推断，空结果也应先查工具与字段，而不是直接解释为研究对象不存在。

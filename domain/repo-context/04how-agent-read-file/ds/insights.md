@@ -9,7 +9,7 @@
 ## 见解 1：默认加载文件的稳态形态是「薄常驻 + 厚按需」，而不是「一份很全的 AGENTS.md」
 
 **观察。** Tianshu-harness 把这件事量化到了常量：`LARGE_VOLATILE_PAYLOAD_CHARS = 12_000`
-（`sources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:27`），并对
+（`resources/repos/Tianshu-harness/src/context/payload-diagnostic.ts:27`），并对
 `project-instructions` 段单独设 6000 字符阈值（`:49-54`），超限时给出的建议原文就是
 "split project instructions into always-on core plus task-routed details"。同一个仓库的
 项目模板测试断言模板应当只有 **30–120 行**，且注明"是通用版而不是完整的天枢 AGENTS.md"
@@ -32,15 +32,15 @@
 
 ## 见解 2：账本能有多宽，由「read 工具能不能做列投影」决定，与人的阅读习惯无关
 
-**观察。** 本阶段取证的 **10 个对象**——口径是「`sources/repos/index.csv` 中读工具列有实值、`status=verified` 的那批」，即
+**观察。** 本阶段取证的 **10 个对象**——口径是「`resources/repos/index.csv` 中读工具列有实值、`status=verified` 的那批」，即
 codex、Tianshu-harness、deepseek-harness、Raven、gemini-cli、qwen-code、cline、ZCode、goose、claude-code
 （不含只有 `absent`/`unverified` 的记忆库与闭源客户端）——里，**没有一个** read 工具的入参含列选择。
 最接近的三个也都不算：Tianshu-harness 的 `focus` 由启发式决定选什么；`read_section` 的粒度是
 **节**不是列；gemini-cli `read_many_files` 的 `include`/`exclude` 是**文件级 glob**
-（`sources/repos/gemini-cli/packages/core/src/tools/read-many-files.ts:58-70`）。
+（`resources/repos/gemini-cli/packages/core/src/tools/read-many-files.ts:58-70`）。
 
 **推断。** 「把补充内容加到 CSV 后面」这个想法在**文档格式层**是无解的——只要工具按整行读，
-加宽一列就是每次读都付那一列的成本。所以 `sources/papers/AGENTS.md` 的「`index.csv` 不加
+加宽一列就是每次读都付那一列的成本。所以 `resources/papers/AGENTS.md` 的「`index.csv` 不加
 摘要列」不是保守，是被工具面约束出来的正确解。反过来也成立：**帐本的宽度应当由工具能力决定**，
 短枚举（`completeness` 这类 ≤ 12 字符的值）可以加，叙事性内容必须外置。
 
@@ -62,7 +62,7 @@ codex、Tianshu-harness、deepseek-harness、Raven、gemini-cli、qwen-code、cl
 27KB 的启动包装器加一个预编译 `claude.exe`，读工具只以类型契约（`FileReadInput`）存在。
 
 **推断。** 三者是同一个风险的不同表现形式：**「这个上游有仓库」会被自动读成「它的实现可以
-被核对」**。引用纪律因此需要一条前置判据——`sources/repos/index.csv` 的 `completeness` 列
+被核对」**。引用纪律因此需要一条前置判据——`resources/repos/index.csv` 的 `completeness` 列
 就是这条判据。它比许可证更该进账本（许可证不影响研究可用性，实现是否可读影响）。
 
 **反例。** 不是所有「缺」都等于「藏」。`dist/`、`out/`、`*.tsbuildinfo` 这类排除是编译产物，
@@ -78,7 +78,7 @@ codex、Tianshu-harness、deepseek-harness、Raven、gemini-cli、qwen-code、cl
 ## 见解 4：复读去重的两种风格，隐含了两种相反的模型行为假设
 
 **观察。** Tianshu-harness 在文件超过 2KiB 且本轮已读过时，**静默转成引用**，不复述内容
-（`sources/repos/Tianshu-harness/src/tools/read-file.ts:151`、`:878-881`）。ZCode 走另一条路：
+（`resources/repos/Tianshu-harness/src/tools/read-file.ts:151`、`:878-881`）。ZCode 走另一条路：
 `apps/zcode-cli/packages/core/src/tool/handlers/read.ts:55-56` 定义了
 `FILE_UNCHANGED_STUB`，原文 "Wasted call — file unchanged since your last Read. Refer to that
 earlier tool_result instead."

@@ -13,7 +13,7 @@
 
 ## 已知盲区
 
-综述侧的集体盲区（七篇都没系统回答的）见 `sources/papers/surveys/README.md` 第 5 层，不在这里复制。
+综述侧的集体盲区（七篇都没系统回答的）见 `resources/papers/surveys/README.md` 第 5 层，不在这里复制。
 
 我们自己拆系统时新增的：
 

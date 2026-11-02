@@ -1,6 +1,6 @@
-"""sources/repos/ 账本与抓取脚本的共享库。
+"""resources/repos/ 账本与抓取脚本的共享库。
 
-两层分工（详见 sources/repos/AGENTS.md）：
+两层分工（详见 resources/repos/AGENTS.md）：
 
   `_commits.json`  抓取事实——机器写。一个目录一条，记上游 slug 与落盘时的提交 sha。
   `index.csv`      研究视图——身份列（`repo`、`snapshot`）派生自 `_commits.json` 与磁盘；
@@ -25,7 +25,7 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEX_FIELDS = ["id", "repo", "kind", "keywords", "completeness", "snapshot"]
 # 重建时从旧行原样搬过来的列——它们是判断，不是可从磁盘推导的事实。
 JUDGEMENT_FIELDS = ("kind", "keywords", "completeness")
-MULTI_FIELDS = ("keywords",)  # `;` 分隔，与 sources/papers/index.csv 同约定
+MULTI_FIELDS = ("keywords",)  # `;` 分隔，与 resources/papers/index.csv 同约定
 
 KINDS = {"harness", "model", "memory", "paper", "docs", "tooling"}
 COMPLETENESS = {"source", "source-partial", "binary", "app-only", "docs-only", "unknown"}

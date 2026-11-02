@@ -1,13 +1,13 @@
 # 2026-09-21：记忆横评调研、材料入库与目录归位
 
-本轮由"关于记忆，深入研究吧"发起，用户给出四个点：借 benchmark 横评了解主流记忆框架并统计表现（注意日期，别让新项目被老项目挡住）、整理论文、考虑给记忆分类一个 domain、归置 `sources/以前的/` 与 `analysis/archive/aaa/`。记录其中的选择理由，不重复正文结论。
+本轮由"关于记忆，深入研究吧"发起，用户给出四个点：借 benchmark 横评了解主流记忆框架并统计表现（注意日期，别让新项目被老项目挡住）、整理论文、考虑给记忆分类一个 domain、归置 `resources/以前的/` 与 `analysis/archive/aaa/`。记录其中的选择理由，不重复正文结论。
 
 ## 做了什么
 
 1. **新增横评研究稿**[analysis/memory-benchmark-crossreview-2026-09.md](../analysis/memory-benchmark-crossreview-2026-09.md)。基准编号与日期用官方接口逐条核验；区分【一手】【自报】【第三方】【未核实】四级证据。
 2. **新增第二个主题综合**[domain/memory-taxonomy/index.md](../domain/memory-taxonomy/index.md)。
-3. **新增 20 篇论文**：10 个基准 + 10 个框架，PDF 与机器转换文本入库，分到 `sources/papers/benchmarks/` 与 `frameworks/`。
-4. **目录归位**：`sources/以前的/pass.md` 迁到 `analysis/landscape/memory-object-candidates-2026-09.md`；`analysis/archive/aaa/` 两份重复副本删除。
+3. **新增 20 篇论文**：10 个基准 + 10 个框架，PDF 与机器转换文本入库，分到 `resources/papers/benchmarks/` 与 `frameworks/`。
+4. **目录归位**：`resources/以前的/pass.md` 迁到 `analysis/landscape/memory-object-candidates-2026-09.md`；`analysis/archive/aaa/` 两份重复副本删除。
 
 ## 几个判断及其理由
 
@@ -15,7 +15,7 @@
 
 **为什么不产出"最佳框架"表。** 用户要的是大表格，但把互相不可比的数排成一列，会制造一个不存在的排序。折中做法是：给三张表（基准矩阵、一手横评、自报分数），再把"为什么不可比"写成可检查的变量清单，最后按机制代表性给深拆候选。分数仍然全部可见，只是不被排序。
 
-**为什么 `pass.md` 归到 analysis/landscape/ 而不是删掉或留在 sources/。** 它此前被 `.gitignore` 当作"疑似私人文件"排除。本轮确认内容是研究者输入的候选清单（研究方向 + 参考项目 + 按数据模型分组的框架清单），不是外部来源，也不是私人信息。它是研究输入材料，放在分析层并保留原文；同时移除那条忽略规则，避免以后再被误判。迁移用脚本逐字节搬运，正文与迁移前一致。
+**为什么 `pass.md` 归到 analysis/landscape/ 而不是删掉或留在 resources/。** 它此前被 `.gitignore` 当作"疑似私人文件"排除。本轮确认内容是研究者输入的候选清单（研究方向 + 参考项目 + 按数据模型分组的框架清单），不是外部来源，也不是私人信息。它是研究输入材料，放在分析层并保留原文；同时移除那条忽略规则，避免以后再被误判。迁移用脚本逐字节搬运，正文与迁移前一致。
 
 **为什么删 `aaa/` 而不保留。** 两份文件与 `analysis/landscape/memory-landscape-2026-09.md`、`analysis/archive/20260919-201314-e52b6696/` 下的正本 SHA256 完全相同，且没有任何文档引用 `aaa/` 路径。保留重复副本只会让"哪份是当前版本"变成需要记忆的知识。两者都在 Git 历史里，需要时可取回。
 

@@ -1,6 +1,6 @@
 # Raven · 根目录文档实测
 
-> 快照 `e17694113b13` · 取证 2026-09-25 · 来源 `sources/repos/Raven/`
+> 快照 `e17694113b13` · 取证 2026-09-25 · 来源 `resources/repos/Raven/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + agent 面（`docs/`、`AGENTS.md` 分级、skills）
 
 ## 1. 根目录清单一览

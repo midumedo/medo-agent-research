@@ -1,6 +1,6 @@
 # codex · 根目录文档实测
 
-> 快照 `75e0e0aad97a` · 取证 2026-09-25 · 来源 `sources/repos/codex/`
+> 快照 `75e0e0aad97a` · 取证 2026-09-25 · 来源 `resources/repos/codex/`
 > 状态：verified ｜ 覆盖范围：仓库根目录直接子文件 + `docs/` 存根 + `.codex/skills/`
 
 ## 1. 根目录清单一览
@@ -78,7 +78,7 @@ codex-rs/tui/src/bottom_pane/AGENTS.md       ← 更内层
 
 | 既有结论 | 本轮实测 | 判定 |
 |---|---|---|
-| `sources/repos/index.csv` 对 codex 的关键词含 `read-tool-absent;exec-command-as-reader;skills-loader` | 根级无 `CLAUDE.md`/`GEMINI.md`；`AGENTS.md` 存在 | 无冲突 |
+| `resources/repos/index.csv` 对 codex 的关键词含 `read-tool-absent;exec-command-as-reader;skills-loader` | 根级无 `CLAUDE.md`/`GEMINI.md`；`AGENTS.md` 存在 | 无冲突 |
 | D02：`CHANGELOG` 记「对外变化」，形态「单文件（+目录变体）」 | codex 的 `CHANGELOG.md` 是**指针型**（330B，正文在 Releases） | **形态清单不全**：除「单文件 / 目录」外还有「指针型」 |
 | D09 边界：AGENTS.md 面向「仓库内的 AI Agent」 | `AGENTS.md` 标题为 `# Rust/codex-rs`，辖域 ≠ 落点 | **需补边界说明**：AGENTS.md 的辖域要读内容判断 |
 

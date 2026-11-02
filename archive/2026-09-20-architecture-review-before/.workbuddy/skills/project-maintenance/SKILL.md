@@ -67,12 +67,12 @@ agent_created: true
 
 | 目录 | 判定句 |
 |---|---|
-| `sources/papers/` | 这是一篇别人写的论文 |
-| `sources/repos/` | 这是别人写的代码，我们 clone 来的 |
+| `resources/papers/` | 这是一篇别人写的论文 |
+| `resources/repos/` | 这是别人写的代码，我们 clone 来的 |
 | `analysis/<系统>/` | 这是我们对某个外部系统的完整拆解 |
 | `evidence/<文档名>/` | 这是支撑某条具体论断的原始摘录 |
 | `dialogue/` | 这是我们的一次交流：问了什么、怎么推演、否掉了什么 |
 | `notes/` | 这是一个已经拍板的决定 |
 | `archive/` | 这是某次会话的原始快照 |
 
-**分水岭**：`sources/` 是外部世界，其余是我们的产出。
+**分水岭**：`resources/` 是外部世界，其余是我们的产出。

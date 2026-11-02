@@ -2,7 +2,7 @@
 """生成 domain/repo-context/00docslist/index.csv。
 
 口径见同目录 README.md「index.csv 字段口径」。要点：
-- 一行一个根目录文件，不重复 sources/repos/index.csv 已有字段（repo/kind/completeness/snapshot）。
+- 一行一个根目录文件，不重复 resources/repos/index.csv 已有字段（repo/kind/completeness/snapshot）。
 - 收录范围：根目录 *.md + *.i18n.yaml + 治理型非 md（NOTICE / LICENSE.txt / architecture-policy.yaml / marketplace.json）。
   构建与 CI 配置（package.json、tsconfig.json、pnpm-workspace.yaml、.pre-commit-config.yaml、*-lock.* 等）不收。
 - bytes 与 L1 哈希都从磁盘现读，不手填；快照刷新后重跑本脚本即可。

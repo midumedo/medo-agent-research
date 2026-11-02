@@ -1,17 +1,17 @@
 # claude-code · 根目录文档实测（absent）
 
-> 快照 —（无）· 取证 2026-09-25 · 来源 `sources/repos/claude-code/`（**不存在**）
+> 快照 —（无）· 取证 2026-09-25 · 来源 `resources/repos/claude-code/`（**不存在**）
 > 状态：**absent** ｜ 覆盖范围：无
 
 ## 1. 根目录清单一览
 
-**无**。本仓在 `sources/repos/` 下**没有本地 checkout**，因此没有可枚举的根目录文件。
+**无**。本仓在 `resources/repos/` 下**没有本地 checkout**，因此没有可枚举的根目录文件。
 
 ## 2. 为什么是 absent 而不是「忘了收」
 
 两条独立证据：
 
-**(a) `sources/repos/index.csv` 的行本身**：
+**(a) `resources/repos/index.csv` 的行本身**：
 
 | 列 | 值 |
 |---|---|
@@ -22,7 +22,7 @@
 | `completeness` | **`binary`** |
 | `snapshot` | **空**（18 行里唯一没有 sha 的一行） |
 
-**(b) 目录不存在（本轮实测）**：`ls -d sources/repos/claude-code` → `ls: cannot access 'claude-code': No such file or directory`（退出码 2，是本环境的**预期负结果**，不是执行失败）。
+**(b) 目录不存在（本轮实测）**：`ls -d resources/repos/claude-code` → `ls: cannot access 'claude-code': No such file or directory`（退出码 2，是本环境的**预期负结果**，不是执行失败）。
 
 `keywords` 里的 `no-local-snapshot` 与 `snapshot` 列为空互相印证——**这是账本里被显式登记的状态，不是遗漏**。
 

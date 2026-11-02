@@ -49,16 +49,16 @@
 - **切分依据是半衰期与读取频率，不是主题**。主线未锁定，按主题切目录 = 过早结构化
 - **目录一律英文**；根级常驻文档全大写（AGENTS/THESIS/TRADEOFFS/STYLE/CONVENTIONS/BRIEF），
   内容文件小写 kebab-case。理由：Windows 非 ASCII 路径在脚本/工具链下会写坏文件名
-- 根级目录：`domain/`（认知层·一号资产）· `sources/`（别人的）· `analysis/`（完整拆解）·
+- 根级目录：`domain/`（认知层·一号资产）· `resources/`（别人的）· `analysis/`（完整拆解）·
   `evidence/`（原始摘录，与文档同名配对）· `dialogue/`（交流记录：问了什么、推演过程、否掉了什么）·
   `notes/`（已拍板决定）· `archive/`（会话快照）· `book/` 与 `manual/`（**后期产物，现在不写**）
 - **`README.md` = 人读入口（渐进披露：30秒 → 怎么逛 → 目录 → 目标边界 → 规则在哪）；
   `AGENTS.md` = AI 常驻指令。两者分工，不合并**
-- **最重要的一条分界线：`sources/` 是外部世界，`analysis/` + `notes/` 是我们的产出**
+- **最重要的一条分界线：`resources/` 是外部世界，`analysis/` + `notes/` 是我们的产出**
 - **不建空目录**；状态靠目录位置表达，不加 status 元数据字段
 - md 配合：三段式（头来源 / 中正文 / 尾「拿去撞主线」）· 导航卡内嵌（nav.json 模式，
   **不建中央 INDEX.md**）· **引用单向**（book→analysis→sources；原料不反指章节）
-- 源码：用户选**完整 clone 到 `sources/repos/`**。配套：锚定 commit sha、不 grep 全仓、
+- 源码：用户选**完整 clone 到 `resources/repos/`**。配套：锚定 commit sha、不 grep 全仓、
   已 .gitignore；**AI 默认读 `analysis/<系统>/` 下的锚点文件，深挖才进 repos/**
 - **不用 `ref/`**——歧义（reference / git refs / refactor），且会把"我们的分析"污染成"参考资料"
 - **维护规则已抽成 skill**：`.workbuddy/skills/project-maintenance/SKILL.md`（项目级）。
@@ -156,7 +156,7 @@ domain/
 这也是引用单向能成立的原因）③ 证据放 `evidence/`，正文只留论断，否则条目被撑成文章
 **检验方法**：随机抽一条中间态问「它能直接放进手册吗」，需要重写句子 → 它是散文不是原子
 
-**三层颗粒度**：`sources/`=外部材料全集（可能还没读）· `analysis/`=一次完整拆解推演 ·
+**三层颗粒度**：`resources/`=外部材料全集（可能还没读）· `analysis/`=一次完整拆解推演 ·
 `evidence/`=**已被引用**的那一小段（锚点+摘录，与 analysis 的重叠是引用式不是复制式）
 
 **`dialogue/` vs `notes/`**：交流是过程（含死路），结论是结果（只含活路）。合并会让结论文件

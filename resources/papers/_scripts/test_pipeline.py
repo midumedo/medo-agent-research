@@ -591,7 +591,7 @@ class StatusTests(unittest.TestCase):
             status.main()
         text = (self.root / ".gitignore").read_text(encoding="utf-8")
         for name in status.DERIVED:
-            self.assertIn(f"/sources/papers/{name}/", text)
+            self.assertIn(f"/resources/papers/{name}/", text)
 
     def test_sync_is_idempotent(self):
         with patch.object(sys, "argv", ["status.py", "--sync"]):

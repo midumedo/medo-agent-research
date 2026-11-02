@@ -1,6 +1,6 @@
 """以 index.csv 为账本重建它：身份列派生，判断列原样保留。
 
-账本语义（与 `sources/papers/_scripts/build_index.py` 一致）：
+账本语义（与 `resources/papers/_scripts/build_index.py` 一致）：
 行以 `id` 为键，**只增不删**。一个 checkout 被移走，那一行仍然留着——它记的是
 「我们曾在某个 sha 上看过这个仓库」，不是「磁盘现在有什么」。`--prune` 才删除，
 而且带 `no-local-snapshot` 标记的行（本来就声明没有本地快照：Claude Code 的 npm 产物、

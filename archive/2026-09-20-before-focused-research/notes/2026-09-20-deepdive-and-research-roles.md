@@ -4,7 +4,7 @@
 
 ## 采用的结构
 
-根级保留 `sources/`、`analysis/`、`notes/`、`domain/` 等目录，新增 `deepdive/`。后期规划 `entries/` 和 `output/`，教材与手册分别进入 `output/book/`、`output/manual/<视图>/`。
+根级保留 `resources/`、`analysis/`、`notes/`、`domain/` 等目录，新增 `deepdive/`。后期规划 `entries/` 和 `output/`，教材与手册分别进入 `output/book/`、`output/manual/<视图>/`。
 
 `deepdive/` 和 `analysis/` 是对象驱动与问题驱动的两种研究入口，均可包含深入推理；`notes/` 是项目决定，虽在根级并列，但不是同种研究稿。认知层持续吸收研究，两类稿不因成熟而逐级搬家。
 

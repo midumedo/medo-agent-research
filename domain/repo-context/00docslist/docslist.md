@@ -104,7 +104,7 @@ BACKLOG；MILESTONES；RISKS；EXPERIMENTS（计划）；RETRO（行动项）；
 
 ### 史册 archive · 燃料（禁预热）
 dialogue/；incidents/；POSTMORTEM（时间线）；CHANGELOG（gen）；RELEASE-NOTES；MEETING-NOTES；STANDUP；
-LOGS；EXPERIMENTS（原始）；BENCHMARKS（结果）；DATASETS；PAPERS/（immutable）；sources/（immutable）；
+LOGS；EXPERIMENTS（原始）；BENCHMARKS（结果）；DATASETS；PAPERS/（immutable）；resources/（immutable）；
 THIRD-PARTY；会话导出
 
 ### 草稿 scratch · 语料外（仅作者）
