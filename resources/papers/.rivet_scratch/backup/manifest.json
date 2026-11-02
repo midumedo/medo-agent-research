@@ -1,0 +1,20 @@
+[
+  {
+    "source": "d:\\workspace\\memory\\resources\\papers\\md\\arxiv-2504.19413v1.Project.Mem0.md",
+    "backup": "d:\\workspace\\memory\\resources\\papers\\.rivet_scratch\\backup\\20261103T014427-12f3511e6689cd0c-arxiv-2504.19413v1.Project.Mem0.md",
+    "sha256": "12f3511e6689cd0c2d44b32f1f487bed40c747068f7077ffa67b7420df7dee0b",
+    "sha16": "12f3511e6689cd0c",
+    "bytes": 160751,
+    "mtime_local": "2026-09-25 05:38:40",
+    "plan": "d:\\workspace\\memory\\resources\\papers\\.rivet_scratch\\repair-mem0"
+  },
+  {
+    "source": "d:\\workspace\\memory\\resources\\papers\\md\\arxiv-2504.19413v1.Project.Mem0.md",
+    "backup": "d:\\workspace\\memory\\resources\\papers\\.rivet_scratch\\backup\\20261103T020351-c850b545d197146f-arxiv-2504.19413v1.Project.Mem0.md",
+    "sha256": "c850b545d197146f6849a63574bea91ff0ebef8ac9be7cd6891d3036d0303f66",
+    "sha16": "c850b545d197146f",
+    "bytes": 83441,
+    "mtime_local": "2026-11-03 01:44:52",
+    "plan": "d:\\workspace\\memory\\resources\\papers\\.rivet_scratch\\repair-mem0-r6lite"
+  }
+]
