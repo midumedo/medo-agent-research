@@ -31,6 +31,7 @@ IMAGE_LINE_RE = re.compile(r"^[ \t]*(?:!\[[^\]]*\]\([^)]*\)|<img\b[^>]*>)[ \t]*$
 
 RAW_WORD_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9'’\-]*")
 PUNCTUATION = " \t\r\n.,;:!?()[]{}\"'“”‘’"
+WHOLE_WORD_RE = re.compile(r"[A-Za-z]{2,}")
 
 # Block-level trigger. Every clean paper in the corpus sits at or below 0.84
 # tags per 1000 chars overall, so 2.0 is a 2.4x margin. The tag floor keeps a
@@ -476,6 +477,23 @@ def _line_rel(line: str, span_start: int) -> tuple[bool, bool]:
     return left, right
 
 
+def _isolated_tag(token: str, start: int, end: int) -> bool:
+    """The token is this one tag, surrounded by punctuation and nothing else."""
+    rest = token[:start] + token[end:]
+    return not any(char.isalnum() or char in "<>/" for char in rest)
+
+
+def _apostrophe_suffix(token: str, start: int, end: int, content: str) -> bool:
+    """``system’<sub>s</sub>``: the mark only completes a possessive."""
+    if not (content.isalnum() and 1 <= len(content) <= 2):
+        return False
+    before, after = token[:start], token[end:]
+    if any(char in "<>/" for char in before + after):
+        return False
+    head = before.lstrip(PUNCTUATION)
+    return bool(head) and head.endswith(("'", "’")) and not after.strip(PUNCTUATION)
+
+
 def _pack_blocks(items: list[dict], max_items: int, max_chars: int) -> list[list[dict]]:
     chunks, current, size = [], [], 0
     for item in items:
@@ -595,7 +613,22 @@ def _plan_core(text: str, index: dict, whitelist, max_pack_items: int) -> dict:
             if core and _found(window, core):
                 for match, start, end, content in others:
                     left, right = _line_rel(line, start)
+                    rel_start, rel_end = start - token_start, end - token_start
                     if not (left or right):
+                        # R6-lite only unwraps a tag that stands alone. The
+                        # merged reading still has to be a verbatim PDF hit;
+                        # shape alone is never enough to patch.
+                        if (WHOLE_WORD_RE.fullmatch(content)
+                                and _isolated_tag(token, rel_start, rel_end)
+                                and _found(window, content)):
+                            add_patch(number, start, end, content, "R6-lite",
+                                      "整词包裹：删标记后该词在 PDF 同窗内逐字命中", page)
+                            continue
+                        if (_apostrophe_suffix(token, rel_start, rel_end, content)
+                                and _found(window, core)):
+                            add_patch(number, start, end, content, "R6-lite",
+                                      "撇号后缀：合并结果在 PDF 同窗内逐字命中", page)
+                            continue
                         unresolved.append((start, end))
                         reasons.add("独立标记，需人工/PDF 核查")
                         continue
@@ -632,7 +665,7 @@ def _plan_core(text: str, index: dict, whitelist, max_pack_items: int) -> dict:
     packs = [_render_pack(chunk, index + 1, len(chunks)) for index, chunk in enumerate(chunks)]
     touched = {patch["line"] for patch in patches}
     rules = {rule: sum(1 for patch in patches if patch["rule"] == rule)
-             for rule in ("R1", "R2", "R4", "R5")}
+             for rule in ("R1", "R2", "R4", "R5", "R6-lite")}
     return {
         "patches": sorted(patches, key=lambda item: (item["line"], item["start"])),
         "kept": kept,
@@ -768,7 +801,7 @@ def build_plan(text: str, pdf_path, *, whitelist=(), checks: bool = True,
              for position, chunk in enumerate(chunks)]
     touched = {patch["line"] for patch in patches}
     rules = {rule: sum(1 for patch in patches if patch["rule"] == rule)
-             for rule in ("R1", "R2", "R4", "R5")}
+             for rule in ("R1", "R2", "R4", "R5", "R6-lite")}
     plan = {
         "patches": sorted(patches, key=lambda item: (item["line"], item["start"])),
         "kept": base["kept"],
@@ -793,6 +826,70 @@ def build_plan(text: str, pdf_path, *, whitelist=(), checks: bool = True,
         if failed:
             raise RepairError("自检未通过：" + "、".join(failed))
     return plan
+
+
+AUTO_RULES = ("R1", "R2", "R4", "R5", "R6-lite")
+
+
+def apply_plan(text: str, patches, pdf_path, *, whitelist=(), max_pack_items: int = 20) -> dict:
+    """Apply the automatic rules and re-run every stage-one assertion.
+
+    `before` must still sit at its offset; text that already reads `after` is
+    counted as applied-before, anything else is a conflict and aborts the whole
+    write. Only R1/R2/R4/R5/R6-lite are applied — AI items stay untouched.
+    """
+    lines = text.split("\n")
+    applied, already, conflicts = [], [], []
+    grouped = {}
+    for patch in patches:
+        if patch["rule"] in AUTO_RULES:
+            grouped.setdefault(patch["line"], []).append(patch)
+    repaired_lines = []
+    for number, line in enumerate(lines, 1):
+        delta = 0
+        for patch in sorted(grouped.get(number, []), key=lambda item: item["start"]):
+            expected, replacement = patch["before"], patch["after"]
+            if "\n" in replacement:
+                conflicts.append({"id": patch["id"], "expected": expected, "found": "越界"})
+                continue
+            begin = patch["start"] + delta
+            starts_before = line.startswith(expected, begin)
+            starts_after = line.startswith(replacement, begin)
+            if starts_before and not (starts_after and replacement.startswith(expected)):
+                line = line[:begin] + replacement + line[begin + len(expected):]
+                applied.append(patch["id"])
+                delta += len(replacement) - len(expected)
+            elif starts_after:
+                already.append(patch["id"])
+                delta += len(replacement) - len(expected)
+            else:
+                conflicts.append({"id": patch["id"], "expected": expected,
+                                  "found": line[begin:begin + len(expected)][:80]})
+        repaired_lines.append(line)
+    if conflicts:
+        first = conflicts[0]
+        raise RepairError(f"{len(conflicts)} 条补丁与原文不一致（首条 {first['id']}："
+                          f"期望 {first['expected']!r}，实际 {first['found']!r}），未写入")
+    repaired = "\n".join(repaired_lines)
+
+    before_quality = audit_body(split_body(text))
+    after_quality = audit_body(split_body(repaired))
+    residual = _plan_core(repaired, _pdf_index(pdf_path), whitelist, max_pack_items)
+    verdicts = {
+        "line_count": text.count("\n") == repaired.count("\n"),
+        "protected_sha": _protected_digest(text) == _protected_digest(repaired),
+        "whitelist_preserved": before_quality["true_sup_count"] == after_quality["true_sup_count"],
+        "idempotent": not residual["patches"],
+    }
+    failed = [name for name, passed in verdicts.items() if not passed]
+    if failed:
+        raise RepairError("应用后自检未通过：" + "、".join(failed))
+    return {"text": repaired, "applied": applied, "already_applied": already,
+            "conflicts": conflicts, "checks": verdicts,
+            "tags": {"before": before_quality["tags"], "after": after_quality["tags"],
+                     "true_sup_before": before_quality["true_sup_count"],
+                     "true_sup_after": after_quality["true_sup_count"],
+                     "ai_lines": len(residual["ai_items"])}}
 
 
 def guard_output(out, library_root) -> Path:

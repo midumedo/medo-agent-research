@@ -220,6 +220,55 @@ class RepairPlanTests(unittest.TestCase):
         self.assertIn("is a foundation of intelligence", fixed)
         self.assertTrue(plan["checks"]["idempotent"])
 
+    def test_whole_word_wrap_is_unwrapped_after_pdf_hit(self):
+        doc = self.build(
+            "Report.wholeword",
+            "Agents equipped with <sub>memory</sub> of past <sub>across</sub> many sessions stay coherent.\n",
+            ["Agents equipped with memory of past across many sessions stay coherent."])
+        text = doc.md.read_text(encoding="utf-8")
+        plan = pdf_repair.build_plan(text, doc.pdf)
+        self.assertEqual(plan["stats"]["rules"]["R6-lite"], 2)
+        fixed = pdf_repair.apply_patches(text, plan["patches"])
+        self.assertIn("equipped with memory of past across many", fixed)
+        self.assertNotIn("<sub>", fixed)
+
+    def test_apostrophe_suffix_is_rejoined(self):
+        doc = self.build(
+            "Report.apostrophe",
+            "This method leverages the model’<sub>s</sub> ability to process sequential input.\n",
+            ["This method leverages the model's ability to process sequential input."])
+        text = doc.md.read_text(encoding="utf-8")
+        plan = pdf_repair.build_plan(text, doc.pdf)
+        self.assertEqual(plan["stats"]["rules"]["R6-lite"], 1)
+        fixed = pdf_repair.apply_patches(text, plan["patches"])
+        self.assertIn("the model’s ability", fixed)
+
+    def test_true_superscript_is_never_unwrapped(self):
+        doc = self.build(
+            "Report.r6sup",
+            "Zexue He <sup>1</sup> and the Mem0<sup>g</sup> baseline both matter for memory work.\n",
+            ["Zexue He 1 and the Mem0 baseline both matter for memory work."])
+        text = doc.md.read_text(encoding="utf-8")
+        plan = pdf_repair.build_plan(text, doc.pdf)
+        self.assertEqual(plan["stats"]["rules"]["R6-lite"], 0)
+        self.assertEqual(plan["stats"]["kept_whitelist"], 1)
+        self.assertEqual(len(plan["ai_items"]), 1)
+        fixed = pdf_repair.apply_patches(text, plan["patches"])
+        self.assertIn("<sup>1</sup>", fixed)
+        self.assertIn("Mem0<sup>g</sup>", fixed)
+
+    def test_whole_word_without_pdf_hit_falls_to_ai(self):
+        doc = self.build(
+            "Report.r6miss",
+            "A <sub>zebra</sub> claim about memory systems across many sessions.\n",
+            ["A different claim about memory systems across many sessions."])
+        text = doc.md.read_text(encoding="utf-8")
+        plan = pdf_repair.build_plan(text, doc.pdf)
+        self.assertEqual(plan["stats"]["rules"]["R6-lite"], 0)
+        self.assertEqual(len(plan["ai_items"]), 1)
+        self.assertIn("<sub>zebra</sub>", pdf_repair.apply_patches(text, plan["patches"]))
+        self.assertTrue(plan["checks"]["idempotent"])
+
     def test_table_formula_and_fence_are_untouched(self):
         body = ("Table follows.\n\n"
                 "<table><tr><td>x<sub>1</sub>y</td></tr></table>\n\n"
@@ -285,6 +334,36 @@ class RepairPlanTests(unittest.TestCase):
         code, _, err = self.run_cli("repair", str(doc.md), "--out", str(refused))
         self.assertEqual(code, 1)
         self.assertIn("拒绝写入", err)
+
+
+    def test_apply_writes_once_and_refuses_a_drifted_plan(self):
+        doc = self.build(
+            "Report.apply",
+            "Lar<sub>g</sub>e Lan<sub>g</sub>ua<sub>g</sub>e models are useful for many tasks.\n",
+            ["Large Language models are useful for many tasks."])
+        original = doc.md.read_text(encoding="utf-8")
+        out = Path(self.temp.name) / "plan"
+        self.assertEqual(self.run_cli("repair", str(doc.md), "--out", str(out))[0], 0)
+
+        code, summary, _ = self.run_cli("repair", str(doc.md), "--out", str(out), "--apply")
+        self.assertEqual(code, 0)
+        applied = doc.md.read_text(encoding="utf-8")
+        self.assertNotEqual(applied, original)
+        self.assertIn("Large Language models", applied)
+        self.assertNotIn("<sub>", applied)
+
+        code, summary, _ = self.run_cli("repair", str(doc.md), "--out", str(out), "--apply")
+        self.assertEqual(code, 0)
+        self.assertIn("已应用 0 条", summary)
+        self.assertEqual(doc.md.read_text(encoding="utf-8"), applied)
+
+        drifted = original.replace("<sub>g</sub>", "<sub>q</sub>", 1)
+        doc.md.write_text(drifted, encoding="utf-8")
+        before = doc.md.read_bytes()
+        code, _, err = self.run_cli("repair", str(doc.md), "--out", str(out), "--apply")
+        self.assertEqual(code, 1)
+        self.assertIn("不一致", err)
+        self.assertEqual(doc.md.read_bytes(), before)
 
 
 if __name__ == "__main__":

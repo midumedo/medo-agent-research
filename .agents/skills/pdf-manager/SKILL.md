@@ -29,6 +29,7 @@ python "<脚本>" metadata "Downloads/paper.md"
 python "<脚本>" convert "a/pdf/xx.pdf"
 python "<脚本>" audit "a/md/xx.md"
 python "<脚本>" repair "a/md/xx.md" --out "a/.rivet_scratch/repair-xx"
+python "<脚本>" repair "a/md/xx.md" --out "a/.rivet_scratch/repair-xx" --apply
 python "<脚本>" check "a/pdf/xx.pdf"
 python "<脚本>" index --root "a"
 ```
