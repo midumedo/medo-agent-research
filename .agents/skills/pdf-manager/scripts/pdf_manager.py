@@ -346,12 +346,15 @@ def make_parser():
     audit.add_argument("--json", action="store_true", help="输出完整字段的 JSON")
     repair = sub.add_parser("repair", help="阶段一：生成补丁清单；--apply 写回同一篇 MD")
     repair.add_argument("input")
-    repair.add_argument("--out", required=True, help="补丁输出目录；拒绝 md/、assets/、pdf/")
+    repair.add_argument("--out", help="补丁输出目录；拒绝 md/、assets/、pdf/")
     repair.add_argument("--root")
     repair.add_argument("--whitelist", help="额外保留的真上标基底，逗号分隔")
     repair.add_argument("--max-pack-items", type=int, default=20, help="每个 AI 裁决包的条目上限")
     repair.add_argument("--apply", action="store_true",
                         help="应用 --out 中已有的 patches.json；AI 条目一律 keep")
+    repair.add_argument("--backfill-preview", action="store_true",
+                        help="只读试算：整句按 PDF 回填的三道闸，不写 MD")
+    repair.add_argument("--limit", type=int, default=5, help="试算输出的条目上限")
     rename = sub.add_parser("rename", help="联动改名；保持来源编号与版本")
     rename.add_argument("input")
     rename.add_argument("new_name", help="完整文件 stem，含已有来源编号前缀")
@@ -452,9 +455,25 @@ def repair_command(args):
         raise LibraryError("缺少同名 PDF，无法用文本层锚定。")
     if not doc.md.is_file():
         raise LibraryError("缺少 MD，无法生成补丁。")
-    out = pdf_repair.guard_output(args.out, doc.root)
+    out = pdf_repair.guard_output(args.out, doc.root) if args.out else None
     text = doc.md.read_text(encoding="utf-8")
     whitelist = tuple(part.strip() for part in (args.whitelist or "").split(",") if part.strip())
+    if args.backfill_preview:
+        if args.apply:
+            raise LibraryError("--backfill-preview 与 --apply 不能同时使用。")
+        before = doc.md.read_bytes()
+        result = pdf_repair.backfill_preview(text, doc.pdf, limit=args.limit,
+                                             whitelist=whitelist,
+                                             max_pack_items=args.max_pack_items)
+        after = doc.md.read_bytes()
+        if before != after:
+            raise pdf_repair.RepairError("只读试算写动了 MD，已中止")
+        result["checks"]["no_write"] = before == after
+        result["document"] = doc.stem
+        emit(result)
+        return 0
+    if out is None:
+        raise LibraryError("repair 需要 --out（除 --backfill-preview 外）。")
     if args.apply:
         plan_file = out / "patches.json"
         if not plan_file.is_file():

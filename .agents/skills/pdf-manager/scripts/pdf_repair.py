@@ -12,6 +12,7 @@ import hashlib
 import io
 import re
 from bisect import bisect_left, bisect_right
+from collections import Counter
 from pathlib import Path
 
 # A tag pair, non-greedy, may span a line break inside the content.
@@ -890,6 +891,391 @@ def apply_plan(text: str, patches, pdf_path, *, whitelist=(), max_pack_items: in
                      "true_sup_before": before_quality["true_sup_count"],
                      "true_sup_after": after_quality["true_sup_count"],
                      "ai_lines": len(residual["ai_items"])}}
+
+
+# --------------------------------------------------------------------------
+# Backfill preview: read-only. The PDF sentence is only an oracle; the span
+# that changes is the damaged token run, never the whole sentence.
+
+
+BACKFILL_MAX_DELTA = 6
+BACKFILL_MIN_SCORE = 0.80
+SENTENCE_BREAK_RE = re.compile(r"(?<=[.!?;])\s+")
+# Which gate a rejection belongs to, counted once per rejected segment.
+GATE_OF_REASON = {
+    "无 PDF 锚点": "no_anchor",
+    "段内无可对齐的词": "align",
+    "无对应 PDF 句": "align",
+    "无法对齐损坏词": "align",
+    "同句在 PDF 出现": "unique",
+    "替换词不在 PDF 句": "verbatim",
+    "跨度": "bounded",
+    "坏片段内完好词未保持": "span_only",
+    "跨度包含已保留标签": "span_only",
+    "边界残留标记": "span_only",
+    "PDF 断行连字符": "span_only",
+    "引入原片段没有的数字": "span_only",
+    "与前词重复": "span_only",
+}
+
+
+def _sentences(text: str) -> list[str]:
+    """Sentence-like units; line breaks from the PDF text layer are already spaces."""
+    return [part.strip() for part in SENTENCE_BREAK_RE.split(text) if part.strip()]
+
+
+def _plain_with_map(segment: str) -> tuple[str, list[int]]:
+    """Merge tags and record, for every plain character, its segment offset."""
+    chars, mapping = [], []
+    cursor = 0
+    for match in TAG_RE.finditer(segment):
+        for index in range(cursor, match.start()):
+            chars.append(segment[index])
+            mapping.append(index)
+        for index in range(match.start("content"), match.end("content")):
+            chars.append(segment[index])
+            mapping.append(index)
+        cursor = match.end()
+    for index in range(cursor, len(segment)):
+        chars.append(segment[index])
+        mapping.append(index)
+    return "".join(chars), mapping
+
+
+def _segments(line: str, protected=()) -> list[tuple[int, int]]:
+    """Sentence-sized spans, cut at punctuation and around protected regions."""
+    tag_mask = bytearray(len(line))
+    for match in TAG_RE.finditer(line):
+        tag_mask[match.start():match.end()] = b"\x01" * len(match.group(0))
+    cuts = {0, len(line)}
+    for start, end in protected:
+        cuts.add(max(0, start))
+        cuts.add(min(len(line), end))
+    for index, char in enumerate(line):
+        if tag_mask[index]:
+            continue
+        if char in ".!?;" and (index + 1 == len(line) or line[index + 1].isspace()):
+            cuts.add(index + 1)
+    ordered = sorted(cuts)
+    return [(ordered[index], ordered[index + 1]) for index in range(len(ordered) - 1)
+            if ordered[index] < ordered[index + 1]]
+
+
+def _best_sentence(plain: str, sentences: list[str]) -> tuple[str | None, float]:
+    target = _flat(plain)
+    if not target:
+        return None, 0.0
+    best, score = None, 0.0
+    for sentence in sentences:
+        ratio = difflib.SequenceMatcher(None, target, _flat(sentence), autojunk=False).ratio()
+        if ratio > score:
+            best, score = sentence, ratio
+    return best, round(score, 3)
+
+
+def _word_hits(text: str) -> list[tuple[int, int, str, str]]:
+    hits = []
+    for match in RAW_WORD_RE.finditer(text):
+        value = _norm(match.group(0))
+        if value:
+            hits.append((match.start(), match.end(), match.group(0), value))
+    return hits
+
+
+def _subsequence(needles: list[str], haystack: list[str]) -> bool:
+    """True when every needle appears in haystack in the given order."""
+    cursor = 0
+    for needle in needles:
+        while cursor < len(haystack) and haystack[cursor] != needle:
+            cursor += 1
+        if cursor == len(haystack):
+            return False
+        cursor += 1
+    return True
+
+
+RESIDUE_RE = re.compile(r"</?(?:sub|sup)", re.I)
+HYPHEN_BREAK_RE = re.compile(r"[A-Za-z]- ")
+TAG_EDGE_RE = re.compile(r"</?(?:sub|sup)", re.I)
+
+
+def _widen_span(line: str, start: int, end: int) -> tuple[int, int]:
+    """Widen a damaged-character span to the whitespace token that holds it.
+
+    A tag is one token together with its content (``<sub>l</sub>etes``), so the
+    replacement has to consume the whole tag: editing only ``etes`` would leave
+    ``<sub>l</sub>`` behind.
+    """
+    begin, finish = start, end
+    for token_start, token_end, _ in _tokens(line):
+        if token_start <= start < token_end:
+            begin = token_start
+        if token_start < end <= token_end:
+            finish = token_end
+    return begin, finish
+
+
+def _kept_tag_inside(line: str, start: int, end: int, unresolved) -> bool:
+    """A well-formed tag inside the span that no unresolved fragment covers."""
+    for match in TAG_RE.finditer(line, start, end):
+        if not any(item_start < match.end() and match.start() < item_end
+                   for item_start, item_end in unresolved):
+            return True
+    return False
+
+
+def _tag_residue(text: str) -> bool:
+    """An angle-bracket tag fragment that TAG_RE does not accept."""
+    covered = [match.span() for match in TAG_RE.finditer(text)]
+    for match in RESIDUE_RE.finditer(text):
+        if not any(begin <= match.start() and match.end() <= finish
+                   for begin, finish in covered):
+            return True
+    return False
+
+
+def _boundary_residue(line: str, start: int, end: int) -> bool:
+    """A tag fragment touching the span from either side."""
+    return bool(re.search(r"<(?:sub|sup)>\Z", line[:start], re.I)
+                or TAG_EDGE_RE.match(line, end))
+
+
+def _adjacent_duplicate(line: str, start: int, end: int, replacement: str) -> bool:
+    """The replacement repeats the intact word just outside the span."""
+    before = next((hit for hit in reversed(_word_hits(line[:start]))), None)
+    after = next(iter(_word_hits(line[end:])), None)
+    repl = _word_hits(replacement)
+    if not repl:
+        return True
+    return bool((before and repl[0][3] == before[3])
+                or (after and repl[-1][3] == after[3]))
+
+
+def backfill_preview(text: str, pdf_path, *, limit: int = 5, whitelist=(),
+                     max_pack_items: int = 20) -> dict:
+    """Read-only trial of sentence-oracle backfill over the residual AI lines.
+
+    Three gates decide acceptance: the PDF sentence occurs once, every word in
+    the replacement occurs in that sentence, and the content delta stays within
+    ``BACKFILL_MAX_DELTA``. Two more are asserted for every attempt: only the
+    damaged span changes, and nothing is written. ``limit`` only caps how many
+    item rows are returned; the statistics always cover the whole document.
+    """
+    index = _pdf_index(pdf_path)
+    spans = masked_spans(text)
+    lines = text.split("\n")
+    starts = _line_starts(text)
+    masked_lines = _masked_text(text, spans).split("\n")
+
+    windows, previous = {}, -10
+    for number in range(1, len(lines) + 1):
+        plain = _merge_tags(masked_lines[number - 1])
+        count = len(_words(plain))
+        if count < 3:
+            continue
+        anchor = _anchor(plain, index, previous)
+        if anchor is None:
+            continue
+        previous = anchor
+        windows[number] = _window(index, anchor, count)
+
+    all_sentences = _sentences(" ".join(line["text"] for line in index["lines"]))
+    sentence_counts = Counter(_flat(sentence) for sentence in all_sentences)
+    base = _plan_core(text, index, whitelist, max_pack_items)
+
+    all_rows, reasons = [], Counter()
+    gate_blocked = Counter()
+    segments_total = segments_passed = items_passed = 0
+    accepted, preview_lines = [], {}
+    for item in base["ai_items"]:
+        number = item["line"]
+        line = lines[number - 1]
+        line_start = starts[number - 1]
+        unresolved = item["offsets"]
+        window = windows.get(number)
+        local_protected = [(max(0, start - line_start), min(len(line), end - line_start))
+                           for start, end in spans
+                           if start < line_start + len(line) and end > line_start]
+        sentence_pool = _sentences(window["text"]) if window else []
+        segment_rows = []
+        for seg_start, seg_end in _segments(line, local_protected):
+            if not any(seg_start <= start < seg_end for start, _ in unresolved):
+                continue
+            segments_total += 1
+            plain_seg, mapping = _plain_with_map(line[seg_start:seg_end])
+            words = _word_hits(plain_seg)
+            damaged = []
+            for position, (word_start, word_end, _, _) in enumerate(words):
+                orig_start = seg_start + mapping[word_start]
+                orig_end = seg_start + mapping[word_end - 1] + 1
+                if any(orig_start < end and start < orig_end for start, end in unresolved):
+                    damaged.append(position)
+            detail = {"line": number, "span": [seg_start, seg_end], "score": None,
+                      "before": line[seg_start:seg_end], "sentence": None,
+                      "replacement": None, "delta": None, "gate": None,
+                      "gates": {"unique": False, "verbatim": False, "bounded": False,
+                                "span_only": False},
+                      "intact_kept": None, "status": "拒绝", "reasons": []}
+            if not window:
+                detail["reasons"].append("无 PDF 锚点")
+            elif not words or not damaged:
+                detail["reasons"].append("段内无可对齐的词")
+            else:
+                sentence, score = _best_sentence(plain_seg, sentence_pool)
+                detail["sentence"], detail["score"] = sentence, score
+                if sentence is None or score < BACKFILL_MIN_SCORE:
+                    detail["reasons"].append(f"无对应 PDF 句（相似度 {score}）")
+                elif sentence_counts.get(_flat(sentence), 0) >= 2:
+                    detail["reasons"].append(
+                        f"同句在 PDF 出现 {sentence_counts[_flat(sentence)]} 次")
+                else:
+                    detail["gates"]["unique"] = True
+                    sentence_words = _word_hits(sentence)
+                    matcher = difflib.SequenceMatcher(
+                        None, [word[3] for word in words],
+                        [word[3] for word in sentence_words], autojunk=False)
+                    first, last = None, None
+                    for position in damaged:
+                        for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+                            if i1 <= position < i2:
+                                if tag == "equal":
+                                    begin = j1 + (position - i1)
+                                    finish = begin + 1
+                                else:
+                                    begin, finish = j1, j2
+                                first = begin if first is None else min(first, begin)
+                                last = finish if last is None else max(last, finish)
+                                break
+                    if first is None or last is None or last <= first:
+                        detail["reasons"].append("无法对齐损坏词")
+                    else:
+                        replacement = sentence[sentence_words[first][0]:
+                                                sentence_words[last - 1][1]].strip()
+                        first_word, last_word = words[damaged[0]], words[damaged[-1]]
+                        orig_start = seg_start + mapping[first_word[0]]
+                        orig_end = seg_start + mapping[last_word[1] - 1] + 1
+                        # A tag and its content are one token; widen so the whole
+                        # fragment is replaced instead of leaving a stray `</sub>`.
+                        orig_start, orig_end = _widen_span(line, orig_start, orig_end)
+                        plain_before = _merge_tags(line[orig_start:orig_end])
+                        replacement_words = [word[3] for word in _word_hits(replacement)]
+                        detail["replacement"] = replacement
+                        detail["orig_span"] = [orig_start, orig_end]
+                        detail["plain_before"] = plain_before
+                        # Gate 2: every substituted word occurs in the anchored PDF
+                        # window. A slice of the sentence satisfies this by
+                        # construction; the check also rejects a stray word from a
+                        # near-miss sentence that the ratio score let through.
+                        detail["verbatim_missing"] = [word[2] for word in _word_hits(replacement)
+                                                      if word[3] not in window["norm"]]
+                        detail["gates"]["verbatim"] = (bool(replacement)
+                                                       and not detail["verbatim_missing"])
+                        delta = len(replacement) - len(plain_before)
+                        detail["delta"] = delta
+                        detail["gates"]["bounded"] = abs(delta) <= BACKFILL_MAX_DELTA
+                        intact = [words[position][3] for position in range(damaged[0], damaged[-1] + 1)
+                                  if position not in damaged]
+                        detail["intact_kept"] = _subsequence(intact, replacement_words)
+                        # Gate 4 guards: the edit may not touch anything that is
+                        # not part of the damaged fragment.
+                        kept_tag = _kept_tag_inside(line, orig_start, orig_end, unresolved)
+                        residue = (_tag_residue(line[orig_start:orig_end])
+                                   or _boundary_residue(line, orig_start, orig_end))
+                        hyphen = bool(HYPHEN_BREAK_RE.search(replacement))
+                        new_digits = sorted(set(re.findall(r"\d", replacement))
+                                            - set(re.findall(r"\d", plain_before)))
+                        duplicate = _adjacent_duplicate(line, orig_start, orig_end, replacement)
+                        detail["span_guards"] = {"kept_tag": kept_tag, "residue": residue,
+                                                 "hyphen": hyphen, "new_digits": new_digits,
+                                                 "adjacent_duplicate": duplicate}
+                        detail["gates"]["span_only"] = not (kept_tag or residue or hyphen
+                                                            or new_digits or duplicate)
+                        if not detail["gates"]["verbatim"]:
+                            detail["reasons"].append("替换词不在 PDF 句")
+                        elif not detail["gates"]["bounded"]:
+                            detail["reasons"].append(f"跨度 {delta} 超过 {BACKFILL_MAX_DELTA}")
+                        elif kept_tag:
+                            detail["reasons"].append("跨度包含已保留标签")
+                        elif residue:
+                            detail["reasons"].append("边界残留标记")
+                        elif hyphen:
+                            detail["reasons"].append("PDF 断行连字符")
+                        elif new_digits:
+                            detail["reasons"].append("引入原片段没有的数字")
+                        elif duplicate:
+                            detail["reasons"].append("与前词重复")
+                        elif not detail["intact_kept"]:
+                            detail["reasons"].append("坏片段内完好词未保持")
+                        else:
+                            detail["status"] = "可安全回填"
+                            accepted.append(detail)
+                            preview_lines.setdefault(number, []).append(
+                                (orig_start, orig_end, replacement))
+            if detail["status"] == "可安全回填":
+                segments_passed += 1
+            else:
+                first_reason = detail["reasons"][0].split("（")[0] if detail["reasons"] else "未分类"
+                detail["gate"] = GATE_OF_REASON.get(first_reason, "align")
+                gate_blocked[detail["gate"]] += 1
+                for reason in detail["reasons"]:
+                    reasons[reason.split("（")[0]] += 1
+            segment_rows.append(detail)
+        item_ok = bool(segment_rows) and all(
+            row["status"] == "可安全回填" for row in segment_rows)
+        if item_ok:
+            items_passed += 1
+        all_rows.append({"line": number, "item_offset": item["offsets"],
+                         "segments": segment_rows,
+                         "status": "可安全回填" if item_ok else "拒绝"})
+
+    preview_source = list(lines)
+    span_only_ok = True
+    for number, changes in preview_lines.items():
+        original = lines[number - 1]
+        change_list = sorted(changes)
+        pieces, cursor = [], 0
+        for orig_start, orig_end, replacement in change_list:
+            if orig_start < cursor:
+                raise RepairError(f"L{number} 回填区间重叠，已中止试算")
+            pieces.append(original[cursor:orig_start])
+            pieces.append(replacement)
+            cursor = orig_end
+        pieces.append(original[cursor:])
+        new_line = "".join(pieces)
+        # Real outside-span assertion on the finished line: every preserved
+        # stretch must still match the original byte for byte.
+        new_cursor = orig_cursor = 0
+        for orig_start, orig_end, replacement in change_list:
+            gap = original[orig_cursor:orig_start]
+            if new_line[new_cursor:new_cursor + len(gap)] != gap:
+                raise RepairError(f"L{number} 回填改动了区间外字节，已中止试算")
+            new_cursor += len(gap)
+            if new_line[new_cursor:new_cursor + len(replacement)] != replacement:
+                raise RepairError(f"L{number} 回填结果与替换串不一致，已中止试算")
+            new_cursor += len(replacement)
+            orig_cursor = orig_end
+        if new_line[new_cursor:] != original[orig_cursor:]:
+            raise RepairError(f"L{number} 回填改动了区间外字节，已中止试算")
+        preview_source[number - 1] = new_line
+    preview = "\n".join(preview_source)
+    line_count_ok = preview.count("\n") == text.count("\n")
+    if not line_count_ok:
+        raise RepairError("回填试算改变了行数，已中止")
+    return {
+        "stats": {"ai_items": len(base["ai_items"]), "items_passed": items_passed,
+                  "segments_attempted": segments_total, "segments_passed": segments_passed,
+                  "item_rate": round(items_passed / len(base["ai_items"]), 3)
+                  if base["ai_items"] else 0.0,
+                  "segment_rate": round(segments_passed / segments_total, 3)
+                  if segments_total else 0.0,
+                  "gate_blocked": dict(gate_blocked.most_common()),
+                  "reasons": dict(reasons.most_common())},
+        "items": all_rows[:limit],
+        "accepted": [{"line": row["line"], "orig_span": row["orig_span"],
+                      "plain_before": row.get("plain_before"),
+                      "replacement": row["replacement"]} for row in accepted],
+        "checks": {"span_only": span_only_ok, "line_count": line_count_ok, "no_write": True},
+    }
 
 
 def guard_output(out, library_root) -> Path:
