@@ -342,12 +342,14 @@ def make_parser():
     audit.add_argument("--root")
     audit.add_argument("--all", action="store_true")
     audit.add_argument("--json", action="store_true", help="输出完整字段的 JSON")
-    repair = sub.add_parser("repair", help="阶段一：生成标签修复补丁清单，不改 MD")
+    repair = sub.add_parser("repair", help="阶段一：生成补丁清单；--apply 写回同一篇 MD")
     repair.add_argument("input")
     repair.add_argument("--out", required=True, help="补丁输出目录；拒绝 md/、assets/、pdf/")
     repair.add_argument("--root")
     repair.add_argument("--whitelist", help="额外保留的真上标基底，逗号分隔")
     repair.add_argument("--max-pack-items", type=int, default=20, help="每个 AI 裁决包的条目上限")
+    repair.add_argument("--apply", action="store_true",
+                        help="应用 --out 中已有的 patches.json；AI 条目一律 keep")
     rename = sub.add_parser("rename", help="联动改名；保持来源编号与版本")
     rename.add_argument("input")
     rename.add_argument("new_name", help="完整文件 stem，含已有来源编号前缀")
@@ -451,6 +453,27 @@ def repair_command(args):
     out = pdf_repair.guard_output(args.out, doc.root)
     text = doc.md.read_text(encoding="utf-8")
     whitelist = tuple(part.strip() for part in (args.whitelist or "").split(",") if part.strip())
+    if args.apply:
+        plan_file = out / "patches.json"
+        if not plan_file.is_file():
+            raise LibraryError("--apply 需要 --out 目录里已有的 patches.json；先生成阶段一清单。")
+        payload = json.loads(plan_file.read_text(encoding="utf-8"))
+        if Path(payload.get("md", "")).resolve() != doc.md.resolve():
+            raise LibraryError("patches.json 记录的 MD 与当前输入不一致。")
+        result = pdf_repair.apply_plan(text, payload["patches"], doc.pdf, whitelist=whitelist,
+                                       max_pack_items=args.max_pack_items)
+        if result["applied"]:
+            atomic_text(doc.md, result["text"])
+            if doc.md.read_text(encoding="utf-8") != result["text"]:
+                atomic_text(doc.md, text)
+                raise pdf_repair.RepairError("写入回读不一致，已还原原文")
+        tags = result["tags"]
+        print(f"[{doc.stem}] 已应用 {len(result['applied'])} 条"
+              f"（已应用过 {len(result['already_applied'])}）"
+              f" · 标签 {tags['before']['total']} -> {tags['after']['total']}"
+              f" · 真上标 {tags['true_sup_before']} -> {tags['true_sup_after']}"
+              f" · 待 AI {tags['ai_lines']} 行 -> {doc.md}")
+        return 0
     plan = pdf_repair.build_plan(text, doc.pdf, whitelist=whitelist,
                                  max_pack_items=args.max_pack_items)
     out.mkdir(parents=True, exist_ok=True)
@@ -472,7 +495,8 @@ def repair_command(args):
         atomic_text(packs / f"p{number:02d}.md", pack)
     rules = plan["stats"]["rules"]
     print(f"[{doc.stem}] R1 {rules['R1']} · R2 {rules['R2']} · R4 {rules['R4']}"
-          f" · R5 {rules['R5']} · 保留 {plan['stats']['kept_whitelist']}"
+          f" · R5 {rules['R5']} · R6-lite {rules['R6-lite']}"
+          f" · 保留 {plan['stats']['kept_whitelist']}"
           f" · AI {plan['stats']['ai_items']} 条/{plan['stats']['ai_packs']} 包 -> {out}")
     return 0
 
