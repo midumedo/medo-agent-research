@@ -11,3 +11,7 @@
 `01`指domain\repo-context\01docsclassify。
 `02`指domain\repo-context\02docsdefine
 其它代指 同理
+
+# 研究处理建议
+
+[真正需要处理的研究](gpt/README.md)：当前主线、处理条件和停止标准。默认只读这一页，两份必要纠错按需查阅。
