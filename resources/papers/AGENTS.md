@@ -6,7 +6,7 @@
 
 ## 操作入口与本库约定
 
-下载、命名、转换、改名和检查使用 [pdf-manager skill](../../.agents/skills/pdf-manager/SKILL.md)。本库根目录是 `resources/papers`；命令、解析器规则和失败恢复以 skill 为准。
+下载、命名、转换、改名和检查使用 [pdf2md skill](../../output/skills/pdf2md/pdf2md/SKILL.md)。本库根目录是 `resources/papers`；命令、解析器规则和失败恢复以 skill 为准。
 
 ```text
 papers/
@@ -28,16 +28,9 @@ PDF、MD、资产和运行日志不进入版本库，由根 `.gitignore` 管理�
 
 ## index.csv：可离线保存的指路表
 
-| 列 | 语义 |
-|---|---|
-| `id` | 可靠的来源身份，论文通常含版本；普通资料可留空 |
-| `name` | 有 id 时为类型与简称；无 id 时为完整文件名主体 |
-| `keywords` | 人工或 Agent 根据摘要判定的关注词，`;` 分隔 |
-| `revised` | 对应版本的修订日；未知留空 |
+本库维护 `index.csv` 作为主要导航。四列含义、字段优先级、关键词同步和对账命令统一见 [skill 的索引管理](../../output/skills/pdf2md/pdf2md/SKILL.md#索引管理)。先按索引筛选，再读候选摘要，最后按研究问题读正文。
 
-有 id 时文件名由 `<id>.<name>` 推导；无 id 时使用 `name`。索引对本库是主要导航，但通用单篇转换不要求索引预先存在。重建保留原有关键词和暂未下载的行，只更新可确定的字段；不因网络元数据不全而洗掉已核实信息。
-
-摘要不放索引，单篇摘要保留在 MD 顶部登记区，筛选后再读取。来源明确提供的摘要是来源内容，Agent 自己写的概括不能冒充来源摘要。关键词是判断结果，不是 arXiv 学科分类的机械复制。
+本地缺少 PDF/MD 的行仍可代表待取资料，日常整理保留这些记录。`index --check` 只检查是否需要对账，材料齐备性另用 `check`；关键词与阅读完成、内容核实是不同信息。
 
 常用关键词参考：`memory, context, harness, agent, benchmark, survey, framework, long-term-memory, context-window, retrieval, rag, evaluation, personalization`。表外有必要的词可以使用。
 
@@ -46,9 +39,9 @@ PDF、MD、资产和运行日志不进入版本库，由根 `.gitignore` 管理�
 在仓库根运行：
 
 ```text
-python .agents/skills/pdf-manager/scripts/pdf_manager.py download 2504.19413v1 --root resources/papers --name Project.Mem0 --convert
-python .agents/skills/pdf-manager/scripts/pdf_manager.py check 2504.19413v1 --root resources/papers
-python .agents/skills/pdf-manager/scripts/pdf_manager.py index --root resources/papers --check
+python output/skills/pdf2md/pdf2md/scripts/pdf2md.py download 2504.19413v1 --root resources/papers --name Project.Mem0 --convert
+python output/skills/pdf2md/pdf2md/scripts/pdf2md.py check 2504.19413v1 --root resources/papers
+python output/skills/pdf2md/pdf2md/scripts/pdf2md.py index --root resources/papers --check
 ```
 
 只处理任务指定的资料。已有缓存不因线上发布新版本而自动换版；新收录的名称按 skill 的摘要流程确定。MD 顶部保留一个 front matter 登记块，其后为转换正文，不另写重复登记区。

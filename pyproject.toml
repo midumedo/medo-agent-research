@@ -3,7 +3,6 @@ name = "memory-research"
 version = "0.0.0"
 description = "Memory / Context / Harness research notes, and the source pipeline behind them"
 requires-python = ">=3.13"
-# PDF 管理脚本与测试使用 Python 标准库。
 dependencies = []
 
 [dependency-groups]
@@ -13,5 +12,5 @@ dev = []
 package = false
 
 [tool.pyright]
-# Skill tests add this directory to sys.path at runtime.
-extraPaths = [".agents/skills/pdf-manager/scripts"]
+# Local skill-development tests live under output/skills/pdf2md/tests.
+extraPaths = ["output/skills/pdf2md/pdf2md/scripts"]

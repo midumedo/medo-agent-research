@@ -28,7 +28,7 @@ from pdf_markdown import rewrite_links as _rewrite_references
 
 
 API = "https://mineru.net/api/v4"
-USER_AGENT = "PDFManager/1.0 (MinerU cloud client)"
+USER_AGENT = "PDF2MD/1.0 (MinerU cloud client)"
 BATCH_SIZE = 50
 POLL_INTERVAL = 3
 CDN_HOSTS = {"cdn-mineru.openxlab.org.cn"}
@@ -45,19 +45,18 @@ class MinerUError(RuntimeError):
     """An actionable API, upload, or returned-archive failure."""
 
 
-def api_key():
-    value = os.environ.get("MINERU_APIKEY", "").strip()
-    if value:
-        return value
-    if sys.platform == "win32":
+def api_key() -> str:
+    """An explicit process value, even empty, takes precedence over Windows."""
+    value = os.environ.get("MINERU_APIKEY")
+    if value is None and sys.platform == "win32":
         try:
             import winreg
             with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment") as key:
-                value = str(winreg.QueryValueEx(key, "MINERU_APIKEY")[0]).strip()
-            if value:
-                return value
-        except (OSError, ImportError):
+                value = winreg.QueryValueEx(key, "MINERU_APIKEY")[0]
+        except OSError:
             pass
+    if isinstance(value, str) and value.strip():
+        return value.strip()
     raise MinerUError("没有取到 MINERU_APIKEY；请设置环境变量后重试。")
 
 
@@ -135,14 +134,15 @@ class _HTTPSAtAddress(http.client.HTTPSConnection):
     """Use a fresh DNS address while authenticating the original HTTPS host."""
 
     def __init__(self, host, address, timeout=30):
-        super().__init__(host, timeout=timeout, context=ssl.create_default_context())
+        self.tls_context = ssl.create_default_context()
+        super().__init__(host, timeout=timeout, context=self.tls_context)
         self.address = address
 
     def connect(self):
         raw = socket.create_connection((self.address, self.port), timeout=self.timeout)
         try:
             # Host and certificate/SNI identity remain the original CDN domain.
-            self.sock = self._context.wrap_socket(raw, server_hostname=self.host)
+            self.sock = self.tls_context.wrap_socket(raw, server_hostname=self.host)
         except Exception:
             raw.close()
             raise
@@ -217,7 +217,7 @@ def _match_results(jobs, records):
 
 def _poll_batch(batch_id, jobs, key, timeout):
     deadline = time.monotonic() + max(0, timeout)
-    matched = {job["data_id"]: None for job in jobs}
+    matched: dict[str, dict | None] = {job["data_id"]: None for job in jobs}
     while True:
         data = _request_json("/extract-results/batch/" + urllib.parse.quote(batch_id, safe=""), key)
         records = data.get("extract_result") or []

@@ -122,7 +122,7 @@ def render_markdown(fields: dict, body: str) -> str:
 
 def atomic_bytes(path: Path, payload: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    fd, temporary = tempfile.mkstemp(prefix=".pdf-manager-", suffix=".tmp", dir=path.parent)
+    fd, temporary = tempfile.mkstemp(prefix=".pdf2md-", suffix=".tmp", dir=path.parent)
     try:
         with os.fdopen(fd, "wb") as handle:
             handle.write(payload)
@@ -235,7 +235,7 @@ class Library:
     @staticmethod
     def render_index(rows: list[dict]) -> str:
         out = io.StringIO(newline="")
-        writer = csv.DictWriter(out, fieldnames=INDEX_FIELDS, lineterminator="\n")
+        writer: csv.DictWriter[str] = csv.DictWriter(out, fieldnames=INDEX_FIELDS, lineterminator="\n")
         writer.writeheader()
         for row in sorted(rows, key=stem_of):
             values = {key: row.get(key) or "" for key in INDEX_FIELDS}
@@ -285,13 +285,19 @@ class Library:
             raise LibraryError(f"无法将 {token!r} 识别为本目录资料；请提供 PDF 路径或完整文件名。")
         return direct
 
-    def rebuilt_index(self, documents=None, prune=False) -> list[dict]:
-        rows = self.read_index()
+    def rebuilt_index(self, documents=None, prune=False, rows=None) -> list[dict]:
+        rows = self.read_index() if rows is None else rows
         selected = self.documents(include_ledger=False) if documents is None else documents
-        by_key = {(r.get("id") or "name:" + (r.get("name") or "")): dict(r) for r in rows}
+        by_key, by_stem = {}, {}
+        for row in rows:
+            key = row.get("id") or "name:" + (row.get("name") or "")
+            if key in by_key or stem_of(row) in by_stem:
+                raise LibraryError(f"索引中有重复身份或同名记录：{stem_of(row)}；请核对并合并对应记录。")
+            by_key[key] = dict(row)
+            by_stem[stem_of(row)] = row
         for doc in selected:
             front = doc.front
-            old = next((r for r in rows if stem_of(r) == doc.stem), {})
+            old = by_stem.get(doc.stem, {})
             ident = front.get("id") or old.get("id") or identity_from_name(doc.stem) or ""
             if ident and doc.stem != ident and not doc.stem.startswith(ident + "."):
                 raise LibraryError(f"{doc.stem} 的来源编号为 {ident}；建立四列索引前请用 rename 将名称调整为 {ident}.<名称>。")
@@ -299,7 +305,16 @@ class Library:
             if doc.stem == ident:
                 name = ""
             key = ident or "name:" + name
+            old_key = old.get("id") or "name:" + (old.get("name") or "")
+            if old and old_key != key:
+                if key in by_key:
+                    raise LibraryError(f"{doc.stem} 补全来源编号后与已有记录冲突；请核对并合并对应记录。")
+                del by_key[old_key]
             previous = by_key.get(key, old)
+            if ident and previous and stem_of(previous) != doc.stem:
+                other = Document(self.root, stem_of(previous))
+                if other.pdf.is_file() or other.md.is_file():
+                    raise LibraryError(f"{ident} 对应多份本地资料：{other.stem}、{doc.stem}；请先核对并整理重复材料。")
             by_key[key] = {
                 "id": ident, "name": name,
                 "keywords": previous.get("keywords") if previous else split_keywords(front.get("keywords")),
@@ -310,9 +325,13 @@ class Library:
             by_key = {k: r for k, r in by_key.items() if stem_of(r) in present}
         return sorted(by_key.values(), key=stem_of)
 
-    def update_existing_index(self, doc: Document) -> None:
+    def update_existing_index(self, doc: Document, revised=None) -> None:
         if self.index.is_file():
-            self.write_index(self.rebuilt_index([doc]))
+            rows = self.rebuilt_index([doc])
+            for row in rows:
+                if stem_of(row) == doc.stem and not row.get("revised"):
+                    row["revised"] = revised or ""
+            self.write_index(rows)
 
     def validate_conversion(self, doc: Document) -> None:
         prefix = doc.prefix.casefold()
@@ -340,7 +359,7 @@ def resolve_document(token: str, root=None) -> tuple[Document, Path | None]:
     return doc, source
 
 
-def check_document(doc: Document, *, audit=None) -> dict:
+def check_document(doc: Document) -> dict:
     _, body = read_markdown(doc.md)
     missing = []
     if doc.md.is_file():
@@ -353,7 +372,6 @@ def check_document(doc: Document, *, audit=None) -> dict:
                 missing.append(reference)
     return {"root": str(doc.root), "stem": doc.stem, "pdf": doc.pdf.is_file(),
             "md": doc.md.is_file(), "md_body": bool(body.strip()), "missing_images": missing,
-            "quality": audit,
             "complete": doc.pdf.is_file() and doc.pdf.stat().st_size > 0 and bool(body.strip()) and not missing}
 
 
@@ -437,7 +455,7 @@ def rename_document(doc: Document, new_name: str) -> Document:
                     row["name"] = new_name.removeprefix(new_ident + ".") if new_ident else new_name
                     if new_name == new_ident:
                         row["name"] = ""
-            lib.write_index(rows)
+            lib.write_index(lib.rebuilt_index([target], rows=rows))
     except Exception:
         for source, destination in reversed(applied):
             if destination.exists() and not source.exists():

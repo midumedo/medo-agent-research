@@ -1,6 +1,6 @@
 # 论文库
 
-这里保存外部论文原件、机器转换全文及定位它们的索引。清单在 [index.csv](index.csv)，本库约定在 [AGENTS.md](AGENTS.md)，历史在 [CHANGELOG.md](CHANGELOG.md)。下载、命名、转换、改名和检查使用 [pdf-manager skill](../../.agents/skills/pdf-manager/SKILL.md)。
+这里保存外部论文原件、机器转换全文及定位它们的索引。清单在 [index.csv](index.csv)，本库约定在 [AGENTS.md](AGENTS.md)，历史在 [CHANGELOG.md](CHANGELOG.md)。搜索发现论文后的本地全文阅读、保存和维护使用 [pdf2md skill](../../output/skills/pdf2md/pdf2md/SKILL.md)。
 
 ## 一篇论文由什么组成
 
@@ -22,8 +22,8 @@ PDF、MD、资产目录按本库 Git 规则不追踪；索引与文档随仓库�
 在仓库根运行：
 
 ```text
-python .agents/skills/pdf-manager/scripts/pdf_manager.py metadata 2504.19413v1 --root resources/papers
-python .agents/skills/pdf-manager/scripts/pdf_manager.py check 2504.19413v1 --root resources/papers
+python output/skills/pdf2md/pdf2md/scripts/pdf2md.py metadata 2504.19413v1 --root resources/papers
+python output/skills/pdf2md/pdf2md/scripts/pdf2md.py check 2504.19413v1 --root resources/papers
 ```
 
 新收录资料可先由脚本获取摘要，Agent 再决定类型与简称；本库已有名称默认保留。类型参考 `Survey / Bench / Project / Model / Method / Analysis`，可按实际材料扩展。转换使用 MinerU v4 精准解析，脚本只需 Python 标准库与 `MINERU_APIKEY`。

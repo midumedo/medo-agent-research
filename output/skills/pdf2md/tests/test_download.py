@@ -6,9 +6,10 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+SKILL_SCRIPTS = Path(__file__).resolve().parents[1] / "pdf2md/scripts"
+sys.path.insert(0, str(SKILL_SCRIPTS))
 import pdf_library as storage
-import pdf_manager as cli
+import pdf2md as cli
 
 
 class DownloadRepairTests(unittest.TestCase):

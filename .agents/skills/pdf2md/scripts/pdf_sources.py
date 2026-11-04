@@ -1,4 +1,4 @@
-"""Source metadata and PDF downloads for the portable PDF manager.
+"""Source metadata and PDF downloads for pdf2md.
 
 This module does not write files.  arXiv version identity is retained through
 every lookup; a response for another version is never used as a substitute.
@@ -20,7 +20,7 @@ class SourceError(RuntimeError):
     """The requested source could not be read or resolved reliably."""
 
 
-USER_AGENT = "PDFManager/1.0 (source metadata and PDF retrieval)"
+USER_AGENT = "PDF2MD/1.0 (source metadata and PDF retrieval)"
 ATOM = "{http://www.w3.org/2005/Atom}"
 ARXIV_ID = re.compile(r"(?:\d{4}\.\d{4,5}|[a-z][a-z0-9.-]*/\d{7})(?:v[1-9]\d*)?", re.I)
 VERSION = re.compile(r"v([1-9]\d*)$", re.I)
@@ -111,7 +111,7 @@ class _ArxivPage(HTMLParser):
         if tag == "blockquote" and (self.abstract_depth or "abstract" in values.get("class", "").split()):
             self.abstract_depth += 1
         elif self.abstract_depth:
-            self.abstract_parts.append(self.get_starttag_text())
+            self.abstract_parts.append(self.get_starttag_text() or "")
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "blockquote" and self.abstract_depth:
@@ -235,7 +235,7 @@ def fetch_metadata(value: str) -> dict:
         api = {}
         warnings.append(str(error))
     chosen = chosen or api.get("versioned_id")
-    if not chosen:
+    if not chosen or not (version := VERSION.search(chosen)):
         raise SourceError("arXiv version unresolved; retry with an explicit versioned id.")
 
     if page.get("versioned_id") != chosen:
@@ -253,7 +253,7 @@ def fetch_metadata(value: str) -> dict:
         id="arxiv-" + chosen.replace("/", "-"),
         native_id=_base_id(chosen),
         versioned_id=chosen,
-        version="v" + VERSION.search(chosen).group(1),
+        version="v" + version.group(1),
         title=page.get("title") or api.get("title"),
         abstract=page.get("abstract") or api.get("abstract"),
         revised=api.get("revised"),

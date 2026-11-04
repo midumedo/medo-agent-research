@@ -1,0 +1,4 @@
+interface:
+  display_name: "pdf2md · 论文全文阅读与保存"
+  short_description: "把发现的论文转为本地 Markdown，深入阅读全文、核对 PDF 并保存复用"
+  default_prompt: "使用 $pdf2md 获取这篇论文，围绕我的研究问题阅读全文，并保存 Markdown、原始 PDF 和图表供后续复用。"

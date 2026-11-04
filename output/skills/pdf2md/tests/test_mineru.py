@@ -1,18 +1,21 @@
 """Offline checks of archive consumption and the MinerU API contract."""
 
+from contextlib import nullcontext
+from email.message import Message
 import io
 import json
 from pathlib import Path
 import sys
 import tempfile
 import ssl
+from types import SimpleNamespace
 import urllib.error
 import unittest
 from unittest.mock import Mock, patch
 import zipfile
 
-sys.dont_write_bytecode = True
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+SKILL_SCRIPTS = Path(__file__).resolve().parents[1] / "pdf2md/scripts"
+sys.path.insert(0, str(SKILL_SCRIPTS))
 import mineru_backend as backend
 
 
@@ -26,9 +29,61 @@ def archive(entries):
     return output.getvalue()
 
 
+class CredentialTests(unittest.TestCase):
+    def setUp(self):
+        self.registry_key = object()
+        self.registry = SimpleNamespace(
+            HKEY_CURRENT_USER=object(), REG_SZ=1, REG_EXPAND_SZ=2,
+            OpenKey=Mock(return_value=nullcontext(self.registry_key)),
+            QueryValueEx=Mock(return_value=(" registry-token ", 1)))
+        process_patch = patch.dict(backend.os.environ, {}, clear=True)
+        self.process_env = process_patch.start()
+        self.addCleanup(process_patch.stop)
+        module_patch = patch.dict(sys.modules, {"winreg": self.registry})
+        module_patch.start()
+        self.addCleanup(module_patch.stop)
+        # Replace only this module's platform view; changing sys.platform itself
+        # could change unrelated standard-library behavior on non-Windows hosts.
+        platform_patch = patch.object(backend, "sys", SimpleNamespace(platform="win32"))
+        platform_patch.start()
+        self.addCleanup(platform_patch.stop)
+
+    def test_process_value_takes_precedence_over_windows_user_value(self):
+        self.process_env["MINERU_APIKEY"] = " process-token "
+        self.assertEqual(backend.api_key(), "process-token")
+        self.registry.OpenKey.assert_not_called()
+
+    def test_explicit_empty_process_value_disables_registry_fallback(self):
+        for value in ("", " \t "):
+            with self.subTest(value=value):
+                self.process_env["MINERU_APIKEY"] = value
+                with self.assertRaisesRegex(backend.MinerUError, "MINERU_APIKEY"):
+                    backend.api_key()
+        self.registry.OpenKey.assert_not_called()
+
+    def test_absent_process_value_uses_windows_user_string(self):
+        for kind in (self.registry.REG_SZ, self.registry.REG_EXPAND_SZ):
+            with self.subTest(kind=kind):
+                self.registry.QueryValueEx.return_value = (" registry-token ", kind)
+                self.assertEqual(backend.api_key(), "registry-token")
+        self.registry.OpenKey.assert_called_with(self.registry.HKEY_CURRENT_USER, "Environment")
+        self.registry.QueryValueEx.assert_called_with(self.registry_key, "MINERU_APIKEY")
+
+    def test_missing_registry_value_is_reported_as_unconfigured(self):
+        self.registry.QueryValueEx.side_effect = OSError("not found")
+        with self.assertRaisesRegex(backend.MinerUError, "MINERU_APIKEY"):
+            backend.api_key()
+
+    def test_non_windows_missing_value_does_not_read_registry(self):
+        with patch.object(backend, "sys", SimpleNamespace(platform="linux")):
+            with self.assertRaisesRegex(backend.MinerUError, "MINERU_APIKEY"):
+                backend.api_key()
+        self.registry.OpenKey.assert_not_called()
+
+
 class ArchiveTests(unittest.TestCase):
     def test_bundled_real_v1_excerpt_supplies_actual_caption_and_path_fields(self):
-        sample_path = Path(__file__).resolve().parents[1] / "references" / "samples" / "content_list.sample.json"
+        sample_path = Path(__file__).parent / "fixtures" / "content_list.sample.json"
         sample = json.loads(sample_path.read_text(encoding="utf-8"))
         visuals = [sample["examples"][kind] for kind in ("image", "chart", "table")]
         # The entries are a real, truncated excerpt; this ZIP is a synthetic
@@ -210,7 +265,7 @@ class TransportTests(unittest.TestCase):
         self.assertTrue(all(r["state"] == "pending" and r["batch_id"] == "keep-this-batch" for r in results))
 
     def test_batches_are_capped_at_fifty(self):
-        def request(route, key, data=None):
+        def request(route, key, data):
             self.assertEqual(route, "/file-urls/batch")
             return {"batch_id": str(len(data["files"])), "file_urls": ["upload"] * len(data["files"])}
         def results(batch, jobs, key, timeout):
@@ -244,7 +299,8 @@ class TransportTests(unittest.TestCase):
 
     def test_missing_credential_is_clear_on_non_windows(self):
         self.key_patch.stop()
-        with patch.dict(backend.os.environ, {}, clear=True), patch.object(backend.sys, "platform", "linux"):
+        with patch.dict(backend.os.environ, {}, clear=True), \
+                patch.object(backend, "sys", SimpleNamespace(platform="linux")):
             with self.assertRaisesRegex(backend.MinerUError, "MINERU_APIKEY"):
                 backend.api_key()
 
@@ -271,7 +327,7 @@ class CdnDownloadTests(unittest.TestCase):
         fallback.assert_called_once_with(self.URL)
 
     def test_http_denial_and_unrelated_hosts_do_not_trigger_bypass(self):
-        denial = urllib.error.HTTPError(self.URL, 403, "denied", {}, None)
+        denial = urllib.error.HTTPError(self.URL, 403, "denied", Message(), None)
         with patch.object(backend.urllib.request, "urlopen", side_effect=denial), \
              patch.object(backend, "_cdn_fallback") as fallback:
             with self.assertRaisesRegex(backend.MinerUError, "HTTP 403"):

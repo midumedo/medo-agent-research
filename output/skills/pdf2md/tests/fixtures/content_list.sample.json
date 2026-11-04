@@ -1,6 +1,5 @@
 {
   "_what": "MinerU 内容列表（Content List V1）的字段字典与代表样例",
-  "_why": "留一份就够——正文已进 md/，图注在 md 里紧贴图片引用，这里只回答「字段叫什么」。原始 206 条全量 dump 有 198 KB，其中 header/page_number/ref_text 等噪声占了多半，故只留每类一条。",
   "_source": {
     "paper": "arxiv-2504.19413v1.Project.Mem0",
     "batch_id": "70168b43-1ec1-401a-a60e-d29b0f4b57e9",
@@ -8,13 +7,6 @@
     "lang": "en",
     "items_in_full_dump": 206
   },
-  "_read": [
-    "1. 解包 MinerU 返回的 zip，找 `*_content_list.json`（V1；同包另有 `*_content_list_v2.json` 按页分组，本项目不用）。",
-    "2. 它是扁平的 list[dict]，每条有 `type` 与 `page_idx`、`bbox`。",
-    "3. 图注字段按类型分开：image 用 `image_caption`、chart 用 `chart_caption`、table 用 `table_caption`——拿错字段图注就是空的。",
-    "4. 图号从图注文本里抽（`Fig. 3` → 3），抽不到就用同类型的顺序号。"
-  ],
-  "_consumed_by": "convert.py 的 parse_visual() / name_map()：只用 type、img_path、caption（为了拿图号）。正文不从这里取。",
   "field_map": {
     "aside_text": [
       "bbox",

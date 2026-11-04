@@ -1,4 +1,4 @@
-# Output：教材设计与后续成品
+# Output：教材设计与可复用成果
 
 这里按读者用途组织教材设计、章节与手册。当前两条路线都处于设计阶段，尚无完成的教材正文或运行案例。
 
@@ -12,3 +12,5 @@ Memory 专题围绕“什么过去信息值得保留，怎样使它在未来有�
 框架筛选理由见 [Memory 工程选择](../analysis/memory-engineering-selection.md)，对象版本与机制片段见 [一手材料](../evidence/domain/memory-frameworks-core-2026-09-21.md)。它们支撑编辑判断，但不被教材顺序限制。主题综合仍在 [Domain](../domain/index.md)，原始资料和具体对象拆解可分别深入。
 
 [教材参考记录](refs/怎么做教材.md)保存先前参考与评价。当前面向已有基础的读者，不以固定习题数、格式或机械章节模板代替解释。
+
+[pdf2md 技能空间](skills/pdf2md/README.md)包含完整源码、设计经验和本地验证材料。可安装的 skill 位于其中的 `pdf2md/`，复制该目录即可使用。

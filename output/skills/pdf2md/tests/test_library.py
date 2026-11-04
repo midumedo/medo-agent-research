@@ -12,9 +12,10 @@ from unittest.mock import patch
 from urllib.parse import quote
 import zipfile
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+SKILL_SCRIPTS = Path(__file__).resolve().parents[1] / "pdf2md/scripts"
+sys.path.insert(0, str(SKILL_SCRIPTS))
 import pdf_library as storage
-import pdf_manager as cli
+import pdf2md as cli
 
 
 def archive():
@@ -32,7 +33,7 @@ def archive():
 
 class LibraryTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="pdf-manager-test-")
+        self.temp = tempfile.TemporaryDirectory(prefix="pdf2md-test-")
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name) / "资料 空间"
         self.lib = storage.Library(self.root)
@@ -131,6 +132,144 @@ class LibraryTests(unittest.TestCase):
         self.assertEqual(self.lib.read_index()[0]["keywords"], [])
         self.assertEqual(doc.front["keywords"], [])
         self.assertEqual(self.run_cli("index", "--root", str(self.root), "--check")[0], 0)
+
+    def test_index_queries_read_saved_rows_without_collecting_unregistered_files(self):
+        self.doc("Unregistered.Alias", "arxiv-2501.13956v1")
+        code, output, _ = self.run_cli("index", "--root", str(self.root), "--list")
+        self.assertEqual(code, 0)
+        self.assertEqual(json.loads(output), [])
+        self.assertFalse(self.lib.index.exists())
+        saved = [
+            {"id": "", "name": "Offline.MissingKeywords", "keywords": [], "revised": "2025-01-23"},
+            {"id": "", "name": "Offline.Curated", "keywords": ["selected"], "revised": ""},
+        ]
+        self.lib.write_index(saved)
+        before = self.lib.index.read_bytes()
+        code, output, _ = self.run_cli("index", "--root", str(self.root), "--list")
+        self.assertEqual(code, 0)
+        self.assertEqual(json.loads(output), self.lib.read_index())
+        code, output, _ = self.run_cli("index", "--root", str(self.root), "--missing-keywords")
+        self.assertEqual(code, 0)
+        missing = json.loads(output)
+        self.assertEqual([row["name"] for row in missing], ["Offline.MissingKeywords"])
+        self.assertIsNone(missing[0]["abstract"])
+        self.assertEqual(self.lib.index.read_bytes(), before)
+
+    def test_index_keyword_update_only_collects_target_and_preserves_other_rows(self):
+        target = self.doc("Report.Target")
+        unrelated = self.doc("Unregistered.Alias", "arxiv-2501.13956v1")
+        self.doc("Report.OtherLocal")
+        offline = {"id": "", "name": "Offline.Candidate", "keywords": ["keep"], "revised": "2025-01-23"}
+        self.lib.write_index([{"id": "", "name": target.stem, "keywords": ["old"], "revised": ""}, offline])
+        before = unrelated.md.read_bytes()
+        code, _, _ = self.run_cli("index", "--root", str(self.root), "--set-keywords", target.stem, "memory;agent")
+        self.assertEqual(code, 0)
+        rows = {row["name"]: row for row in self.lib.read_index()}
+        self.assertEqual(set(rows), {target.stem, offline["name"]})
+        self.assertEqual(rows[target.stem]["keywords"], ["memory", "agent"])
+        self.assertEqual(target.front["keywords"], ["memory", "agent"])
+        self.assertEqual(rows[offline["name"]], offline)
+        self.assertEqual(unrelated.md.read_bytes(), before)
+
+    def test_index_check_compares_records_without_reformatting_saved_csv(self):
+        self.doc("Report.One")
+        self.doc("Report.Two")
+        saved = ('\ufeffid,name,keywords,revised\r\n'
+                 '"","Report.Two","human-choice",""\r\n'
+                 '"","Offline.Candidate","keep","2025-01-23"\r\n'
+                 '"","Report.One","human-choice",""\r\n')
+        storage.atomic_text(self.lib.index, saved)
+        before = self.lib.index.read_bytes()
+        self.assertEqual(self.run_cli("index", "--root", str(self.root), "--check")[0], 0)
+        self.assertEqual(self.lib.index.read_bytes(), before)
+        self.doc("Report.New")
+        self.assertEqual(self.run_cli("index", "--root", str(self.root), "--check")[0], 1)
+        self.assertEqual(self.lib.index.read_bytes(), before)
+
+    def test_index_rebuild_rejects_duplicate_saved_identity_without_rewriting(self):
+        ident = "arxiv-2501.13956v1"
+        rows = [{"id": ident, "name": "Project.One", "keywords": ["one"], "revised": ""},
+                {"id": ident, "name": "Project.Two", "keywords": ["two"], "revised": ""}]
+        storage.atomic_text(self.lib.index, self.lib.render_index(rows))
+        before = self.lib.index.read_bytes()
+        self.assertEqual(self.run_cli("index", "--root", str(self.root))[0], 1)
+        self.assertEqual(self.lib.index.read_bytes(), before)
+
+    def test_index_rebuild_allows_versions_but_rejects_two_local_names_for_one_identity(self):
+        first_id = "arxiv-2501.13956v1"
+        second_id = "arxiv-2501.13956v2"
+        self.doc(first_id + ".Project.Zep", first_id)
+        self.doc(second_id + ".Project.Zep", second_id)
+        self.assertEqual({row["id"] for row in self.lib.rebuilt_index()}, {first_id, second_id})
+        self.doc(first_id + ".Project.Other", first_id)
+        self.assertEqual(self.run_cli("index", "--root", str(self.root))[0], 1)
+        self.assertFalse(self.lib.index.exists())
+
+    def test_index_identity_completion_replaces_name_only_row_and_keeps_curated_fields(self):
+        ident = "arxiv-2501.13956v1"
+        doc = self.doc(ident + ".Project.Zep")
+        self.lib.write_index([{"id": "", "name": doc.stem, "keywords": ["curated"], "revised": "2025-01-23"}])
+        self.assertEqual(self.run_cli("index", "--root", str(self.root))[0], 0)
+        self.assertEqual(self.lib.read_index(), [{"id": ident, "name": "Project.Zep",
+                                                 "keywords": ["curated"], "revised": "2025-01-23"}])
+
+    def test_index_rebuild_rejects_two_saved_rows_for_same_file(self):
+        ident = "arxiv-2501.13956v1"
+        doc = self.doc(ident + ".Project.Zep", ident)
+        rows = [{"id": "", "name": doc.stem, "keywords": ["one"], "revised": ""},
+                {"id": ident, "name": "Project.Zep", "keywords": ["two"], "revised": ""}]
+        for ordering in (rows, rows[::-1]):
+            with self.subTest(ordering=ordering):
+                storage.atomic_text(self.lib.index, self.lib.render_index(ordering))
+                before = self.lib.index.read_bytes()
+                self.assertEqual(self.run_cli("index", "--root", str(self.root))[0], 1)
+                self.assertEqual(self.lib.index.read_bytes(), before)
+
+    def test_index_rebuild_preserves_curated_fields_and_offline_rows_until_pruned(self):
+        ident = "arxiv-2501.13956v1"
+        doc = self.doc(ident + ".Project.Zep", ident)
+        front, body = storage.read_markdown(doc.md)
+        front["revised"] = "2025-01-01"
+        storage.atomic_text(doc.md, storage.render_markdown(front, body))
+        local = {"id": ident, "name": "Project.Zep", "keywords": ["curated"], "revised": "2025-01-23"}
+        offline = {"id": "arxiv-2401.00001v1", "name": "Survey.Candidate", "keywords": ["keep"], "revised": ""}
+        self.lib.write_index([local, offline])
+        before = doc.md.read_bytes()
+        self.assertEqual(self.run_cli("index", "--root", str(self.root))[0], 0)
+        rows = {row["id"]: row for row in self.lib.read_index()}
+        self.assertEqual(rows, {ident: local, offline["id"]: offline})
+        self.assertEqual(doc.md.read_bytes(), before)
+        self.assertEqual(self.run_cli("index", "--root", str(self.root), "--prune")[0], 0)
+        self.assertEqual(self.lib.read_index(), [local])
+
+    def test_download_only_fills_missing_index_revision_without_overwriting_curated_date(self):
+        ident = "arxiv-2501.13956v1"
+        fetched_date = "2025-01-23"
+        for label, previous_date in (("missing", ""), ("curated", "2025-01-20")):
+            with self.subTest(previous_date=previous_date):
+                root = self.root / label
+                library = storage.Library(root)
+                library.write_index([{"id": ident, "name": "Project.Zep", "keywords": ["keep"], "revised": previous_date}])
+                info = {"id": ident, "title": "Zep", "source": "https://arxiv.org/abs/2501.13956v1",
+                        "pdf_url": "https://arxiv.org/pdf/2501.13956v1", "revised": fetched_date}
+                with patch.object(cli.pdf_sources, "fetch_metadata", return_value=info), \
+                     patch.object(cli.pdf_sources, "download_pdf", return_value=b"%PDF-1.4\n%%EOF"):
+                    doc, _ = cli.download_one(ident, root, "Project.Zep")
+                self.assertTrue(doc.pdf.is_file())
+                self.assertFalse(doc.md.exists())
+                self.assertEqual(library.read_index(), [{"id": ident, "name": "Project.Zep",
+                                                        "keywords": ["keep"], "revised": previous_date or fetched_date}])
+
+    def test_rename_adds_previously_unregistered_document_to_existing_index(self):
+        doc = self.doc("Report.Unregistered")
+        offline = {"id": "", "name": "Offline.Candidate", "keywords": ["keep"], "revised": "2025-01-23"}
+        self.lib.write_index([offline])
+        renamed = storage.rename_document(doc, "Report.Renamed")
+        rows = {row["name"]: row for row in self.lib.read_index()}
+        self.assertEqual(set(rows), {renamed.stem, offline["name"]})
+        self.assertEqual(rows[offline["name"]], offline)
+        self.assertEqual(rows[renamed.stem]["keywords"], ["human-choice"])
+        self.assertTrue(storage.check_document(renamed)["complete"])
 
     def test_check_only_selected_document_and_metadata_is_complete(self):
         doc = self.doc()

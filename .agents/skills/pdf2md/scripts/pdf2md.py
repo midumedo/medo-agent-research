@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Manage a portable pdf/, md/, assets/ collection. Python standard library only."""
+"""Manage a portable pdf/, md/, assets/ collection. Standard library only."""
 
 from __future__ import annotations
 
@@ -16,7 +16,6 @@ from pdf_library import (Document, Library, LibraryError, atomic_bytes, atomic_t
                          split_keywords, stem_of, write_conversion, identity_from_name)
 import pdf_sources
 import mineru_backend
-import pdf_repair
 
 
 def emit(value):
@@ -197,10 +196,10 @@ def download_one(value: str, root, name=None) -> tuple[Document, dict]:
     if not url:
         raise LibraryError(f"没有明确的 PDF 下载地址：{value}")
     ident = info.get("id")
-    repair = existing is not None and (existing.md.is_file() or bool(row))
-    if repair:
-        confirm_download_source(existing, info)
-        filename = existing.stem
+    partial = existing if existing and (existing.md.is_file() or row) else None
+    if partial:
+        confirm_download_source(partial, info)
+        filename = partial.stem
     elif name:
         filename = clean_name(name_stem(name))
         if ident and filename != ident and not filename.startswith(ident + "."):
@@ -211,14 +210,13 @@ def download_one(value: str, root, name=None) -> tuple[Document, dict]:
     else:
         filename = clean_name(name_stem(info.get("filename") or "document.pdf"))
     doc = Document(lib.root, filename)
-    if doc.pdf.exists() or (doc.md.exists() and not repair):
+    if doc.pdf.exists() or (doc.md.exists() and not partial):
         raise LibraryError(f"同名资料已存在，未覆盖：{filename}；请使用明确名称或现有资料标识。")
     payload = pdf_sources.download_pdf(url)
     atomic_bytes(doc.pdf, payload)
     # Metadata is returned to the Agent; a combined download/convert retains it
     # in memory until it can be written into the MD. No permanent sidecar.
-    if not repair:
-        lib.update_existing_index(doc)
+    lib.update_existing_index(doc, revised=info.get("revised"))
     return doc, {**info, "stem": doc.stem, "pdf": str(doc.pdf), "state": "downloaded"}
 
 
@@ -286,14 +284,6 @@ def convert_documents(documents, args, known_metadata=None) -> int:
                     for warning in parsed.get("warnings", []):
                         print(f"[{doc.stem}] {warning}", file=sys.stderr)
                     print(f"[{doc.stem}] -> {doc.md}；{len(parsed['assets'])} 张分类资产；{parsed['parser']}")
-                    if getattr(args, "audit", True):
-                        # A read-only diagnosis must never turn a good conversion
-                        # into a failed one, nor change the command's exit code.
-                        try:
-                            quality = pdf_repair.audit_body(parsed["body"])
-                        except Exception as error:  # noqa: BLE001 - deliberately total
-                            quality = {"error": str(error)}
-                        print(f"[{doc.stem}] {pdf_repair.summarize(quality)}")
                 except (LibraryError, mineru_backend.MinerUError, OSError, ValueError) as error:
                     errors += 1
                     print(f"[{doc.stem}] 结果处理失败：{error}", file=sys.stderr)
@@ -316,8 +306,7 @@ def add_conversion_options(parser):
     parser.add_argument("--ocr", action="store_true", help="启用云端 OCR（pipeline / vlm）")
     parser.add_argument("--no-formula", action="store_true", help="关闭公式识别；vlm 仅关闭行内公式识别")
     parser.add_argument("--no-table", action="store_true", help="关闭表格识别（pipeline / vlm）")
-    parser.add_argument("--audit", action=argparse.BooleanOptionalAction, default=True,
-                        help="转换后输出一行只读体检摘要（--no-audit 关闭）")
+
 
 
 def make_parser():
@@ -337,167 +326,64 @@ def make_parser():
     convert.add_argument("--root")
     convert.add_argument("--all", action="store_true")
     add_conversion_options(convert)
-    audit = sub.add_parser("audit", help="只读体检：标签密度、真上标与可自动修估算")
-    audit.add_argument("inputs", nargs="*")
-    audit.add_argument("--root")
-    audit.add_argument("--all", action="store_true")
-    audit.add_argument("--json", action="store_true", help="输出完整字段的 JSON")
-    repair = sub.add_parser("repair", help="阶段一：生成补丁清单；--apply 写回同一篇 MD")
-    repair.add_argument("input")
-    repair.add_argument("--out", required=True, help="补丁输出目录；拒绝 md/、assets/、pdf/")
-    repair.add_argument("--root")
-    repair.add_argument("--whitelist", help="额外保留的真上标基底，逗号分隔")
-    repair.add_argument("--max-pack-items", type=int, default=20, help="每个 AI 裁决包的条目上限")
-    repair.add_argument("--apply", action="store_true",
-                        help="应用 --out 中已有的 patches.json；AI 条目一律 keep")
     rename = sub.add_parser("rename", help="联动改名；保持来源编号与版本")
     rename.add_argument("input")
     rename.add_argument("new_name", help="完整文件 stem，含已有来源编号前缀")
     rename.add_argument("--root")
-    index = sub.add_parser("index", help="按需创建/维护四列 index.csv，保留离线记录")
+    index = sub.add_parser("index", help="维护四列 index.csv；默认合并本地资料并保留离线记录",
+                           description="不带操作参数时创建或更新 index.csv；读取、关键词修改和对账分别按指定范围执行。")
     index.add_argument("--root", required=True)
     action = index.add_mutually_exclusive_group()
-    action.add_argument("--set-keywords", nargs=2, metavar=("TARGET", "WORDS"))
-    action.add_argument("--missing-keywords", action="store_true")
-    action.add_argument("--check", action="store_true", help="只比较，不写入")
-    action.add_argument("--list", action="store_true")
-    index.add_argument("--prune", action="store_true", help="显式移除本地不存在的索引记录")
+    action.add_argument("--set-keywords", nargs=2, metavar=("TARGET", "WORDS"),
+                        help="替换单篇关键词并同步已有 MD；分号分隔，空字符串清空")
+    action.add_argument("--missing-keywords", action="store_true", help="只读已登记且缺关键词的记录，附本地标题与摘要")
+    action.add_argument("--check", action="store_true", help="只检查索引是否需要对账；不检查 PDF/MD 齐备性")
+    action.add_argument("--list", action="store_true", help="只读已保存的索引，不扫描或收录本地文件")
+    index.add_argument("--prune", action="store_true", help="对账时删除 PDF 和 MD 均不在本地的记录，包括待下载资料")
     check = sub.add_parser("check", help="检查 PDF、MD 及 MD 引用的本地图片")
     check.add_argument("inputs", nargs="*")
     check.add_argument("--root")
     check.add_argument("--all", action="store_true")
-    check.add_argument("--audit", action="store_true", help="同时附加只读体检结果")
     return parser
-
-
-def audit_document(doc) -> dict:
-    """Read-only quality report; an audit problem is data, never an exception."""
-    if not doc.md.is_file():
-        return {"error": "缺少 MD"}
-    try:
-        _, body = read_markdown(doc.md)
-        return pdf_repair.audit_body(body)
-    except Exception as error:  # noqa: BLE001 - audit must stay non-fatal
-        return {"error": str(error)}
-
-
-def audit_command(args):
-    documents, failures = select_documents(args.inputs, args.root,
-                                           args.all or (not args.inputs and bool(args.root)))
-    results = [{"root": str(doc.root), "stem": doc.stem, "md": str(doc.md),
-                "quality": audit_document(doc)} for doc in documents]
-    if args.json:
-        emit(results + failures)
-    else:
-        for row in results:
-            quality = row["quality"]
-            if quality.get("error"):
-                print(f"[{row['stem']}] 体检失败：{quality['error']}")
-                continue
-            verdict = "建议 repair" if quality["suggest_repair"] else "无需 repair"
-            print(f"[{row['stem']}] sub {quality['tags']['sub']} · sup {quality['tags']['sup']}"
-                  f" · 表格外 {quality['density']}/千字 · 词内 {quality['word_internal_tags']}"
-                  f" · 跨词 {quality['cross_word_tags']} · 真上标 {quality['true_sup_count']}"
-                  f" · 可自动修 {quality['auto_fixable']} 词 · {verdict}")
-        for failure in failures:
-            print(f"[{failure['input']}] {failure['error']}", file=sys.stderr)
-    return 0 if not failures else 1
 
 
 def index_command(args):
     lib = Library(args.root)
     if args.prune and (args.check or args.missing_keywords or args.list or args.set_keywords):
         raise LibraryError("--prune 仅与索引重建一起使用。")
-    rows = lib.rebuilt_index(prune=args.prune)
-    if args.check:
-        current = lib.index.read_text(encoding="utf-8-sig") if lib.index.exists() else ""
-        if current != lib.render_index(rows):
-            print("index.csv 与当前文件状态不一致；未写入。", file=sys.stderr)
-            return 1
-        print(f"index.csv 一致：{len(rows)} 条")
+    if args.list:
+        emit(lib.read_index())
         return 0
     if args.missing_keywords:
         result = []
-        for row in rows:
+        for row in lib.read_index():
             if not row.get("keywords"):
                 info = local_metadata(Document(lib.root, stem_of(row)))
                 result.append({**row, "title": info.get("title"), "abstract": info.get("abstract")})
         emit(result)
         return 0
-    if args.list:
-        emit(rows)
-        return 0
     if args.set_keywords:
         token, words = args.set_keywords
         doc = lib.resolve(token)
-        row = next((r for r in rows if stem_of(r) == doc.stem), None)
-        if row is None:
+        if not (doc.pdf.is_file() or doc.md.is_file() or doc.record):
             raise LibraryError(f"找不到关键词目标：{token}")
+        rows = lib.rebuilt_index([doc])
+        row = next(r for r in rows if stem_of(r) == doc.stem)
         row["keywords"] = split_keywords(words)
         if doc.md.is_file():
             front, body = read_markdown(doc.md)
             front["keywords"] = row["keywords"]
             atomic_text(doc.md, render_markdown(front, body))
+    else:
+        rows = lib.rebuilt_index(prune=args.prune)
+        if args.check:
+            if not lib.index.is_file() or lib.render_index(lib.read_index()) != lib.render_index(rows):
+                print("index.csv 需要对账；未写入。", file=sys.stderr)
+                return 1
+            print(f"index.csv 一致：{len(rows)} 条")
+            return 0
     lib.write_index(rows)
     print(f"index.csv：{len(rows)} 条")
-    return 0
-
-
-def repair_command(args):
-    """Stage one: write a patch ledger next to (never inside) the paper library."""
-    doc, _ = resolve_document(args.input, args.root)
-    if not doc.pdf.is_file():
-        raise LibraryError("缺少同名 PDF，无法用文本层锚定。")
-    if not doc.md.is_file():
-        raise LibraryError("缺少 MD，无法生成补丁。")
-    out = pdf_repair.guard_output(args.out, doc.root)
-    text = doc.md.read_text(encoding="utf-8")
-    whitelist = tuple(part.strip() for part in (args.whitelist or "").split(",") if part.strip())
-    if args.apply:
-        plan_file = out / "patches.json"
-        if not plan_file.is_file():
-            raise LibraryError("--apply 需要 --out 目录里已有的 patches.json；先生成阶段一清单。")
-        payload = json.loads(plan_file.read_text(encoding="utf-8"))
-        if Path(payload.get("md", "")).resolve() != doc.md.resolve():
-            raise LibraryError("patches.json 记录的 MD 与当前输入不一致。")
-        result = pdf_repair.apply_plan(text, payload["patches"], doc.pdf, whitelist=whitelist,
-                                       max_pack_items=args.max_pack_items)
-        if result["applied"]:
-            atomic_text(doc.md, result["text"])
-            if doc.md.read_text(encoding="utf-8") != result["text"]:
-                atomic_text(doc.md, text)
-                raise pdf_repair.RepairError("写入回读不一致，已还原原文")
-        tags = result["tags"]
-        print(f"[{doc.stem}] 已应用 {len(result['applied'])} 条"
-              f"（已应用过 {len(result['already_applied'])}）"
-              f" · 标签 {tags['before']['total']} -> {tags['after']['total']}"
-              f" · 真上标 {tags['true_sup_before']} -> {tags['true_sup_after']}"
-              f" · 待 AI {tags['ai_lines']} 行 -> {doc.md}")
-        return 0
-    plan = pdf_repair.build_plan(text, doc.pdf, whitelist=whitelist,
-                                 max_pack_items=args.max_pack_items)
-    out.mkdir(parents=True, exist_ok=True)
-    payload = {"document": doc.stem, "md": str(doc.md), "pdf": str(doc.pdf),
-               "whitelist": list(whitelist), "checks": plan["checks"],
-               "stats": plan["stats"], "patches": plan["patches"]}
-    atomic_text(out / "patches.json", json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
-    atomic_text(out / "diff.txt", plan["diff"])
-    atomic_text(out / "stats.json", json.dumps(
-        {**payload["stats"], "kept": plan["kept"], "checks": plan["checks"]},
-        ensure_ascii=False, indent=2) + "\n")
-    packs = out / "ai-packs"
-    packs.mkdir(exist_ok=True)
-    keep = {f"p{number:02d}.md" for number in range(1, len(plan["ai_packs"]) + 1)}
-    for stale in packs.glob("p[0-9][0-9].md"):
-        if stale.name not in keep:
-            stale.unlink()
-    for number, pack in enumerate(plan["ai_packs"], 1):
-        atomic_text(packs / f"p{number:02d}.md", pack)
-    rules = plan["stats"]["rules"]
-    print(f"[{doc.stem}] R1 {rules['R1']} · R2 {rules['R2']} · R4 {rules['R4']}"
-          f" · R5 {rules['R5']} · R6-lite {rules['R6-lite']}"
-          f" · 保留 {plan['stats']['kept_whitelist']}"
-          f" · AI {plan['stats']['ai_items']} 条/{plan['stats']['ai_packs']} 包 -> {out}")
     return 0
 
 
@@ -544,23 +430,15 @@ def main(argv=None):
             renamed = rename_document(doc, args.new_name)
             emit({"old": doc.stem, "new": renamed.stem, "root": str(doc.root)})
             return 0
-        if args.command == "audit":
-            return audit_command(args)
-        if args.command == "repair":
-            return repair_command(args)
         if args.command == "index":
             return index_command(args)
         if args.command == "check":
             documents, failures = select_documents(args.inputs, args.root, args.all or (not args.inputs and bool(args.root)))
-            results = [check_document(doc, audit=audit_document(doc) if args.audit else None)
+            results = [check_document(doc)
                        for doc in documents] + failures
             emit(results)
             return 0 if all(row["complete"] for row in results) else 1
-    except pdf_repair.DependencyError as error:
-        print(f"错误：{error}\n安装：python -m pip install pymupdf", file=sys.stderr)
-        return 2
-    except (LibraryError, pdf_sources.SourceError, mineru_backend.MinerUError, OSError, ValueError,
-            pdf_repair.RepairError) as error:
+    except (LibraryError, pdf_sources.SourceError, mineru_backend.MinerUError, OSError, ValueError) as error:
         print(f"错误：{error}", file=sys.stderr)
         return 1
     return 0
