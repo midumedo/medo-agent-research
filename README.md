@@ -1,47 +1,45 @@
-# Memory 与上下文工程
+# Agent Memory、Context 与 Harness
 
-面向已了解 LLM 与 Agent 的进阶读者，研究 Memory、Context 与 Harness，形成能支持工程判断的主题认识，再制作教材与多视图手册。
+研究 Agent 怎样保存和使用信息、修正已有认识，并在持续任务中行动。Memory 关注过去留下的状态及其复用，Context 关注一次调用实际获得的信息，Harness 关注调用、工具与状态变化怎样被组织起来。
 
-**当前优先研究 Memory。** 围绕过去信息怎样被保存、找回、修正和复用，先拆清有机制差异的项目与论文，再判断哪些复杂度值得投入。Context 与 Harness 提供必要的使用和控制关系；领域结构与教材顺序可以随证据调整。
+这是一个处于早期探索阶段的认知研究仓。我们从具体机制和第一性原理出发，借助论文、源码、反例与实验修正解释；成熟的认识再用于教材和手册。当前重点是 **Memory**，具体推进位置见 [INDEX](INDEX.md)。
 
-## 从任务选择入口
+## 已经形成哪些认识
 
-| 想做什么 | 入口 |
+- **保存、取得和正确使用是不同问题。** 一份记录存在，不保证本次调用能看到；看到了，也不保证正确影响行动。研究需要沿信息实际生效的路径定位问题。
+- **内容、表示、消费方式与生命周期需要分别解释。** 同一经验可以留下原文、摘要、索引、连续状态或参数变化；这些对象可能共同存在，却承担不同职责。相同文件名或系统标签不足以说明机制。
+- **选择与比较依赖任务条件。** 提前整理与查询时理解，把工作放在不同阶段；短输入、较大记忆库或更复杂结构，都不能单独证明整体收益。比较应说明需要恢复什么，以及构建、使用和维护的代价。
+
+目前已积累连贯的机制解释、边界案例、局部论文核对、静态源码拆解与确定性测量。PDF修复等工具工作已有实现；记忆策略的成对行为比较、系统运行验证和教材成稿仍有各自的缺口。各研究的进度在对应主文中说明。
+
+## 关键研究，从共识与背景进入
+
+| 研究 | 已有进展与仍需回答的问题 |
 |---|---|
-| 找外部材料与所用版本 | [Sources](resources/README.md) |
-| 拆清一个项目或论文的相关机制 | [Deepdive](deepdive/README.md) |
-| 研究概念、解释现象、比较方案或设计检验 | [Analysis](analysis/README.md) |
-| 连贯理解一个综合主题 | [Domain](domain/index.md)；已有第一个暂定的整体运行主题 |
-| 看 Memory 专题与后续教材路线 | [Output](output/README.md)；当前优先 [Memory 教材设计](output/book-memory/design.md) |
-| 追溯项目讨论和重要决定 | [Dialogue](dialogue/README.md) |
+| [记忆载体](domain/memory/gpt/载体研究.md) | 已解释参数、符号记录和连续状态的使用机制；继续厘清目标模型与整个Agent的研究边界。 |
+| [记忆生命周期](domain/memory/gpt/生命周期研究.md) | 已拆开形成、读取、更正、遗忘、整理与技能转化；需要进一步连接这些操作及其实际生效条件。 |
+| [分类维度](domain/memory/gpt/分类维度研究.md) | 已积累候选维度、综述对照与反例；继续厘清分类维度与生命周期的关系，用具体对象检验必要区分。 |
+| [文档模型与定义](domain/repo-context/gpt/文档模型与定义.md) | 已形成内容职责、使用任务和演化关系的解释及候选定义；用新实例检验边界。 |
+| [读取与治理机制](domain/repo-context/gpt/读取与治理机制.md) | 已有读取链、确定性测量和维护规则接到检查器的案例；实际投递与任务效果仍需分别确认。 |
+| [信息留存与评测](analysis/gpt/信息留存与评测.md) | 已建立留存策略的条件关系、完整成本口径与比较方法；尚无通用策略排名。 |
+| [记忆系统机制对照](deepdive/gpt/记忆系统机制对照.md) | 已辨明多种系统怎样分配内容判断、检索、更新和淘汰；具体机制差异尚不能直接转为整体优劣。 |
+| [pdf2md](output/skills/pdf2md/README.md) | 论文全文获取、转换与核对的 skill 源码、设计经验和本地验证。 |
 
-Deepdive 与 Analysis 在根级并列，分别按对象和问题组织。Domain 形成更大尺度的主题综合，`output/` 中的教材设计及后续成品直接使用它们及其依据。章节草案不限制研究展开，也不等于已完成教材。
+需要先理解整体运行关系，可读 [Agent 的持续运行](domain/agent-runtime/index.md)。以上入口按问题选择，无需依次通读。
 
-## 现在实际积累了什么
+### 共识、推导与引用的分工
 
-- [Agent 的持续运行](domain/agent-runtime/index.md)：首个主题综合，把 Harness、Context、Memory、反馈、修正与恢复连成整体；附状态、生命周期和失效定位的深入解释。
-- [Memory 工程选择](analysis/memory-engineering-selection.md)：区分需求、机制、实现与训练前提，给出当前值得深拆的对象和比较条件。
-- [Memory 教材设计](output/book-memory/design.md)：八章主干，加关系与时间、经验复用两条深入路线；含持续研究项目案例。
-- [整体运行教材设计](<output/harness book/book-design.md>)：保留原十一章路线，当前作为后续参考。
-- [概念与边界草稿](analysis/concepts-and-boundaries.md)：区分 Memory、Context、Harness 及相关观察维度，仍是可修正的研究框架。
-- [上下文留存分析](analysis/context-retention.md)：保留、摘要、外部化与组合的条件推演，含逻辑反例和未校准的成本式。
-- [问题、假设与检验议程](analysis/research-agenda.md)：候选问题与实验设计，按需使用。
-- [Claude Code 策略分析](analysis/claude-code/context-management-offload.md)与[成本分析](analysis/claude-code/context-economics-two-traps.md)：已修正过强推断，产品行为仍有待核实项。
-- [综述阅读导航](analysis/surveys/README.md)与[本地核对片段](evidence/domain/reviewed-local-passages.md)：已有局部原文核对，不代表全文复核或实验复现。
-- [Memory 框架一手材料](evidence/domain/memory-frameworks-core-2026-09-21.md)与[评估片段核对](evidence/domain/memory-evaluation-passages-2026-09-21.md)：固定版本的文档和局部源码阅读，以及论文比较条件与报告限制。
-- [记忆横评对照](analysis/memory-benchmark-crossreview-2026-09.md)：20 个基准的编号与日期经官方接口核验，五份一手横评的具体数字，以及厂商自报分数为何不能互比。
-- [记忆分类法](domain/memory-taxonomy/index.md)：第二个主题综合，解释六家分类轴的分歧与三处归属冲突；含[经典分类详解](domain/memory-taxonomy/cognitive-classes.md)（感觉/工作/情景/语义/程序及其映射到 Agent 后的失效处）。
-- [论文简介卡片](analysis/paper-digests-2026-09.md)：27 篇入库论文与四个纯源码对象的一句话定位、可引用点、限制，以及过程中未进正文的判断。
-- 已完成的[记忆系统深拆与开源榜对照](deepdive/README.md)：四个系统（Mem0、memU、EverMemOS、MemoryBear）加 AML 榜单对照（InvMem、ReFind），均为静态读码，结论区分"代码存在/文档声称/默认启用/未验证"。
+每项关键研究的主文集中给出**共识、实际进度和两种可复用背景**：背景1供同一大研究内的子课题交流，说明做了什么、得到什么；背景2供其他研究快速理解核心结论。
 
-- [仓库上下文研究](domain/repo-context/AGENTS.md)：一批真实仓库的根文档治理与 skill 布局实测、read 工具与 skill 加载的源码事实、PDF/HTML 阅读成本的确定性测量。
+复杂机制、论证、反例和争议放在同名 `.推导.md`；出处、版本和引用关系放在 `.引用.md`，区分一手材料与仓内转引。两者从主文末尾进入。这里的共识是当前可继续使用、也可被新证据修正的认识；多份稿件重复同一结论，不增加独立证据。
 
-目前有初版主题综合、章节提案与五份静态读码深拆；尚无运行验证与成对模型行为实验。主题综合依据已有研究和官方资料形成可修正解释，不能因目录名称被提升成实证定律。候选对象与范围在 [Deepdive 入口](deepdive/README.md#research-map)。
+## 材料与原研究在哪里
 
-## 项目设计与协作
+- **[resources/](resources/README.md)**：论文、第三方源码与来源记录；[论文索引](resources/papers/index.csv)和[源码索引](resources/repos/index.csv)用于定位材料。
+- **[deepdive/](deepdive/README.md)**：围绕单篇论文、单个系统或方案拆解机制。
+- **[analysis/](analysis/README.md)**：围绕明确问题展开概念分析、因果判断、比较与检验。
+- **[domain/](domain/index.md)**：跨材料形成主题解释；当前主要积累位于 `domain/memory/` 和 `domain/repo-context/`。
+- **[output/](output/README.md)**：面向读者的教材设计与后续产出；现有两条教材路线均处于设计阶段。
+- **[dialogue/](dialogue/README.md)**：重要讨论与决定；`evidence/` 保存已有核对片段和来源分析记录。
 
-ARCHITECTURE.md 解释整体设计；[本轮架构研究](analysis/knowledge-architecture-2026-09-20.md) 给出诊断、外部参考与取舍理由。AI 协作入口是 AGENTS.md，按任务读取相关材料，无需每轮遍读假设和历史。
-
-修改文档、表达与成品取舍的规则见 CONVENTIONS.md。
-
-项目已建立 Git 版本历史，后续改动通过提交追溯。[.gitignore](.gitignore) 排除第三方仓库内容、本地凭据、运行时状态与可重建的重件；研究正文与来源记录正常跟踪。既有 [历史快照](archive/2026-09-20-before-focused-research/SNAPSHOT.md) 保留原用途。
+各研究的原稿与推理过程保留在原位，关键梳理负责提供阅读入口。协作约定见 [AGENTS.md](AGENTS.md)；`以前的/` 与 `archive/` 用于历史追溯，不作为当前规范。

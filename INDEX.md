@@ -1,17 +1,7 @@
-# index.md
+# 当前研究重点
 
-# 研究核心
+当前研究 `domain/memory/`：载体、生命周期，以及描述系统差异所需的分类维度。当前仍需厘清生命周期与额外分类怎样互补，不将其中一种组织方式视为已经确定的唯一顺序。
 
-聚焦agent engineering，  包括但不限于**Memory、Context 与 Harness**
+此前主要研究 `domain/repo-context/`。讨论中的 `01` 指 `domain/repo-context/01docsclassify`，`02` 指 `domain/repo-context/02docsdefine`，其余编号按该目录下的同名前缀理解。
 
-# 现在
-现在在研究 domain\memory
-
-之前在研究domain\repo-context
-`01`指domain\repo-context\01docsclassify。
-`02`指domain\repo-context\02docsdefine
-其它代指 同理
-
-# 关键研究整理
-
-[关键研究入口](gpt/README.md)：默认阅读共识、背景1和背景2；复杂推导与引用链分别保存在配套文档。八项关键研究保持原有范围，历史稿可从Git恢复。
+全仓研究导航、共识与背景入口见 [README](README.md)。
